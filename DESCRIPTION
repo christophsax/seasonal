@@ -6,23 +6,6 @@ Date: 2013-09-17
 Author: Christoph Sax
 Maintainer: Christoph Sax <c.sax@seco.admin.ch>
 Description: a simple interface to X13
-Depends:
-Imports:
-License: GPL-3
+License: NA
 Collate:
-    'advanced_time_series.R'
-    'collector.R'
-    'datamine.R'
-    'estim.R'
-    'forecast.R'
-    'fusion.R'
-    'operators.R'
-    'qslist.R'
-    'read_write.R'
-    'seasonal.R'
-    'time_series.R'
-    'dataset.R'
-    'general_tools.R'
-    'recursive.estim.R'
-    'analyze.R'
-    'vts.R'
+    'parse.R'
