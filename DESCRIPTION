@@ -2,14 +2,13 @@ Package: seasonal
 Type: Package
 Title: a simple interface to X13
 Version: 0.01.0
-Date: 2013-09-10
+Date: 2013-09-17
 Author: Christoph Sax
 Maintainer: Christoph Sax <c.sax@seco.admin.ch>
 Description: a simple interface to X13
 Depends:
 Imports:
 License: GPL-3
-Packaged: 2013-09-03 16:57:28 UTC; seco-sxh
 Collate:
     'advanced_time_series.R'
     'collector.R'
