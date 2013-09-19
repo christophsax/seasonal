@@ -38,6 +38,6 @@ outlier{
 
 }
 
-x11{
+seats{
 
 }

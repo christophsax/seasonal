@@ -1,0 +1,1742 @@
+  Reading input spec file from test.spc
+
+1
+
+               U. S. Department of Commerce, U. S. Census Bureau
+
+              X-13ARIMA-SEATS monthly seasonal adjustment Method,
+                         Release Version 1.0 Build 150
+
+
+           This software application provides an enhanced version of
+             Statistics Canada's X-11-ARIMA extension (Dagum, 1980)
+                 of the X-11 variant of the Census Method II of
+                      Shiskin, Young and Musgrave (1967).
+
+            It also provides an ARIMA model-based method following
+       Hillmer and Tiao (1982) and Burman (1980) that is very similar
+       to the update of the method of SEATS (Gómez and Maravall, 1996)
+                produced at the Bank of Spain by G. Caporello and
+               A. Maravall for TSW (Caporello and Maravall, 2004).
+          The present application includes additional enhancements.
+
+         X-13ARIMA-SEATS includes an automatic ARIMA model selection procedure
+          based largely on the procedure of Gómez and Maravall (1998)
+            as implemented in TRAMO (1996) and subsequent revisions.
+
+              Primary Programmers: Brian Monsell, Mark Otto and,
+                 for the ARIMA model-based signal extraction,
+                      Gianluca Caporello and Victor Gómez
+
+
+     Series Title- International Airline Passengers Data from Box and Jenkins
+     Series Name- test
+     Sep 19, 2013  15.34.22 
+
+        -Period covered-  1st month,1952 to 12th month,1960
+        -Type of run - auto-mode seasonal adjustment
+
+        -Sigma limits for graduating extreme values are 1.5 and 2.5 .
+        -3x3 moving average used in section 1 of each iteration, 
+         3x5 moving average in section 2 of iterations B and C,
+         moving average for final seasonal factors chosen by Global MSR.
+        -Holiday adjustment factors applied directly to the final seasonally adjusted series
+        -Spectral plots generated for selected series
+        -Spectral plots generated for series starting in 1953.Jan
+
+ FILE SAVE REQUESTS (* indicates file exists and will be overwritten)
+  test.mdl* model specifications (regression and arima specs)
+  test.out* program output file
+  test.err* program error file
+  test.udg  seasonal adjustment and model diagnostics file
+        International Airline Passengers Data from Box and Jenkins            PAGE   1, SERIES test
+
+     Contents of spc file test.spc
+
+ Line #
+ ------
+      1: series{
+      2:   title="International Airline Passengers Data from Box and Jenkins"
+      3:   start=1949.01
+      4:   data=(
+      5: 	112 118 132 129 121 135 148 148 136 119 104 118
+      6: 	115 126 141 135 125 149 170 170 158 133 114 140
+      7: 	145 150 178 163 172 178 199 199 184 162 146 166
+      8: 	171 180 193 181 183 218 230 242 209 191 172 194
+      9: 	196 196 236 235 229 243 264 272 237 211 180 201
+     10: 	204 188 235 227 234 264 302 293 259 229 203 229
+     11: 	242 233 267 269 270 315 364 347 312 274 237 278
+     12: 	284 277 317 313 318 374 413 405 355 306 271 306
+     13: 	315 301 356 348 355 422 465 467 404 347 305 336
+     14: 	340 318 362 348 363 435 491 505 404 359 310 337
+     15: 	360 342 406 396 420 472 548 559 463 407 362 405
+     16: 	417 391 419 461 472 535 622 606 508 461 390 432)
+     17:   span=(1952.01, )
+     18: }
+     19: spectrum{
+     20:   savelog=peaks	
+     21: }
+     22: transform{
+     23:   function=auto
+     24:   savelog=autotransform
+     25: }
+     26: regression{
+     27:   aictest=(td easter)
+     28:   savelog=aictest
+     29: }
+     30: automdl{
+     31:   savelog=automodel
+     32: }
+     33: estimate{
+     34:   save = (model)
+     35: }
+     36: outlier{ }
+     37: x11{}
+     38:  
+     39:  
+
+
+ Likelihood statistics for model fit to untransformed series.
+
+ Likelihood Statistics
+ ------------------------------------------------------------------
+ Number of observations (nobs)                                  108
+ Effective number of observations (nefobs)                       95
+ Number of parameters estimated (np)                              3
+ Log likelihood (L)                                       -376.3401
+ AIC                                                       758.6802 
+ AICC (F-corrected-AIC)                                    758.9439 
+ Hannan Quinn                                              761.7761 
+ BIC                                                       766.3418 
+ ------------------------------------------------------------------
+
+
+ Likelihood statistics for model fit to log transformed series.
+
+ Likelihood Statistics
+ ------------------------------------------------------------------
+ Number of observations (nobs)                                  108
+ Effective number of observations (nefobs)                       95
+ Number of parameters estimated (np)                              3
+ Log likelihood                                            181.0332
+ Transformation Adjustment                                -550.6875
+ Adjusted Log likelihood (L)                              -369.6543
+ AIC                                                       745.3087 
+ AICC (F-corrected-AIC)                                    745.5724 
+ Hannan Quinn                                              748.4046 
+ BIC                                                       752.9703 
+ ------------------------------------------------------------------
+
+
+   *****   AICC (with aicdiff=-2.00) prefers log transformation   *****
+   *****   Multiplicative seasonal adjustment will be performed.   ****
+
+
+
+        International Airline Passengers Data from Box and Jenkins            PAGE   2, SERIES test
+
+ A 1  Time series data (for the span analyzed)
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec        TOTAL  
+ -----------------------------------------------------------------------------
+  1952         171.     180.     193.     181.     183.     218.
+               230.     242.     209.     191.     172.     194.         2364.
+ 
+  1953         196.     196.     236.     235.     229.     243.
+               264.     272.     237.     211.     180.     201.         2700.
+ 
+  1954         204.     188.     235.     227.     234.     264.
+               302.     293.     259.     229.     203.     229.         2867.
+ 
+  1955         242.     233.     267.     269.     270.     315.
+               364.     347.     312.     274.     237.     278.         3408.
+ 
+  1956         284.     277.     317.     313.     318.     374.
+               413.     405.     355.     306.     271.     306.         3939.
+ 
+  1957         315.     301.     356.     348.     355.     422.
+               465.     467.     404.     347.     305.     336.         4421.
+ 
+  1958         340.     318.     362.     348.     363.     435.
+               491.     505.     404.     359.     310.     337.         4572.
+ 
+  1959         360.     342.     406.     396.     420.     472.
+               548.     559.     463.     407.     362.     405.         5140.
+ 
+  1960         417.     391.     419.     461.     472.     535.
+               622.     606.     508.     461.     390.     432.         5714.
+ 
+  AVGE         281.     270.     310.     309.     316.     364.
+               411.     411.     350.     309.     270.     302.
+
+  Table Total-     35125.00   Mean-     325.23   Std. Dev.-     103.82
+                              Min -     171.00        Max -     622.00
+        International Airline Passengers Data from Box and Jenkins            PAGE   3, SERIES test
+                        Automatic ARIMA Model Selection
+
+                    Procedure based closely on TRAMO method 
+                         of Gomez and Maravall (2000)
+              "Automatic Modeling Methods for Univariate Series",
+                            A Course in Time Series
+                  (Edited by D. Pena, G. C. Tiao, R. S. Tsay),
+                         New York : J. Wiley and Sons
+
+
+     Maximum order for regular ARMA parameters :   2
+     Maximum order for seasonal ARMA parameters :   1
+     Maximum order for regular differencing :   2
+     Maximum order for seasonal differencing :   1
+
+   Results of Unit Root Test for identifying orders of differencing:
+     Regular difference order :   1
+     Seasonal difference order :   1
+
+     Mean is not significant.
+
+  Automatic model choice : (0 1 0)(0 1 1)
+
+
+  Final Checks for Identified Model
+
+
+  Checking for Unit Roots.
+   No unit roots found.
+
+  Checking for insignificant ARMA coefficients.
+
+  Final automatic model choice : (0 1 0)(0 1 1)
+   End of automatic model selection procedure.
+
+ Average absolute percentage error in within-sample forecasts:
+  Last year:   4.66      Last-1 year:   7.05     Last-2 year:   6.27
+  Last three years:    5.99
+
+ Estimation converged in    5 ARMA iterations,   33 function evaluations.
+
+ Regression Model
+ ------------------------------------------------------------------------------
+                             Parameter        Standard
+ Variable                     Estimate           Error      t-value
+ ------------------------------------------------------------------------------
+ 1-Coefficient Trading Day
+   Weekday                     -0.0033         0.00052        -6.29
+ **Sat/Sun (derived)            0.0083         0.00131         6.29
+
+ Easter[1]                      0.0163         0.00730         2.24
+
+ Automatically Identified Outliers
+   AO1954.Feb                  -0.0682         0.01708        -3.99
+ ------------------------------------------------------------------------------
+ **For the one coefficient trading-day effect, the derived
+   parameter estimate is obtained indirectly as minus -2.5 times
+   the directly estimated parameter that defines the effect.
+
+
+ F Tests for Trading Day Regressors 
+ -----------------------------------------------------------------------
+ Regression Effect                     df         F-statistic    P-Value
+ -----------------------------------------------------------------------
+ 1-Coefficient Trading Day           1,  92           38.36         0.00
+
+
+ ARIMA Model:  (0 1 0)(0 1 1)
+   Nonseasonal differences: 1
+   Seasonal differences:    1
+                                              Standard
+ Parameter                    Estimate          Errors
+ -----------------------------------------------------
+ Seasonal MA                                       
+   Lag 12                       0.4935         0.08870
+
+ Variance                       0.76887E-03
+ SE of Var                      0.11156E-03
+ -----------------------------------------------------
+
+ Likelihood Statistics
+ ------------------------------------------------------------------
+ Number of observations (nobs)                                  108
+ Effective number of observations (nefobs)                       95
+ Number of parameters estimated (np)                              5
+ Log likelihood                                            204.1293
+ Transformation Adjustment                                -550.6875
+ Adjusted Log likelihood (L)                              -346.5583
+ AIC                                                       703.1165 
+ AICC (F-corrected-AIC)                                    703.7907 
+ Hannan Quinn                                              708.2763 
+ BIC                                                       715.8859 
+ ------------------------------------------------------------------
+
+
+  Visually significant residual trading day and seasonal peaks have been
+  found in the spectral plot of the following series starting in 1953.Jan:
+
+          regARIMA model residuals (1 Seasonal and 1 Trading Day peak(s))
+
+
+
+
+      10*LOG(SPECTRUM) of the regARIMA model residuals
+      Spectrum estimated from 1953.Jan to 1960.Dec.
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+     -26.24I                                                            SI    -26.24
+           I                                                            SI
+           I                       *                            T       SI
+           I                      **                            T       SI
+     -27.39I                      **                            T       SI    -27.39
+           I                      **                S           T       SI
+           I                      **                S           T       SI
+           I                      **                S           T       SI
+     -28.54I                      **                S           T       SI    -28.54
+           I               *      **  *             S           T      *SI
+           I               *      **  *             S           T      *SI
+           I               *  *   **  *             S           T      *SI
+     -29.69I          S    *  *   **  **            S           T      *SI    -29.69
+           I          S    *  *   **  **            S           T      *SI
+           I          S    ** *   *** **            S           T      *SI
+           I         *S    *****  ******            S           T  *   *SI
+     -30.84I         *S    *****  ******           *S     *     T  *   *SI    -30.84
+           I         *S    ***** *******     *     *S     *     T  *   *SI
+           I         *S    ***** *******     *     *S     *     T* *  **SI
+           I         *S    ***** *******     **    *S     *    *T**** **SI
+     -31.99I   *     *S    ***** ********    **    *S     *    *T**** **SI    -31.99
+           I   *     *S    *****S********    **    *S    **    *T**** **SI
+           I   *     *S   ******S********   ***    *S    **    *T*******SI
+           I   **    *S   ******S********   ***    *S    **    *T*******SI
+     -33.15I   **    *S   ******S*********S****    *S    **    *T*******SI    -33.15
+           I   **    *S   ******S*********S****    *S    **    *T*******SI
+           I   **   **S   ******S*********S****    *S    **    *T*******SI
+           I   **   **S   ******S*********S****    *S*   **    *T*******SI
+     -34.30I   **   **S   ******S*********S****    *S*   **    *T*******SI    -34.30
+           I   ***  **S*  ******S*********S*****   *S*   **    *T*******SI
+           I   *** ***S*  ******S*********S*****   *S*   **    *T*******SI
+           I   *******S*  ******S*********S*****   *S*   **    *T*******SI
+     -35.45I   *******S*  ******S*********S*****  **S*   **    *T*******SI    -35.45
+           I   *******S*  ******S*********S*****  **S*   **    *T*******SI
+           I   *******S* *******S*********S*****  **S*   **    *T*******SI
+           I   *******S* *******S*********S*****  **S*   **    *T*******SI
+     -36.60I  ********S*********S*********S****** **S*   **    *T*******SI    -36.60
+           I  ********S*********S*********S*********S*   **    *T*******SI
+           I  ********S*********S*********S*********S*   **    *T*******SI
+           I  ********S*********S*********S*********S*   **    *T*******SI
+     -37.75I  ********S*********S*********S*********S*   **   S*T*******SI    -37.75
+           I  ********S*********S*********S*********S*   **   S*T*******SI
+           I  ********S*********S*********S*********S*   **   S*T*******SI
+           I  ********S*********S*********S*********S*  ***   S*T*******SI
+     -38.91I  ********S*********S*********S*********S*T ****  S*T*******SI    -38.91
+           I  ********S*********S*********S*********S*T ****  S*T*******SI
+           I  ********S*********S*********S*********S*T ****  S*T*******SI
+           I  ********S*********S*********S*********S*T ****  S*T*******SI
+     -40.06I *********S*********S*********S*********S*T ****  S*T*******SI    -40.06
+           I *********S*********S*********S*********S*T*****  S*T*******SI
+           I *********S*********S*********S*********S*T*****  S*T*******SI
+           I *********S*********S*********S*********S*T***** *S*T*******SI
+     -41.21I**********S*********S*********S*********S*T*******S*T*******SI    -41.21
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+            S=SEASONAL FREQUENCIES, T=TRADING DAY FREQUENCIES
+
+
+ FORECASTING
+  Origin  1960.Dec
+  Number        12
+
+  Forecasts and Standard Errors of the Prior Adjusted and Transformed Data
+   ------------------------------
+                         Standard
+       Date   Forecast      Error
+   ------------------------------
+   1961.Jan       6.09      0.028
+   1961.Feb       6.03      0.039
+   1961.Mar       6.14      0.048
+   1961.Apr       6.21      0.056
+   1961.May       6.21      0.062
+   1961.Jun       6.35      0.068
+   1961.Jul       6.51      0.073
+   1961.Aug       6.48      0.078
+   1961.Sep       6.32      0.083
+   1961.Oct       6.19      0.088
+   1961.Nov       6.04      0.092
+   1961.Dec       6.17      0.096
+   ------------------------------
+
+  Confidence intervals with coverage probability (0.95000)
+  On the Original Scale Before Prior Adjustments
+   ---------------------------------------
+       Date      Lower  Forecast     Upper
+   ---------------------------------------
+   1961.Jan     418.96    442.42    467.19
+   1961.Feb     381.63    412.13    445.06
+   1961.Mar     421.68    463.41    509.26
+   1961.Apr     445.18    496.35    553.40
+   1961.May     439.00    495.82    559.99
+   1961.Jun     501.51    572.95    654.57
+   1961.Jul     579.38    668.98    772.43
+   1961.Aug     558.90    651.83    760.22
+   1961.Sep     471.65    555.17    653.48
+   1961.Oct     411.72    488.94    580.65
+   1961.Nov     351.21    420.60    503.71
+   1961.Dec     395.21    477.08    575.92
+   ---------------------------------------
+        International Airline Passengers Data from Box and Jenkins            PAGE   4, SERIES test
+  
+ A 6  RegARIMA trading day component
+      Leap year prior adjustments included from Table A2.
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952         99.0    102.3    101.3     99.3    100.2    100.5
+               99.0    101.3     99.3     99.0    101.7     99.0         100.2
+ 
+  1953        100.2     99.1    100.2     99.3    101.3     99.3
+               99.0    101.3     99.3    100.2    100.5     99.0          99.9
+ 
+  1954        101.3     99.1     99.0     99.3    101.3     99.3
+              100.2    100.2     99.3    101.3     99.3     99.0          99.9
+ 
+  1955        101.3     99.1     99.0    100.5    100.2     99.3
+              101.3     99.0     99.3    101.3     99.3    100.2         100.0
+ 
+  1956        100.2    102.3    100.2    100.5     99.0    100.5
+              100.2     99.0    101.7     99.0     99.3    101.3         100.3
+ 
+  1957         99.0     99.1    101.3     99.3     99.0    101.7
+               99.0    100.2    100.5     99.0    100.5    100.2          99.9
+ 
+  1958         99.0     99.1    101.3     99.3    100.2    100.5
+               99.0    101.3     99.3     99.0    101.7     99.0          99.9
+ 
+  1959        100.2     99.1    100.2     99.3    101.3     99.3
+               99.0    101.3     99.3    100.2    100.5     99.0          99.9
+ 
+  1960        101.3    102.3     99.0    100.5    100.2     99.3
+              101.3     99.0     99.3    101.3     99.3    100.2         100.3
+ 
+  AVGE        100.2    100.2    100.2     99.7    100.3    100.0
+               99.8    100.3     99.7    100.0    100.2     99.7
+
+  Table Total-     10802.54   Mean-     100.02   Std. Dev.-       0.97
+                              Min -      99.01        Max -     102.32
+
+ A 6.A  RegARIMA trading day component forecasts
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961        100.2     99.1     99.0    101.7     99.0     99.3
+              101.3     99.0    100.5    100.2     99.3    101.3         100.0
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE   5, SERIES test
+
+ A 7  RegARIMA holiday component
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1953        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1954        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1955        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1956        100.0    100.0    101.2     98.8    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1957        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1958        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1959        100.0    100.0    101.2     98.8    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1960        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  AVGE        100.0    100.0     99.9    100.1    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0
+
+  Table Total-     10800.04   Mean-     100.00   Std. Dev.-       0.28
+                              Min -      98.81        Max -     101.21
+
+ A 7.A  RegARIMA holiday component forecasts
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961        100.0    100.0     99.6    100.4    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE   6, SERIES test
+  
+ A 8  RegARIMA combined outlier component
+      (AO outliers included)
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1953        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1954        100.0     93.4    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0          99.5
+ 
+  1955        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1956        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1957        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1958        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1959        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  1960        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+  AVGE        100.0     99.3    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0
+
+  Table Total-     10793.41   Mean-      99.94   Std. Dev.-       0.63
+                              Min -      93.41        Max -     100.00
+
+ A 8.A  RegARIMA outlier component
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0         100.0
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE   7, SERIES test
+  
+ B 1  Original series (prior adjusted)
+      (adjusted for regARIMA factors)
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec        TOTAL  
+ -----------------------------------------------------------------------------
+  1952         173.     176.     191.     181.     183.     217.
+               232.     239.     210.     193.     169.     196.         2360.
+ 
+  1953         196.     198.     237.     236.     226.     245.
+               267.     268.     239.     211.     179.     203.         2703.
+ 
+  1954         201.     203.     238.     228.     231.     266.
+               302.     293.     261.     226.     204.     231.         2883.
+ 
+  1955         239.     235.     271.     267.     270.     317.
+               359.     350.     314.     270.     239.     278.         3408.
+ 
+  1956         284.     271.     313.     315.     321.     372.
+               412.     409.     349.     309.     273.     302.         3930.
+ 
+  1957         318.     304.     353.     349.     359.     415.
+               470.     466.     402.     350.     303.     335.         4424.
+ 
+  1958         343.     321.     359.     349.     362.     433.
+               496.     498.     407.     363.     305.     340.         4576.
+ 
+  1959         359.     345.     400.     403.     414.     475.
+               553.     552.     466.     406.     360.     409.         5145.
+ 
+  1960         412.     382.     425.     457.     471.     539.
+               614.     612.     511.     455.     393.     431.         5701.
+ 
+  AVGE         281.     270.     310.     309.     315.     364.
+               412.     410.     351.     309.     269.     303.
+
+  Table Total-     35130.61   Mean-     325.28   Std. Dev.-     103.58
+                              Min -     169.19        Max -     613.84
+
+ B 1.A  Forecasts of (prior adjusted) original series
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec        TOTAL  
+ -----------------------------------------------------------------------------
+  1961         442.     416.     470.     486.     501.     577.
+               660.     658.     552.     488.     423.     471.         6144.
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE   8, SERIES test
+
+ C 17  Final weights for irregular component
+  From  1952.Jan to 1960.Dec
+  Observations        108
+  Lower sigma limit    1.50
+  Upper sigma limit    2.50
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         S.D.  
+ -----------------------------------------------------------------------------
+  1952        100.0      0.0    100.0    100.0    100.0    100.0
+                0.0    100.0     76.7    100.0    100.0    100.0           1.0
+ 
+  1953        100.0    100.0     47.4      0.0    100.0      0.0
+                0.0    100.0    100.0    100.0    100.0    100.0           1.0
+ 
+  1954        100.0    100.0     88.5    100.0    100.0    100.0
+              100.0    100.0    100.0     89.1    100.0    100.0           1.0
+ 
+  1955        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0     62.3           0.8
+ 
+  1956        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0           0.8
+ 
+  1957        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0           0.8
+ 
+  1958        100.0    100.0    100.0      0.0     88.2    100.0
+              100.0      0.0    100.0     92.4     65.8     82.1           0.8
+ 
+  1959        100.0    100.0    100.0    100.0    100.0    100.0
+              100.0    100.0    100.0     60.9    100.0      0.0           0.8
+ 
+  1960        100.0     18.8      0.0    100.0     39.1    100.0
+              100.0    100.0    100.0    100.0    100.0    100.0           0.8
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE   9, SERIES test
+
+ D 8  Final unmodified SI ratios
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952         90.3     93.4    102.5     97.6     97.4    113.4
+              118.8    119.6    103.3     92.9     79.8     90.6         100.0
+ 
+  1953         89.0     88.5    104.5    103.2     98.9    107.5
+              117.6    118.6    105.4     93.2     79.5     90.1          99.7
+ 
+  1954         88.9     88.7    102.9     97.4     98.1    111.8
+              125.3    120.2    105.9     90.6     80.6     89.5         100.0
+ 
+  1955         90.7     88.0    100.2     97.5     97.4    112.8
+              125.7    120.9    107.2     91.2     79.3     90.9         100.2
+ 
+  1956         91.5     86.1     98.0     97.4     98.2    113.2
+              125.3    124.0    105.2     92.3     80.6     88.1         100.0
+ 
+  1957         91.4     85.8     98.2     96.0     98.0    112.8
+              126.7    124.8    106.8     92.6     80.0     88.5         100.1
+ 
+  1958         90.9     85.4     96.0     93.3     96.2    113.8
+              129.3    129.4    105.6     94.2     78.9     87.0         100.0
+ 
+  1959         90.3     84.8     96.6     96.3     98.2    111.7
+              129.0    127.3    106.4     91.8     80.4     90.3         100.2
+ 
+  1960         89.9     82.6     91.0     96.9     99.3    113.0
+              128.3    127.3    105.7     93.4     80.1     87.7          99.6
+ 
+  AVGE         90.3     87.0     98.9     97.3     98.0    112.2
+              125.1    123.6    105.7     92.5     79.9     89.2
+
+  Table Total-     10797.14   Mean-      99.97   Std. Dev.-      13.80
+                              Min -      78.88        Max -     129.42
+        International Airline Passengers Data from Box and Jenkins            PAGE  10, SERIES test
+
+ D 8.A  F-tests for seasonality
+
+    Test for the presence of seasonality assuming stability.
+
+                           Sum of     Dgrs.of         Mean
+                          Squares     Freedom        Square       F-Value
+    Between months       19962.2045       11       1814.74587     283.067**
+          Residual         615.4576       96          6.41102
+             Total       20577.6621      107
+
+            **Seasonality present at the 0.1 per cent level.
+
+
+  Nonparametric Test for the Presence of Seasonality Assuming Stability
+
+                 Kruskal-Wallis      Degrees of    Probability
+                   Statistic        Freedom         Level
+
+                     102.4654          11            0.000%
+
+            Seasonality present at the one percent level.
+
+
+  Moving Seasonality Test
+                         Sum of     Dgrs.of         Mean
+                        Squares     Freedom        Square       F-value
+   Between Years         133.6619        8        16.707734       4.193**
+           Error         350.6418       88         3.984566
+
+          **Moving seasonality present at the one percent level.
+
+
+  COMBINED TEST FOR THE PRESENCE OF IDENTIFIABLE SEASONALITY
+
+
+            IDENTIFIABLE SEASONALITY PRESENT
+        International Airline Passengers Data from Box and Jenkins            PAGE  11, SERIES test
+
+ D 8.B  Final unmodified SI ratios, with labels for outliers and extreme values
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ ---------------------------------------------------------------------
+               Jan       Feb       Mar       Apr       May       Jun  
+               Jul       Aug       Sep       Oct       Nov       Dec  
+ ---------------------------------------------------------------------
+  1952        90.3      93.4*    102.5      97.6      97.4     113.4  
+             118.8*    119.6     103.3*     92.9      79.8      90.6  
+ 
+  1953        89.0      88.5     104.5*    103.2*     98.9     107.5* 
+             117.6*    118.6     105.4      93.2      79.5      90.1  
+ 
+  1954        88.9      88.7#    102.9*     97.4      98.1     111.8  
+             125.3     120.2     105.9      90.6*     80.6      89.5  
+ 
+  1955        90.7      88.0     100.2      97.5      97.4     112.8  
+             125.7     120.9     107.2      91.2      79.3      90.9* 
+ 
+  1956        91.5      86.1      98.0      97.4      98.2     113.2  
+             125.3     124.0     105.2      92.3      80.6      88.1  
+ 
+  1957        91.4      85.8      98.2      96.0      98.0     112.8  
+             126.7     124.8     106.8      92.6      80.0      88.5  
+ 
+  1958        90.9      85.4      96.0      93.3*     96.2*    113.8  
+             129.3     129.4*    105.6      94.2*     78.9*     87.0* 
+ 
+  1959        90.3      84.8      96.6      96.3      98.2     111.7  
+             129.0     127.3     106.4      91.8*     80.4      90.3* 
+ 
+  1960        89.9      82.6*     91.0*     96.9      99.3*    113.0  
+             128.3     127.3     105.7      93.4      80.1      87.7  
+ 
+
+  Key to symbols:
+    *  : extreme value as determined by X-11 extreme value procedure
+    #  : regARIMA outlier (either AO, LS, TC, or Ramp)
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE  12, SERIES test
+
+ D 9  Final replacement values for SI ratios
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ ---------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec 
+ ---------------------------------------------------------------
+  1952     ********     88.6 ******** ******** ******** ********
+              123.4 ********    103.7 ******** ******** ********
+ 
+  1953     ******** ********    103.5     97.8 ********    112.3
+              123.5 ******** ******** ******** ******** ********
+ 
+  1954     ******** ********    102.8 ******** ******** ********
+           ******** ******** ********     90.8 ******** ********
+ 
+  1955     ******** ******** ******** ******** ******** ********
+           ******** ******** ******** ******** ********     90.4
+ 
+  1956     ******** ******** ******** ******** ******** ********
+           ******** ******** ******** ******** ******** ********
+ 
+  1957     ******** ******** ******** ******** ******** ********
+           ******** ******** ******** ******** ******** ********
+ 
+  1958     ******** ******** ********     96.4     96.4 ********
+           ********    125.7 ********     94.1     79.3     87.2
+ 
+  1959     ******** ******** ******** ******** ******** ********
+           ******** ******** ********     92.3 ********     87.9
+ 
+  1960     ********     83.9     95.5 ********     98.3 ********
+           ******** ******** ******** ******** ******** ********
+ 
+
+ D 9.A  Moving seasonality ratio
+ ---------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+ ---------------------------------------------------------------
+   I          0.860    0.547    1.155    0.451    0.898    0.886
+   S          0.220    0.609    0.897    0.167    0.098    0.112
+ RATIO        3.904    0.898    1.287    2.706    9.199    7.905
+
+
+
+ ---------------------------------------------------------------
+               Jul      Aug      Sep      Oct      Nov      Dec 
+ ---------------------------------------------------------------
+   I          0.776    0.644    1.169    1.154    1.023    0.945
+   S          0.486    0.807    0.149    0.192    0.120    0.390
+ RATIO        1.598    0.799    7.851    6.023    8.521    2.423
+
+
+
+        International Airline Passengers Data from Box and Jenkins            PAGE  13, SERIES test
+
+ D 10  Final seasonal factors
+  From  1952.Jan to 1960.Dec
+  Observations        108
+  Seasonal filter    3 x 3 moving average
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952        89.52    88.59   102.96    97.61    98.13   112.63
+             123.82   119.30   104.82    92.62    79.84    90.26        100.01
+ 
+  1953        89.53    88.53   102.66    97.55    98.11   112.47
+             124.18   119.49   105.31    92.31    79.89    90.21        100.02
+ 
+  1954        89.83    88.20   101.75    97.47    98.00   112.40
+             124.72   120.29   105.79    91.90    80.08    89.93        100.03
+ 
+  1955        90.46    87.55   100.37    97.24    97.87   112.51
+             125.29   121.53   106.26    91.84    80.11    89.58        100.05
+ 
+  1956        91.04    86.67    98.77    96.92    97.64   112.81
+             126.06   123.21   106.18    92.26    80.16    88.88        100.05
+ 
+  1957        91.19    85.91    97.65    96.51    97.52   112.87
+             127.03   124.64   106.24    92.77    80.04    88.37        100.06
+ 
+  1958        90.87    85.26    96.74    96.38    97.46   112.86
+             128.04   125.85   106.08    93.16    79.99    87.86        100.05
+ 
+  1959        90.41    84.77    96.17    96.43    97.81   112.65
+             128.53   126.66   106.12    93.10    80.03    87.81        100.04
+ 
+  1960        90.04    84.35    95.64    96.66    98.18   112.70
+             128.59   127.12   105.99    93.10    80.07    87.80        100.02
+ 
+  AVGE        90.32    86.65    99.19    96.98    97.86   112.65
+             126.25   123.12   105.86    92.56    80.02    88.97
+
+  Table Total-     10803.96   Mean-     100.04   Std. Dev.-      13.86
+                              Min -      79.84        Max -     128.59
+
+ D 10.A  Final seasonal component forecasts
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961        89.85    84.15    95.39    96.77    98.50   112.71
+             128.45   127.28   105.97    93.01    80.09    87.89        100.01
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE  14, SERIES test
+  
+ D 11  Final seasonally adjusted data
+       (also adjusted for trading day, holiday)
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec        TOTAL  
+ -----------------------------------------------------------------------------
+  1952         193.     199.     186.     186.     186.     193.
+               188.     200.     201.     208.     212.     217.         2368.
+ 
+  1953         219.     223.     231.     241.     230.     217.
+               215.     225.     227.     228.     224.     225.         2705.
+ 
+  1954         224.     215.     234.     233.     236.     236.
+               242.     243.     246.     246.     255.     257.         2869.
+ 
+  1955         264.     268.     270.     274.     275.     282.
+               287.     288.     296.     294.     298.     310.         3406.
+ 
+  1956         311.     312.     317.     325.     329.     330.
+               327.     332.     329.     335.     340.     340.         3927.
+ 
+  1957         349.     353.     361.     361.     368.     368.
+               370.     374.     378.     378.     379.     380.         4419.
+ 
+  1958         378.     376.     371.     362.     372.     384.
+               387.     396.     383.     389.     381.     387.         4567.
+ 
+  1959         398.     407.     416.     418.     424.     422.
+               431.     436.     439.     436.     450.     466.         5143.
+ 
+  1960         457.     453.     444.     473.     480.     478.
+               477.     481.     482.     489.     490.     491.         5696.
+ 
+  AVGE         310.     312.     314.     319.     322.     323.
+               325.     331.     331.     334.     337.     341.
+
+  Table Total-     35099.96   Mean-     325.00   Std. Dev.-      91.08
+                              Min -     185.79        Max -     491.21
+
+                    Test for the presence of residual seasonality.
+
+       No evidence of residual seasonality in the entire series at the
+            1 per cent level.  F =      0.18
+
+       No evidence of residual seasonality in the last 3 years at the
+            1 per cent level.  F =      0.35
+
+       No evidence of residual seasonality in the last 3 years at the
+            5 per cent level.
+
+ Note: sudden large changes in the level of the adjusted series will
+       invalidate the results of this test for the last three year period.
+        International Airline Passengers Data from Box and Jenkins            PAGE  15, SERIES test
+
+ D 12  Final trend cycle
+  From  1952.Jan to 1960.Dec
+  Observations        108
+  Trend filter     9-term Henderson moving average
+  I/C ratio        0.77
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec        TOTAL  
+ -----------------------------------------------------------------------------
+  1952         191.     189.     187.     186.     188.     191.
+               195.     199.     203.     208.     212.     216.         2365.
+ 
+  1953         220.     224.     227.     229.     229.     228.
+               226.     226.     226.     226.     225.     225.         2711.
+ 
+  1954         226.     229.     232.     234.     236.     238.
+               240.     243.     246.     249.     253.     258.         2885.
+ 
+  1955         263.     267.     270.     274.     277.     281.
+               286.     290.     293.     296.     301.     305.         3404.
+ 
+  1956         310.     314.     319.     323.     327.     329.
+               329.     330.     332.     334.     338.     343.         3929.
+ 
+  1957         348.     354.     359.     363.     366.     368.
+               371.     374.     377.     379.     379.     379.         4418.
+ 
+  1958         377.     375.     373.     373.     377.     381.
+               384.     386.     385.     385.     386.     390.         4573.
+ 
+  1959         398.     406.     414.     419.     422.     426.
+               430.     434.     438.     443.     448.     453.         5130.
+ 
+  1960         457.     462.     466.     471.     475.     477.
+               479.     481.     484.     487.     490.     491.         5720.
+ 
+  AVGE         310.     313.     316.     319.     322.     324.
+               327.     329.     332.     334.     337.     340.
+
+  Table Total-     35134.26   Mean-     325.32   Std. Dev.-      91.00
+                              Min -     186.30        Max -     491.11
+        International Airline Passengers Data from Box and Jenkins            PAGE  16, SERIES test
+
+ D 13  Final irregular component
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         S.D.  
+ -----------------------------------------------------------------------------
+  1952        101.0    105.3     99.4     99.8     99.2    100.8
+               96.2    100.5     98.7    100.3    100.0    100.5           2.0
+ 
+  1953         99.3     99.8    101.5    105.4    100.6     95.6
+               94.9     99.5    100.2    101.0     99.5    100.0           2.6
+ 
+  1954         99.0     93.8    101.0     99.7     99.9     99.4
+              100.6    100.1    100.3     98.8    100.7     99.5           1.9
+ 
+  1955        100.2    100.4     99.8    100.2     99.4    100.2
+              100.3     99.6    101.0     99.4     99.1    101.5           0.7
+ 
+  1956        100.5     99.4     99.3    100.5    100.5    100.2
+               99.3    100.6     99.2    100.2    100.7     99.1           0.6
+ 
+  1957        100.2     99.9    100.6     99.5    100.5     99.8
+               99.6    100.0    100.5     99.8     99.9    100.2           0.3
+ 
+  1958        100.1    100.3     99.4     96.9     98.7    100.7
+              100.8    102.7     99.5    101.2     98.7     99.2           1.4
+ 
+  1959        100.0    100.2    100.6     99.9    100.4     99.1
+              100.2    100.4    100.2     98.5    100.5    102.9           1.0
+ 
+  1960        100.0     98.1     95.3    100.3    101.1    100.1
+               99.7    100.1     99.7    100.3    100.1    100.0           1.5
+ 
+  S.D.          0.6      2.8      1.8      2.1      0.7      1.6
+                2.2      1.0      0.7      0.9      0.7      1.2
+
+  Table Total-     10788.68   Mean-      99.90   Std. Dev.-       1.51
+                              Min -      93.84        Max -     105.45
+        International Airline Passengers Data from Box and Jenkins            PAGE  17, SERIES test
+  
+ D 16  Combined adjustment factors
+       (includes seasonal, trading day, holiday factors)
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952        88.64    90.64   103.88    97.39    98.30   113.19
+             122.60   120.89   104.13    91.71    81.16    89.37        100.16
+ 
+  1953        89.68    87.75   102.39    97.34    99.41   111.73
+             122.95   121.08   104.62    92.46    80.29    89.32         99.92
+ 
+  1954        91.03    87.42   100.31    97.25    99.30   111.66
+             124.93   120.49   105.09    93.12    79.55    89.04         99.93
+ 
+  1955        91.66    86.78    98.95    98.15    98.04   111.77
+             126.95   120.33   105.56    93.06    79.58    89.73        100.05
+ 
+  1956        91.19    88.67   100.13    96.24    96.68   113.37
+             126.26   122.00   107.94    91.36    79.63    90.06        100.30
+ 
+  1957        90.29    85.15    98.52    96.29    96.56   114.75
+             125.77   124.85   106.77    91.86    80.44    88.52         99.98
+ 
+  1958        89.98    84.50    97.60    96.16    97.62   113.42
+             126.78   127.52   105.38    92.25    81.32    87.00         99.96
+ 
+  1959        90.56    84.02    97.49    94.65    99.11   111.91
+             127.27   128.35   105.42    93.26    80.43    86.95         99.95
+ 
+  1960        91.23    86.31    94.29    97.56    98.34   111.95
+             130.29   125.87   105.29    94.34    79.54    87.95        100.25
+ 
+  AVGE        90.47    86.81    99.28    96.78    98.15   112.64
+             125.98   123.49   105.58    92.60    80.22    88.66
+
+  Table Total-     10805.87   Mean-     100.05   Std. Dev.-      13.86
+                              Min -      79.54        Max -     130.29
+
+ D 16.A  Combined adjustment component forecasts
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961        90.00    83.41    94.05    98.81    97.53   111.97
+             130.16   126.03   106.50    93.16    79.57    89.06        100.02
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE  18, SERIES test
+  
+ D 18  Combined calendar adjustment factors
+       (includes trading day, holiday factors)
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952         99.0    102.3    100.9     99.8    100.2    100.5
+               99.0    101.3     99.3     99.0    101.7     99.0         100.2
+ 
+  1953        100.2     99.1     99.7     99.8    101.3     99.3
+               99.0    101.3     99.3    100.2    100.5     99.0          99.9
+ 
+  1954        101.3     99.1     98.6     99.8    101.3     99.3
+              100.2    100.2     99.3    101.3     99.3     99.0          99.9
+ 
+  1955        101.3     99.1     98.6    100.9    100.2     99.3
+              101.3     99.0     99.3    101.3     99.3    100.2         100.0
+ 
+  1956        100.2    102.3    101.4     99.3     99.0    100.5
+              100.2     99.0    101.7     99.0     99.3    101.3         100.3
+ 
+  1957         99.0     99.1    100.9     99.8     99.0    101.7
+               99.0    100.2    100.5     99.0    100.5    100.2          99.9
+ 
+  1958         99.0     99.1    100.9     99.8    100.2    100.5
+               99.0    101.3     99.3     99.0    101.7     99.0          99.9
+ 
+  1959        100.2     99.1    101.4     98.2    101.3     99.3
+               99.0    101.3     99.3    100.2    100.5     99.0          99.9
+ 
+  1960        101.3    102.3     98.6    100.9    100.2     99.3
+              101.3     99.0     99.3    101.3     99.3    100.2         100.3
+ 
+  AVGE        100.2    100.2    100.1     99.8    100.3    100.0
+               99.8    100.3     99.7    100.0    100.2     99.7
+
+  Table Total-     10802.57   Mean-     100.02   Std. Dev.-       1.00
+                              Min -      98.16        Max -     102.32
+
+ D 18.A  Combined calendar adjustment component forecasts
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961        100.2     99.1     98.6    102.1     99.0     99.3
+              101.3     99.0    100.5    100.2     99.3    101.3         100.0
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE  19, SERIES test
+
+ E 4  Ratios of annual totals
+  From          1952 to 1960
+  Observations          9
+ -----------------------------------
+  Year       Unmodified     Modified
+                  (D11)         (E3)
+ -----------------------------------
+  1952            99.85        99.96
+ 
+  1953            99.81        99.97
+ 
+  1954            99.94        99.88
+ 
+  1955           100.05       100.05
+ 
+  1956           100.30       100.30
+ 
+  1957           100.04       100.04
+ 
+  1958           100.11       100.04
+ 
+  1959            99.95        99.98
+ 
+  1960           100.31       100.29
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE  20, SERIES test
+
+ E 5  Month-to-month percent change in the original series
+  From  1952.Feb to 1960.Dec
+  Observations        107
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952                   5.3      7.2     -6.2      1.1     19.1
+                5.5      5.2    -13.6     -8.6     -9.9     12.8           1.6
+ 
+  1953          1.0      0.0     20.4     -0.4     -2.6      6.1
+                8.6      3.0    -12.9    -11.0    -14.7     11.7           0.8
+ 
+  1954          1.5     -7.8     25.0     -3.4      3.1     12.8
+               14.4     -3.0    -11.6    -11.6    -11.4     12.8           1.7
+ 
+  1955          5.7     -3.7     14.6      0.7      0.4     16.7
+               15.6     -4.7    -10.1    -12.2    -13.5     17.3           2.2
+ 
+  1956          2.2     -2.5     14.4     -1.3      1.6     17.6
+               10.4     -1.9    -12.3    -13.8    -11.4     12.9           1.3
+ 
+  1957          2.9     -4.4     18.3     -2.2      2.0     18.9
+               10.2      0.4    -13.5    -14.1    -12.1     10.2           1.4
+ 
+  1958          1.2     -6.5     13.8     -3.9      4.3     19.8
+               12.9      2.9    -20.0    -11.1    -13.6      8.7           0.7
+ 
+  1959          6.8     -5.0     18.7     -2.5      6.1     12.4
+               16.1      2.0    -17.2    -12.1    -11.1     11.9           2.2
+ 
+  1960          3.0     -6.2      7.2     10.0      2.4     13.3
+               16.3     -2.6    -16.2     -9.3    -15.4     10.8           1.1
+ 
+  AVGE          3.0     -3.4     15.5     -1.0      2.0     15.2
+               12.2      0.2    -14.2    -11.5    -12.6     12.1
+
+  Table Total-       155.11   Mean-       1.45   Std. Dev.-      10.91
+                              Min -     -20.00        Max -      25.00
+        International Airline Passengers Data from Box and Jenkins            PAGE  21, SERIES test
+
+ E 6  Month-to-month percent change in seasonally adjusted series (D11)
+  From  1952.Feb to 1960.Dec
+  Observations        107
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952                   2.9     -6.4      0.0      0.2      3.5
+               -2.6      6.7      0.3      3.8      1.8      2.4           1.1
+ 
+  1953          0.7      2.2      3.2      4.7     -4.6     -5.6
+               -1.3      4.6      0.8      0.7     -1.8      0.4           0.3
+ 
+  1954         -0.4     -4.0      8.9     -0.4      1.0      0.3
+                2.2      0.6      1.3     -0.2      3.8      0.8           1.2
+ 
+  1955          2.7      1.7      0.5      1.6      0.5      2.3
+                1.7      0.6      2.5     -0.4      1.1      4.0           1.6
+ 
+  1956          0.5      0.3      1.3      2.7      1.1      0.3
+               -0.8      1.5     -0.9      1.8      1.6     -0.2           0.8
+ 
+  1957          2.7      1.3      2.2      0.0      1.7      0.0
+                0.5      1.2      1.2     -0.2      0.4      0.1           0.9
+ 
+  1958         -0.5     -0.4     -1.4     -2.4      2.8      3.1
+                1.0      2.3     -3.2      1.5     -2.1      1.6           0.2
+ 
+  1959          2.6      2.4      2.3      0.5      1.3     -0.5
+                2.1      1.1      0.8     -0.6      3.1      3.5           1.6
+ 
+  1960         -1.9     -0.9     -1.9      6.3      1.6     -0.4
+               -0.1      0.9      0.2      1.3      0.3      0.2           0.5
+ 
+  AVGE          0.8      0.6      1.0      1.5      0.6      0.3
+                0.3      2.2      0.3      0.9      0.9      1.4
+
+  Table Total-        96.48   Mean-       0.90   Std. Dev.-       2.40
+                              Min -      -6.44        Max -       8.94
+        International Airline Passengers Data from Box and Jenkins            PAGE  22, SERIES test
+
+ E 7  Month-to-month percent change in final trend cycle (D12)
+  From  1952.Feb to 1960.Dec
+  Observations        107
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952                  -1.3     -0.9     -0.3      0.8      1.8
+                2.1      2.1      2.1      2.1      2.1      2.0           1.1
+ 
+  1953          1.8      1.7      1.5      0.8      0.0     -0.6
+               -0.6     -0.2      0.1     -0.1     -0.3     -0.1           0.3
+ 
+  1954          0.6      1.2      1.2      0.9      0.7      0.9
+                1.1      1.1      1.1      1.3      1.7      2.0           1.2
+ 
+  1955          1.9      1.5      1.2      1.2      1.2      1.5
+                1.6      1.3      1.1      1.2      1.5      1.5           1.4
+ 
+  1956          1.5      1.5      1.5      1.4      1.2      0.6
+                0.1      0.1      0.5      0.9      1.1      1.4           1.0
+ 
+  1957          1.6      1.6      1.5      1.1      0.7      0.7
+                0.7      0.8      0.7      0.5      0.2     -0.1           0.8
+ 
+  1958         -0.4     -0.6     -0.6      0.1      0.9      1.1
+                0.9      0.4     -0.1     -0.2      0.3      1.1           0.2
+ 
+  1959          1.8      2.2      1.9      1.2      0.8      0.8
+                0.9      1.0      1.0      1.1      1.1      1.1           1.2
+ 
+  1960          1.0      1.0      1.0      1.0      0.8      0.5
+                0.3      0.5      0.6      0.6      0.5      0.3           0.7
+ 
+  AVGE          1.2      1.0      0.9      0.8      0.8      0.8
+                0.8      0.8      0.8      0.8      0.9      1.0
+
+  Table Total-        95.16   Mean-       0.89   Std. Dev.-       1.15
+                              Min -      -1.29        Max -       2.21
+        International Airline Passengers Data from Box and Jenkins            PAGE  23, SERIES test
+
+ E 8  Month-to-month percent change in original series adjusted for calendar factors (A18)
+  From  1952.Feb to 1960.Dec
+  Observations        107
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952                   1.9      8.7     -5.2      0.7     18.7
+                7.1      2.8    -11.9     -8.3    -12.3     15.8           1.6
+ 
+  1953         -0.1      1.1     19.7     -0.5     -4.0      8.2
+                9.0      0.7    -11.1    -11.7    -15.0     13.3           0.8
+ 
+  1954         -0.8     -5.8     25.7     -4.6      1.5     15.1
+               13.5     -3.0    -10.9    -13.3     -9.6     13.2           1.7
+ 
+  1955          3.3     -1.6     15.2     -1.6      1.1     17.6
+               13.3     -2.4    -10.4    -13.9    -11.8     16.3           2.1
+ 
+  1956          2.2     -4.5     15.5      0.8      1.9     15.9
+               10.8     -0.8    -14.6    -11.5    -11.7     10.7           1.2
+ 
+  1957          5.3     -4.5     16.2     -1.2      2.8     15.8
+               13.1     -0.7    -13.8    -12.8    -13.4     10.5           1.4
+ 
+  1958          2.4     -6.6     11.8     -2.8      3.9     19.4
+               14.6      0.5    -18.4    -10.8    -15.9     11.6           0.8
+ 
+  1959          5.6     -4.0     16.1      0.7      2.7     14.6
+               16.5     -0.3    -15.5    -12.8    -11.3     13.6           2.2
+ 
+  1960          0.6     -7.1     11.2      7.5      3.2     14.3
+               14.0     -0.3    -16.4    -11.0    -13.7      9.9           1.0
+ 
+  AVGE          2.3     -3.5     15.6     -0.7      1.5     15.5
+               12.4     -0.4    -13.7    -11.8    -12.7     12.8
+
+  Table Total-       153.19   Mean-       1.43   Std. Dev.-      10.85
+                              Min -     -18.40        Max -      25.67
+        International Airline Passengers Data from Box and Jenkins            PAGE  24, SERIES test
+
+ E 18  Final adjustment ratios
+  From  1952.Jan to 1960.Dec
+  Observations        108
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1952         88.6     90.6    103.9     97.4     98.3    113.2
+              122.6    120.9    104.1     91.7     81.2     89.4         100.2
+ 
+  1953         89.7     87.7    102.4     97.3     99.4    111.7
+              123.0    121.1    104.6     92.5     80.3     89.3          99.9
+ 
+  1954         91.0     87.4    100.3     97.3     99.3    111.7
+              124.9    120.5    105.1     93.1     79.5     89.0          99.9
+ 
+  1955         91.7     86.8     98.9     98.1     98.0    111.8
+              127.0    120.3    105.6     93.1     79.6     89.7         100.0
+ 
+  1956         91.2     88.7    100.1     96.2     96.7    113.4
+              126.3    122.0    107.9     91.4     79.6     90.1         100.3
+ 
+  1957         90.3     85.2     98.5     96.3     96.6    114.7
+              125.8    124.9    106.8     91.9     80.4     88.5         100.0
+ 
+  1958         90.0     84.5     97.6     96.2     97.6    113.4
+              126.8    127.5    105.4     92.2     81.3     87.0         100.0
+ 
+  1959         90.6     84.0     97.5     94.7     99.1    111.9
+              127.3    128.3    105.4     93.3     80.4     86.9         100.0
+ 
+  1960         91.2     86.3     94.3     97.6     98.3    112.0
+              130.3    125.9    105.3     94.3     79.5     87.9         100.2
+ 
+  AVGE         90.5     86.8     99.3     96.8     98.2    112.6
+              126.0    123.5    105.6     92.6     80.2     88.7
+
+  Table Total-     10805.87   Mean-     100.05   Std. Dev.-      13.86
+                              Min -      79.54        Max -     130.29
+
+ E 18.A  Final adjustment ratio forecasts
+  From  1961.Jan to 1961.Dec
+  Observations         12
+ -----------------------------------------------------------------------------
+               Jan      Feb      Mar      Apr      May      Jun 
+               Jul      Aug      Sep      Oct      Nov      Dec         AVGE  
+ -----------------------------------------------------------------------------
+  1961         90.0     83.4     94.0     98.8     97.5    112.0
+              130.2    126.0    106.5     93.2     79.6     89.1         100.0
+ 
+        International Airline Passengers Data from Box and Jenkins            PAGE  25, SERIES test
+
+
+ F 2. Summary Measures
+   F 2.A: Average percent change without regard to sign over the
+          indicated span
+      Span
+       in      A1     D11     D13     D12     D10      A2     D18      F1
+     months    O      CI       I       C       S       P     TD&H     mcd
+        1    9.07    1.68    1.27    1.01    8.78    0.13    1.44    1.29
+        2   14.09    2.67    1.33    2.01   13.77    0.13    1.27    2.46
+        3   17.46    3.70    1.42    2.99   16.48    0.13    0.83    3.49
+        4   21.08    4.51    1.25    3.97   19.94    0.13    1.41    4.41
+        5   22.77    5.32    1.25    4.94   21.05    0.13    1.09    5.27
+        6   22.58    6.19    1.31    5.92   20.94    0.13    0.96    6.17
+        7   22.26    7.16    1.28    6.91   21.44    0.14    1.34    7.15
+        8   21.47    8.17    1.41    7.88   20.62    0.14    1.12    8.16
+        9   18.42    9.10    1.27    8.86   17.27    0.14    0.75    9.13
+       10   16.22    9.98    1.24    9.83   14.03    0.14    1.46   10.04
+       11   13.49   10.88    1.14   10.83    8.78    0.14    1.09   10.97
+       12   11.84   11.84    1.35   11.82    0.39    0.14    0.91   11.86
+
+      Span
+       in     E1      E2      E3
+     months  Mod.O   Mod.CI  Mod.I
+        1    9.07    1.27    0.81
+        2   14.27    2.16    0.76
+        3   17.76    3.17    0.77
+        4   21.37    4.13    0.64
+        5   23.09    5.05    0.67
+        6   22.73    6.01    0.73
+        7   22.39    7.01    0.69
+        8   21.73    8.00    0.78
+        9   18.48    8.95    0.68
+       10   16.41    9.91    0.69
+       11   13.65   10.84    0.65
+       12   11.82   11.83    0.82
+
+   F 2.B: Relative contributions to the variance of the percent change
+          in the components of the original series
+      Span
+       in     E3     D12     D10      A2     D18            RATIO
+     months   I       C       S       P     TD&H    TOTAL   (X100)
+        1    0.82    1.25   95.33    0.02    2.58  100.00   98.40
+        2    0.29    2.06   96.81    0.01    0.82  100.00   96.12
+        3    0.21    3.17   96.37    0.01    0.25  100.00   89.35
+        4    0.10    3.79   95.63    0.00    0.48  100.00   91.04
+        5    0.10    5.20   94.45    0.00    0.25  100.00   88.02
+        6    0.11    7.39   92.31    0.00    0.19  100.00   91.97
+        7    0.09    9.35   90.19    0.00    0.35  100.00  101.72
+        8    0.12   12.69   86.93    0.00    0.26  100.00  103.61
+        9    0.12   20.77   78.96    0.01    0.15  100.00  110.54
+       10    0.16   32.63   66.48    0.01    0.72  100.00  110.03
+       11    0.21   59.82   39.35    0.01    0.61  100.00  105.18
+       12    0.48   98.82    0.10    0.01    0.58  100.00  101.28
+
+   F 2.C: Average percent change with regard to sign and standard
+          deviation over indicated span
+      Span        A1               D13              D12
+       in          O                I                C
+     months   Avg.    S.D.     Avg.    S.D.     Avg.    S.D.
+        1     1.43   10.64     0.01    1.79     0.89    0.74
+        2     3.01   16.54    -0.04    2.09     1.82    1.42
+        3     4.59   20.11    -0.02    2.27     2.78    2.02
+        4     6.25   23.22    -0.03    1.97     3.76    2.54
+        5     7.75   24.97    -0.02    1.94     4.77    3.00
+        6     8.95   25.84    -0.04    1.89     5.77    3.44
+        7     9.94   26.53     0.01    1.98     6.79    3.85
+        8    10.65   27.01     0.01    2.01     7.80    4.23
+        9    11.03   24.74     0.03    2.03     8.82    4.58
+       10    11.20   19.77    -0.03    1.82     9.82    4.90
+       11    11.34   12.98    -0.05    1.76    10.83    5.18
+       12    11.76    6.15    -0.05    1.89    11.82    5.41
+
+      Span        D10              D11               F1
+       in          S                CI              mcd
+     months   Avg.    S.D.     Avg.    S.D.     Avg.    S.D.
+        1     0.53   10.43     0.90    2.03     0.89    1.25
+        2     1.24   16.21     1.79    2.81     1.84    2.20
+        3     1.81   19.38     2.76    3.39     2.83    2.79
+        4     2.48   22.25     3.74    3.57     3.82    3.20
+        5     2.96   23.89     4.75    3.88     4.82    3.55
+        6     3.11   24.43     5.75    4.23     5.84    3.91
+        7     3.02   24.78     6.80    4.59     6.87    4.30
+        8     2.71   24.92     7.82    4.93     7.87    4.71
+        9     2.04   22.33     8.85    5.25     8.84    5.10
+       10     1.32   17.40     9.80    5.46     9.81    5.42
+       11     0.52   10.56    10.78    5.71    10.80    5.67
+       12    -0.03    0.52    11.77    5.94    11.81    5.83
+
+   F 2.D: Average duration of run        CI      I       C      mcd
+                                        2.74    1.45   10.70    8.75
+
+
+   F 2.E: I/C Ratio for months span
+
+      SPAN         1       2       3       4       5       6
+      I/C        1.26    0.66    0.48    0.32    0.25    0.22
+
+      SPAN         7       8       9      10      11      12
+      I/C        0.19    0.18    0.14    0.13    0.11    0.11
+
+         months for cyclical dominance:       2
+
+
+   F 2.F: Relative contribution of the components to the stationary
+          portion of the variance in the original series
+
+                   I       C       S       P     TD&H   Total
+                  0.20    6.34   93.24    0.22    0.51  100.51
+
+
+   F 2.G: The autocorrelation of the irregulars for spans 1 to 14
+
+      SPAN         1       2       3       4       5       6       7
+      ACF        0.17   -0.19   -0.40   -0.03   -0.01    0.06   -0.07
+
+      SPAN         8       9      10      11      12      13      14
+      ACF       -0.08   -0.09    0.06    0.10   -0.01    0.00    0.18
+
+   F 2.H: The final I/C Ratio from Table D12:        0.77
+          The final I/S Ratio from Table D10:        2.47
+
+   F 2.I:                                                    Statistic   Prob.
+                                                                         level
+    F-test for stable seasonality from Table B 1.        :    199.548    0.00%
+    F-test for stable seasonality from Table D 8.        :    283.067    0.00%
+    Kruskal-Wallis Chi Squared test
+                  for stable seasonality from Table D 8. :    102.465    0.00%
+    F-test for moving seasonality from Table D 8.        :      4.193    0.03%
+
+        International Airline Passengers Data from Box and Jenkins            PAGE  27, SERIES test
+
+
+ F 3. Monitoring and Quality Assessment Statistics
+       All the measures below are in the range from 0 to 3 with an 
+       acceptance region from 0 to 1.
+
+    1. The relative contribution of the irregular over three       M1  = 0.021
+       months span (from Table F 2.B).
+
+
+    2. The relative contribution of the irregular component        M2  = 0.020
+       to the stationary portion of the variance (from Table 
+       F 2.F).
+
+    3. The amount of month to month change in the irregular        M3  = 0.000
+       component as compared to the amount of month to month
+       change in the trend-cycle (from Table F2.H).
+
+    4. The amount of autocorrelation in the irregular as           M4  = 0.208
+       described by the average duration of run (Table F 2.D).
+
+
+    5. The number of months it takes the change in the trend-      M5  = 0.188
+       cycle to surpass the amount of change in the irregular
+       (from Table F 2.E).
+
+    6. The amount of year to year change in the irregular as       M6  = 0.610
+       compared to the amount of year to year change in the
+       seasonal (from Table F 2.H).
+
+    7. The amount of moving seasonality present relative to        M7  = 0.186
+       the amount of stable seasonality (from Table F 2.I).
+
+
+    8. The size of the fluctuations in the seasonal component      M8  = 0.285
+       throughout the whole series.
+
+
+    9. The average linear movement in the seasonal component       M9  = 0.226
+       throughout the whole series.
+
+
+   10. Same as 8, calculated for recent years only.                M10 = 0.386
+
+
+
+   11. Same as 9, calculated for recent years only.                M11 = 0.368
+
+
+          *** ACCEPTED *** at the level   0.16
+
+          *** Q (without M2) =  0.18  ACCEPTED.
+
+
+        International Airline Passengers Data from Box and Jenkins            PAGE  28, SERIES test
+
+ F 4.  Multiplicative Trading Day Component Factors:
+       Day of Week and Leap Year Factors
+
+
+      Day of Week Component for regARIMA Trading Day Factors:
+
+                                       months starting on:
+                     Mon      Tue      Wed      Thu      Fri      Sat      Sun
+ 31-day months      99.01    99.01    99.01   100.17   101.33   101.33   100.17
+ 30-day months      99.34    99.34    99.34    99.34   100.50   101.66   100.50
+ Leap year Feb.     99.67 ********    99.67 ********    99.67 ******** ********
+
+
+      Nonseasonal component of length of month effect ("Leap Year" factors):
+
+  31-day months   100.00                 
+  30-day months   100.00                 
+  Leap year Feb.  102.65  100*(29/28.25) 
+  Non-Leap Feb.    99.12  100*(28/28.25) 
+        International Airline Passengers Data from Box and Jenkins            PAGE  29, SERIES test
+
+
+  Visually significant residual trading day peaks have been
+  found in the spectral plots of the following series starting in 1953.Jan:
+
+          differenced, transformed seasonally adjusted series (Table E2) (1 Trading Day peak(s))
+
+          Modified irregular component (Table E3) (1 Trading Day peak(s))
+
+        International Airline Passengers Data from Box and Jenkins            PAGE  30, SERIES test
+ G 0  10*LOG(SPECTRUM) of the differenced, transformed Prior Adjusted Series
+      (Table B1).  Spectrum estimated from 1953.Jan to 1960.Dec.
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+      -4.99I          S                                                  I     -4.99
+           I          S                                                  I
+           I          S         S                                        I
+           I          S         S                                        I
+      -7.37I          S         S                                        I     -7.37
+           I          S         S                                        I
+           I          S         S                                        I
+           I          S         S                                        I
+      -9.76I          S         S                   S                    I     -9.76
+           I          S         S                   S                    I
+           I          S         S                   S                    I
+           I          S         S                   S         S          I
+     -12.14I          S         S                   S         S          I    -12.14
+           I          S         S         S         S         S          I
+           I          S         S         S         S         S          I
+           I          S         S         S         S         S          I
+     -14.53I          S         S         S         S         S          I    -14.53
+           I          S         S         S         S         S          I
+           I          S         S         S         S         S          I
+           I          S         S         S         S         S          I
+     -16.91I          S         S*        S         S         S          I    -16.91
+           I         *S         S*        S         S         S          I
+           I         *S         S*        S         S         S          I
+           I         *S*        S*        S         S         S          I
+     -19.30I         *S*        S*        S         S         S          I    -19.30
+           I         *S*       *S*        S         S         S          I
+           I         *S*       *S*       *S        *S*        S          I
+           I         *S*       *S*       *S        *S*        S*         I
+     -21.68I         *S*       *S*       *S        *S*        S*         I    -21.68
+           I         *S*       *S**      *S        *S*        S*         I
+           I         *S*       *S**      *S        *S*        S*         I
+           I        **S*       *S**      *S        *S*        S*         I
+     -24.07I        **S**      *S**      *S        *S*        S*         I    -24.07
+           I        **S**      *S**      *S*       *S*        S*         I
+           I        **S**      *S**     **S*       *S*       *S*         I
+           I        **S**     **S***    **S*       *S*       *S*         I
+     -26.45I        **S***    **S***    **S*       *S*T      *S*        SI    -26.45
+           I        **S***    **S***    **S*       *S*T      *S*T       SI
+           I       ***S****   **S***   ***S*      **S*T      *S*T       SI
+           I       ***S***** ***S***   ***S*      **S*T      *S*T **    SI
+     -28.84I       ***S*********S****  ***S*      **S*T      *S*T***    SI    -28.84
+           I       ***S*********S**** ****S*      **S*T      *S*T***   *SI
+           I      ****S*********S*********S*      **S*T*     *S*T****  *SI
+           I      ****S*********S*********S**     **S*T*    **S*T****  *SI
+     -31.22I    ******S*********S*********S**    ***S*T*    **S*T****  *SI    -31.22
+           I   *******S*********S*********S**    ***S*T*    **S*T*******SI
+           I   *******S*********S*********S**    ***S*T*    **S*T*******SI
+           I   *******S*********S*********S**    ***S*T*    **S*T*******SI
+     -33.61I  ********S*********S*********S***  ****S*T**  ***S*T*******SI    -33.61
+           I  ********S*********S*********S***  ****S*T**  ***S*T*******SI
+           I  ********S*********S*********S*********S*T*******S*T*******SI
+           I *********S*********S*********S*********S*T*******S*T*******SI
+     -35.99I**********S*********S*********S*********S*T*******S*T*******SI    -35.99
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+            S=SEASONAL FREQUENCIES, T=TRADING DAY FREQUENCIES
+        International Airline Passengers Data from Box and Jenkins            PAGE  31, SERIES test
+ G 1  10*LOG(SPECTRUM) of the differenced, transformed seasonally adjusted 
+      data (Table E2).  Spectrum estimated from 1953.Jan to 1960.Dec.
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+     -29.63I                                                        *    I    -29.63
+           I                                                        *    I
+           I                                                        *    I
+           I                                                        *    I
+     -30.92I                                                        *    I    -30.92
+           I                                                        *    I
+           I                                                        *    I
+           I                                                        *    I
+     -32.22I                                                        *    I    -32.22
+           I                                                        *    I
+           I                                                        *    I
+           I                                                    T   *    I
+     -33.51I                                                    T   *    I    -33.51
+           I                                    *               T   *    I
+           I   *                   *            *         *     T   *    I
+           I   *                   *            *         *     T   *    I
+     -34.81I   *                   *            *         *     T   *    I    -34.81
+           I   *                   *            *         *     T   *    I
+           I   *                   *   *        *         *     T   *    I
+           I   *                   *   *        *         *     T   *    I
+     -36.10I   *                   *   *        *         *     T   *    I    -36.10
+           I  **                   *   *       **         *     T   *    I
+           I  ***          *      **   *       **         *     T  **    I
+           I  ***          *      **   *       **         *     T  ***   I
+     -37.40I  ***         **      **   *       **         *     T  ***   I    -37.40
+           I  ****        **      **   *       **         **    T* ***   I
+           I  ****        ***     **   *       **         **    T* ***   I
+           I  *****       ****    **   **      **         **    T* ***   I
+     -38.69I  *****   S   ****    **   **      **         **    T* ***   I    -38.69
+           I  *****   S   *****   **   **      **        ***    T* ***   I
+           I  *****   S*  *****   **   **      **      * ***    T* ***   I
+           I  *****   S* ******   **  ***     ***      * ***    T* ***  SI
+     -39.98I  ******  S* ******   *** ***     ***      *****    T*****  SI    -39.98
+           I  ****** *S* ******   *** ***     ****     *****   *T*******SI
+           I ******* *S********   *** ***     ****     *****   *T*******SI
+           I *********S********   *** ***    *****     *****   *T*******SI
+     -41.28I *********S*********  *** ***    *****     *****   *T*******SI    -41.28
+           I *********S********* ********    *****     *****   *T*******SI
+           I**********S********* ********   ******     *****   *T*******SI
+           I**********S********* *********  ******    T*****   *T*******SI
+     -42.57I**********S*********S*********  ******    T*****   *T*******SI    -42.57
+           I**********S*********S********* *******    T*****   *T*******SI
+           I**********S*********S********* *******    T******  *T*******SI
+           I**********S*********S*********S*******    T******  *T*******SI
+     -43.87I**********S*********S*********S*******    T****** S*T*******SI    -43.87
+           I**********S*********S*********S*******    T****** S*T*******SI
+           I**********S*********S*********S********   T****** S*T*******SI
+           I**********S*********S*********S********   T*******S*T*******SI
+     -45.16I**********S*********S*********S********   T*******S*T*******SI    -45.16
+           I**********S*********S*********S********  *T*******S*T*******SI
+           I**********S*********S*********S********  *T*******S*T*******SI
+           I**********S*********S*********S********  *T*******S*T*******SI
+     -46.46I**********S*********S*********S*********S*T*******S*T*******SI    -46.46
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+            S=SEASONAL FREQUENCIES, T=TRADING DAY FREQUENCIES
+        International Airline Passengers Data from Box and Jenkins            PAGE  32, SERIES test
+ G 2  10*LOG(SPECTRUM) of the Modified Irregular (Table E3).  
+      Spectrum estimated from 1953.Jan to 1960.Dec.
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+     -34.96I                                                        *    I    -34.96
+           I                                                        *    I
+           I                                                        *    I
+           I                                                        *    I
+     -36.36I                                                        *    I    -36.36
+           I                                    *                   *    I
+           I                                    *                   *    I
+           I                                    *                   *    I
+     -37.76I                                    *                   *    I    -37.76
+           I                                    *                   *    I
+           I                                    *                   *    I
+           I                                    *                   *    I
+     -39.16I                       *            *               T   *    I    -39.16
+           I                       *            *               T   *    I
+           I                       *   *        *               T   *    I
+           I                       *   *        *         *     T   *    I
+     -40.56I                       *   **       *         *     T   *    I    -40.56
+           I                      **   **       *         *     T   *    I
+           I                      **   **      **         *     T   *    I
+           I                      **   **      **         *     T   *    I
+     -41.96I                      **   **      **         *     T   *    I    -41.96
+           I                      **   **      **         *     T   *    I
+           I                 *    **   **      **         *     T   *    I
+           I                 *    ***  **      **         **    T   *    I
+     -43.36I                 *    ***  **      **         **    T  ***   I    -43.36
+           I                 *    ***  **    * **         **    T* ***   I
+           I                 *    *** ***    ****        ***    T* ***   I
+           I                **    *** ***   *****        ***    T* ***   I
+     -44.76I                **    *** ***   ******       ***    T* ***   I    -44.76
+           I                **   ********   ******     * ***    T* ***   I
+           I                **   ********   ******     *****    T* ***   I
+           I                **   *********  ******     *****    T* ***  SI
+     -46.16I                **   *********  ******     *****    T*****  SI    -46.16
+           I                ***  *********  ******     *****   *T***** *SI
+           I                ***  ********* *******    T*****   *T*******SI
+           I                ***  ********* *******    T*****   *T*******SI
+     -47.56I                *** S*********S*******    T*****   *T*******SI    -47.56
+           I                *** S*********S*******    T*****   *T*******SI
+           I           *    ****S*********S*******    T*****   *T*******SI
+           I           *   *****S*********S*******    T******  *T*******SI
+     -48.96I          S**  *****S*********S*******    T******  *T*******SI    -48.96
+           I          S**  *****S*********S********  *T******  *T*******SI
+           I          S**  *****S*********S********  *T****** S*T*******SI
+           I          S**  *****S*********S********  *T****** S*T*******SI
+     -50.36I         *S*********S*********S********  *T****** S*T*******SI    -50.36
+           I         *S*********S*********S*********S*T*******S*T*******SI
+           I         *S*********S*********S*********S*T*******S*T*******SI
+           I         *S*********S*********S*********S*T*******S*T*******SI
+     -51.76I        **S*********S*********S*********S*T*******S*T*******SI    -51.76
+           I*       **S*********S*********S*********S*T*******S*T*******SI
+           I*       **S*********S*********S*********S*T*******S*T*******SI
+           I**     ***S*********S*********S*********S*T*******S*T*******SI
+     -53.16I**********S*********S*********S*********S*T*******S*T*******SI    -53.16
+ ++++++++++I+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++I
+            S=SEASONAL FREQUENCIES, T=TRADING DAY FREQUENCIES

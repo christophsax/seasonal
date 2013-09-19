@@ -1,0 +1,13 @@
+     Error messages generated from processing the X-13ARIMA-SEATS spec file
+     C:/Users/seco-sxh/github/seasonal/inst/io/stdfile.spc:
+
+
+
+ NOTE: X-13ARIMA-SEATS will not compute the ACF of the squared residuals for
+       a set of residuals that is less than ten years long.
+  
+ WARNING: Visually significant seasonal and trading day peaks have 
+          been found in the estimated spectrum of the regARIMA residuals.
+  
+ WARNING: At least one visually significant trading day peak has been
+          found in one or more of the estimated spectra.

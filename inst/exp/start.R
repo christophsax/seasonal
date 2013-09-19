@@ -18,5 +18,15 @@ stdfile <- paste0(iopath, "stdfile.spc")
 
 
 x <- ReadX13(infile)
+
+
+x$x11 <- NULL
+x$seats <- list()
+
+x$seats$table <- "all"
+x$x11$print <- "all"
+
+
+
 WriteX13(x, stdfile)
 shell(paste0(x13path, "x13as.exe ", iopath, "stdfile"))
