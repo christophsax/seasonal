@@ -1,0 +1,9 @@
+regression{
+  variables = (td1coef easter[1] ao1954.Feb)
+  b = (-0.003300012566 0.01634452929 -0.06819859676)
+}
+
+arima{
+  model = (0 1 0 0 1 1)
+  ma = 0.4934662397
+}
