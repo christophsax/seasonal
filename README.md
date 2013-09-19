@@ -1,20 +1,20 @@
-seasonal: a simple R interface to X-13ARIMA-SEATS
--------------------------------------------------
+seasonal: R interface to X-13ARIMA-SEATS
+----------------------------------------
 
 ### Roadmap
 
-1. Parsing
-   - read and write files in /io
+#### Parsing
 
-2. Run x13
+Universal functions to parse X13 files to an R list (and reverse).
 
-  - call x13 from terminal
+#### Run x13 from R
+
     `C:\Users\seco-sxh\software\x13as\x13as.exe C:\Users\seco-sxh\software\x13as\Testairline.spc`
 
-3. User Interface
+#### User Interface
 
-4. Graphs, Analytics
+#### Graphs, Analytics
 
-5. Documentation
+#### Documentation
 
 
