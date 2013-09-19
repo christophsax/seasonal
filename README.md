@@ -11,7 +11,7 @@ Universal functions to parse X13 files to an R list (DONE).
 
 - Basic Call:
 
-    `C:\Users\seco-sxh\software\x13as\x13as.exe C:\Users\seco-sxh\software\x13as\Testairline.spc`
+    C:\Users\seco-sxh\software\x13as\x13as.exe C:\Users\seco-sxh\software\x13as\Testairline.spc
     
 - Manipulate spc.list to adjust X13 inputs
 
