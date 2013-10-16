@@ -1,12 +1,12 @@
   *** Seats Build date :3-Jun-2005  ***
-   "International Airlin"
-   NZ =108;   PERIOD=01-1952/12-1960;   MQ=12;
+   "AirPassengers"       
+   NZ =144;   PERIOD=01-1949/12-1960;   MQ=12;
 
    INPUT 
    bias= 1   fh=24   Imean= 0   Init= 2   lam= 0
-   neast= 1   noadmiss= 0   nouir= 1   npatd= 1   q= 0
-   statseas= 1   tramo= 1   blqt=  22.454   tmu= 325.231   bth(1)=  -0.493
-   thbar =   -0.754
+   neast= 1   noadmiss= 0   nouir= 1   npatd= 1   statseas= 1
+   tramo= 1   blqt=  33.230   tmu= 280.299   th(1)=  -0.116   bth(1)=  -0.497
+   thbar =   -0.772
  
    Decomposition : General
  
@@ -14,7 +14,7 @@
      Pread. Model   Approx.               Model                 SD(a)     Ken(a)     Spectr. Check  Check     Determ.
             Changed to NA                                                            Factor  on ACF on CCF  Comp. Modif.
                             m    p    d    q    bp    bd    bq                                             TC S U Trans SA
-       Y      N        N    0    0    1    0     0     1     1  .2788E-01  15.00         0       0       0  N Y Y     N  Y
+       Y      N        N    0    0    1    1     0     1     1  .3112E-01  15.46         0       0       0  N Y Y     N  Y
  
  
    Decomposition : Standard Errors
@@ -23,7 +23,7 @@
                                                                    (Conc.)                (Conc.)             SE T11                   SE T1Mq
                                                                                                            (One Period)           (Annual Centered)
             TC         S     Trans         U        SA           TC        SA           TC        SA        TC        SA         X        TC        SA
-     .1030E-01 .8330E-02 0.000     .1041E-01 .2102E-01    .1824E-01 .1695E-01    .1358E-01 .1232E-01      0.86      1.06        7.0937    6.9859    7.0932
+     .1021E-01 .8982E-02 0.000     .1300E-01 .2358E-01    .1912E-01 .1754E-01    .1433E-01 .1273E-01      0.93      1.35        7.5319    7.3834    7.5297
  
  
    Decomposition : Properties
@@ -32,4 +32,4 @@
                          (in %)                          Season. (95%)
                  1Y                 5Y
             TC        SA        TC        SA        Hist.     Prel.     Fore.           TC        SA
-          63.8      49.5      97.9      97.0           11        10        10         0.19      0.19
+          67.2      48.8      98.0      96.9           11        10        10         0.21      0.21

@@ -1,4 +1,5 @@
 #' @export
+#' @import stringr
 ReadText <- function(txt){
   require(stringr)
   mat <- str_match_all(txt, '(?:([a-zA-Z1-9]+))\\{(.*?)\\}')[[1]]
@@ -51,12 +52,11 @@ ReadElement <- function(x){
 }
 
 #' @export
-ReadX13 <- function(file){
+ReadSPC <- function(file){
   txt = paste(readLines(file), collapse = " ")
   curly.txt <- ReadText(txt)
   z <- lapply(curly.txt, ReadSpec)
   z <- lapply(z, function(el) lapply(el, ReadElement))
-  class(z) <- "x13.list"
   z
 }
 
@@ -91,8 +91,8 @@ WriteText <- function(x){
 }
 
 #' @export
-WriteX13 <- function(x, file){
-  stopifnot(inherits(x, "x13.list"))
+WriteSPC <- function(x, file){
+  stopifnot(inherits(x, "list"))
   txt <- WriteText(x)
   writeLines(txt, con = file)
 }

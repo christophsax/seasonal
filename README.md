@@ -5,22 +5,25 @@ seasonal: R interface to X-13ARIMA-SEATS
 
 #### Parsing
 
-Universal functions to parse X13 files to an R list (DONE).
+- Universal functions to parse X13 files to an R list (DONE).
 
-#### Run x13 from R
+#### Run x13 from R (DONE)
 
 - Basic Call:
 
     C:\Users\seco-sxh\software\x13as\x13as.exe C:\Users\seco-sxh\software\x13as\Testairline.spc
-    
-- Manipulate spc.list to adjust X13 inputs
 
-- ts to series spc as a first step towards an inface
-
-- Automatic settings
+- ts to series spc as a first step towards an interface
 
 
-#### User Interface
+#### Automatic Specification
+
+- Outlier
+
+- Model Selection
+
+- Trading Days
+
 
 #### Graphs, Analytics
 

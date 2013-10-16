@@ -1,5 +1,5 @@
 series{
-  title = "International Airline Passengers Data from Box and Jenkins"
+  title  =  "International Airline Passengers Data from Box and Jenkins"
   start = 1949.01
   data = (112 118 132 129 121 135 148 148 136 119 104 118 115 126 141 135 125
     149 170 170 158 133 114 140 145 150 178 163 172 178 199 199 184 162 146 166
@@ -13,11 +13,11 @@ series{
 }
 
 spectrum{
-  savelog = peaks
+  savelog  = peaks
 }
 
 transform{
-  function = auto
+  function  = auto
   savelog = autotransform
 }
 
@@ -27,7 +27,7 @@ regression{
 }
 
 automdl{
-  savelog = automodel
+  savelog  = automodel
 }
 
 estimate{
@@ -39,5 +39,5 @@ outlier{
 }
 
 seats{
-
+  save = (s10 s11 s12 s13 s16 s18)
 }
