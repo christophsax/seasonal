@@ -14,7 +14,7 @@ To install directly from github to R, substitute your github 'USERNAME' and 'PAS
 seasonal includes the binary files of X-13ARIMA-SEATS, so no separte installation is needed.
 
 
-### An introductiory session
+### Introductiory session
 
 `seas` ist the core function of seasonal. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustement that works very well in most circumstances. It returns an object of class `seas` that contains all necessary information on the adjustment process, as well as the series. The `predict` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
@@ -42,7 +42,7 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
     inspect(x)
 
 
-### X-13ARIMA-SEATS syntax in seasonal
+### X-13ARIMA-SEATS syntax
 
 Whenever possible, seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it should be possible to invoce (almost) all options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *Specs* and *Arguments*, while each Spec may contain some Arguments. An additional Spec/Argument can be added to the `seas` function by separating Spec and Argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.01)`, the input to `seas` looks like this:
 
@@ -64,19 +64,16 @@ translates to R the following way:
 `seas` takes care of the series argument. with `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed.
 
 
-### Graphs
-
-TODO
+### Graphs, Output
 
 
-### the `inspect` function
 
-TODO
+### Inspect tool
+
 
 
 ### Licence
 
-TODO
 
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
