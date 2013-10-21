@@ -1,7 +1,9 @@
 seasonal: an R interface to X-13ARIMA-SEATS
 -------------------------------------------
 
-seasonal is an easy-to-use interface to X-13ARIMA-SEATS. X-13ARIMA-SEATS is a seasonal adjustment software **produced, distributed, and maintained by the United States Census Bureau**. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. For information on X-13ARIMA-SEATS, see the [manual][manual] or the [quick reference][qref].
+seasonal is an easy-to-use interface to X-13ARIMA-SEATS. X-13ARIMA-SEATS is a seasonal adjustment software **produced, distributed, and maintained by the United States Census Bureau**. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
+
+If you are new to X-13ARIMA-SEATS, start with the Introductiory session and skip the rest. If you are familiar with X-13ARIMA-SEATS, read X-13ARIMA-SEATS syntax to see how X-13ARIMA-SEATS commands can be used with the R package. For all details on X-13ARIMA-SEATS, see the [manual][manual] or the [quick reference][qref].
 
 
 ### Installation
