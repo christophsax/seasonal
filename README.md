@@ -74,7 +74,9 @@ translates to R the following way:
 
 ### Licence
 
+When released, the R code in seasonal will be GPL-3. The package contains the X-13ARIMA-SEATS binary files from the United States Census Bureau. According to the manual, may
 
+When it is released, the X-13ARIMA-SEATS program will be in the public domain, and may be copied or transferred
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
 
