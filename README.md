@@ -8,7 +8,7 @@ If you are new to X-13ARIMA-SEATS, start with the Introductiory session and skip
 
 ### Installation
 
-To install directly from github to R, substitute your github 'USERNAME' and 'PASSWORD':
+To install directly from github to R, substitute your github `'USERNAME'` and `'PASSWORD'`:
 
     require(devtools)
     install_github('seasonal', 'christophsax', auth_user = 'USERNAME', password = 'PASSWORD')
@@ -63,7 +63,7 @@ translates to R the following way:
     seas(X-13ARIMA-SEATS,
          arima.model = "(0 1 1)")
     
-`seas` takes care of the series argument. with `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed.
+`seas` takes care of the series argument. with `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list with examples can be found in the [wiki][examples].
 
 
 ### Graphs, Output
@@ -76,11 +76,17 @@ translates to R the following way:
 
 ### Licence
 
-When released, the R code in seasonal will be GPL-3. The package contains the X-13ARIMA-SEATS binary files from the United States Census Bureau. According to the manual, may
+When released, the R code in seasonal will be GPL-3. The package contains the X-13ARIMA-SEATS binary files from the United States Census Bureau. According to the manual (page 1), 
 
-When it is released, the X-13ARIMA-SEATS program will be in the public domain, and may be copied or transferred
+> When it is released, the X-13ARIMA-SEATS program will be in the public domain, and may be copied or transferred.
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
 
 [qref]: http://www.census.gov/ts/x13as/pc/qrefX13ASpc.pdf "Quick Reference"
+
+[examples]: https://github.com/christophsax/seasonal/wiki/Examples-X-13ARIMA-SEATS "Wiki: Examples X-13ARIMA-SEATS"
+
+
+
+
 
