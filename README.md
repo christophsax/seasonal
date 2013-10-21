@@ -1,12 +1,17 @@
-seasonal: R interface to X-13ARIMA-SEATS
-----------------------------------------
+seasonal: an R interface to X-13ARIMA-SEATS
+-------------------------------------------
 
-seasonal is an easy-to-use interface to X-13ARIMA-SEATS. X-13ARIMA-SEATS is a seasonal adjustment software produced, distributed, and maintained by the United States Census Bureau. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
+seasonal is an easy-to-use interface to X-13ARIMA-SEATS. X-13ARIMA-SEATS is a seasonal adjustment software **produced, distributed, and maintained by the United States Census Bureau**. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. For information on X-13ARIMA-SEATS, see the [manual][manual] or the [quick reference][qref].
 
 
 ### Installation
 
+To install directly from github to R, substitute your github 'USERNAME' and 'PASSWORD':
 
+    require(devtools)
+    install_github('seasonal', 'christophsax', auth_user = 'USERNAME', password = 'PASSWORD')
+    
+seasonal includes the binary files of X-13ARIMA-SEATS, so no separte installation is needed.
 
 
 ### An introductiory session
@@ -17,7 +22,7 @@ seasonal is an easy-to-use interface to X-13ARIMA-SEATS. X-13ARIMA-SEATS is a se
      predict(x)
      plot(x)
      
-By default, `seas` calls the SEATS adjustemnt procedure. If you prefer the X11 adjustemnt filter, use the following option:
+The first argument must a be time series of class `ts`. By default, `seas` calls the SEATS adjustemnt procedure. If you prefer the X11 adjustemnt filter, use the following option:
 
      seas(AirPassengers, method = "x11")
      
@@ -39,52 +44,39 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 ### X-13ARIMA-SEATS syntax in seasonal
 
-Whenever possible, seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it should be possible to invoce (almost) all options that are available in X-13ARIMA-SEATS. For details on the options, see the manual.
+Whenever possible, seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it should be possible to invoce (almost) all options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *Specs* and *Arguments*, while each Spec may contain some Arguments. An additional Spec/Argument can be added to the `seas` function by separating Spec and Argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.01)`, the input to `seas` looks like this:
+
+    x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
+   
+Note that R vectors can used as an input. It is possible to manipulate almost all inputs to X-13ARIMA-SEATS that way. Most examples from the [manual][manual] should be replicable. For instance, example 1 from the manual
+
+    series { title  =  "Quarterly Grape Harvest" start = 1950.1
+           period =  4
+           data  = (8997 9401 ... 11346) }
+    arima { model = (0 1 1) }
+    estimate { }
+
+translates to R the following way:
+
+    seas(X-13ARIMA-SEATS,
+         arima.model = "(0 1 1)")
+    
+`seas` takes care of the series argument. with `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed.
 
 
-and allows the inclusion of (almost) all options
+### Graphs
+
+TODO
 
 
+### the `inspect` function
 
-### X-13ARIMA-SEATS
-
-
-
+TODO
 
 
+### Licence
 
-#### Parsing
-
-- Universal functions to parse X13 files to an R list (DONE).
-
-#### Run x13 from R (DONE)
-
-- Basic Call:
-
-    C:\Users\seco-sxh\software\x13as\x13as.exe C:\Users\seco-sxh\software\x13as\Testairline.spc
-
-- ts to series spc as a first step towards an interface
-
-
-#### Automatic Specification
-
-- Outlier
-
-- Model Selection
-
-- Trading Days
-
-
-#### Graphs, Analytics
-
-- List of Graphs from WinX13
-
-- Graphs form seasonaladjustment.com 
-
-- Implementation Concept
-
-#### Documentation
-
+TODO
 
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
