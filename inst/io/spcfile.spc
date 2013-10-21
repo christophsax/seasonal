@@ -1,5 +1,5 @@
 series{
-  title = "AirPassengers"
+  title = "x"
   start = 1949.1
   data = (112 118 132 129 121 135 148 148 136 119 104 118 115 126 141 135 125
     149 170 170 158 133 114 140 145 150 178 163 172 178 199 199 184 162 146 166
@@ -28,9 +28,9 @@ estimate{
 }
 
 outlier{
-
+  critical = 4.23
 }
 
-x11{
-  save = (d10 d11 d12 d13 d16 e18)
+seats{
+  save = (s10 s11 s12 s13 s16 s18)
 }

@@ -27,6 +27,12 @@ seasonal: R interface to X-13ARIMA-SEATS
 
 #### Graphs, Analytics
 
+- List of Graphs from WinX13
+
+- Graphs form seasonaladjustment.com 
+
+- Implementation Concept
+
 #### Documentation
 
 

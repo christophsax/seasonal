@@ -32,7 +32,9 @@ ReadSpec <- function(txt){
 }
 
 #' @export
-ReadElement <- function(x){
+CleanElement <- function(x){
+  # removes brackets and converts to (numeric if possible) vector
+
   # remove curved brackets
   x.nb <- str_replace_all(x, '[\\(\\)]', ' ')
   
@@ -48,6 +50,7 @@ ReadElement <- function(x){
   if (!any(is.na(try.numeric))){
     z <- as.numeric(z)
   }
+
   z
 }
 
@@ -56,7 +59,8 @@ ReadSPC <- function(file){
   txt = paste(readLines(file), collapse = " ")
   curly.txt <- ReadText(txt)
   z <- lapply(curly.txt, ReadSpec)
-  z <- lapply(z, function(el) lapply(el, ReadElement))
+#   z <- lapply(z, function(el) lapply(el, ReadElement))
+
   z
 }
 

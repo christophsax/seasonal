@@ -1,5 +1,5 @@
 1
-   Log for X-13ARIMA-SEATS program (Version 1.0 Build 150)  Oct 16, 2013  21.54.18 
+   Log for X-13ARIMA-SEATS program (Version 1.0 Build 150)  Oct 21, 2013  12.32.24 
    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 
@@ -8,6 +8,6 @@
  Adjust.  Ident.      Identifiers
 
 
-  M-AUTO   /Users -------- -------- AirPassengers                                     
+  M-AUTO   /Users -------- -------- x                                                 
      Automatic model chosen : (0 1 1)(0 1 1)
 

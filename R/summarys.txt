@@ -1,5 +1,5 @@
   *** Seats Build date :3-Jun-2005  ***
-   "x"                   
+   "AirPassengers"       
    NZ =144;   PERIOD=01-1949/12-1960;   MQ=12;
 
    INPUT 

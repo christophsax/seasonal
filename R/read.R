@@ -1,5 +1,6 @@
 #' @export
-ReadX13 <- function(method = "seats", name = "test", path){
+ReadX13 <- function(method = "seats", name = "test", 
+                    path = "C:/Users/seco-sxh/github/seasonal/inst/"){
 
   # currently extracted final series (SEATS / X11)
   
@@ -29,5 +30,28 @@ ReadX13 <- function(method = "seats", name = "test", path){
     stop("wrong method.")
   }
   z$data <- as.data.frame(z$data)
+  
+  if (file.exists(paste0(path, "io/out/", name, ".saa"))){
+    z$data$final <- as.numeric(read.table(paste0(path, "io/out/", name, ".saa"), stringsAsFactors = F)[-c(1,2) ,2])
+  } else {
+    z$data$final <- z$data$seasonaladj
+  }
+  
+  z$mdl <- ReadSPC(paste0(path, "io/out/", name, ".mdl"))
+  
+  # keep arima models as a single string, 
+  # transform other SPC vectors to R vectors
+  for (i in seq_along(z$mdl)){
+    z$mdl[[i]] <- as.list(z$mdl[[i]])
+    for (j in seq_along(z$mdl[[i]])){
+      if (names(z$mdl[[i]])[j] != "model"){
+        z$mdl[[i]][[j]] <- CleanElement(z$mdl[[i]][[j]])
+      } else {
+        z$mdl[[i]][[j]] <- str_trim(z$mdl[[i]][[j]])
+      }
+    }    
+  }
+
+  
   z
 }

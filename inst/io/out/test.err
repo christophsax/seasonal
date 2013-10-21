@@ -3,5 +3,5 @@
 
 
   
- WARNING: Visually significant seasonal and trading day peaks have 
-          been found in one or more of the estimated spectra.
+ WARNING: At least one visually significant seasonal peak has been found
+          in the estimated spectrum of the regARIMA residuals.
