@@ -12,3 +12,5 @@ Collate:
     'plot.R'
     'read.R'
     'seas.R'
+    'outlier.R'
+    'seasonalyze.R'

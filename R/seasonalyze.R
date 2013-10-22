@@ -1,7 +1,10 @@
+
+#' Inspection Tool
+#' 
 #' @export
 #' @examples
-#' seasonalyze(AirPassengers)
-seasonalyze <- function(x){
+#' inspect(AirPassengers)
+inspect <- function(x){
   stopifnot(inherits(x, "ts"))
   require(manipulate)
   
@@ -19,6 +22,3 @@ SubPlot <- function(x, outlier.critical){
   static(s)
 }
 
-plot(seas(AirPassengers))
-
-plot

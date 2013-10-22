@@ -9,6 +9,10 @@ z <- seas(AirPassengers, force.type = "denton")
 
 
 
+
+#   path <- "C:/Users/seco-sxh/github/seasonal/inst/"
+
+
 seas(AirPassengers,
      regression.variables = c("td1coef", "easter[1]", "ao1950.Jan", "ao1950.Nov", "ao1951.May", "ls1953.Jun", "ao1954.Feb", "ls1960.Apr"),
      arima.model = "(0 1 0)(0 1 1)",
@@ -21,7 +25,7 @@ library(manipulate)
 
 
 
-plot(seas)
+plot(x)
 
 
 z <- seas(AirPassengers, regression.variables = c("td1coef", "easter[1]", "ao1951.May", "ao1954.Feb"), 

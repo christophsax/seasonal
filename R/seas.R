@@ -4,12 +4,16 @@ seas <- function(x, method = "seats", ...){
   # 2. Run
   # 3. Read
   
+  wdir <- tempdir()
+  
+  
   spc <- GenSPC(x, name = deparse(substitute(x)), method = method)
   spc <- ModSPC(spc, ...)
   spc <- EnsureConsistencySPC(spc)
-  RunSPC(spc)
 
-  z <- ReadX13(method = method)
+  RunSPC(spc, wdir = wdir)
+
+  z <- ReadX13(method = method, wdir = wdir)
   
   z$spc <- spc
   
@@ -104,18 +108,27 @@ EnsureConsistencySPC <-function(x){
 
 
 #' @export
-RunSPC <- function(x, method = "seats"){
-  # if everything works:
-  # path <- system.file(package = "seasonal")
-  path <- "C:/Users/seco-sxh/github/seasonal/inst/"
-  spcfile <- "spcfile"
-  
+RunSPC <- function(x, method = "seats", wdir = tempdir()){
   stopifnot(inherits(x, "SPC"))
   
-  unlink(paste0(path, "io/out"), recursive = TRUE)
-  dir.create(paste0(path, "io/out"))
-  WriteSPC(x, paste0(path, "io/", spcfile, ".spc"))
-  shell(paste0(path, "x13/x13as.exe ", path, "io/", spcfile, " ", path, "io/out/test"))
+  
+  
+  
+  # ---------------------
+  # if everything works, need to be platform independent
+  
+#   x13dir <- system.file(package = "seasonal")
+  
+#   x13dir <- "C:/Users/seco-sxh/github/seasonal/inst/"
+  
+  x13dir <- "~/seasonal/inst/"
+  # ---------------------
+  
+  
+  WriteSPC(x, paste0(wdir, "/spcfile.spc"))
+  system(paste0(x13dir, "x13/x13as ", paste0(wdir, "/spcfile")))
+  
+#   shell(paste0(path, "x13/x13as.exe ", path, "io/", spcfile, " ", path, "io/out/test"))
 }
 
 

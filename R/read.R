@@ -1,6 +1,5 @@
 #' @export
-ReadX13 <- function(method = "seats", name = "test", 
-                    path = "C:/Users/seco-sxh/github/seasonal/inst/"){
+ReadX13 <- function(method = "seats", name = "spcfile", wdir){
 
   # currently extracted final series (SEATS / X11)
   
@@ -13,31 +12,31 @@ ReadX13 <- function(method = "seats", name = "test",
   
   z <- list()
   if (identical(method, "seats")){
-    z$data$seasonal        <- as.numeric(read.table(paste0(path, "io/out/", name, ".s10"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$seasonaladj     <- as.numeric(read.table(paste0(path, "io/out/", name, ".s11"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$trend           <- as.numeric(read.table(paste0(path, "io/out/", name, ".s12"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$irregular       <- as.numeric(read.table(paste0(path, "io/out/", name, ".s13"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustfac       <- as.numeric(read.table(paste0(path, "io/out/", name, ".s16"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustmentratio <- as.numeric(read.table(paste0(path, "io/out/", name, ".s18"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonal        <- as.numeric(read.table(paste0(wdir, "/", name, ".s10"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonaladj     <- as.numeric(read.table(paste0(wdir, "/", name, ".s11"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$trend           <- as.numeric(read.table(paste0(wdir, "/", name, ".s12"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$irregular       <- as.numeric(read.table(paste0(wdir, "/", name, ".s13"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustfac       <- as.numeric(read.table(paste0(wdir, "/", name, ".s16"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustmentratio <- as.numeric(read.table(paste0(wdir, "/", name, ".s18"), stringsAsFactors = F)[-c(1,2) ,2])
   } else if (identical(method, "x11")){
-    z$data$seasonal        <- as.numeric(read.table(paste0(path, "io/out/", name, ".d10"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$seasonaladj     <- as.numeric(read.table(paste0(path, "io/out/", name, ".d11"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$trend           <- as.numeric(read.table(paste0(path, "io/out/", name, ".d12"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$irregular       <- as.numeric(read.table(paste0(path, "io/out/", name, ".d13"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustfac       <- as.numeric(read.table(paste0(path, "io/out/", name, ".d16"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustmentratio <- as.numeric(read.table(paste0(path, "io/out/", name, ".e18"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonal        <- as.numeric(read.table(paste0(wdir, "/", name, ".d10"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonaladj     <- as.numeric(read.table(paste0(wdir, "/", name, ".d11"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$trend           <- as.numeric(read.table(paste0(wdir, "/", name, ".d12"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$irregular       <- as.numeric(read.table(paste0(wdir, "/", name, ".d13"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustfac       <- as.numeric(read.table(paste0(wdir, "/", name, ".d16"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustmentratio <- as.numeric(read.table(paste0(wdir, "/", name, ".e18"), stringsAsFactors = F)[-c(1,2) ,2])
   } else {
     stop("wrong method.")
   }
   z$data <- as.data.frame(z$data)
   
-  if (file.exists(paste0(path, "io/out/", name, ".saa"))){
-    z$data$final <- as.numeric(read.table(paste0(path, "io/out/", name, ".saa"), stringsAsFactors = F)[-c(1,2) ,2])
+  if (file.exists(paste0(wdir, "/", name, ".saa"))){
+    z$data$final <- as.numeric(read.table(paste0(wdir, "/", name, ".saa"), stringsAsFactors = F)[-c(1,2) ,2])
   } else {
     z$data$final <- z$data$seasonaladj
   }
   
-  z$mdl <- ReadSPC(paste0(path, "io/out/", name, ".mdl"))
+  z$mdl <- ReadSPC(paste0(wdir, "/", name, ".mdl"))
   
   # keep arima models as a single string, 
   # transform other SPC vectors to R vectors

@@ -94,9 +94,13 @@ WriteText <- function(x){
   paste(paste0(names(x), "{\n", xl, "\n}"), collapse = "\n\n")
 }
 
+
 #' @export
 WriteSPC <- function(x, file){
   stopifnot(inherits(x, "list"))
   txt <- WriteText(x)
   writeLines(txt, con = file)
 }
+
+
+
