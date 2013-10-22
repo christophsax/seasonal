@@ -9,3 +9,6 @@ Description: a simple interface to X13
 License: NA
 Collate:
     'parse.R'
+    'plot.R'
+    'read.R'
+    'seas.R'

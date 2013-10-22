@@ -1,12 +1,14 @@
 #' @export
+#' @import stringr
 ReadText <- function(txt){
   require(stringr)
-  mat <- str_match_all(txt, '(?:([a-z]+))\\{(.*?)\\}')[[1]]
+  mat <- str_match_all(txt, '(?:([a-zA-Z1-9]+))\\{(.*?)\\}')[[1]]
   z <- mat[,3]
   names(z) <- mat[,2]
   z <- str_replace_all(z, pattern = '\\s+', " ")
   str_trim(z)
 }
+
 
 #' @export
 ReadSpec <- function(txt){
@@ -30,7 +32,9 @@ ReadSpec <- function(txt){
 }
 
 #' @export
-ReadElement <- function(x){
+CleanElement <- function(x){
+  # removes brackets and converts to (numeric if possible) vector
+
   # remove curved brackets
   x.nb <- str_replace_all(x, '[\\(\\)]', ' ')
   
@@ -46,15 +50,18 @@ ReadElement <- function(x){
   if (!any(is.na(try.numeric))){
     z <- as.numeric(z)
   }
+
   z
 }
 
 #' @export
-ReadX13 <- function(file){
+ReadSPC <- function(file){
   txt = paste(readLines(file), collapse = " ")
   curly.txt <- ReadText(txt)
   z <- lapply(curly.txt, ReadSpec)
-  lapply(z, function(el) lapply(el, ReadElement))
+#   z <- lapply(z, function(el) lapply(el, ReadElement))
+
+  z
 }
 
 #' @export
@@ -63,17 +70,23 @@ WriteSpec <- function(x){
   z <- character(length = length(x))
   for (i in seq_along(x)){
     if (length(x[[i]]) > 1){
-      # only put brackets around several elements
-      z[i] <- paste0("  ", nx[i], " = (", paste(x[[i]], collapse = " "), ")")
+      # put brackets around several elements
+      x.i <- paste0(nx[i], " = (", paste(x[[i]], collapse = " "), ")")
+      z[i] <- str_wrap(x.i, indent = 2, exdent = 4)
     } else if (length(x[[i]] == 1)){
-      z[i] <- paste0("  ", nx[i], " = ", x[[i]])
+      # put brackets around elements containing a comma
+      if (str_detect(x[[i]], ',')){
+        x.i <- paste0("(", x[[i]], ")")
+      } else {
+        x.i <- x[[i]]
+      }
+      z[i] <- paste0("  ", nx[i], " = ", x.i)
     } else {
       z[i] <- ""
     }
   }
   paste(z, collapse = "\n")
 }
-
 
 #' @export
 WriteText <- function(x){
@@ -82,7 +95,7 @@ WriteText <- function(x){
 }
 
 #' @export
-WriteX13 <- function(x, file){
+WriteSPC <- function(x, file){
   stopifnot(inherits(x, "list"))
   txt <- WriteText(x)
   writeLines(txt, con = file)

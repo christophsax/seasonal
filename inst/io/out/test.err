@@ -1,0 +1,7 @@
+     Error messages generated from processing the X-13ARIMA-SEATS spec file
+     C:/Users/seco-sxh/github/seasonal/inst/io/spcfile.spc:
+
+
+  
+ WARNING: At least one visually significant seasonal peak has been found
+          in the estimated spectrum of the regARIMA residuals.
