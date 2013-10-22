@@ -5,10 +5,14 @@ devtools::load_all(".")
 
 library(stringr)
 
-z <- seas(AirPassengers, force.type = "denton")
+z <- seas(AirPassengers)
+
+
+plot(z)
 
 
 
+x<- seas(AirPassengers)
 
 #   path <- "C:/Users/seco-sxh/github/seasonal/inst/"
 

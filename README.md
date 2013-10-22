@@ -35,6 +35,12 @@ The default invoces the automatic procedures of X-13ARIMA-SEATS. They include:
 
 Alternatively, all inputs can be entered manually, as in the following example (see the section below for details on on the syntax):
 
+    seas(AirPassengers,
+         regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
+         arima.model = "(0 1 1)(0 1 1)",
+         regression.aictest = NULL, outlier.types = "none"
+    )
+
 The `static` command reveals the static call that is needed to replicate a a seasonal adjustment procedure. E.g.
 
     static(x)
@@ -60,10 +66,12 @@ Note that R vectors can used as an input. It is possible to manipulate almost al
 
 translates to R the following way:
 
-    seas(X-13ARIMA-SEATS,
-         arima.model = "(0 1 1)")
+    seas(AirPassengers,
+         method = "x11",
+         arima.model = "(0 1 1)"
+    )
     
-`seas` takes care of the series argument. with `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list with examples can be found in the [wiki][examples].
+`seas` takes care of the series argument. As seas uses the SEATS procedure by default, the use of X11 has to be specified manually. With `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list with examples can be found in the [wiki][examples].
 
 
 ### Graphs, Output
