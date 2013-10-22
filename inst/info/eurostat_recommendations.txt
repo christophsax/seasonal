@@ -1,0 +1,16 @@
+http://epp.eurostat.ec.europa.eu/cache/ITY_OFFPUB/KS-RA-09-006/EN/KS-RA-09-006-EN.PDF
+
+# Use a detailed set of graphical, descriptive, non-parametric and parametric criteria to validate the seasonal adjustment. Re-do the seasonal adjustment with a different set of options in case of non-acceptance of results. Particular attention must be paid to the following suitable characteristics of seasonal adjustment series:
+
+
+# - absence of residual seasonality
+# - absence of residual calendar effects
+# - absence of an over-adjustment of seasonal and calendar effects
+# - absence of significant and positive autocorrelation for seasonal lags in the irregular component - stability of the seasonal component
+
+# In addition, the appropriateness of the identified model used in the complete adjustment procedure should be checked using standard diagnostics and some additional considerations. An important consideration is that the number of outliers should be relatively small, and not unduly concentrated around the same period of the year.
+
+# B) Use only default criteria defined within the different tools to validate the results and, if validation fails, re- run the seasonal adjustment as in alternative A).
+
+# C) No validation of performed seasonal adjustment or use of only a basic set of graphical and descriptive statistics to validate the seasonal adjustment.
+# 

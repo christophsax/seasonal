@@ -1,0 +1,35 @@
+http://www.webmo.net/support/fortran_osx.html
+
+
+
+Download the free g77 packages for Intel Mac from this website: 
+
+     http://hpc.sourceforge.net/
+
+
+If your browser did not automatically unzip the file, then
+
+     gunzip g77-bin-intel.tar.gz
+     
+     
+     
+
+     sudo tar -xvf g77-intel-bin.tar -C /
+
+which puts everything in /usr/local
+
+
+
+
+     sudo ln -s /usr/local/bin/g77 /usr/bin/g77
+
+
+im ordner mit sourcecode:
+
+make -f makefile.g77 
+
+
+
+
+(als es nicht ging, hab ich alles mit gfortran compiliert, ging aber auch nicht. nachher gings mit g77)
+
