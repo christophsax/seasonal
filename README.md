@@ -8,27 +8,15 @@ If you are new to X-13ARIMA-SEATS, start with the Introductiory session and skip
 
 ### Installation
 
-<<<<<<< HEAD
-- Basic Call:
-=======
 To install directly from github to R, substitute your github `'USERNAME'` and `'PASSWORD'`:
->>>>>>> a2111fd7cbfb06c7f904c621d23d54fd0a48ca71
 
     require(devtools)
     install_github('seasonal', 'christophsax', auth_user = 'USERNAME', password = 'PASSWORD')
     
-<<<<<<< HEAD
-- Manipulate spc.list to adjust X13 inputs
-
-- ts to series spc as a first step towards an inface
-
-- Automatic settings
-=======
 seasonal includes the binary files of X-13ARIMA-SEATS, so no separte installation is needed.
 
 
 ### Introductiory session
->>>>>>> a2111fd7cbfb06c7f904c621d23d54fd0a48ca71
 
 `seas` ist the core function of seasonal. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustement that works very well in most circumstances. It returns an object of class `seas` that contains all necessary information on the adjustment process, as well as the series. The `predict` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
