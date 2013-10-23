@@ -71,7 +71,7 @@ translates to R the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the series argument. As seas uses the SEATS procedure by default, the use of X11 has to be specified manually. With `arima.model`, an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list with examples can be found in the [wiki][examples].
+`seas` takes care of the series argument. As seas uses the SEATS procedure by default, the use of X11 has to be specified manually. With `arima.model`, an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list of examples can be found in the [wiki][examples].
 
 
 ### Graphs, Output
