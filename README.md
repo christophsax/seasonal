@@ -52,7 +52,7 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 ### X-13ARIMA-SEATS syntax
 
-Whenever possible, seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it should be possible to invoce (almost) all options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *Specs* and *Arguments*, while each Spec may contain some Arguments. An additional Spec/Argument can be added to the `seas` function by separating Spec and Argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.01)`, the input to `seas` looks like this:
+Whenever possible, seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it should be possible to invoce (almost) all options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *Specs* and *Arguments*, while each Spec may contain some Arguments. An additional Spec/Argument can be added to the `seas` function by separating Spec and Argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
     x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
    
@@ -71,7 +71,7 @@ translates to R the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the series argument. As seas uses the SEATS procedure by default, the use of X11 has to be specified manually. With `arima.model` an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list with examples can be found in the [wiki][examples].
+`seas` takes care of the series argument. As seas uses the SEATS procedure by default, the use of X11 has to be specified manually. With `arima.model`, an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list with examples can be found in the [wiki][examples].
 
 
 ### Graphs, Output
