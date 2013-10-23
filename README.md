@@ -28,7 +28,7 @@ The first argument must a be time series of class `ts`. By default, `seas` calls
 
      seas(AirPassengers, x11 = list())
      
-The default invoces the automatic procedures of X-13ARIMA-SEATS. They include:
+Besides performing seasonal adjustement with SEATS, the default invoces the following automatic procedures of X-13ARIMA-SEATS:
   - ARIMA model search
   - outlier detection
   - detection of trading day and easter effects
@@ -52,11 +52,11 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 ### X-13ARIMA-SEATS syntax
 
-Seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it is possible to invoce most options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *Specs* and *Arguments*, while each Spec may contain some Arguments. An additional Spec/Argument can be added to the `seas` function by separating Spec and Argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
+Seasonal uses the same syntax as X-13ARIMA-SEATS. It is possible to invoce most options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. An additional spec/argument can be added to the `seas` function by separating spec and argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
     x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
    
-Note that R vectors can used as an input. It is possible to manipulate almost all inputs to X-13ARIMA-SEATS this way. Most examples in the [manual][manual] are replicable in R. For instance, example 1 in the ARIMA Spec section 7.1,
+Note that R vectors may be used as an input. It is possible to manipulate almost all inputs to X-13ARIMA-SEATS this way. Most examples in the [manual][manual] are replicable in R. For instance, example 1 in section 7.1,
 
     series { title  =  "Quarterly Grape Harvest" start = 1950.1
            period =  4
@@ -64,15 +64,33 @@ Note that R vectors can used as an input. It is possible to manipulate almost al
     arima { model = (0 1 1) }
     estimate { }
 
-translates to R the following way:
+translates to R in the following way:
 
     seas(AirPassengers,
          x11 = list(),
          arima.model = "(0 1 1)"
     )
     
-`seas` fully takes care of the series argument As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the X11 spec is added as an input, the mutually exlusive and default `seats` spec is automatically removed. With `arima.model`, an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list of examples can be found in the [wiki][examples].
+`seas` fully takes care of the series argument As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the X11 spec is added as the input (as above), the mutually exlusive and default `seats` spec is automatically removed. With `arima.model`, an addtional `spec.argument` entry is added to the input file to X-13ARIMA-SEATS. As the spec cannot be used with the default automdl spec, the latter is removed. A growing list of examples can be found in the [wiki][examples].
 
+
+### Priority rules
+
+There are several mutually exclusive specs in R. If more than one mutually exclusive specs are included, X-13ARIMA-SEATS would lead to an error. In contrast, `seas` follows a set of priority rules, where a lower priority is overwritten by a higher priority. Usually, the default has the lowest priority, and it is overwritten when one or several of the following `spec` inputs are provided:
+
+Model selection
+  1. `arima`
+  2. `pickmdl`
+  3. `automdl` (default)
+
+Adjustment procedure
+  1. `x11`
+  2. `seats` (default)
+  
+Regression procedure
+  1. `x11regression`
+  2. `regression` (default)
+  
 
 ### Graphs, Output
 
