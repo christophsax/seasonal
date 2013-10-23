@@ -37,14 +37,17 @@ cat(WriteText(x3$spc))
 
 x3$mdl
 
-x3 <- seas(AirPassengers,
-     regression.variables = c("ao1951.May"),
-     regression.b = c("-0.00152f"),   
-     arima.model = "(0 1 0)(0 1 1)",
-     arima.ma = "0.25f",
-     transform = NULL,
-     regression.aictest = NULL, outlier.types = "none"
+x3 <-     seas(AirPassengers, 
+               x11 = list(),
+               regression.variables = c("td", "ao1999.01"),
+               arima.model = "(0,1,1)(0,1,1)",
+               arima.ma = "0.25f",
+               estimate.tol = 1e-4,
+               estimate.maxiter = 100,
+               estimate.exact = "ma"
 )
+
+static(x3, static.coeff=TRUE)
 
 
 x3 <- seas(AirPassengers,
