@@ -3,7 +3,7 @@ seasonal: an R interface to X-13ARIMA-SEATS
 
 seasonal is an easy-to-use interface to X-13ARIMA-SEATS. X-13ARIMA-SEATS is a seasonal adjustment software **produced, distributed, and maintained by the United States Census Bureau**. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
 
-If you are new to X-13ARIMA-SEATS, start with the Introductiory session and skip the rest. If you are familiar with X-13ARIMA-SEATS, read X-13ARIMA-SEATS syntax to see how X-13ARIMA-SEATS commands can be used with the R package. For all details on X-13ARIMA-SEATS, see the [manual][manual] or the [quick reference][qref].
+If you are new to X-13ARIMA-SEATS, start with the introductiory session and skip the rest. If you are familiar with X-13ARIMA-SEATS, read the X-13ARIMA-SEATS syntax section to see how X-13ARIMA-SEATS commands can be used in R. For all details on X-13ARIMA-SEATS, see the [manual][manual] or the [quick reference][qref].
 
 
 ### Installation
@@ -13,7 +13,7 @@ To install directly from github to R, substitute your github `'USERNAME'` and `'
     require(devtools)
     install_github('seasonal', 'christophsax', auth_user = 'USERNAME', password = 'PASSWORD')
     
-seasonal includes the binary files of X-13ARIMA-SEATS, so no separte installation is needed.
+seasonal includes the binary files of X-13ARIMA-SEATS. No separte download of the binaries is needed.
 
 
 ### Introductiory session
@@ -24,16 +24,16 @@ seasonal includes the binary files of X-13ARIMA-SEATS, so no separte installatio
      predict(x)
      plot(x)
      
-The first argument must a be time series of class `ts`. By default, `seas` calls the SEATS adjustemnt procedure. If you prefer the X11 adjustemnt filter, use the following option:
+The first argument must a be time series of class `ts`. By default, `seas` calls the SEATS adjustemnt procedure. If you prefer the X11 adjustemnt filter, use the following option (see the next senction for details on the syntax):
 
-     seas(AirPassengers, method = "x11")
+     seas(AirPassengers, x11 = list())
      
-The default invoces the automatic procedures of X-13ARIMA-SEATS. They include:
+Besides performing seasonal adjustement with SEATS, the default invoces the following automatic procedures of X-13ARIMA-SEATS:
   - ARIMA model search
   - outlier detection
   - detection of trading day and easter effects
 
-Alternatively, all inputs can be entered manually, as in the following example (see the section below for details on on the syntax):
+Alternatively, all inputs may be entered manually, as in the following example (again, see the next section for details on the syntax):
 
     seas(AirPassengers,
          regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
@@ -41,7 +41,7 @@ Alternatively, all inputs can be entered manually, as in the following example (
          regression.aictest = NULL, outlier.types = "none"
     )
 
-The `static` command reveals the static call that is needed to replicate a a seasonal adjustment procedure. E.g.
+The `static` command reveals the static call from above that is needed to replicate an automatic seasonal adjustment procedure:
 
     static(x)
     
@@ -52,11 +52,11 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 ### X-13ARIMA-SEATS syntax
 
-Whenever possible, seasonal uses the same syntax as X-13ARIMA-SEATS. Thus, it should be possible to invoce (almost) all options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *Specs* and *Arguments*, while each Spec may contain some Arguments. An additional Spec/Argument can be added to the `seas` function by separating Spec and Argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
+Seasonal uses the same syntax as X-13ARIMA-SEATS. It is possible to invoce most options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. An additional spec/argument can be added to the `seas` function by separating spec and argument by a `.`. For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
     x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
    
-Note that R vectors can used as an input. It is possible to manipulate almost all inputs to X-13ARIMA-SEATS that way. Most examples from the [manual][manual] should be replicable. For instance, example 1 from the manual
+Note that R vectors may be used as an input. It is possible to manipulate almost all inputs to X-13ARIMA-SEATS this way. Most examples in the [manual][manual] are replicable in R. For instance, example 1 in section 7.1,
 
     series { title  =  "Quarterly Grape Harvest" start = 1950.1
            period =  4
@@ -64,15 +64,33 @@ Note that R vectors can used as an input. It is possible to manipulate almost al
     arima { model = (0 1 1) }
     estimate { }
 
-translates to R the following way:
+translates to R in the following way:
 
     seas(AirPassengers,
-         method = "x11",
+         x11 = list(),
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the series argument. As seas uses the SEATS procedure by default, the use of X11 has to be specified manually. With `arima.model`, an addtional Spec/Argument entry is added to the input file to X-13ARIMA-SEATS. As the Spec cannot be used with the default automdl spec, the latter is removed. A growing list of examples can be found in the [wiki][examples].
+`seas` fully takes care of the series argument As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the X11 spec is added as the input (as above), the mutually exlusive and default `seats` spec is automatically removed. With `arima.model`, an addtional `spec.argument` entry is added to the input file to X-13ARIMA-SEATS. As the spec cannot be used with the default automdl spec, the latter is removed. A growing list of examples can be found in the [wiki][examples].
 
+
+### Priority rules
+
+There are several mutually exclusive specs in R. If more than one mutually exclusive specs are included, X-13ARIMA-SEATS would lead to an error. In contrast, `seas` follows a set of priority rules, where a lower priority is overwritten by a higher priority. Usually, the default has the lowest priority, and it is overwritten when one or several of the following `spec` inputs are provided:
+
+Model selection
+  1. `arima`
+  2. `pickmdl`
+  3. `automdl` (default)
+
+Adjustment procedure
+  1. `x11`
+  2. `seats` (default)
+  
+Regression procedure
+  1. `x11regression`
+  2. `regression` (default)
+  
 
 ### Graphs, Output
 
@@ -80,6 +98,11 @@ translates to R the following way:
 
 ### Inspect tool
 
+
+### Platform independecy
+
+
+### The future
 
 
 ### Licence
