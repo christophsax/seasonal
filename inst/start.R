@@ -22,11 +22,75 @@ x2 <- seas(AirPassengers,
 x2$spc
 x2 <-     seas(AirPassengers, 
                x11 = list(),
-               regression.variables = c("td"),
-               automdl.diff = c(1, 1),
-               automdl.maxorder = "3, "
+               regression.variables = c("td", "ao1999.01"),
+               arima.model = "(0,1,1)(0,1,1)",
+               arima.ma = "0.25f",
+               estimate.tol = 1e-4,
+               estimate.maxiter = 100,
+               estimate.exact = "ma"
 )
 
+
+x2$mdl$regression
+
+cat(WriteText(x3$spc))
+
+x3$mdl
+
+x3 <- seas(AirPassengers,
+     regression.variables = c("ao1951.May"),
+     regression.b = c("-0.00152f"),   
+     arima.model = "(0 1 0)(0 1 1)",
+     arima.ma = "0.25f",
+     transform = NULL,
+     regression.aictest = NULL, outlier.types = "none"
+)
+
+
+x3 <- seas(AirPassengers,
+           regression.variables = c("td", "ao1951.May"),
+           arima.model = "(0 1 0)(0 1 1)",
+           arima.ma = "0.25f",
+           transform = NULL,
+           regression.aictest = NULL, outlier.types = "none"
+)
+
+x3 <- seas(AirPassengers,
+           regression.variables = c("td", "ao1951.May"),
+           arima.model = "(0 1 0)(0 1 1)",
+           arima.ma = "0.25f",
+           transform = NULL,
+           regression.aictest = NULL, outlier.types = "none"
+)
+
+x4 <- seas(AirPassengers,
+     regression.variables = c("td", "ao1951.May"),
+     arima.model = "(0 1 0)(0 1 1)",
+     regression.b = c("-0.655149759f", "-1.446766266f", "-1.051914831f", "-2.020760853f", "1.416146773f", "1.239608635f", "10.16224917f", "23.10660807f"),
+     transform = NULL,
+     regression.aictest = NULL, outlier.types = "none"
+)
+
+
+x5 <- seas(AirPassengers,
+     regression.variables = c("td", "ao1951.May"),
+     arima.model = "(0 1 0)(0 1 1)",
+     regression.b = c("-0.655149759f", "-1.446766266f", "-1.051914831f", "-2.020760853f", "1.416146773f", "1.239608635f", "10.16224917f", "23.10660807f"),
+     arima.ma = c("0.2500000000E+00f"),
+     transform = NULL,
+     regression.aictest = NULL, outlier.types = "none"
+)
+
+predict(x5) - predict(x3)
+
+
+static(x3, static.coeff=T)
+
+
+static(x2, static.coeff = T)
+
+
+x2$err
 
 x <- seas(AirPassengers,
      x11 = list(),
