@@ -28,12 +28,12 @@ The first argument must a be time series of class `ts`. By default, `seas` calls
 
      seas(AirPassengers, x11 = list())
      
-Besides performing seasonal adjustement with SEATS, the default invoces the following automatic procedures of X-13ARIMA-SEATS:
+Besides performing seasonal adjustement with SEATS, a default call of `seas`invoces the following automatic procedures of X-13ARIMA-SEATS:
   - ARIMA model search
   - outlier detection
   - detection of trading day and easter effects
 
-Alternatively, all inputs may be entered manually, as in the following example (again, see the next section for details on the syntax):
+Alternatively, all inputs may be entered manually, as in the following example:
 
     seas(AirPassengers,
          regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
@@ -56,7 +56,9 @@ Seasonal uses the same syntax as X-13ARIMA-SEATS. It is possible to invoce most 
 
     x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
    
-Note that R vectors may be used as an input. It is possible to manipulate almost all inputs to X-13ARIMA-SEATS this way. Most examples in the [manual][manual] are replicable in R. For instance, example 1 in section 7.1,
+Note that R vectors may be used as an input. If a `spec` is added without any arguments, the `spec` should be set equal to an empty `list()`. Several defaults of `seas` are such empty lists, like the default `seats = list()`. See the help page (`?seas`) for more details on the defaults.
+
+It is possible to manipulate almost all inputs to X-13ARIMA-SEATS this way. Most examples in the [manual][manual] are replicable in R. For instance, example 1 in section 7.1,
 
     series { title  =  "Quarterly Grape Harvest" start = 1950.1
            period =  4
