@@ -92,7 +92,7 @@ When released, the R code in seasonal can be used under GPL-2. The package conta
 
 [qref]: http://www.census.gov/ts/x13as/pc/qrefX13ASpc.pdf "Quick Reference"
 
-[examples]: https://github.com/christophsax/seasonal/wiki/Examples-X-13ARIMA-SEATS "Wiki: Examples X-13ARIMA-SEATS"
+[examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
 
 

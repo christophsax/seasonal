@@ -6,11 +6,13 @@ Date: 2013-09-17
 Author: Christoph Sax
 Maintainer: Christoph Sax <c.sax@seco.admin.ch>
 Description: a simple interface to X13
-License: NA
+License: GPL-3
 Collate:
     'parse.R'
     'plot.R'
     'read.R'
     'seas.R'
     'outlier.R'
-    'seasonalyze.R'
+    'inspect.R'
+    'predict.R'
+    'static.R'

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>7.1 ARIMA</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<p>This page collects the R translations of the examples in the X-13ARIMA-SEATS <a href="http://www.census.gov/ts/x13as/docX13AS.pdf" title="Reference Manual">manual</a>. It is not yet exhaustive, but will grow over time. If you have reproduced an example, you are invited to add it to the wiki.</p>
+
+<h3>7.1 ARIMA</h3>
+
+<h4>Example 1</h4>
+
+<pre><code>series { title  =  &quot;Quarterly Grape Harvest&quot; start = 1950.1
+         period =  4
+         data  = (8997 9401 ... 11346) }
+arima { model = (0 1 1) }
+estimate { }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     arima.model = &quot;(0 1 1)&quot;
+)
+</code></pre>
+
+<p>If the <code>x11</code> spec is specified (here, as an empty <code>list</code>), the default <code>seats</code> spec is automatically removed. </p>
+
+<h4>Example 2</h4>
+
+<pre><code>series { title = &quot;Monthly sales&quot; start = 1976.jan
+         data = (138 128 ... 297) }
+transform { function = log } arima{model =(210)(011)} estimate { }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     transform.function = &quot;log&quot;,
+     arima.model = &quot;(2 1 0)(0 1 1)&quot;
+)
+</code></pre>
+
+<h4>Example 3</h4>
+
+<pre><code>Series { Title = &quot;Monthly Sales&quot;  Start = 1976.jan
+         Data = (138 128 ... 297)  }
+Transform { Function = log }
+Regression { Variables= (seasonal const) } Arima {Model=(011)}
+Estimate { }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     transform.function = &quot;log&quot;,
+     regression.variables = c(&quot;season&quot;, &quot;const&quot;),
+     arima.model = &quot;(0 1 1)&quot;
+)
+</code></pre>
+
+<h4>Example 4</h4>
+
+<pre><code>series{title = &quot;Annual Olive Harvest&quot; start = 1950
+        data = (251 271 ... 240)  }
+arima{model  = ([2] 1 0)}
+estimate{ }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     transform.function = &quot;log&quot;,
+     regression.variables = c(&quot;season&quot;, &quot;const&quot;),
+     arima.model = &quot;([2] 1 0)&quot;
+)
+</code></pre>
+
+<h4>Example 5</h4>
+
+<pre><code>series { title = &quot;Monthly sales&quot;  start = 1976.jan
+         data = (138 128 ... 297) }
+transform { function = log }
+regression { variables = const }
+arima { model  = (0 1 1)12 }
+estimate { }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     transform.function = &quot;log&quot;,
+     regression.variables = c(&quot;variables&quot;, &quot;const&quot;),
+     arima.model = &quot;(0 1 1)12&quot;
+)
+</code></pre>
+
+<h4>Example 6</h4>
+
+<pre><code>series { title = &quot;Monthly sales&quot;  start = 1976.jan
+          data = (138 128 ... 297) }
+transform { function = log }
+regression { variables = (const seasonal)} arima{model =(110)(100)3(001)} estimate { }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     transform.function = &quot;log&quot;,
+     regression.variables = c(&quot;const&quot;, &quot;seasonal&quot;),
+     arima.model = &quot;(110)(100)3(001)&quot;
+)
+</code></pre>
+
+<h4>Example 7</h4>
+
+<pre><code>series { title = &quot;Monthly sales&quot;  start = 1976.jan
+         data = (138 128 ...  297) }
+transform{ function = log }
+arima  { model = (0 1 1)(0 1 1)12
+            ma = ( ,1.0f)}
+estimate { }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     transform.function = &quot;log&quot;,
+     arima.model = &quot;(0 1 1)(0 1 1)12&quot;,
+     arima.ma = &quot;( ,1.0f)&quot;
+)
+</code></pre>
+
+<h3>7.2 AUTOMDL</h3>
+
+<h3>7.3 CHECK</h3>
+
+<h3>7.4 COMPOSITE</h3>
+
+<h3>7.5 ESTIMATE</h3>
+
+<h3>7.6 FORCE</h3>
+
+<h3>7.7 FORECAST</h3>
+
+<h3>7.8 HISTORY</h3>
+
+<h3>7.9 METADATA</h3>
+
+<h3>7.10 IDENTIFY</h3>
+
+<h3>7.11 OUTLIER</h3>
+
+<h3>7.12 PICKMDL</h3>
+
+<h4>Example 1</h4>
+
+<pre><code>series      { title = &quot;Monthly sales&quot;   start = 1976.jan
+                data = (138 128  ...  297) }
+regression { variables = (td seasonal) }
+pickmdl { mode = fcst file = &quot;nosdiff.mdl&quot; } estimate { }
+x11 {}
+</code></pre>
+
+<p>R code:
+    seas(AirPassengers, 
+         x11 = list(),
+         pickmdl.mode = &ldquo;fcst&rdquo;
+    )</p>
+
+<p>If the <code>x11</code> spec is specified (here, as an empty <code>list</code>), the default <code>seats</code> spec is automatically removed. If the <code>pickmdl</code> spec is specified, the default <code>automdl</code> spec is automatically removed. No manual modifications of the output should be performed.</p>
+
+<h4>Example 2</h4>
+
+<pre><code>series      { title = &quot;Monthly sales&quot;   start = 1976.jan
+                data = (138 128  ...  297) }
+regression  { variables = td }
+pickmdl     { mode = fcst    file = &quot;nosdiff.mdl&quot;
+                method = first   fcstlim = 20   qlim = 10
+                overdiff = 0.99  identify = all }
+outlier     {  }
+estimate { } 
+x11 {}
+</code></pre>
+
+<p>R code:
+    seas(AirPassengers, 
+         x11 = list(),
+         regression.variables = &ldquo;td&rdquo;,
+         pickmdl.mode = &ldquo;fcst&rdquo;,
+         pickmdl.method = &ldquo;first&rdquo;,
+         pickmdl.fcstlim = 20,
+         pickmdl.qlim = 10,
+         pickmdl.overdiff = 0.99,
+         pickmdl.identify = &ldquo;all&rdquo;
+    )</p>
+
+<h4>Example 3</h4>
+
+<pre><code>series      { title = &quot;Monthly sales&quot;   start = 1976.jan
+                data = (138 128  ...  297) }
+regression  { variables = td }
+pickmdl     { mode = fcst    file = &quot;nosdiff.mdl&quot;
+                outofsample=yes  }
+estimate    {   }
+x11 {}
+</code></pre>
+
+<p>R code:
+    seas(AirPassengers, 
+         x11 = list(),
+         regression.variables = &ldquo;td&rdquo;,
+         pickmdl.mode = &ldquo;fcst&rdquo;,
+         pickmdl.outofsample = &ldquo;yes&rdquo;
+    )</p>
+
+<h3>7.13 REGRESSION</h3>
+
+<h3>7.14 SEATS</h3>
+
+<h3>7.15 SERIES</h3>
+
+<h3>7.16 SLIDINGSPANS</h3>
+
+<h3>7.17 SPECTRUM</h3>
+
+<h3>7.18 TRANSFORM</h3>
+
+<h3>7.19 X11</h3>
+
+<h4>Example 1</h4>
+
+<pre><code>Series { File=&quot;klaatu.dat&quot; Start = 1976.1 }
+X11 {  }
+</code></pre>
+
+<p>R code:
+    seas(AirPassengers, 
+         x11 = list()
+    )</p>
+
+<p>If the <code>x11</code> spec is specified (here, as an empty <code>list</code>), the default <code>seats</code> spec is automatically removed. </p>
+
+<h4>Example 2</h4>
+
+<pre><code>X11 { SeasonalMA =  s3x9  TrendMA = 23  }
+X11regression { variables = td   aictest=td  }
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers, 
+     x11.seasonalma = &quot;s3x9&quot;, 
+     x11.trendma = 23,
+     x11regression.variables = &quot;td&quot;,
+     x11regression.aictest = &quot;td&quot;
+)
+</code></pre>
+
+<p>If the <code>x11regression</code> spec is specified, the <code>regression</code> spec is automatically removed.</p>
+
+<h4>Example 3</h4>
+
+<pre><code>series {
+  file=&quot;qhstarts.dat&quot;
+  start = 1967.1
+  period=4 }
+x11    {
+  seasonalma = (s3x3 s3x3 s3x5 s3x5)
+  trendma = 7
+}
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers, 
+     x11.seasonalma = c(&quot;s3x3&quot;, &quot;s3x3&quot;, &quot;s3x5&quot;, &quot;s3x5&quot;),
+     x11.trendma = 7
+)
+</code></pre>
+
+<h4>Example 4</h4>
+
+<pre><code>SERIES { TITLE = &quot;EXPORTS OF LEATHER GOODS&quot;  START = 1969.JUL
+         DATA = (815 866 926 ... 942)  }
+REGRESSION { VARIABLES = (CONST TD LS1972.MAY LS1976.OCT)  }
+ARIMA {  MODEL=(0 1 2)(1 1 0)   }
+ESTIMATE {  }
+FORECAST {  MAXLEAD=0   }
+X11 {  MODE = ADD  PRINT = ALLTABLES  SIGMALIM = (2.0 3.5)  }
+</code></pre>
+
+<p>R code:    </p>
+
+<pre><code>seas(AirPassengers, 
+     transform.function = NULL, 
+     regression.variables = c(&quot;const&quot;, &quot;td&quot;, &quot;ls1960.may&quot;, &quot;ls1960.oct&quot;),
+     arima.model = &quot;(0 1 2)(1 1 0)&quot;,
+     forecast.maxlead = 0,
+     x11.mode = &quot;add&quot;,
+     x11.sigmalim = c(2.0, 3.5)
+)
+</code></pre>
+
+<p>Automatic transformation has to be turned off.</p>
+
+<h4>Example 5</h4>
+
+<pre><code>series {  title = &quot;Unit Auto Sales&quot;  file = &quot;autosal.dat&quot;
+          start = 1985.1  }
+transform {  function = log  }
+regression  { variables = (const td)~~~user = (sale88 sale90)
+              file = &quot;special.dat&quot; format = &quot;(2f12.2)&quot; } arima {model=(310)(011)12 }
+forecast  { maxlead=12    maxback=12  }
+x11  {  title = ( &quot;Unit Auto Sales&quot;}
+</code></pre>
+
+<p>R code:    </p>
+
+<pre><code>seas(AirPassengers, 
+     transform.function = NULL, 
+     regression.variables = c(&quot;const&quot;, &quot;td&quot;, &quot;ls1960.may&quot;, &quot;ls1960.oct&quot;),
+     arima.model = &quot;(0 1 2)(1 1 0)&quot;,
+     forecast.maxlead = 0,
+     x11.mode = &quot;add&quot;,
+     x11.sigmalim = c(2.0, 3.5)
+)
+</code></pre>
+
+<h4>Example 6</h4>
+
+<pre><code>series { title=&quot;NORTHEAST ONE FAMILY Housing Starts&quot;
+         file=&quot;cne1hs.ori&quot;   name=&quot;CNE1HS&quot;    format=&quot;2R&quot; }
+transform {    function=log   }
+regression {
+  variables=(ao1976.feb ao1978.feb ls1980.feb
+             ls1982.nov ao1984.feb)
+}
+arima {  model=(0 1 2)(0 1 1)  }
+forecast {  maxlead=60  }
+x11 {  seasonalma=(s3x9)
+       title=&quot;Adjustment of 1 family housing starts&quot;
+       save = e2
+}
+</code></pre>
+
+<p>R code:    </p>
+
+<pre><code>seas(AirPassengers, 
+     transform.function = &quot;log&quot;, 
+     regression.variables = c(&quot;ao1956.feb&quot;, &quot;ao1958.feb&quot;, &quot;ls1960.feb&quot;,
+                              &quot;ls1952.nov&quot;, &quot;ao1954.feb&quot;),
+     arima.model = &quot;(0 1 2)(0 1 1)&quot;,
+     forecast.maxlead = 60,
+     x11.seasonalma = &quot;s3x9&quot;
+)
+</code></pre>
+
+<h3>7.20 X11REGRESSION</h3>
+
+<h4>Example 1</h4>
+
+<pre><code>Series { File = &quot;westus.dat&quot;
+         Start = 1976.1
+} X11 { }
+X11Regression { Variables = td
+}
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     x11regression.variables = &quot;td&quot;
+)
+</code></pre>
+
+<p>If the <code>x11regression</code> spec is specified, the <code>regression</code> spec is automatically removed.</p>
+
+<h4>Example 2</h4>
+
+<pre><code>Series { File = &quot;westus.dat&quot;
+         Start = 1976.1
+} X11 { }
+X11Regression { Variables = td
+                Aictest = (td easter)
+}
+</code></pre>
+
+<p>R-code:</p>
+
+<pre><code>seas(AirPassengers,
+     regression = NULL,
+     x11regression.variables = &quot;td&quot;,
+     x11regression.aictest = c(&quot;td&quot;, &quot;easter&quot;)
+)
+</code></pre>
+
+<h4>Example 3</h4>
+
+<p>Currently, no exogenous variables. </p>
+
+</body>
+
+</html>
+

@@ -2,6 +2,8 @@
 
 #' Inspection Tool
 #' 
+#' @param x an object of class \code{"ts"}
+#' 
 #' @export
 #' @examples
 #' inspect(AirPassengers)
@@ -9,17 +11,31 @@ inspect <- function(x){
   stopifnot(inherits(x, "ts"))
   require(manipulate)
   
-  manipulate(
-    SubPlot(x, outlier.critical), 
-    outlier.critical = slider(2.5, 5, initial = 4)
+  tsname <- deparse(substitute(x))
+
+  controls <- list(
+    outlier.critical = slider(2.5, 5, initial = 4),
+    
+    outliers = checkbox(TRUE),
+    trend = checkbox(FALSE)
   )
+  
+  manipulate({
+    SubPlot(x, tsname,
+            outlier.critical,
+            outliers, trend)
+  }, controls)
+  
 }
 
 
-SubPlot <- function(x, outlier.critical){
+SubPlot <- function(x, tsname,
+                    outlier.critical,
+                    outliers, trend
+                    ){
   s <- seas(x, outlier.critical = outlier.critical)
-  plot(s)
+  plot(s, outliers, trend)
   cat("\nStatic Call:\n")
-  static(s)
+  static(s, name = tsname)
 }
 

@@ -4,6 +4,9 @@
 \usage{
   inspect(x)
 }
+\arguments{
+  \item{x}{an object of class \code{"ts"}}
+}
 \description{
   Inspection Tool
 }

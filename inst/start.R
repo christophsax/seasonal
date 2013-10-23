@@ -1,12 +1,49 @@
-library(tstools)
+library(stringr)
 
 # library(seasonal)
 devtools::load_all(".")
 
-library(stringr)
 
-z <- seas(AirPassengers)
+x <- seas(AirPassengers, 
+     transform.function = "log", 
+     regression.variables = c("ao1956.feb", "ao1958.feb", "ls1960.feb",
+                              "ls1952.nov", "ao1954.feb"),
+     arima.model = "(0 1 2)(0 1 1)",
+     forecast.maxlead = 60,
+     x11.seasonalma = "s3x9"
+)
 
+x2 <- seas(AirPassengers, 
+     x11 = list(),
+     pickmdl.mode = "fcst"
+)
+
+
+x2$spc
+x2 <-     seas(AirPassengers, 
+               x11 = list(),
+               regression.variables = c("td"),
+               automdl.diff = c(1, 1),
+               automdl.maxorder = "3, "
+)
+
+
+x <- seas(AirPassengers,
+     x11 = list(),
+     transform.aicdiff = 0.0
+     )
+
+x$mdl
+
+x$spc
+View(x$out)
+x <- seas(AirPassengers)
+
+inspect(AirPassengers)
+
+
+
+z$data[, 'trend']
 
 plot(z)
 

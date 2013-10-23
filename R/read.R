@@ -1,5 +1,5 @@
 #' @export
-ReadX13 <- function(method = "seats", name = "spcfile", wdir){
+ReadX13 <- function(method = "seats", name = "spcfile", wdir, save.out = FALSE){
 
   # currently extracted final series (SEATS / X11)
   
@@ -51,6 +51,10 @@ ReadX13 <- function(method = "seats", name = "spcfile", wdir){
     }    
   }
 
+  if (save.out){
+    z$out <-  readLines(paste0(wdir, "/", name, ".out"))
+  }
+  z$err <-  readLines(paste0(wdir, "/", name, ".err"))
   
   z
 }
