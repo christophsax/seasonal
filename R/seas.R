@@ -195,9 +195,16 @@ RunSpclist <- function(x, method = "seats", file){
   
   txt <- SpclistToTxt(x)
   writeLines(txt, con = paste0(file, ".spc"))
-  system(paste0(x13dir, "x13/x13as ", file))
   
-#   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test"))
+  if (Sys.info()['sysname'] == "Darwin"){
+    system(paste0(x13dir, "x13/x13as-mac ", file))
+  } else if (Sys.info()['sysname'] == "Linux"){
+    system(paste0(x13dir, "x13/x13as-linux ", file))
+  } else if (Sys.info()['sysname'] == "Windows"){
+    system(paste0(x13dir, "x13/x13as.exe ", file))
+    #   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test")) 
+  }
+  
 }
 
 
