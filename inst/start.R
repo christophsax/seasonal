@@ -3,7 +3,32 @@ library(stringr)
 # library(seasonal)
 devtools::load_all(".")
 
-seas(AirPassengers)
+x <- seas(AirPassengers, X14 = list(), X15 = list())
+
+t <- paste(x$err[-c(1:5)], collapse = " ")
+
+
+str_match_all(t, "WARNING:")
+
+x <- seas(AirPassengers)
+
+
+str_x$err
+
+
+
+
+ARIMA model search
+Outlier detection
+Detection of trading day and Easter effects
+
+x$data
+
+x$spc$series$title
+
+x$mdl$regression
+
+summary(AirPassengers)
 
 
 xreg <- cbind(a = austres, b = austres)
