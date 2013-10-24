@@ -44,8 +44,18 @@ x2 <- seas(AirPassengers,
            identify.sdiff = c(0, 1),
 ) 
 
-tls <- ts(0, start = 1949, end = 1965, freq = 12)
-window(tls, start = c(1955, 1), end = c(1957, 12)) <- 1
+easter1 <- ts(0, start = 1949, end = 1965, freq = 12)
+window(easter1, start = c(1955, 1), end = c(1955, 2)) <- 1
+
+easter2 <- ts(0, start = 1949, end = 1965, freq = 12)
+window(easter2, start = c(1957, 11), end = c(1957, 12)) <- 1
+
+seas(AirPassengers, xreg = cbind(easter1, easter2),
+     x11regression.usertype = "holiday"
+)
+
+
+
 
 x1 <- seas(AirPassengers, xreg = tls,
            x11 = list(),

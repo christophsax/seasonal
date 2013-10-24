@@ -664,7 +664,31 @@ R-code:
     
 #### Example 3
     
-Currently, no exogenous variables. 
+    series {
+        file = "ukclothes.dat"
+        start = 1985.Jan
+    }
+    x11 {  }
+    x11regression{
+        variables = td
+        user = (easter1 easter2)  file = "ukeaster.dat"
+        usertype = holiday        start = 1980.Jan
+    }
+
+
+R-code:
+
+    # nonsense data:
+    easter1 <- ts(0, start = 1949, end = 1965, freq = 12)
+    window(easter1, start = c(1955, 1), end = c(1955, 2)) <- 1
+    
+    easter2 <- ts(0, start = 1949, end = 1965, freq = 12)
+    window(easter2, start = c(1957, 11), end = c(1957, 12)) <- 1
+    
+    seas(AirPassengers, xreg = cbind(easter1, easter2),
+         x11regression.usertype = "holiday"
+    )
+
 
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
