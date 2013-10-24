@@ -1,18 +1,29 @@
 #' @export
-seas <- function(x, seats = list(), transform.function = "auto", 
+seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto", 
                  regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
                  save.out = FALSE, ...){
   
-  # temporary working dir, x13 spc file is saved here, input is read from here.
+  # temporary working dir and filenames
   wdir <- tempdir() 
   
-  ### 1. Gen
+  # file name for inputs and outputs (without ending)
+  iofile <- paste0(wdir, "/iofile") 
+  datafile <- paste0(wdir, "/data.dta")
+  regfile <- paste0(wdir, "reg.dta")
+  
+  ### Write the Data
+  WriteDatavalue(x, file = datafile)
+  
+  
+  ### Construct the spclist
   spc <- list()
-  class(spc) <- c("SPC", "list")
+  class(spc) <- c("spclist", "list")
   
   # add data series
-  spc$series <- SPCSeries(x, name = deparse(substitute(x))) 
+  spc$series$title <- paste0("\"", deparse(substitute(x)), "\"")
+  spc$series$file <- paste0("\"", datafile, "\"")
+  spc$series$format <- "\"datevalue\""
   
   # add the default options
   spc$transform$`function` <- transform.function
@@ -22,28 +33,54 @@ seas <- function(x, seats = list(), transform.function = "auto",
   spc$seats <- seats
 
   # add user defined options
-  spc <- ModSPC(spc, ...)
+  spc <- ModSpclist(spc, ...)
 
   # remove double entries, adjust outputs
-  spc <- EnsureConsistencySPC(spc)
+  spc <- EnsureConsistencySpclist(spc)
 
-  ### 2. Run
-  RunSPC(spc, wdir = wdir)
+  
+  ### User defined Regressors
+  if (!is.null(xreg)){
+    WriteDatavalue(xreg, file = regfile)
 
-  ### 3. Read
+    # user names either from input (single "ts"), or from colnames ("mts)
+    if (is.null(dim(xreg))){
+      user <- deparse(substitute(xreg))
+    } else {
+      user <- colnames(xreg)
+    }
+        
+    if (!is.null(spc$regression)){
+      spc$regression$user <- user
+      spc$regression$file <- paste0("\"", regfile, "\"")
+      spc$regression$format <- "\"datevalue\""
+    } else if (!is.null(spc$x11regression)){
+      spc$x11regression$user <- user
+      spc$x11regression$file <- paste0("\"", regfile, "\"")
+      spc$x11regression$format <- "\"datevalue\""
+    } else {
+      stop ("either 'regression' or 'x11regression' has to be specied if 'xreg' is present")
+    }
+  }
+  
+  
+  ### Run X13
+  RunSpclist(spc, file = iofile)
+
+  ### Read the output
   # Output tables have names that depend on the method, thus a separate call to
   # ReadX13 is needed
   if (!is.null(spc$seats)){
-    z <- ReadX13(method = "seats", wdir = wdir, save.out = save.out)
+    z <- ReadX13(method = "seats", file = iofile, save.out = save.out)
   } else if (!is.null(spc$x11)){
-    z <- ReadX13(method = "x11", wdir = wdir, save.out = save.out)
+    z <- ReadX13(method = "x11", file = iofile, save.out = save.out)
   } else {
     warning("dont know what to read if neater seats or x11 are specified.")
   }
   
   z$spc <- spc
   
-  ### 4. final transformations
+  ### Final transformations
   z$data$original <- x
   z$data <- ts(z$data, start = start(x), frequency = frequency(x))
   z$call <- match.call()
@@ -54,8 +91,8 @@ seas <- function(x, seats = list(), transform.function = "auto",
 
 
 #' @export
-ModSPC <- function(x, ...){
-  stopifnot(inherits(x, "SPC"))
+ModSpclist <- function(x, ...){
+  stopifnot(inherits(x, "spclist"))
   
   mod.list <- list(...)
   
@@ -89,8 +126,8 @@ ModSPC <- function(x, ...){
 }
 
 #' @export
-EnsureConsistencySPC <-function(x){
-  stopifnot(inherits(x, "SPC"))
+EnsureConsistencySpclist <-function(x){
+  stopifnot(inherits(x, "spclist"))
   
   ### avoid mutually exclusive alternatives
   
@@ -140,8 +177,8 @@ EnsureConsistencySPC <-function(x){
 
 
 #' @export
-RunSPC <- function(x, method = "seats", wdir = tempdir()){
-  stopifnot(inherits(x, "SPC"))
+RunSpclist <- function(x, method = "seats", file){
+  stopifnot(inherits(x, "spclist"))
   
   
   
@@ -156,11 +193,11 @@ RunSPC <- function(x, method = "seats", wdir = tempdir()){
   x13dir <- "~/seasonal/inst/"
   # ---------------------
   
+  txt <- SpclistToTxt(x)
+  writeLines(txt, con = paste0(file, ".spc"))
+  system(paste0(x13dir, "x13/x13as ", file))
   
-  WriteSPC(x, paste0(wdir, "/spcfile.spc"))
-  system(paste0(x13dir, "x13/x13as ", paste0(wdir, "/spcfile")))
-  
-#   shell(paste0(path, "x13/x13as.exe ", path, "io/", spcfile, " ", path, "io/out/test"))
+#   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test"))
 }
 
 

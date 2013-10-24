@@ -1,5 +1,5 @@
 #' @export
-ReadX13 <- function(method = "seats", name = "spcfile", wdir, save.out = FALSE){
+ReadX13 <- function(method = "seats", name = "spcfile", file, save.out = FALSE){
 
   # currently extracted final series (SEATS / X11)
   
@@ -12,31 +12,31 @@ ReadX13 <- function(method = "seats", name = "spcfile", wdir, save.out = FALSE){
   
   z <- list()
   if (identical(method, "seats")){
-    z$data$seasonal        <- as.numeric(read.table(paste0(wdir, "/", name, ".s10"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$seasonaladj     <- as.numeric(read.table(paste0(wdir, "/", name, ".s11"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$trend           <- as.numeric(read.table(paste0(wdir, "/", name, ".s12"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$irregular       <- as.numeric(read.table(paste0(wdir, "/", name, ".s13"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustfac       <- as.numeric(read.table(paste0(wdir, "/", name, ".s16"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustmentratio <- as.numeric(read.table(paste0(wdir, "/", name, ".s18"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonal        <- as.numeric(read.table(paste0(file, ".s10"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonaladj     <- as.numeric(read.table(paste0(file, ".s11"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$trend           <- as.numeric(read.table(paste0(file, ".s12"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$irregular       <- as.numeric(read.table(paste0(file, ".s13"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustfac       <- as.numeric(read.table(paste0(file, ".s16"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustmentratio <- as.numeric(read.table(paste0(file, ".s18"), stringsAsFactors = F)[-c(1,2) ,2])
   } else if (identical(method, "x11")){
-    z$data$seasonal        <- as.numeric(read.table(paste0(wdir, "/", name, ".d10"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$seasonaladj     <- as.numeric(read.table(paste0(wdir, "/", name, ".d11"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$trend           <- as.numeric(read.table(paste0(wdir, "/", name, ".d12"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$irregular       <- as.numeric(read.table(paste0(wdir, "/", name, ".d13"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustfac       <- as.numeric(read.table(paste0(wdir, "/", name, ".d16"), stringsAsFactors = F)[-c(1,2) ,2])
-    z$data$adjustmentratio <- as.numeric(read.table(paste0(wdir, "/", name, ".e18"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonal        <- as.numeric(read.table(paste0(file, ".d10"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$seasonaladj     <- as.numeric(read.table(paste0(file, ".d11"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$trend           <- as.numeric(read.table(paste0(file, ".d12"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$irregular       <- as.numeric(read.table(paste0(file, ".d13"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustfac       <- as.numeric(read.table(paste0(file, ".d16"), stringsAsFactors = F)[-c(1,2) ,2])
+    z$data$adjustmentratio <- as.numeric(read.table(paste0(file, ".e18"), stringsAsFactors = F)[-c(1,2) ,2])
   } else {
     stop("wrong method.")
   }
   z$data <- as.data.frame(z$data)
   
-  if (file.exists(paste0(wdir, "/", name, ".saa"))){
-    z$data$final <- as.numeric(read.table(paste0(wdir, "/", name, ".saa"), stringsAsFactors = F)[-c(1,2) ,2])
+  if (file.exists(paste0(file, ".saa"))){
+    z$data$final <- as.numeric(read.table(paste0(file, ".saa"), stringsAsFactors = F)[-c(1,2) ,2])
   } else {
     z$data$final <- z$data$seasonaladj
   }
   
-  z$mdl <- ReadSPC(paste0(wdir, "/", name, ".mdl"))
+  z$mdl <- ReadFile(paste0(file, ".mdl"))
   
   # keep arima models as a single string, 
   # transform other SPC vectors to R vectors
@@ -52,9 +52,9 @@ ReadX13 <- function(method = "seats", name = "spcfile", wdir, save.out = FALSE){
   }
 
   if (save.out){
-    z$out <-  readLines(paste0(wdir, "/", name, ".out"))
+    z$out <-  readLines(paste0(file, ".out"))
   }
-  z$err <-  readLines(paste0(wdir, "/", name, ".err"))
+  z$err <-  readLines(paste0(file, ".err"))
   
   z
 }

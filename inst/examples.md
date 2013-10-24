@@ -333,6 +333,172 @@ R-code:
     )
 
 ### 7.13 REGRESSION
+
+#### Example 1
+
+    SERIES      { TITLE = "Monthly sales"  START = 1976.JAN
+                     DATA = (138 128 ... 297) }
+    REGRESSION { VARIABLES = (CONST SEASONAL) }
+    ARIMA { MODEL = (0 1 1) }
+    ESTIMATE { }
+    
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         regression.variables = c("const", "seasonal"),
+         regression.aictest = NULL,
+         arima.model = "(0 1 1)"
+    )
+    
+`regression.aictest = NULL` turns off the automatic detection of trading days and easter effects, which is enabled by default.
+
+
+#### Example 2
+
+    series { title = "Irregular Component of Monthly Sales"
+               start = 1976.jan
+               file = "sales.d13"
+               format = "x12save"
+             }
+    regression { variables = (const sincos[4,5]) }
+    estimate { }
+    spectrum { savelog=peaks }
+    
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         regression.variables = c("const", "sincos[4,5]"),
+         regression.aictest = NULL
+    )
+
+#### Example 3
+
+    Series { Title = "Monthly Sales"  Start = 1976.Jan
+              Data = (138 128 ... 297) }
+    Transform { Function = Log }
+    Regression { Variables = (TD Easter[8] Labor[10] Thank[3]) }
+    Identify { Diff = (0 1) SDiff = (0 1) }
+
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         transform.function = "log",
+         regression.variables = c("td", "easter[8]", "labor[10]", "thank[3]"),
+         identify.diff = c(0, 1),
+         identify.sdiff = c(0, 1),
+         regression.aictest = NULL
+    )
+
+
+#### Example 4
+
+    series      { title = "Monthly sales"  start = 1976.jan
+                    data = (138 128 ... 297) }
+    transform { function = log }
+    regression { variables = (tdnolpyear lom easter[8] labor[10] thank[3])
+                   aictest = (lom td easter) }
+    arima { model = (0 1 1)(0 1 1) }
+    estimate { }
+
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         transform.function = "log",
+         regression.variables = c("tdnolpyear", "lom", "easter[8]", 
+                                  "labor[10]", "thank[3]"),
+         regression.aictest = c("lom", "td", "easter"),
+         arima.model = "(0 1 1)(0 1 1)"
+    )
+
+
+#### Example 5
+
+    series     {  title = "Retail inventory of food products"
+                    start = 1990.jan  data = "foodri.dat"
+    type = stock }
+      regression {  variables = (
+                       tdstock1coef[31]
+                       easterstock[8]
+                       )
+                    aictest = ( td easter )
+    }
+    arima { model = (0 1 1)(0 1 1) } x11{ }
+
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         series.type = "stock",
+         regression.variables = c("tdstock1coef[31]", "easterstock[8]"),
+         arima.model = "(0 1 1)(0 1 1)"
+    )
+    
+#### Example 6
+
+    Series     { Title  = "Quarterly Sales"  Start = 1963.1  Period = 4
+                   Data  = (1039 1241 ...  2210)  }
+    Transform { Function = Log }
+    Regression { Variables = (AO1967.1 LS1985.3 LS1987.2 AO1978.1 TD) } Arima { Model=(011)(011)}
+    Estimate { }
+
+
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         transform.function = "log",
+         regression.variables = c("ao1967.1", "ls1985.3", "ls1987.2", "ao1978.1", "td"),
+         arima.model = "(0 1 1)(0 1 1)"
+    )
+
+#### Example 7
+
+    series {title = "Quarterly sales"  start = 1981.1
+               data = (301 294 ...  391)  period = 4  }
+    regression {user = tls
+                  data = (0 0 0 0 0 0 0 0 0 0 0 0 ...
+                          0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 ... 0) }
+    identify   { diff = (0 1) sdiff = (0 1) }
+
+R-code:
+
+    tls <- ts(0, start = 1949, end = 1965, freq = 12)
+    window(tls, start = c(1955, 1), end = c(1957, 12)) <- 1
+    
+    seas(AirPassengers, xreg = tls,
+         x11 = list(),
+         regression = list(),
+         outlier.types = "none",
+         identify.diff = c(0, 1),
+         identify.sdiff = c(0, 1),
+    ) 
+
+`regression.aictest = NULL` turns off the automatic detection of trading days and easter effects, which is enabled by default.
+
+#### Example 8
+
+    series {title = "Quarterly sales"  start = 1981.1
+               data = (301 294 ...  391)  period = 4  }
+    regression {  variables = tl1985.03-1987.01  }
+    identify   { diff = (0 1) sdiff = (0 1) }
+  
+R-code:
+
+    seas(AirPassengers, 
+         x11 = list(),
+         regression.variables = c("tl1955.01-1957.12"),
+         regression.aictest = NULL,
+         outlier.types = "none",
+         identify.diff = c(0, 1),
+         identify.sdiff = c(0, 1),
+    ) 
+
+Example 7 and 9 are equivalent and lead to identical results.
+
 ### 7.14 SEATS
 ### 7.15 SERIES
 ### 7.16 SLIDINGSPANS
