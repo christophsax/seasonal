@@ -1,3 +1,6 @@
+#' @method print seas
+#' @export
+#' 
 print.seas <- function(x){
   cat("X13-ARIMA-SEATS seasonal adjustment of ", x$spc$series$title, ":\n", sep = "")
   

@@ -1,11 +1,11 @@
 Package: seasonal
 Type: Package
-Title: a simple interface to X13
-Version: 0.01.0
-Date: 2013-09-17
+Title: R interface to X-13ARIMA-SEATS
+Version: 0.02.0
+Date: 2013-10-30
 Author: Christoph Sax
 Maintainer: Christoph Sax <c.sax@seco.admin.ch>
-Description: a simple interface to X13
+Description: R interface to X-13ARIMA-SEATS
 License: GPL-3
 Collate:
     'parse.R'
@@ -16,3 +16,4 @@ Collate:
     'inspect.R'
     'predict.R'
     'static.R'
+    'output.R'

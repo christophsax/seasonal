@@ -2,7 +2,7 @@
 \alias{static}
 \title{Static Call of a seas Object}
 \usage{
-  static(x, name = NULL)
+  static(x, static.coeff = FALSE, name = NULL)
 }
 \arguments{
   \item{x}{an object of class \code{seas}}

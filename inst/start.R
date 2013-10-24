@@ -17,7 +17,6 @@ str_x$err
 
 
 
-
 ARIMA model search
 Outlier detection
 Detection of trading day and Easter effects
