@@ -19,6 +19,8 @@ x2 <- seas(AirPassengers,
 )
 
 
+x2$mdl
+
 x2$spc
 x2 <-     seas(AirPassengers, 
                x11 = list(),

@@ -102,5 +102,13 @@ WriteSPC <- function(x, file){
   writeLines(txt, con = file)
 }
 
+# WriteDatavalue(austres, file = "data.dat")
+WriteDatavalue <- function(x, file = "data.dat"){
+  stopifnot(inherits(x, "ts"))
+  data <- cbind(floor(time(x)), cycle(x), x)
+  write.table(data, file = file, sep = " ", 
+              row.names = FALSE,
+              col.names = FALSE)
+}
 
 
