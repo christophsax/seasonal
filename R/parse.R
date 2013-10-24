@@ -10,7 +10,7 @@ ReadText <- function(txt){
 }
 
 
-#' @export
+# Read a single Spec from a file formated like .spc or .mdl
 ReadSpec <- function(txt){
   require(stringr)
   st <- str_split(txt, '=')[[1]]  # split at '='
@@ -31,9 +31,12 @@ ReadSpec <- function(txt){
   z
 }
 
-#' @export
+# removes brackets and converts to (numeric if possible) vector
+#
+# x   character vector of length 1
+#
 CleanElement <- function(x){
-  # removes brackets and converts to (numeric if possible) vector
+  stopifnot(length(x) == 1)
 
   # remove curved brackets
   x.nb <- str_replace_all(x, '[\\(\\)]', ' ')
@@ -54,18 +57,20 @@ CleanElement <- function(x){
   z
 }
 
-#' @export
-ReadSPC <- function(file){
+# Read a file formated like .spc or .mdl
+ReadFile <- function(file){
   txt = paste(readLines(file), collapse = " ")
   curly.txt <- ReadText(txt)
   z <- lapply(curly.txt, ReadSpec)
 #   z <- lapply(z, function(el) lapply(el, ReadElement))
-
   z
 }
 
-#' @export
-WriteSpec <- function(x){
+# Parse a single spec from a spclist 
+#
+# x   list element in a spclist
+#
+SpcToTxt <- function(x){
   nx <- names(x)
   z <- character(length = length(x))
   for (i in seq_along(x)){
@@ -89,18 +94,12 @@ WriteSpec <- function(x){
 }
 
 #' @export
-WriteText <- function(x){
-  xl <- lapply(x, WriteSpec)
+SpclistToTxt <- function(x){
+  xl <- lapply(x, SpcToTxt)
   paste(paste0(names(x), "{\n", xl, "\n}"), collapse = "\n\n")
 }
 
 
-#' @export
-WriteSPC <- function(x, file){
-  stopifnot(inherits(x, "list"))
-  txt <- WriteText(x)
-  writeLines(txt, con = file)
-}
 
 # WriteDatavalue(austres, file = "data.dat")
 WriteDatavalue <- function(x, file = "data.dat"){

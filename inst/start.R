@@ -3,6 +3,96 @@ library(stringr)
 # library(seasonal)
 devtools::load_all(".")
 
+seas(AirPassengers)
+
+
+xreg <- cbind(a = austres, b = austres)
+  
+var <- ts(rnorm(200), start = 1949, frequency = 12)
+
+x2 <- seas(AirPassengers, xreg = var, regression.aictest = c("td", "easter", "user"))
+
+
+
+series {title = "Quarterly sales"  start = 1981.1
+        data = (301 294 ...  391)  period = 4  }
+regression {user = tls
+            data = (0 0 0 0 0 0 0 0 0 0 0 0 ...
+                    0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 ... 0) }
+identify   { diff = (0 1) sdiff = (0 1) }
+
+
+
+plot(AirPassengers)
+
+x2 <- seas(AirPassengers, 
+     x11 = list(),
+     regression.variables = c("tl1955.03-1957.01"),
+     arima.model = "(0 1 1)(0 1 1)",
+     identify.diff = c(0, 1),
+     identify.sdiff = c(0, 1)
+) 
+
+static(x2)
+
+x2 <- seas(AirPassengers, 
+           x11 = list(),
+           regression.variables = c("tl1955.01-1957.12"),
+           regression.aictest = NULL,
+           outlier.types = "none",
+           identify.diff = c(0, 1),
+           identify.sdiff = c(0, 1),
+) 
+
+tls <- ts(0, start = 1949, end = 1965, freq = 12)
+window(tls, start = c(1955, 1), end = c(1957, 12)) <- 1
+
+x1 <- seas(AirPassengers, xreg = tls,
+           x11 = list(),
+           regression = list(),
+           outlier.types = "none",
+           identify.diff = c(0, 1),
+           identify.sdiff = c(0, 1),
+) 
+
+predict(x1)-predict(x2)
+
+
+
+
+
+x2 <- seas(AirPassengers, 
+           x11 = list(),
+           regression.variables = c("ao1950.jan"),
+           regression.aictest = NULL,
+           outlier.types = "none",
+) 
+
+tls <- ts(0, start = 1949, end = 1965, freq = 12)
+window(tls, start = c(1950, 1), end = c(1950, 1)) <- 1
+
+x1 <- seas(AirPassengers, xreg = tls,
+           x11 = list(),
+           regression = list(),
+           outlier.types = "none",
+           
+) 
+
+
+predict(x1)-predict(x2)
+
+x1$mdl
+x2$mdl
+
+seas(AirPassengers, 
+     x11 = list(),
+     transform.function = "log",
+     regression.variables = c("ao1967.1", "ls1985.3", "ls1987.2", "ao1978.1", "td"),
+     arima.model = "(0 1 1)(0 1 1)"
+)
+
+
+
 
 x <- seas(AirPassengers, 
      transform.function = "log", 
@@ -22,7 +112,7 @@ x2 <- seas(AirPassengers,
 x2$mdl
 
 x2$spc
-x2 <-     seas(AirPassengers, 
+x2 <- seas(AirPassengers, 
                x11 = list(),
                regression.variables = c("td", "ao1999.01"),
                arima.model = "(0,1,1)(0,1,1)",
