@@ -24,6 +24,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   spc$series$title <- paste0("\"", deparse(substitute(x)), "\"")
   spc$series$file <- paste0("\"", datafile, "\"")
   spc$series$format <- "\"datevalue\""
+  spc$series$period <- frequency(x)
   
   # add the default options
   spc$transform$`function` <- transform.function

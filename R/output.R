@@ -36,6 +36,6 @@ print.seas <- function(x){
     cat("off")
   } 
 
-  cat("\n\nUse:\n- predict() to extract the final adjusted series.\n- summary() for details on the adjustment model.\n- plot() for diagnostical plots.\n- static() to extract the static call for the model.")
+  cat("\n\nUse:\n- final() to extract the final adjusted series.\n- summary() for details on the adjustment model.\n- plot() for diagnostical plots.\n- static() to extract the static call for the model.")
   
 }

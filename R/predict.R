@@ -1,6 +1,6 @@
 
 #' @export
-predict.seas <- function(x){
+final <- function(x){
   x$data[,'final']
 }
 
