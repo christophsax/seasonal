@@ -1,5 +1,5 @@
 seasonal: R interface to X-13ARIMA-SEATS
-========================================
+----------------------------------------
 
 **seasonal** is an easy-to-use R-interface to **X-13ARIMA-SEATS**, a seasonal adjustment software **produced, distributed, and maintained by the United States Census Bureau**. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
 
@@ -8,8 +8,7 @@ If you are new to seasonal adjusmtent and X-13ARIMA-SEATS, you may use the autom
 If you are familiar with seasonal adjusmtent and already know something about X-13ARIMA-SEATS, you may benefit from the very close relationship between the syntax in seasonal and X-13ARIMA-SEATS. Study the *X-13ARIMA-SEATS syntax* section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
 
 
-Installation
-------------
+### Installation
 
 To install directly from github to R, substitute your github `'USERNAME'` and `'PASSWORD'`:
 
@@ -19,8 +18,7 @@ To install directly from github to R, substitute your github `'USERNAME'` and `'
 seasonal includes the binary files of X-13ARIMA-SEATS. **No separate download of the binaries is needed.**
 
 
-Getting started
----------------
+### Getting started
 
 `seas` ist the core function of the seasonal package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `seas` that contains all necessary information on the adjustment process, as well as the series. The `predict` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
@@ -55,8 +53,8 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
     inspect(x)
 
 
-X-13ARIMA-SEATS syntax
-----------------------
+### X-13ARIMA-SEATS syntax
+
 
 Seasonal uses the same syntax as X-13ARIMA-SEATS. It is possible to invoke most options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. **An additional spec/argument can be added to the `seas` function by separating spec and argument by a `.`.** For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
@@ -82,7 +80,7 @@ translates to R in the following way:
 `seas` takes care of the `series` spec, so no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as the input (as above), the mutually exlusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec/argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used with the default `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples].
 
 
-### Priority rules
+#### Priority rules
 
 There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs are included, X-13ARIMA-SEATS leads to an error. In contrast, `seas` follows a set of priority rules, where a lower priority is overwritten by a higher priority. Usually, the default has the lowest priority, and is overwritten if one or several of the following `spec` inputs are provided:
 
@@ -100,8 +98,8 @@ Regression procedure
   2. `regression` (default)
   
 
-Output
-------
+### Output
+
 
 `seas` returns an object of class `seas`, which is basically a list with the following elements:
 
@@ -113,19 +111,18 @@ Element    | Description
 `mdl`      | A list with the model specification, similar to `spc`. It typically contains `regression`, which contains the regressors and parameter estimates, and `arima`, which contains the ARIMA specification and the parameter estimates. The `summary` function gives an overview of the model.
 
 
-Graphs
-------
-
-
-
-Inspect tool
-------------
+### Graphs
 
 
 
 
-License
--------
+### Inspect tool
+
+
+
+
+
+### License
 
 When released, the R code in seasonal is licensed under GPL-3. The package contains the X-13ARIMA-SEATS binary files from the United States Census Bureau, which are in the public domain. According to the [manual][manual] (page 1):
 
