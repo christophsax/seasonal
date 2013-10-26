@@ -2,6 +2,48 @@
 #
 # 
 
+# autoprocedures:
+
+# automdl
+# pickmdl
+# manual
+
+# aic test
+# chi2test
+
+seas(AirPassengers)
+
+inspect(seas)
+
+ts(0, start(AirPassengers), end = 1965 = 12)
+
+x <- seas(AirPassengers, pickmdl = list())
+
+inspect(AirPassengers, pickmdl = list())
+
+coef(x)
+
+
+mdl(x)
+
+static(x, static.coeff=T)
+
+
+
+x <- seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]", 
+                                                 "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no", 
+     outlier.types = "none", transform.function = "log", regression.b = c("-0.00294969914f", 
+                                                                          "0.01776737356f", "0.1001558243f"), arima.ma = c("0.1156204208f", 
+                                                                                                                           "0.4973600212f"), dir = "~/tmp")
+
+
+
+
+file <- "~/tmp/iofile.est"
+
+
+
+est$reg$fixed
 
 library(stringr)
 
@@ -10,14 +52,62 @@ devtools::load_all(".")
 
 # x <- seas(austres)
 
-x <- seas(AirPassengers, x11 = list())
+x <- seas(AirPassengers)
+
+arima(lh, order = c(1,0,0))
+
+getAnywhere(print.Arima)
+
 static(x)
+
+
+coefficients
+
+mod <- arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
+
+summary(mod)
+
+sm <- summary(mod1)
+  
+  
+x <- summary(mod1)
+
+
+
+
+coef(x)
+cat("\nCoefficients:\n")
+coefs <- coef(x)
+if (!is.null(aliased <- x$aliased) && any(aliased)) {
+  cn <- names(aliased)
+  coefs <- matrix(NA, length(aliased), 4, 
+                  dimnames = list(cn, colnames(coefs)))
+  coefs[!aliased, ] <- x$coefficients
+}
+printCoefmat(coefs, digits = digits, signif.stars = signif.stars,
+             na.print = "NA")
+
+
+
+
+data(swisspharma)
+
+# one indicator, no intercept
+mod1 <- td(sales.a ~ 0 + exports.q)
+s <- summary(mod1)  # summary statistics
+
+s$
+summary.td
 
 inspect(AirPassengers)
 final(x)
 
 static(x, static.coeff = T)
 
+
+seas(AirPassengers, save.out = T)
+
+output
 
 seas(x = austres, 
      regression.variables = c("ao1974.4", "ls1990.3", 
@@ -71,7 +161,7 @@ x <- seas(AirPassengers, xreg = tls,
 
 static(x)
 
-
+page(noquote(x$output))
 x$mdl
 
 x <- seas(AirPassengers, regression.variables = c("td1coef", "easter[1]", "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.b = c("-0.00294969914f", "0.01776737356f", "0.1001558243f", "0.1"), arima.ma = c("0.1156204208f", "0.4973600212f"), transform = NULL, regression.aictest = NULL, outlier.types = "none")

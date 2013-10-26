@@ -44,6 +44,7 @@ print.seas <- function(x){
 
 
 
+
 print.spclist <- function(x){
   cat(SpclistToTxt(x))
 }
@@ -55,5 +56,15 @@ spc <- function(x){
 
 mdl <- function(x){
   x$mdl
+}
+
+# x <- seas(AirPassengers, save.out = T)
+output <- function(x){
+  if (is.null(x$output)){
+    stop("Contains no output. Use 'seas' with the 'output = TRUE' option.")
+  }
+  # remove page breaks
+#   x$output <- str_replace_all(x$output, '\\f', '')
+  page(x$output)
 }
 

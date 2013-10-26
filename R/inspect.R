@@ -7,8 +7,11 @@
 #' @export
 #' @examples
 #' inspect(AirPassengers)
-inspect <- function(x){
+inspect <- function(x, ...){
   stopifnot(inherits(x, "ts"))
+  
+  dotlist <- list(...)
+  
   require(manipulate)
   
   tsname <- deparse(substitute(x))
@@ -17,14 +20,28 @@ inspect <- function(x){
     view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", label = "View"),
     method = picker("SEATS", "X11", label = "Method"),
     outlier.critical = slider(2.5, 5, initial = 4),
-    static.call = checkbox(FALSE, "Show static call")
+    is.static.call = checkbox(FALSE, "Show static call")
   )
   
   manipulate({
+    lcall <- structure(list(quote(seas)), .Names = "")
+    lcall$x <- parse(text = tsname)[[1]]
+    lcall$outlier.critical <- outlier.critical
+    
+    if (method == "X11"){
+      lcall$x11 = list()
+    }
+    
+    
+    if (length(dotlist) > 0){
+      lcall <- c(lcall, dotlist)
+    }
+
+    call <- as.call(lcall)
+    
     SubPlot(x, tsname, view,
-            method,
-            outlier.critical,
-            static.call
+            call,
+            is.static.call
             )
   }, controls)
   
@@ -32,18 +49,11 @@ inspect <- function(x){
 
 
 SubPlot <- function(x, tsname, view,
-                    method,
-                    outlier.critical,
-                    static.call
+                    call,
+                    is.static.call
                     ){
-  if (method == "X11"){
-    s <- seas(x, outlier.critical = outlier.critical, x11 = list())
-  } else if (method == "SEATS") {
-    s <- seas(x, outlier.critical = outlier.critical)
-  } else {
-    stop("something wrong.")
-  }
-  
+
+  s <- eval(call)
   
   if (view == "Series"){
     plot(s)
@@ -59,10 +69,13 @@ SubPlot <- function(x, tsname, view,
     stop("something wrong.")
   }
   
-  if (static.call){
+  print(summary(s))
+  
+  if (is.static.call){
     cat("\nStatic Call:\n")
     static(s, name = tsname, test = TRUE)
   }
 
+  
 }
 
