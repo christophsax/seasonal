@@ -1,4 +1,4 @@
-ReadMdl <- function(file){
+read_mdl <- function(file){
   
   z <- ReadFile(paste0(file, ".mdl"))
   class(z) <- c("spclist", "list")
@@ -22,7 +22,6 @@ ReadMdl <- function(file){
 
 # Read a single Spec from a file formated like .spc or .mdl
 ReadSpec <- function(txt){
-  require(stringr)
   st <- str_split(txt, '=')[[1]]  # split at '='
   
   if (length(st) > 2){
@@ -82,7 +81,6 @@ ReadFile <- function(file){
 #' @export
 #' @import stringr
 ReadText <- function(txt){
-  require(stringr)
   mat <- str_match_all(txt, '(?:([a-zA-Z1-9]+))\\{(.*?)\\}')[[1]]
   z <- mat[,3]
   names(z) <- mat[,2]

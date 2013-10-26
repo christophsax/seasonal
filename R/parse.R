@@ -1,10 +1,8 @@
-
-
 # Parse a single spec from a spclist 
 #
 # x   list element in a spclist
 #
-SpcToTxt <- function(x){
+parse_spc <- function(x){
   nx <- names(x)
   z <- character(length = length(x))
   for (i in seq_along(x)){
@@ -28,14 +26,14 @@ SpcToTxt <- function(x){
 }
 
 #' @export
-SpclistToTxt <- function(x){
-  xl <- lapply(x, SpcToTxt)
+parse_spclist <- function(x){
+  xl <- lapply(x, parse_spc)
   paste(paste0(names(x), "{\n", xl, "\n}"), collapse = "\n\n")
 }
 
 
 # WriteDatavalue(austres, file = "data.dat")
-WriteDatavalue <- function(x, file = "data.dat"){
+write_ts_dat <- function(x, file = "data.dat"){
   stopifnot(inherits(x, "ts"))
   data <- cbind(floor(time(x)), cycle(x), x)
   write.table(data, file = file, sep = " ", 

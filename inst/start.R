@@ -1,7 +1,6 @@
 # list with options for inspect:
 #
 # 
-
 # autoprocedures:
 
 # automdl
@@ -11,9 +10,54 @@
 # aic test
 # chi2test
 
-seas(AirPassengers)
 
-inspect(seas)
+# library(seasonal)
+devtools::load_all(".")
+
+# x <- seas(austres)
+
+summary(x)
+
+mdl(x)
+
+library(stringr)
+
+x <- seas(AirPassengers)
+
+plot(x)
+monthplot(x)
+
+x <- seas(austres)
+resid(x)
+
+outlier(x)
+
+x$data
+read_data_file("~/tmp/iofile.rsd")
+
+
+
+x <- seas(x = AirPassengers, outlier.critical = 2.91)
+residplot(x)
+
+
+
+
+x <- seas(AirPassengers, estimate.save = "residuals", dir = "~/tmp/")
+
+x <- seas(austres, dir = "~/tmp")
+
+ol <- x$mdl$regression$variables[str_detect(x$mdl$regression$variables, "\\.")]
+
+
+inspect(AirPassengers)
+
+ol.ts <- OutlierTimeSeries(final(x), ol)
+
+
+x$spc
+
+inspect(AirPassengers)
 
 ts(0, start(AirPassengers), end = 1965 = 12)
 
@@ -47,12 +91,7 @@ est$reg$fixed
 
 library(stringr)
 
-# library(seasonal)
-devtools::load_all(".")
 
-# x <- seas(austres)
-
-x <- seas(AirPassengers)
 
 arima(lh, order = c(1,0,0))
 
@@ -73,31 +112,6 @@ sm <- summary(mod1)
 x <- summary(mod1)
 
 
-
-
-coef(x)
-cat("\nCoefficients:\n")
-coefs <- coef(x)
-if (!is.null(aliased <- x$aliased) && any(aliased)) {
-  cn <- names(aliased)
-  coefs <- matrix(NA, length(aliased), 4, 
-                  dimnames = list(cn, colnames(coefs)))
-  coefs[!aliased, ] <- x$coefficients
-}
-printCoefmat(coefs, digits = digits, signif.stars = signif.stars,
-             na.print = "NA")
-
-
-
-
-data(swisspharma)
-
-# one indicator, no intercept
-mod1 <- td(sales.a ~ 0 + exports.q)
-s <- summary(mod1)  # summary statistics
-
-s$
-summary.td
 
 inspect(AirPassengers)
 final(x)

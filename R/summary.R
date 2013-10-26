@@ -1,42 +1,31 @@
-' Summary of a Temporal Disaggregation
+#' Summary of a X13-ARIMA-SEATS seasonal adjustment
 #' 
-#' \code{summary} method for class "td".
+#' \code{summary} method for class "seas".
 #' 
-#' @param object      an object of class \code{"td"}, usually, a result of a 
-#'                    call to \code{\link{td}}.
-#' @param x           an object of class \code{"summary.td"}, usually, a result 
-#'                    of a call to \code{summary.td}.
+#' @param object      an object of class \code{"seas"}, usually, a result of a 
+#'                    call to \code{\link{seas}}.
+#' @param x           an object of class \code{"summary.seas"}, usually, a result 
+#'                    of a call to \code{summary.seas}.
 #' @param digits      the number of significant digits to use when printing.
 #' @param signif.stars logical. If \code{TRUE}, 'significance stars' are printed 
 #'                    for each coefficient.
 #' @param \dots       further arguments passed to or from other methods.
 
-#' @return \code{summary.td} returns a list containing the summary statistics 
+#' @return \code{summary.seas} returns a list containing the summary statistics 
 #'   included in \code{object}, and computes the following additional
 #'   statistics:
-#'   
-#'   \item{n_l}{number of low frequency observations}
-#'   \item{n}{number of high frequency observations}
-#'   \item{ar_l}{empirical auto-correlation of the low frequency series}
+#'  
 #'   \item{coefficients}{a named matrix containing coefficients, standard
 #'   deviations, t-values and p-values}
 #'   
 #'   The \code{print} method prints the summary output in a similar way as the method for \code{"lm"}.
 #'   
-#' @seealso \code{\link{td}} for the main function for temporal disaggregation.
 #' @examples
-#' data(swisspharma)
+#' x <- seas(AirPassengers)
+#' summary(x)  
 #'   
-#' mod1 <- td(sales.a ~ imports.q + exports.q)
-#' summary(mod1)  
-#'   
-#' mod2 <- td(sales.a ~ 0, to = "quarterly", method = "uniform")
-#' summary(mod2)
-#'   
-#' @keywords ts, models
-#' @method summary td
+#' @method summary seas
 #' @export
-#' 
 summary.seas <- function(object, ...){
   # build output on top of the input
   z <- object

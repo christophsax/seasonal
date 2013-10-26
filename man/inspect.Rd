@@ -2,7 +2,7 @@
 \alias{inspect}
 \title{Inspection Tool}
 \usage{
-  inspect(x)
+  inspect(x, ...)
 }
 \arguments{
   \item{x}{an object of class \code{"ts"}}

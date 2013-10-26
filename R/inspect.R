@@ -17,7 +17,7 @@ inspect <- function(x, ...){
   tsname <- deparse(substitute(x))
 
   controls <- list(
-    view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", label = "View"),
+    view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
     method = picker("SEATS", "X11", label = "Method"),
     outlier.critical = slider(2.5, 5, initial = 4),
     is.static.call = checkbox(FALSE, "Show static call")
@@ -31,7 +31,6 @@ inspect <- function(x, ...){
     if (method == "X11"){
       lcall$x11 = list()
     }
-    
     
     if (length(dotlist) > 0){
       lcall <- c(lcall, dotlist)
@@ -65,6 +64,8 @@ SubPlot <- function(x, tsname, view,
     spec.ar(original(s))
   } else if (view == "Spectrum final"){
     spec.ar(final(s))
+  } else if (view == "Residuals of regARIMA"){
+    residplot(s)
   } else {
     stop("something wrong.")
   }

@@ -1,5 +1,5 @@
 
-ReadEst <- function(file){
+read_est <- function(file){
   
   est <-  readLines(paste0(file, ".est"))
   

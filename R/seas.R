@@ -19,7 +19,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   regfile <- paste0(wdir, "reg.dta")
   
   ### Write the Data
-  WriteDatavalue(x, file = datafile)
+  write_ts_dat(x, file = datafile)
   
   
   ### Construct the spclist
@@ -41,15 +41,15 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
 
   
   # add user defined options
-  spc <- ModSpclist(spc, ...)
+  spc <- mod_spclist(spc, ...)
 
   # remove double entries, adjust outputs
-  spc <- EnsureConsistencySpclist(spc)
+  spc <- consist_check_spclist(spc)
 
   
   ### User defined Regressors
   if (!is.null(xreg)){
-    WriteDatavalue(xreg, file = regfile)
+    write_ts_dat(xreg, file = regfile)
 
     # user names either from input (single "ts"), or from colnames ("mts)
     if (is.null(dim(xreg))){
@@ -89,17 +89,17 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
 
 
   # data tables have names that depend on the method, thus a separate call to
-  # ReadData is needed
+  # read_data is needed
   if (!is.null(spc$seats)){
-    z$data <- ReadData(method = "seats", file = iofile, output = output)
+    z$data <- read_data(method = "seats", file = iofile, output = output)
   } else if (!is.null(spc$x11)){
-    z$data <- ReadData(method = "x11", file = iofile, output = output)
+    z$data <- read_data(method = "x11", file = iofile, output = output)
   } else {
     warning("dont know what to read if neither 'seats' nor 'x11' are specified (TODO).")
   }
   
-  z$mdl <- ReadMdl(iofile)
-  z$est <- ReadEst(iofile)
+  z$mdl <- read_mdl(iofile)
+  z$est <- read_est(iofile)
   
   z$coefficients <- z$est$coefficients
   z$se <- z$est$se
@@ -114,13 +114,15 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   
   if (!is.null(dir)){
     flist <- list.files(wdir, full.names = TRUE)
-    file.copy(flist, dir)
+    file.copy(flist, dir, overwrite = TRUE)
     message("All X13-ARIMA-SEATS output files have been copied to '", dir, "'.")
   }
   
   ### Final transformations
-  z$data$original <- x
-  z$data <- ts(z$data, start = start(x), frequency = frequency(x))
+  cndata <- colnames(z$data)
+  z$data <- cbind(z$data, x)
+  colnames(z$data) <- c(cndata, 'original')
+  
   z$call <- match.call()
   class(z) <- "seas"
   z
@@ -129,7 +131,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
 
 
 #' @export
-ModSpclist <- function(x, ...){
+mod_spclist <- function(x, ...){
   stopifnot(inherits(x, "spclist"))
   
   mod.list <- list(...)
@@ -164,7 +166,7 @@ ModSpclist <- function(x, ...){
 }
 
 #' @export
-EnsureConsistencySpclist <-function(x){
+consist_check_spclist <-function(x){
   stopifnot(inherits(x, "spclist"))
   
   ### avoid mutually exclusive alternatives
@@ -208,12 +210,16 @@ EnsureConsistencySpclist <-function(x){
   
   # if force is present, return adjusted output
   if (!is.null(x$force$type)){
-    x <- ModSpclist(x, force.save = "saa")
+    x$force$save = "saa"
   }
   
   # always return estimate model
+  always.add <- c("model", "estimates", "residuals")
   if (is.null(x$estimate$save)){
-    x <- ModSpclist(x, estimate.save = c("model", "estimates"))
+    x$estimate$save <- always.add
+  } else {
+    to.add <- always.add[!(always.add %in% x$estimate$save)]
+    x$estimate$save <- c(x$estimate$save, to.add)
   }
   
   x
@@ -237,7 +243,7 @@ RunSpclist <- function(x, method = "seats", file){
   x13dir <- "~/seasonal/inst/"
   # ---------------------
   
-  txt <- SpclistToTxt(x)
+  txt <- parse_spclist(x)
   writeLines(txt, con = paste0(file, ".spc"))
   
   # platform dependent call to X13

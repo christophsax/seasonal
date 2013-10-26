@@ -12,8 +12,7 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE){
   }
   
   if (identical(outliers, TRUE)){
-    ol <- x$mdl$regression$variables[str_detect(x$mdl$regression$variables, "\\.")]
-    ol.ts <- OutlierTimeSeries(final(x), ol)
+    ol.ts <- outlier(x)
     sym.ts <- ol.ts
     sym.ts[!is.na(sym.ts)] <- 3
     points(final(x), pch=as.numeric(sym.ts))
@@ -21,6 +20,24 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE){
   }
 }
 
+#' @export
+residplot <- function(x, outliers = TRUE){
+  ts.plot(resid(x), ylab = "value",
+          main = "residuals of regARIMA"
+  )
+  
+  if (identical(outliers, TRUE)){
+    ol.ts <- outlier(x)
+    sym.ts <- ol.ts
+    sym.ts[!is.na(sym.ts)] <- 3
+    points(resid(x), pch=as.numeric(sym.ts))
+    text(resid(x), labels=ol.ts, pos=3, cex=0.75, offset=0.4)
+  }
+}
+
+
+#' @export
+#' @method monthplot seas
 monthplot.seas <- function(x, choice = "seasonal", ...){
   if (choice == "seasonal"){
     monthplot(x$data[,'adjustfac'], ylab = "factor", main = "seasonal component", ...)

@@ -1,30 +1,30 @@
 
-#' A string time series with outliers
+#' A time series with outliers
 #' 
 #' @param x time series template
 #' @param outlier character string with outliers
 #' 
 #' @export
 #' @examples
-#' OutlierTimeSeries(AirPassengers, c("ao1951.May", "ao1954.Feb", "ls1956.Feb"))
-#' OutlierTimeSeries(austres, c("ao1981.1", "ao1984.2", "ls1986.4"))
-#' OutlierTimeSeries(austres, character())
-#' 
-OutlierTimeSeries <- function(x, outlier){
-  stopifnot(inherits(x, "ts"))
+#' x <- seas(AirPassengers)
+#' outlier(x)
+outlier <- function(x){
+  stopifnot(inherits(x, "seas"))
   
-  z <- x
+  ol <- x$mdl$regression$variables[str_detect(x$mdl$regression$variables, "\\.")]
+  
+  z <- final(x)
   z[1:length(z)] <- NA
   
   # if there are no outlier, return a time series with NAs
-  if (length(outlier) == 0){
+  if (length(ol) == 0){
     return(z)
   }
   
-  stopifnot(inherits(outlier, "character"))
+  stopifnot(inherits(ol, "character"))
   
-  ol.type <- str_sub(outlier, start = 1, end = 2)
-  ol.time <- str_sub(outlier, start = 3, end = -1)
+  ol.type <- str_sub(ol, start = 1, end = 2)
+  ol.time <- str_sub(ol, start = 3, end = -1)
   
   if (frequency(z) == 12){
     MonthToNum <- function(x){
@@ -42,7 +42,7 @@ OutlierTimeSeries <- function(x, outlier){
     )
   }
   
-  stopifnot(length(ol.time.R) == length(outlier))
+  stopifnot(length(ol.time.R) == length(ol))
   
   for (i in 1:length(ol.time.R)){
     window(z, start = as.numeric(ol.time.R[[i]]), 

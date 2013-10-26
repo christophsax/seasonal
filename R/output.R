@@ -44,21 +44,23 @@ print.seas <- function(x){
 
 
 
-
+#' @export
 print.spclist <- function(x){
-  cat(SpclistToTxt(x))
+  cat(parse_spclist(x))
 }
 
 
+#' @export
 spc <- function(x){
   x$spc
 }
 
+#' @export
 mdl <- function(x){
   x$mdl
 }
 
-# x <- seas(AirPassengers, save.out = T)
+#' @export
 output <- function(x){
   if (is.null(x$output)){
     stop("Contains no output. Use 'seas' with the 'output = TRUE' option.")
@@ -66,5 +68,10 @@ output <- function(x){
   # remove page breaks
 #   x$output <- str_replace_all(x$output, '\\f', '')
   page(x$output)
+}
+
+#' @export
+residuals.seas <- function(x){
+  x$data[,'residuals']
 }
 
