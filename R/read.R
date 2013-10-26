@@ -37,6 +37,7 @@ ReadX13 <- function(method = "seats", name = "spcfile", file, save.out = FALSE){
   }
   
   z$mdl <- ReadFile(paste0(file, ".mdl"))
+  class(z$mdl) <- c("spclist", "list")
   
   # keep arima models as a single string, 
   # transform other SPC vectors to R vectors
@@ -54,7 +55,14 @@ ReadX13 <- function(method = "seats", name = "spcfile", file, save.out = FALSE){
   if (save.out){
     z$out <-  readLines(paste0(file, ".out"))
   }
+  
   z$err <-  readLines(paste0(file, ".err"))
+  
+  # break on error
+  if (any(str_detect(z$err, "ERROR:"))){
+    stop(paste(z$err, collapse = "\n"))
+  }
+  
   
   z
 }

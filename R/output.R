@@ -36,6 +36,24 @@ print.seas <- function(x){
     cat("off")
   } 
 
-  cat("\n\nUse:\n- final() to extract the final adjusted series.\n- summary() for details on the adjustment model.\n- plot() for diagnostical plots.\n- static() to extract the static call for the model.")
+  cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")
+  
+  cat("\nUse:\n- final() to extract the final adjusted series.\n- summary() for details on the adjustment model.\n- plot() for diagnostical plots.\n- static() to extract the static call for the model.")
   
 }
+
+
+
+print.spclist <- function(x){
+  cat(SpclistToTxt(x))
+}
+
+
+spc <- function(x){
+  x$spc
+}
+
+mdl <- function(x){
+  x$mdl
+}
+

@@ -21,12 +21,12 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE){
   }
 }
 
-monthplot.seas <- function(x, labels = NULL, ylab = choice, choice = "seasonal"){
+monthplot.seas <- function(x, choice = "seasonal", ...){
   if (choice == "seasonal"){
-    monthplot(x$data[,'seasonal'], ylab = "factor", main = "seasonal component")
+    monthplot(x$data[,'adjustfac'], ylab = "factor", main = "seasonal component", ...)
   }
   if (choice == "irregular"){
-    monthplot(x$data[,'irregular'], ylab = "factor", main = "irregular component")
+    monthplot(x$data[,'irregular'], ylab = "factor", main = "irregular component", ...)
   }
 }
 

@@ -124,7 +124,7 @@ Element    | Description
 
 ### License
 
-When released, the R code in seasonal is licensed under GPL-3. The package contains the X-13ARIMA-SEATS binary files from the United States Census Bureau, which are in the public domain. According to the [manual][manual] (page 1):
+seasonal is free and open source, licensed under GPL-3. The package contains the X-13ARIMA-SEATS binary files from the United States Census Bureau, which are in the public domain. According to the [manual][manual] (page 1):
 
 > When it is released, the X-13ARIMA-SEATS program will be in the public domain, and may be copied or transferred.
 

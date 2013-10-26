@@ -199,11 +199,11 @@ RunSpclist <- function(x, method = "seats", file){
   
   # platform dependent call to X13
   if (Sys.info()['sysname'] == "Darwin"){
-    system(paste0(x13dir, "x13/x13as-mac ", file))
+    system(paste0(x13dir, "x13/x13as-mac ", file), intern = TRUE)
   } else if (Sys.info()['sysname'] == "Linux"){
-    system(paste0(x13dir, "x13/x13as-linux ", file))
+    system(paste0(x13dir, "x13/x13as-linux -q ", file))
   } else if (.Platform$OS.type == "windows"){
-#     system(paste0(x13dir, "x13/x13as.exe ", file))
+#     system(paste0(x13dir, "x13/x13as.exe -q ", file))
     shell(paste0(x13dir, "x13/x13as.exe ", file))
     #   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test")) 
   }
