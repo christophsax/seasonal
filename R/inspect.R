@@ -38,8 +38,10 @@ SubPlot <- function(x, tsname, view,
                     ){
   if (method == "X11"){
     s <- seas(x, outlier.critical = outlier.critical, x11 = list())
-  } else {
+  } else if (method == "SEATS") {
     s <- seas(x, outlier.critical = outlier.critical)
+  } else {
+    stop("something wrong.")
   }
   
   

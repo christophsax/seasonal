@@ -1,6 +1,6 @@
 #' @export
 seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto", 
-                 regression.aictest = c("td", "easter"), outlier = list(), 
+                 regression.chi2test = "yes", outlier = list(), 
                  automdl = list(), 
                  save.out = FALSE, ...){
   
@@ -28,7 +28,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   
   # add the default options
   spc$transform$`function` <- transform.function
-  spc$regression$aictest <- regression.aictest
+  spc$regression$chi2test <- regression.chi2test
   spc$outlier <- outlier
   spc$automdl <- automdl
   spc$seats <- seats
@@ -153,6 +153,10 @@ EnsureConsistencySpclist <-function(x){
     x$regression <- NULL
   }
   
+  # priority: 1. aictest, 2. chi2test (default)
+  if (!is.null(x$x11regression) & !is.null(x$regression)){
+    x$regression <- NULL
+  }
   
   ### ensure correct output
   

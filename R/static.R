@@ -15,72 +15,59 @@ static <- function(x, static.coeff = FALSE, name = NULL, test = TRUE){
   
   stopifnot(inherits(x, "seas"))
   
-  if (is.null(name)){
-    name <- x$call[[2]]
+  lc <- as.list(x$call)  
+  
+  # keep arguments if they are in this vector
+  keep <- c("", "x", "xreg",
+            
+            "force.type", 
+            
+            "x11", "x11.mode", "x11.trendma", "x11.sigmalim", "x11.appendfcst", 
+            "x11.appendbcst", "x11.final"
+  )
+  
+  lc <- lc[names(lc) %in% keep]
+  
+  if (!is.null(name)){
+    lc$x = parse(text = name)[[1]]
   }
   
-  if (!is.null(x$spc$force)) {
-    opt.force <- paste0(", force.type = ", x$spc$force$type)
-  } else {
-    opt.force <- ""
-  }
+  lc$regression.variables <- x$mdl$regression$variables
+  lc$arima.model <- x$mdl$arima$model
+  lc$regression.chi2test <- "no"
+  lc$outlier.types <- "none"
   
-  if (!is.null(x$spc$x11)) {
-    opt.x11 <- paste0(", x11 = list()")
-  } else {
-    opt.x11 <- ""
-  }
+  lc$transform.function = "log"
   
   if (static.coeff){
     if (!is.null(x$mdl$regression$b)) {
-      opt.b <- paste(", regression.b =", deparse(SubFixed(x$mdl$regression$b)))
-    } else {
-      opt.b <- ""
+      lc$regression.b = c(SubFixed(x$mdl$regression$b))
     }
     if (!is.null(x$mdl$arima$ma)) {
-      opt.ma <- paste(", arima.ma =", deparse(SubFixed(x$mdl$arima$ma)))
-    } else {
-      opt.ma <- ""
-    }
-    
-    # ar
+      lc$arima.ma = SubFixed(x$mdl$arima$ma)
+    } 
     if (!is.null(x$mdl$arima$ar)) {
-      opt.ar <- paste(", arima.ar =", deparse(SubFixed(x$mdl$arima$ar)))
-    } else {
-      opt.ar <- ""
+      lc$arima.ar = SubFixed(x$mdl$arima$ar)
     }
-    
-    opt.coeff <- paste0(opt.b, opt.ar, opt.ma, ", transform = NULL")
-  } else {
-    opt.coeff <- ""
   }
   
-  z <- paste0("seas(", name, 
-              ", regression.variables = ", deparse(x$mdl$regression$variables,
-                                                   width.cutoff = 500), 
-              ", arima.model = ", deparse(x$mdl$arima$model, 
-                                          width.cutoff = 500),
-              opt.coeff, opt.force, opt.x11,
-              ", regression.aictest = NULL, outlier.types = \"none\")"
-  )
+
+  
+  z <- as.call(lc)
 
   if (test){
     # testing the static call
-    x.static <- eval(parse(text = z))
-    test <- (all.equal(final(x.static), final(x)))
+    x.static <- eval(z)
+    test <- (all.equal(final(x.static), final(x), tolerance = 1e-06))
     if (inherits(test, "character")){
       warning(paste("Final Series of static and provided model differ.", test))
     }
   }
 
-  class(z) <- "static"
-  z
+  cat(deparse(z), sep = "\n")
+  invisible(z)
 }
 
-
-print.static <- function(x){
-  cat(x)
-}
 
 # x <- c("2342f", "324234")
 # SubFixed(x)

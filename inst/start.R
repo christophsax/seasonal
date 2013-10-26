@@ -2,35 +2,48 @@
 #
 # 
 
-sta <- function
 
-x <- seas(AirPassengers)
-          
-lc <- as.list(x$call)  
+library(stringr)
 
-# keep elements if they are int the vector
+# library(seasonal)
+devtools::load_all(".")
 
+# x <- seas(austres)
 
-keep <- c("", "x", "xreg", "force.type", 
-  "x11.mode", "x11.trendma", "x11.sigmalim", "x11.appendfcst", "x11.appendbcst", 
-  "x11.final"
-)
+x <- seas(AirPassengers, x11 = list())
+static(x)
 
-as.call(lc[names(lc) %in% keep])
+inspect(AirPassengers)
+final(x)
 
-
+static(x, static.coeff = T)
 
 
+seas(x = austres, 
+     regression.variables = c("ao1974.4", "ls1990.3", 
+    "ls1992.1"), arima.model = "(1 2 0)(0 1 1)", regression.chi2test = "no", 
+     outlier.types = "none", transform.function = "log", 
+     regression.b = c("0.000792151787f", "-0.002424193975f", "-0.001581068458f"), 
+     arima.ma = "0.7583853142f", 
+     arima.ar = "-0.3472735644f")
 
-names(x$call)
+inspect(austres)
+
+x2 <- seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]", 
+                                                 "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", transform.function = "log", 
+     regression.b = c("-0.00294969914f", "0.01776737356f", "0.1001558243f"
+     ), arima.ma = c("0.1156204208f", "0.4973600212f"))
+
+mdl(x2)
+
+
+mdl(x)
+
+deparse
 
 
 
-as.call(lc)
-
-
-
-
+str
 
 (x$call)
 
@@ -58,16 +71,6 @@ x <- seas(AirPassengers, xreg = tls,
 
 static(x)
 
-library(stringr)
-
-# library(seasonal)
-devtools::load_all(".")
-
-# x <- seas(austres)
-x <- seas(AirPassengers)
-final(x)
-static(x)
-static(x, static.coeff = T)
 
 x$mdl
 
