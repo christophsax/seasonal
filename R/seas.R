@@ -253,7 +253,7 @@ run_x13 <- function(x, method = "seats", file){
   if (Sys.info()['sysname'] == "Darwin"){
     system(paste0(x13dir, "/x13as-mac ", file), intern = TRUE)
   } else if (Sys.info()['sysname'] == "Linux"){
-    system(paste0(x13dir, "/x13as-linux", file))
+    system(paste0(x13dir, "/x13as-linux ", file))
   } else if (.Platform$OS.type == "windows"){
 #     system(paste0(x13dir, "x13/x13as.exe -p", file))
     shell(paste0(x13dir, "/x13as.exe ", file))
