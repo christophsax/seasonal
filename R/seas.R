@@ -237,7 +237,7 @@ run_x13 <- function(x, method = "seats", file){
   # ---------------------
   # if everything works, need to be platform independent
   
-  x13dir <- system.file("x13", package = "seasonal")
+  x13dir <- system.file("exec", package = "seasonal")
   
 #   x13dir <- "C:/Users/seco-sxh/github/seasonal/inst/"
   
