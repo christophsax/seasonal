@@ -55,16 +55,16 @@ summary.seas <- function(object, ...){
 print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3), 
                               signif.stars = getOption("show.signif.stars"), ...) {
   
-  cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n",
+  cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n",
       sep = "")
-#   resid <- x$residuals
+#   res <- x$data[,'residuals']
 #   cat("Residuals:\n")
-#   if (length(resid) > 5) {
+#   if (length(res) > 5) {
 #     nam <- c("Min", "1Q", "Median", "3Q", "Max")
-#     quantile.resid <- zapsmall(quantile(resid), digits + 1)
-#     print(structure(quantile.resid, names = nam), digits = digits)
+#     quantile.res <- zapsmall(quantile(res), digits + 1)
+#     print(structure(quantile.res, names = nam), digits = digits)
 #   } else {
-#     print(resid, digits = digits)
+#     print(res, digits = digits)
 #   }
   
   if (is.null(coef(x))) {
@@ -76,8 +76,12 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                  na.print = "NA")
   }
   
-#   cat("\n'", x$method, "' disaggregation with '", x$conversion, 
-#       "' conversion", sep = "")
+  if (!is.null(x$mdl$arima$model)) {
+    cat("\nARIMA structure:", x$mdl$arima$model, "\n")
+  }
+
+  cat("AIC:", formatC(x$lks['aic'], digits = digits), "\tnumber of observations:", formatC(x$lks['nobs'], format = "d"))
+
 #   cat("\n", x$n_l, " low-freq. obs. converted to ", x$n, " high-freq. obs.", sep="")
 #   if (!is.null(x$adj.r.squared)) {
 #     cat("\nAdjusted R-squared:", formatC(x$adj.r.squared, digits = digits))
@@ -94,3 +98,5 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   cat("\n")
   invisible(x)
 }
+
+

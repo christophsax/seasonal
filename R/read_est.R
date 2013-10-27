@@ -51,3 +51,15 @@ read_est <- function(file){
   
   z
 }
+
+
+
+read_lks <- function(file){
+  lks.raw <-  readLines(paste0(file, ".lks"))[-1]
+  lks.split <- str_split(lks.raw, "\\s+")
+  
+  lks <- do.call(rbind, lks.split)
+  z <- as.numeric(lks[,2])
+  names(z) <- lks[,1]
+  z
+}

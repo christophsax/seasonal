@@ -73,7 +73,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   
   
   ### Run X13
-  RunSpclist(spc, file = iofile)
+  run_x13(spc, file = iofile)
   
   
   ### Import from X13
@@ -100,6 +100,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   
   z$mdl <- read_mdl(iofile)
   z$est <- read_est(iofile)
+  z$lks <- read_lks(iofile)
   
   z$coefficients <- z$est$coefficients
   z$se <- z$est$se
@@ -214,7 +215,7 @@ consist_check_spclist <-function(x){
   }
   
   # always return estimate model
-  always.add <- c("model", "estimates", "residuals")
+  always.add <- c("model", "estimates", "residuals", "lkstats")
   if (is.null(x$estimate$save)){
     x$estimate$save <- always.add
   } else {
@@ -227,7 +228,7 @@ consist_check_spclist <-function(x){
 
 
 #' @export
-RunSpclist <- function(x, method = "seats", file){
+run_x13 <- function(x, method = "seats", file){
   stopifnot(inherits(x, "spclist"))
   
   
@@ -236,11 +237,11 @@ RunSpclist <- function(x, method = "seats", file){
   # ---------------------
   # if everything works, need to be platform independent
   
-#   x13dir <- system.file(package = "seasonal")
+  x13dir <- system.file(package = "seasonal")
   
 #   x13dir <- "C:/Users/seco-sxh/github/seasonal/inst/"
   
-  x13dir <- "~/seasonal/inst/"
+#   x13dir <- "~/seasonal/inst/"
   # ---------------------
   
   txt <- parse_spclist(x)
@@ -250,12 +251,12 @@ RunSpclist <- function(x, method = "seats", file){
   # The -p flag specifies that page breaks and headers will be suppressed in 
   # the main output file
   if (Sys.info()['sysname'] == "Darwin"){
-    system(paste0(x13dir, "x13/x13as-mac ", file), intern = TRUE)
+    system(paste0(x13dir, "/x13/x13as-mac ", file), intern = TRUE)
   } else if (Sys.info()['sysname'] == "Linux"){
-    system(paste0(x13dir, "x13/x13as-linux -p", file))
+    system(paste0(x13dir, "/x13/x13as-linux -p", file))
   } else if (.Platform$OS.type == "windows"){
 #     system(paste0(x13dir, "x13/x13as.exe -p", file))
-    shell(paste0(x13dir, "x13/x13as.exe ", file))
+    shell(paste0(x13dir, "/x13/x13as.exe ", file))
     #   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test")) 
   }
   
@@ -263,14 +264,14 @@ RunSpclist <- function(x, method = "seats", file){
 
 
 
-
-#' @export
-SPCSeries <- function(x, name = "series", start = NULL, end = NULL){
-  stopifnot(inherits(x, "ts"))
-  
-  z <- list()
-  z$title <- paste0("\"", name, "\"")
-  z$start <- paste0(start(x)[1], ".", cycle(x)[1])
-  z$data <- as.numeric(x)
-  z
-}
+# 
+# #' @export
+# SPCSeries <- function(x, name = "series", start = NULL, end = NULL){
+#   stopifnot(inherits(x, "ts"))
+#   
+#   z <- list()
+#   z$title <- paste0("\"", name, "\"")
+#   z$start <- paste0(start(x)[1], ".", cycle(x)[1])
+#   z$data <- as.numeric(x)
+#   z
+# }
