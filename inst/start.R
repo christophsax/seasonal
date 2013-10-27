@@ -48,6 +48,11 @@ residplot(x)
 
 
 
+x <- seas(x = AirPassengers, outlier = "")
+
+spc(x)
+
+
 
 
 

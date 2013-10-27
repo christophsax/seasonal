@@ -237,7 +237,7 @@ run_x13 <- function(x, method = "seats", file){
   # ---------------------
   # if everything works, need to be platform independent
   
-  x13dir <- system.file(package = "seasonal")
+  x13dir <- system.file("x13", package = "seasonal")
   
 #   x13dir <- "C:/Users/seco-sxh/github/seasonal/inst/"
   
@@ -251,17 +251,16 @@ run_x13 <- function(x, method = "seats", file){
   # The -p flag specifies that page breaks and headers will be suppressed in 
   # the main output file
   if (Sys.info()['sysname'] == "Darwin"){
-    system(paste0(x13dir, "/x13/x13as-mac ", file), intern = TRUE)
+    system(paste0(x13dir, "/x13as-mac ", file), intern = TRUE)
   } else if (Sys.info()['sysname'] == "Linux"){
-    system(paste0(x13dir, "/x13/x13as-linux -p", file))
+    system(paste0(x13dir, "/x13as-linux", file))
   } else if (.Platform$OS.type == "windows"){
 #     system(paste0(x13dir, "x13/x13as.exe -p", file))
-    shell(paste0(x13dir, "/x13/x13as.exe ", file))
+    shell(paste0(x13dir, "/x13as.exe ", file))
     #   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test")) 
   }
   
 }
-
 
 
 # 
