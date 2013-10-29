@@ -19,6 +19,8 @@ inspect <- function(x, ...){
   controls <- list(
     view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
     method = picker("SEATS", "X11", label = "Method"),
+    modelsearch = picker("automdl", "pickmdl", label = "Model"),
+    calendar = picker("chi2test", "aictest", label = "Calendar"),
     outlier.critical = slider(2.5, 5, initial = 4),
     is.static.call = checkbox(FALSE, "Show static call")
   )
@@ -30,6 +32,14 @@ inspect <- function(x, ...){
     
     if (method == "X11"){
       lcall$x11 = list()
+    }
+    
+    if (modelsearch == "pickmdl"){
+      lcall$pickmdl = list()
+    }
+    
+    if (calendar == "aictest"){
+      lcall$regression.aictest = c("td", "easter")
     }
     
     if (length(dotlist) > 0){
@@ -61,9 +71,9 @@ SubPlot <- function(x, tsname, view,
   } else if (view == "Irregular component"){
     monthplot(s, choice = "irregular")
   } else if (view == "Spectrum original"){
-    spec.ar(original(s))
+    spectrum(original(s))
   } else if (view == "Spectrum final"){
-    spec.ar(final(s))
+    spectrum(final(s))
   } else if (view == "Residuals of regARIMA"){
     residplot(s)
   } else {

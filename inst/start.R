@@ -1,16 +1,3 @@
-# list with options for inspect:
-#
-# 
-# autoprocedures:
-
-# automdl
-# pickmdl
-# manual
-
-# aic test
-# chi2test
-
-
 
 devtools::load_all(".")
 
@@ -27,11 +14,17 @@ x <- seas(AirPassengers)
 plot(x)
 monthplot(x)
 inspect(AirPassengers)
+
+
 x <- seas(austres)
+
+inspect(austres)
 resid(x)
 
 outlier(x)
 
+
+static(x)
 x$data
 file <- ("~/tmp/iofile")
 

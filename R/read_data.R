@@ -1,5 +1,5 @@
 #' @export
-read_data <- function(method = "seats", file, output = FALSE){
+read_data <- function(method = "seats", file){
 
   # currently extracted final series (SEATS / X11)
   

@@ -61,13 +61,14 @@ mdl <- function(x){
 }
 
 #' @export
-output <- function(x){
-  if (is.null(x$output)){
-    stop("Contains no output. Use 'seas' with the 'output = TRUE' option.")
+out <- function(x){
+  if (is.null(x$out)){
+    stop("Contains no 'out' data. Use 'seas' with the 'out = TRUE' option.")
   }
   # remove page breaks
 #   x$output <- str_replace_all(x$output, '\\f', '')
-  page(x$output)
+  page(x$out)
+  invisible(x$out)
 }
 
 #' @export

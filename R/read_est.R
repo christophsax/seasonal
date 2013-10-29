@@ -15,7 +15,11 @@ read_est <- function(file){
     
     reg.names <- z$reg$variable
     reg.coef <- as.numeric(z$reg$estimate)
-    reg.se <- as.numeric(z$reg$standard.error)
+    if (is.null(z$reg$standard.error)){
+      reg.se <- rep(0, length(reg.coef))
+    } else {
+      reg.se <- as.numeric(z$reg$standard.error)
+    }
     names(reg.coef) <- reg.names
     names(reg.se) <- reg.names
   } else {
@@ -33,7 +37,11 @@ read_est <- function(file){
     arima.names <- paste(z$arima$operator, z$arima$factor, 
                                 z$arima$period, sep = "-")
     arima.coef <- as.numeric(z$arima$estimate)
-    arima.se <- as.numeric(z$arima$standard.error)
+    if (is.null(z$arima$standard.error)){
+      arima.se <- rep(0, length(arima.coef))
+    } else {
+      arima.se <- as.numeric(z$arima$standard.error)
+    }
     names(arima.coef) <- arima.names
     names(arima.se) <- arima.names
   } else {

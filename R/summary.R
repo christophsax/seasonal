@@ -76,25 +76,12 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                  na.print = "NA")
   }
   
-  if (!is.null(x$mdl$arima$model)) {
-    cat("\nARIMA structure:", x$mdl$arima$model, "\n")
-  }
+  cat("\nARIMA structure:", x$mdl$arima$model)
+  cat(", Number of obs.:", formatC(x$lks['nobs'], format = "d"))
+  cat("\nAIC:", formatC(x$lks['aic'], digits = digits))
+  cat(", AICC:", formatC(x$lks['Aicc'], digits = digits))
+  cat(", BIC:", formatC(x$lks['bic'], digits = digits))
 
-  cat("AIC:", formatC(x$lks['aic'], digits = digits), "\tnumber of observations:", formatC(x$lks['nobs'], format = "d"))
-
-#   cat("\n", x$n_l, " low-freq. obs. converted to ", x$n, " high-freq. obs.", sep="")
-#   if (!is.null(x$adj.r.squared)) {
-#     cat("\nAdjusted R-squared:", formatC(x$adj.r.squared, digits = digits))
-#   }
-#   if (!is.null(x$rho)) {
-#     cat("\tAR1-Parameter:", formatC(x$rho, digits = digits))
-#     if (x$truncated){
-#       cat(" (truncated)")
-#     }
-#   }
-#   if (!is.null(x$criterion)) {
-#     cat("\ncriterion:", x$criterion, "\torder of differencing 'h':", x$h)
-#   }
   cat("\n")
   invisible(x)
 }

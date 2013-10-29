@@ -1,8 +1,99 @@
+#' Seasonal Adjustment with X13-ARIMA-SEATS
+#' 
+#' Core function of the seasonal package. By default, \code{seas} calls the 
+#' automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
+#' works well in most circumstances.
+#' 
+#' Seasonal uses the same syntax as X-13ARIMA-SEATS. It is possible to invoke 
+#' most options that are available in X-13ARIMA-SEATS. The X-13ARIMA-SEATS 
+#' syntax uses specs and arguments, while each spec may contain some arguments. 
+#' An additional spec/argument can be added to the \code{seas} function by 
+#' separating spec and argument by a \code{.}. For a more extensive description 
+#' of the X-13ARIMA-SEATS in \code{seas}, consider the Website on github 
+#' (\url{www.github/christophsax/seasonal})
+#' 
+#' @param x   object of class "ts": time series to seasonaly adjust
+#' @param reg   (optional) object of class "ts": one or several user defined 
+#'   exogenous variables for regARIMA modelling.
+#' @param seats   spec 'seats' without arguments (default). Seasonal adjustment 
+#'   by SEATS.
+#' @param seats   spec \code{transform} with argument \code{function = "auto"} 
+#'   (default). Automatic transformation detection.
+#' @param seats   spec \code{regression} with argument \code{chi2test = "yes"} 
+#'   (default). Chi Square test for calendar effects.
+#' @param seats   spec \code{outlier} without arguments (default). Automatic 
+#'   oulier detection.
+#' @param seats   spec \code{automdl} without arguments (default). Automatic 
+#'   model search with the automodl module.
+#' @param out   logical, should the standard output be saved in the "seas" 
+#'   object? (increases object size)
+#' @param dir   character string with output paht. If specified, the 
+#'   X13-ARIMA-SEATS output files are copied to this folder.
+#'   
+#' @return returns an object of class \code{"seas"}, which is basically a list 
+#'   with the following elements:
+#'   \item{err}{Warning messages from X13-ARIMA-SEATS}
+#'   \item{data}{An object of class "ts", containing the seasonally adjusted
+#'   data, the raw data, the trend component, the irregular component and the
+#'   seasonal component.}
+#'   \item{mdl}{A list with the model specification, similar to "spc". It
+#'   typically contains "regression", which contains the regressors and
+#'   parameter estimates, and "arima", which contains the ARIMA specification
+#'   and the parameter estimates.}
+#'   \item{est}{More detailed information on the estimation}
+#'   \item{lks}{Summary statistics}
+#'   \item{coefficients}{Coefficients of the regARIMA model}
+#'   \item{se}{Standard errors of the regARIMA model}
+#'   \item{spc}{An object of class "spclist", a list containing everything
+#'   that is send to X-13ARIMA-SEATS. Each spec is on the first level, each
+#'   argument is on the second level. Checking "spc" is good start for
+#'   debugging.}
+#'   \item{call}{Function call.}
+#'   
+#'   The \code{final} function returns the adjusted series, the \code{plot} 
+#'   method shows a plot with the unadjusted and the adjusted series. \code{summary}
+#'   gives an overview of the regARIMA model. \code{static} returns the static call from above that is needed to replicate an automatic seasonal adjustment procedure 
+#'   the model.
+#'   
+#' @examples
+#' x <- seas(AirPassengers) 
+#' summary(x)
+#' 
+#' x2 <- seas(x = AirPassengers, regression.aictest = c("td", "easter")) 
+#' summary(x2) 
+#' static(x2)
+#' 
+#' seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]", 
+#' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no", 
+#' outlier.types = "none", transform.function = "log")
+#' #' final(x) 
+#' original(x) 
+#' resid(x) 
+#' coef(x)
+#' 
+#' plot(x2) 
+#' plot(x2, trend = T) monthplot(x2) monthplot(x2, choice = "irregular")
+#' 
+#' spectrum(final(x)) 
+#' spectrum(original(x))
+#' 
+#' spc(x) mdl(x)
+#' 
+#' x3 <- seas(AirPassengers, out = T) 
+#' out(x3)
+#' 
+#' x$est$variance 
+#' x$lks
+#' 
+#' inspect(AirPassengers)
+#' 
 #' @export
 seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto", 
                  regression.chi2test = "yes", outlier = list(), 
                  automdl = list(), 
-                 output = FALSE, dir = NULL, ...){
+                 out = FALSE, dir = NULL, ...){
+  
+  stopifnot(inherits(x, "ts"))
   
   # temporary working dir and filenames
   wdir <- paste0(tempdir(), "/x13")
@@ -20,7 +111,6 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   
   ### Write the Data
   write_ts_dat(x, file = datafile)
-  
   
   ### Construct the spclist
   spc <- list()
@@ -45,7 +135,6 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
 
   # remove double entries, adjust outputs
   spc <- consist_check_spclist(spc)
-
   
   ### User defined Regressors
   if (!is.null(xreg)){
@@ -86,14 +175,17 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
     stop(paste("(messages generated by X13-ARIMA-SEATS)\n", 
                paste(z$err[-(1:4)], collapse = "\n")))
   }
-
+  
+  if (any(str_detect(z$err, "Model used for SEATS decomposition is different"))){
+    stop("SEATS decomposition invalid. Choose another regARIMA model.")
+  }
 
   # data tables have names that depend on the method, thus a separate call to
   # read_data is needed
   if (!is.null(spc$seats)){
-    z$data <- read_data(method = "seats", file = iofile, output = output)
+    z$data <- read_data(method = "seats", file = iofile)
   } else if (!is.null(spc$x11)){
-    z$data <- read_data(method = "x11", file = iofile, output = output)
+    z$data <- read_data(method = "x11", file = iofile)
   } else {
     warning("dont know what to read if neither 'seats' nor 'x11' are specified (TODO).")
   }
@@ -105,8 +197,8 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   z$coefficients <- z$est$coefficients
   z$se <- z$est$se
   
-  if (output){
-    z$output <-  readLines(paste0(file, ".out"))
+  if (out){
+    z$out <-  readLines(paste0(iofile, ".out"))
   }
   
   z$spc <- spc
@@ -130,8 +222,6 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
 }
 
 
-
-#' @export
 mod_spclist <- function(x, ...){
   stopifnot(inherits(x, "spclist"))
   
@@ -166,7 +256,6 @@ mod_spclist <- function(x, ...){
   x
 }
 
-#' @export
 consist_check_spclist <-function(x){
   stopifnot(inherits(x, "spclist"))
   
@@ -226,13 +315,8 @@ consist_check_spclist <-function(x){
   x
 }
 
-
-#' @export
 run_x13 <- function(x, method = "seats", file){
   stopifnot(inherits(x, "spclist"))
-  
-  
-  
   
   # ---------------------
   # if everything works, need to be platform independent
@@ -263,14 +347,3 @@ run_x13 <- function(x, method = "seats", file){
 }
 
 
-# 
-# #' @export
-# SPCSeries <- function(x, name = "series", start = NULL, end = NULL){
-#   stopifnot(inherits(x, "ts"))
-#   
-#   z <- list()
-#   z$title <- paste0("\"", name, "\"")
-#   z$start <- paste0(start(x)[1], ".", cycle(x)[1])
-#   z$data <- as.numeric(x)
-#   z
-# }

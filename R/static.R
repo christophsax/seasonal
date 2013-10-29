@@ -11,7 +11,7 @@
 #' x <- seas(AirPassengers)
 #' static(x)
 #' static(x, name = "ArbitrayName")
-static <- function(x, static.coeff = FALSE, name = NULL, test = TRUE){
+static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   
   stopifnot(inherits(x, "seas"))
   
@@ -39,7 +39,7 @@ static <- function(x, static.coeff = FALSE, name = NULL, test = TRUE){
   
   lc$transform.function = "log"
   
-  if (static.coeff){
+  if (coef){
     if (!is.null(x$mdl$regression$b)) {
       lc$regression.b = c(SubFixed(x$mdl$regression$b))
     }
