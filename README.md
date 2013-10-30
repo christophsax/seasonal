@@ -3,9 +3,9 @@ seasonal: R interface to X-13ARIMA-SEATS
 
 **seasonal** is an easy-to-use R-interface to **X-13ARIMA-SEATS**, a seasonal adjustment software **produced, distributed, and maintained by the United States Census Bureau**. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
 
-If you are new to seasonal adjusmtent and X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustements of some time series. The default settings in the core function generally do a very good job. Start with the *installation* and *getting started* section and skip the rest. 
+If you are new to seasonal adjustment and X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of some time series. The default settings in the core function generally do a very good job. Start with the *installation* and *getting started* section and skip the rest. 
 
-If you are familiar with seasonal adjusmtent and already know something about X-13ARIMA-SEATS, you may benefit from the close relationship between the syntax in seasonal and X-13ARIMA-SEATS. Study the *X-13ARIMA-SEATS syntax* section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
+If you are familiar with seasonal adjustment and already know something about X-13ARIMA-SEATS, you may benefit from the close relationship between the syntax in seasonal and X-13ARIMA-SEATS. Study the *X-13ARIMA-SEATS syntax* section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
 
 
 ### Installation
@@ -74,7 +74,7 @@ translates to R in the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the `series` spec, so no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (as above), the mutually exlusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec/argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used with the default `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples].
+`seas` takes care of the `series` spec, so no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (as above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec/argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used with the default `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples].
 
 
 #### Priority rules
@@ -97,7 +97,7 @@ Regression procedure
 
 ### Graphs
 
-All plots from Win X-13 should be reproducable in R. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally, it also draws the trend of the seasonal decomposition.
+All plots from Win X-13 should be reproducible in R. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally, it also draws the trend of the seasonal decomposition.
 
     x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
     plot(x)
@@ -117,7 +117,7 @@ With `spectrum`, the spectral density of a series can be estimated:
 
 ### Inspect tool
 
-the `inspect` function is a powerful tool for choosing a good seasonal adjustemt model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. The function uses a `ts` object as its first argument:
+the `inspect` function is a powerful tool for choosing a good seasonal adjustment model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. The function uses a `ts` object as its first argument:
 
     inspect(x)
     
@@ -125,7 +125,7 @@ Optionally, you can pass arbitrary spec/arguments to inspect. Here, the maximum 
 
     inspect(AirPassengers, estimate.maxiter = 1000) 
     
-The inspect function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustement process and the visualizations are recalculated. Summary statics are shown in the R console. With the 'Show static call' option, a replicable static call is also shown in the console. Note that the last option will double the time for recalculation, as the static function tests the static call each time.
+The inspect function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statics are shown in the R console. With the 'Show static call' option, a replicable static call is also shown in the console. Note that the last option will double the time for recalculation, as the static function tests the static call each time.
 
 
 ### License
@@ -143,6 +143,7 @@ This is a very new package, and it may still contain bugs. Please report them on
 [examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
 [rstudio]: http://www.rstudio.com/ide/
+
 
 
 
