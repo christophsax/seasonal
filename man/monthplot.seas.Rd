@@ -1,6 +1,6 @@
 \name{monthplot.seas}
 \alias{monthplot.seas}
-\title{Plot the Seasonal or Irregular Factors}
+\title{Plot Seasonal or Irregular Factors}
 \usage{
   \method{monthplot}{seas} (x, choice = "seasonal", ...)
 }
@@ -18,8 +18,8 @@
   returns a plot as its side effect.
 }
 \description{
-  \code{monthplot} method for class \code{"seas"}. Plot the
-  seasonal factors or the irregular factors.
+  \code{monthplot} method for class \code{"seas"}. Plot
+  seasonal or irregular factors.
 }
 \examples{
 x <- seas(AirPassengers, regression.aictest = c("td", "easter"))

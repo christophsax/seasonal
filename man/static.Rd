@@ -25,12 +25,8 @@
 }
 \description{
   A static call is a static replication of a call.
-  Automatic procedures are subistuted by the chosen
-  options.
-}
-\details{
-  If \code{coef = TRUE}, the coefficients are treated as
-  fixed, instead of beeing estimated. By df
+  Automatic procedures are subistuted by the automatically
+  selected spec/argument options.
 }
 \examples{
 x <- seas(AirPassengers)

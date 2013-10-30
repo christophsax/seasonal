@@ -8,12 +8,12 @@
 #' most options that are available in X-13ARIMA-SEATS. The X-13ARIMA-SEATS 
 #' syntax uses specs and arguments, while each spec may contain some arguments. 
 #' An additional spec/argument can be added to the \code{seas} function by 
-#' separating spec and argument by a \code{.}. For a more extensive description 
-#' of the X-13ARIMA-SEATS in \code{seas}, consider the Website on github 
+#' separating spec and argument by a dot (\code{.}). For a more extensive description 
+#' of the X-13ARIMA-SEATS in \code{seas}, consider the website on github 
 #' (\url{www.github/christophsax/seasonal})
 #' 
-#' @param x   object of class "ts": time series to seasonaly adjust
-#' @param xreg   (optional) object of class "ts": one or several user defined 
+#' @param x   object of class \code{"ts"}": time series to seasonaly adjust.
+#' @param xreg   (optional) object of class \code{"ts"}": one or several user defined 
 #'   exogenous variables for regARIMA modelling.
 #' @param seats   spec 'seats' without arguments (default). Seasonal adjustment 
 #'   by SEATS.
@@ -25,26 +25,26 @@
 #'   oulier detection.
 #' @param automdl   spec \code{automdl} without arguments (default). Automatic 
 #'   model search with the automodl module.
-#' @param out   logical, should the standard output be saved in the "seas" 
+#' @param out   logical, should the standard output be saved in the \code{"seas"} 
 #'   object? (increases object size)
-#' @param dir   character string with output paht. If specified, the 
+#' @param dir   character string with output path. If specified, the 
 #'   X13-ARIMA-SEATS output files are copied to this folder.
 #' @param ...  additional spec/arguments options (see details).
 #'   
-#' @return returns an object of class \code{"seas"}, which is basically a list 
+#' @return returns an object of class \code{"seas"}, essentially a list 
 #'   with the following elements: \item{err}{Warning messages from
-#'   X13-ARIMA-SEATS} \item{data}{An object of class "ts", containing the
+#'   X13-ARIMA-SEATS.} \item{data}{An object of class \code{"ts"}", containing the
 #'   seasonally adjusted data, the raw data, the trend component, the irregular
 #'   component and the seasonal component.} \item{mdl}{A list with the model
-#'   specification, similar to "spc". It typically contains "regression", which
-#'   contains the regressors and parameter estimates, and "arima", which
+#'   specification, similar to \code{"spc"}". It typically contains \code{"regression"}", which
+#'   contains the regressors and parameter estimates, and \code{"arima"}", which
 #'   contains the ARIMA specification and the parameter estimates.} 
-#'   \item{est}{More detailed information on the estimation} \item{lks}{Summary
-#'   statistics} \item{coefficients}{Coefficients of the regARIMA model} 
-#'   \item{se}{Standard errors of the regARIMA model} \item{spc}{An object of
-#'   class "spclist", a list containing everything that is send to
+#'   \item{est}{More detailed information on the estimation.} \item{lks}{Summary
+#'   statistics.} \item{coefficients}{Coefficients of the regARIMA model.} 
+#'   \item{se}{Standard errors of the regARIMA model.} \item{spc}{An object of
+#'   class \code{"spclist"}, a list containing everything that is send to
 #'   X-13ARIMA-SEATS. Each spec is on the first level, each argument is on the
-#'   second level. Checking "spc" is good start for debugging.} 
+#'   second level. Checking \code{"spc"}" is good start for debugging.} 
 #'   \item{call}{Function call.}
 #'   
 #'   The \code{final} function returns the adjusted series, the \code{plot} 

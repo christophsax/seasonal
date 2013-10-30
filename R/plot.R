@@ -50,7 +50,7 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE, ...){
 #' 
 #' @param x  an object of class \code{"seas"}, usually, a result of a call to 
 #'   \code{\link{seas}}.
-#' @param outliers   logical, should the oultiers be drawn
+#' @param outliers   logical, should the oultiers be drawn.
 #' @param \dots   further arguments passed to \code{ts.plot}.
 #'   
 #' @return returns a plot as its side effect.
@@ -80,9 +80,9 @@ residplot <- function(x, outliers = TRUE, ...){
 }
 
 
-#' Plot the Seasonal or Irregular Factors
+#' Plot Seasonal or Irregular Factors
 #' 
-#' \code{monthplot} method for class \code{"seas"}. Plot the seasonal factors or the irregular factors. 
+#' \code{monthplot} method for class \code{"seas"}. Plot seasonal or irregular factors. 
 #' 
 #' @param x  an object of class \code{"seas"}, usually, a result of a call to 
 #'   \code{\link{seas}}.

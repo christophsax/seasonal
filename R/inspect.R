@@ -1,7 +1,7 @@
 #' Inspection Function for Seasonal Adjustment (RStudio only)
 #' 
 #' Inspect the seasonal adjustment of a time series. \code{inspect} uses the
-#' \code{manipulate} package from RStudio and can not be used without.
+#' \code{manipulate} package from RStudio and can not be used without it.
 #' 
 #' @param x an object of class \code{"ts"}
 #' @param ...  additional spec/arguments options

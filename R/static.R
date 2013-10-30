@@ -1,10 +1,7 @@
 #' Static Call of a seas Object
 #' 
 #' A static call is a static replication of a call. Automatic procedures are
-#' subistuted by the chosen options.
-#' 
-#' If \code{coef = TRUE}, the coefficients are treated as fixed, instead of
-#' beeing estimated. By df
+#' subistuted by the automatically selected spec/argument options.
 #' 
 #' @param x an object of class \code{seas}
 #' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed,

@@ -23,14 +23,14 @@
   irregular(x)
 }
 \arguments{
-  \item{x}{an object of class "seas".}
+  \item{x}{an object of class \code{"seas"}.}
 }
 \value{
   return an element or a series, depending on the function
 }
 \description{
-  These functions extract elements or series from a "seas"
-  object.
+  These functions extract elements or series from a
+  \code{"seas"} object.
 }
 \examples{
 x <- seas(AirPassengers)

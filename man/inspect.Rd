@@ -12,7 +12,7 @@
 \description{
   Inspect the seasonal adjustment of a time series.
   \code{inspect} uses the \code{manipulate} package from
-  RStudio and can not be used without.
+  RStudio and can not be used without it.
 }
 \examples{
 \dontrun{

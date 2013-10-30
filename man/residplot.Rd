@@ -8,7 +8,7 @@
   \item{x}{an object of class \code{"seas"}, usually, a
   result of a call to \code{\link{seas}}.}
 
-  \item{outliers}{logical, should the oultiers be drawn}
+  \item{outliers}{logical, should the oultiers be drawn.}
 
   \item{\dots}{further arguments passed to \code{ts.plot}.}
 }

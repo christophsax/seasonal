@@ -1,8 +1,8 @@
 #' Outlier Time series
 #' 
-#' Returns a time series that contains the names of the outliers.
+#' Returns an object of class \code{"ts"} that contains the names of the outliers.
 #' 
-#' @param x   an object of class "seas".
+#' @param x   an object of class \code{"seas"}.
 #' 
 #' @return character string time series with outliers.
 #' 

@@ -1,8 +1,8 @@
 #' Extractor Functions for seas Elements and Series
 #' 
-#' These functions extract elements or series from a "seas" object.
+#' These functions extract elements or series from a \code{"seas"} object.
 #' 
-#' @param x  an object of class "seas".
+#' @param x  an object of class \code{"seas"}.
 #' 
 #' @return return an element or a series, depending on the function
 #' 
