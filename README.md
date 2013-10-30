@@ -31,7 +31,7 @@ The first argument must be a time series of class `ts`. By default, `seas` calls
      seas(AirPassengers, x11 = list())
      
 Besides performing seasonal adjustment with SEATS, a default call of `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
-  - transformation section (log, no log)
+  - transformation selection (log / no log)
   - Detection of trading day and Easter effects
   - Outlier detection
   - ARIMA model search
