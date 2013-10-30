@@ -10,7 +10,7 @@
 #' An additional spec/argument can be added to the \code{seas} function by 
 #' separating spec and argument by a dot (\code{.}). For a more extensive description 
 #' of the X-13ARIMA-SEATS in \code{seas}, consider the website on github 
-#' (\url{www.github/christophsax/seasonal})
+#' (\url{https://github.com/christophsax/seasonal})
 #' 
 #' @param x   object of class \code{"ts"}": time series to seasonaly adjust.
 #' @param xreg   (optional) object of class \code{"ts"}": one or several user defined 
