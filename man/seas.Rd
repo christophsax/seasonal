@@ -87,7 +87,8 @@
   the \code{seas} function by separating spec and argument
   by a dot (\code{.}). For a more extensive description of
   the X-13ARIMA-SEATS in \code{seas}, consider the website
-  on github (\url{www.github/christophsax/seasonal})
+  on github
+  (\url{https://github.com/christophsax/seasonal})
 }
 \examples{
 x <- seas(AirPassengers)
