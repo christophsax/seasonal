@@ -13,48 +13,47 @@
 #' (\url{www.github/christophsax/seasonal})
 #' 
 #' @param x   object of class "ts": time series to seasonaly adjust
-#' @param reg   (optional) object of class "ts": one or several user defined 
+#' @param xreg   (optional) object of class "ts": one or several user defined 
 #'   exogenous variables for regARIMA modelling.
 #' @param seats   spec 'seats' without arguments (default). Seasonal adjustment 
 #'   by SEATS.
-#' @param seats   spec \code{transform} with argument \code{function = "auto"} 
+#' @param transform.function   spec \code{transform} with argument \code{function = "auto"} 
 #'   (default). Automatic transformation detection.
-#' @param seats   spec \code{regression} with argument \code{chi2test = "yes"} 
+#' @param regression.chi2test   spec \code{regression} with argument \code{chi2test = "yes"} 
 #'   (default). Chi Square test for calendar effects.
-#' @param seats   spec \code{outlier} without arguments (default). Automatic 
+#' @param outlier   spec \code{outlier} without arguments (default). Automatic 
 #'   oulier detection.
-#' @param seats   spec \code{automdl} without arguments (default). Automatic 
+#' @param automdl   spec \code{automdl} without arguments (default). Automatic 
 #'   model search with the automodl module.
 #' @param out   logical, should the standard output be saved in the "seas" 
 #'   object? (increases object size)
 #' @param dir   character string with output paht. If specified, the 
 #'   X13-ARIMA-SEATS output files are copied to this folder.
+#' @param ...  additional spec/arguments options (see details).
 #'   
 #' @return returns an object of class \code{"seas"}, which is basically a list 
-#'   with the following elements:
-#'   \item{err}{Warning messages from X13-ARIMA-SEATS}
-#'   \item{data}{An object of class "ts", containing the seasonally adjusted
-#'   data, the raw data, the trend component, the irregular component and the
-#'   seasonal component.}
-#'   \item{mdl}{A list with the model specification, similar to "spc". It
-#'   typically contains "regression", which contains the regressors and
-#'   parameter estimates, and "arima", which contains the ARIMA specification
-#'   and the parameter estimates.}
-#'   \item{est}{More detailed information on the estimation}
-#'   \item{lks}{Summary statistics}
-#'   \item{coefficients}{Coefficients of the regARIMA model}
-#'   \item{se}{Standard errors of the regARIMA model}
-#'   \item{spc}{An object of class "spclist", a list containing everything
-#'   that is send to X-13ARIMA-SEATS. Each spec is on the first level, each
-#'   argument is on the second level. Checking "spc" is good start for
-#'   debugging.}
+#'   with the following elements: \item{err}{Warning messages from
+#'   X13-ARIMA-SEATS} \item{data}{An object of class "ts", containing the
+#'   seasonally adjusted data, the raw data, the trend component, the irregular
+#'   component and the seasonal component.} \item{mdl}{A list with the model
+#'   specification, similar to "spc". It typically contains "regression", which
+#'   contains the regressors and parameter estimates, and "arima", which
+#'   contains the ARIMA specification and the parameter estimates.} 
+#'   \item{est}{More detailed information on the estimation} \item{lks}{Summary
+#'   statistics} \item{coefficients}{Coefficients of the regARIMA model} 
+#'   \item{se}{Standard errors of the regARIMA model} \item{spc}{An object of
+#'   class "spclist", a list containing everything that is send to
+#'   X-13ARIMA-SEATS. Each spec is on the first level, each argument is on the
+#'   second level. Checking "spc" is good start for debugging.} 
 #'   \item{call}{Function call.}
 #'   
 #'   The \code{final} function returns the adjusted series, the \code{plot} 
-#'   method shows a plot with the unadjusted and the adjusted series. \code{summary}
-#'   gives an overview of the regARIMA model. \code{static} returns the static call from above that is needed to replicate an automatic seasonal adjustment procedure 
-#'   the model.
+#'   method shows a plot with the unadjusted and the adjusted series.
+#'   \code{summary} gives an overview of the regARIMA model. \code{static}
+#'   returns the static call from above that is needed to replicate an automatic
+#'   seasonal adjustment procedure the model.
 #'   
+#' @import stringr
 #' @examples
 #' x <- seas(AirPassengers) 
 #' summary(x)
@@ -66,26 +65,34 @@
 #' seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]", 
 #' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no", 
 #' outlier.types = "none", transform.function = "log")
-#' #' final(x) 
+#' 
+#' final(x) 
 #' original(x) 
 #' resid(x) 
 #' coef(x)
 #' 
 #' plot(x2) 
-#' plot(x2, trend = T) monthplot(x2) monthplot(x2, choice = "irregular")
+#' plot(x2, trend = TRUE) 
+#' monthplot(x2) 
+#' monthplot(x2, choice = "irregular")
 #' 
 #' spectrum(final(x)) 
 #' spectrum(original(x))
 #' 
-#' spc(x) mdl(x)
+#' spc(x) 
+#' mdl(x)
 #' 
-#' x3 <- seas(AirPassengers, out = T) 
+#' x3 <- seas(AirPassengers, out = TRUE) 
+#' \dontrun{
 #' out(x3)
+#' }
 #' 
-#' x$est$variance 
+#' x$est$variance  
 #' x$lks
 #' 
+#' \dontrun{
 #' inspect(AirPassengers)
+#' }
 #' 
 #' @export
 seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto", 
@@ -160,10 +167,8 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
     }
   }
   
-  
   ### Run X13
   run_x13(spc, file = iofile)
-  
   
   ### Import from X13
   z <- list()
@@ -222,7 +227,14 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
 }
 
 
+
 mod_spclist <- function(x, ...){
+  # Add one or several X13-ARIMA-SEATS specs/arguments to a spclist
+  #
+  # x  "spclist" object
+  #
+  # returns a "spclist"
+  
   stopifnot(inherits(x, "spclist"))
   
   mod.list <- list(...)
@@ -257,6 +269,15 @@ mod_spclist <- function(x, ...){
 }
 
 consist_check_spclist <-function(x){
+  # Checks the consitency of a spclist
+  # 
+  # removes exclusive spec/arguments. See 'priority rules' on website..
+  # ensures the necessary output
+  #
+  # x  "spclist" object
+  #
+  # returns a "spclist"
+  
   stopifnot(inherits(x, "spclist"))
   
   ### avoid mutually exclusive alternatives
@@ -315,7 +336,13 @@ consist_check_spclist <-function(x){
   x
 }
 
-run_x13 <- function(x, method = "seats", file){
+
+run_x13 <- function(x, file){
+  # run X13-ARIMA-SEATS platform dependently
+  #
+  # x  "spclist" object
+  # file   full path, without file ending
+  
   stopifnot(inherits(x, "spclist"))
   
   # ---------------------
@@ -332,8 +359,6 @@ run_x13 <- function(x, method = "seats", file){
   writeLines(txt, con = paste0(file, ".spc"))
   
   # platform dependent call to X13
-  # The -p flag specifies that page breaks and headers will be suppressed in 
-  # the main output file
   if (Sys.info()['sysname'] == "Darwin"){
     system(paste0(x13dir, "/x13as-mac ", file), intern = TRUE)
   } else if (Sys.info()['sysname'] == "Linux"){

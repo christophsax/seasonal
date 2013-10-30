@@ -1,5 +1,9 @@
-
 read_est <- function(file){
+  # Read a .est file from X13-ARIMA-SEATS
+  # 
+  # file  full path without file ending
+  #
+  # return a list with coefficients, standard errors and some statistics
   
   est <-  readLines(paste0(file, ".est"))
   
@@ -61,13 +65,3 @@ read_est <- function(file){
 }
 
 
-
-read_lks <- function(file){
-  lks.raw <-  readLines(paste0(file, ".lks"))[-1]
-  lks.split <- str_split(lks.raw, "\\s+")
-  
-  lks <- do.call(rbind, lks.split)
-  z <- as.numeric(lks[,2])
-  names(z) <- lks[,1]
-  z
-}

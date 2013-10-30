@@ -1,8 +1,10 @@
-# Parse a single spec from a spclist 
-#
-# x   list element in a spclist
-#
 parse_spc <- function(x){
+  # Parse a single spec from a spclist 
+  #
+  # x   list element in a spclist
+  #
+  # returns the parsed text for writing to a .spc file
+  
   nx <- names(x)
   z <- character(length = length(x))
   for (i in seq_along(x)){
@@ -25,15 +27,28 @@ parse_spc <- function(x){
   paste(z, collapse = "\n")
 }
 
-#' @export
 parse_spclist <- function(x){
+  # Parse a spclist
+  #
+  # x   a "spclist" object
+  #
+  # returns the parsed text for writing to a .spc file
+  
   xl <- lapply(x, parse_spc)
   paste(paste0(names(x), "{\n", xl, "\n}"), collapse = "\n\n")
 }
 
 
-# WriteDatavalue(austres, file = "data.dat")
+
 write_ts_dat <- function(x, file = "data.dat"){
+  # Write a "ts" object to a .dat file
+  #
+  # Uses the X13-ARIMA-SEATS "datevalue" format.
+  # 
+  # x  a "ts" object
+  # 
+  # WriteDatavalue(austres, file = "data.dat")
+  
   stopifnot(inherits(x, "ts"))
   data <- cbind(floor(time(x)), cycle(x), x)
   write.table(data, file = file, sep = " ", 

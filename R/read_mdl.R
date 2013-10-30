@@ -1,4 +1,13 @@
+# Reading a .mdl file: Its a bit complicated, and could be probably simplified.
+
 read_mdl <- function(file){
+  # Read an .mdl file from X13-ARIMA-SEATS
+  # 
+  # file  full path without file ending
+  #
+  # return "spclist" object, similar to the input specification
+  #
+  # depends: ReadFile, ReadSpec, ReadText, CleanElement
   
   z <- ReadFile(paste0(file, ".mdl"))
   class(z) <- c("spclist", "list")
@@ -20,8 +29,9 @@ read_mdl <- function(file){
 
 
 
-# Read a single Spec from a file formated like .spc or .mdl
 ReadSpec <- function(txt){
+  # Read a single Spec from a file formated like .spc or .mdl
+  
   st <- str_split(txt, '=')[[1]]  # split at '='
   
   if (length(st) > 2){
@@ -78,8 +88,6 @@ ReadFile <- function(file){
 }
 
 
-#' @export
-#' @import stringr
 ReadText <- function(txt){
   mat <- str_match_all(txt, '(?:([a-zA-Z1-9]+))\\{(.*?)\\}')[[1]]
   z <- mat[,3]

@@ -1,10 +1,33 @@
+#' Plot the Adjusted and Unadjusted Series
+#' 
+#' \code{plot} method for class \code{"seas"}. Plot the adjusted and unadjusted
+#' series, as well as the outliers. Optionally draw the trend series.
+#' 
+#' @param x  an object of class \code{"seas"}, usually, a result of a 
+#'   call to \code{\link{seas}}.
+#' @param outliers   logical, should the oultiers be drawn
+#' @param trend   logical, should the trend be drawn
+#' @param \dots   further arguments passed to \code{ts.plot}.
+#'   
+#' @return returns a plot as its side effect.
+#'   
+#' @seealso \code{\link{seas}} for the main function.
+#'   
 #' @export
-plot.seas <- function(x, outliers = TRUE, trend = FALSE){
+#' @method plot seas
+#'   
+#' @examples
+#' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
+#' plot(x)  
+#' plot(x, outliers = FALSE)  
+#' plot(x, trend = TRUE) 
+#' 
+plot.seas <- function(x, outliers = TRUE, trend = FALSE, ...){
   ts.plot(cbind(x$data[,'original'], final(x)), 
           col = c("black", "red"), 
           lwd = c(1, 2),
           ylab = "value",
-          main = "unadjusted and seasonally adjusted series"
+          main = "unadjusted and seasonally adjusted series", ...
   )
   
   if (identical(trend, TRUE)){
@@ -20,10 +43,31 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE){
   }
 }
 
+#' Plot the Residuals of an X13 regARIMA model
+#' 
+#' Plot the residuals of an X13 regARIMA model, as well as the outliers.
+#' Optionally draw the trend series.
+#' 
+#' @param x  an object of class \code{"seas"}, usually, a result of a call to 
+#'   \code{\link{seas}}.
+#' @param outliers   logical, should the oultiers be drawn
+#' @param \dots   further arguments passed to \code{ts.plot}.
+#'   
+#' @return returns a plot as its side effect.
+#'   
+#' @seealso \code{\link{seas}} for the main function.
+#'   
 #' @export
-residplot <- function(x, outliers = TRUE){
+#'   
+#' @examples
+#' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
+#' residplot(x)  
+#' residplot(x, outliers = FALSE)  
+#' 
+#' @export
+residplot <- function(x, outliers = TRUE, ...){
   ts.plot(resid(x), ylab = "value",
-          main = "residuals of regARIMA"
+          main = "residuals of regARIMA", ...
   )
   
   if (identical(outliers, TRUE)){
@@ -36,6 +80,27 @@ residplot <- function(x, outliers = TRUE){
 }
 
 
+#' Plot the Seasonal or Irregular Factors
+#' 
+#' \code{monthplot} method for class \code{"seas"}. Plot the seasonal factors or the irregular factors. 
+#' 
+#' @param x  an object of class \code{"seas"}, usually, a result of a call to 
+#'   \code{\link{seas}}.
+#' @param choice  character string, either \code{"seasonal"} or \code{"irregular"}.
+#' @param \dots   further arguments passed to \code{monthplot.default}.
+#'   
+#' @return returns a plot as its side effect.
+#'   
+#' @seealso \code{\link{seas}} for the main function.
+#'   
+#' @export
+#' @method monthplot seas
+#'   
+#' @examples
+#' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
+#' monthplot(x)  
+#' monthplot(x, choice = "irregular")  
+#' 
 #' @export
 #' @method monthplot seas
 monthplot.seas <- function(x, choice = "seasonal", ...){

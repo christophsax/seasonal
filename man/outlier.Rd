@@ -1,16 +1,18 @@
 \name{outlier}
 \alias{outlier}
-\title{A time series with outliers}
+\title{Outlier Time series}
 \usage{
   outlier(x)
 }
 \arguments{
-  \item{x}{time series template}
-
-  \item{outlier}{character string with outliers}
+  \item{x}{an object of class "seas".}
+}
+\value{
+  character string time series with outliers.
 }
 \description{
-  A time series with outliers
+  Returns a time series that contains the names of the
+  outliers.
 }
 \examples{
 x <- seas(AirPassengers)

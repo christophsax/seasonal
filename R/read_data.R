@@ -1,14 +1,18 @@
-#' @export
 read_data <- function(method = "seats", file){
+  # Read data from X13-ARIMA-SEATS
+  # 
+  # method  "seats" or "x11", series are in different files, depending on mehtod
+  # file  full path without file ending
+  #
+  # return "mts" object
 
-  # currently extracted final series (SEATS / X11)
   
+  # currently extracted final series (SEATS / X11)
   # seasonal        s10 final SEATS seasonal component               d10 final seasonal factors
   # seasonaladj     s11 final SEATS seasonal adjustment component    d11 final seasonally adjusted series
   # trend           s12 final SEATS trend component                  d12 final trend-cycle
   # irregular       s13 final SEATS irregular component              d13 final irregular component
   # adjustfac       s16 final SEATS combined adjustment factors      d16 combined seasonal and trading day factors
-  # adjustmentratio s18 final SEATS adjustment ratio                 e18 final adjustment ratios (original series / seasonally adjusted series)
 
   if (identical(method, "seats")){
     seasonal        <- read_data_file(paste0(file, ".s10"))
@@ -40,6 +44,13 @@ read_data <- function(method = "seats", file){
 
 
 read_data_file <- function(file){
+  # Read data from a particular X13-ARIMA-SEATS file
+  # 
+  # file  full path including file ending
+  #
+  # return a "ts" object
+  
+  
   dta <- read.table(file, stringsAsFactors = F)
   series <- as.numeric(dta[-c(1,2) ,2])
   

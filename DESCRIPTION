@@ -6,6 +6,9 @@ Date: 2013-10-30
 Author: Christoph Sax
 Maintainer: Christoph Sax <c.sax@seco.admin.ch>
 Description: R interface to X-13ARIMA-SEATS
+Imports:
+    stringr
+Enhances: manipulate
 License: GPL-3
 Collate:
     'parse.R'
@@ -13,10 +16,12 @@ Collate:
     'seas.R'
     'outlier.R'
     'inspect.R'
-    'predict.R'
     'static.R'
-    'output.R'
     'read_data.R'
     'read_est.R'
     'read_mdl.R'
     'summary.R'
+    'extractors.R'
+    'default.methods.R'
+    'read_lks.R'
+BugReports: https://github.com/christophsax/seasonal

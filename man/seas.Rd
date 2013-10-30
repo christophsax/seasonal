@@ -11,25 +11,25 @@
   \item{x}{object of class "ts": time series to seasonaly
   adjust}
 
-  \item{reg}{(optional) object of class "ts": one or
+  \item{xreg}{(optional) object of class "ts": one or
   several user defined exogenous variables for regARIMA
   modelling.}
 
   \item{seats}{spec 'seats' without arguments (default).
   Seasonal adjustment by SEATS.}
 
-  \item{seats}{spec \code{transform} with argument
-  \code{function = "auto"} (default). Automatic
+  \item{transform.function}{spec \code{transform} with
+  argument \code{function = "auto"} (default). Automatic
   transformation detection.}
 
-  \item{seats}{spec \code{regression} with argument
-  \code{chi2test = "yes"} (default). Chi Square test for
-  calendar effects.}
+  \item{regression.chi2test}{spec \code{regression} with
+  argument \code{chi2test = "yes"} (default). Chi Square
+  test for calendar effects.}
 
-  \item{seats}{spec \code{outlier} without arguments
+  \item{outlier}{spec \code{outlier} without arguments
   (default). Automatic oulier detection.}
 
-  \item{seats}{spec \code{automdl} without arguments
+  \item{automdl}{spec \code{automdl} without arguments
   (default). Automatic model search with the automodl
   module.}
 
@@ -39,6 +39,9 @@
   \item{dir}{character string with output paht. If
   specified, the X13-ARIMA-SEATS output files are copied to
   this folder.}
+
+  \item{...}{additional spec/arguments options (see
+  details).}
 }
 \value{
   returns an object of class \code{"seas"}, which is
@@ -64,10 +67,10 @@
 
   The \code{final} function returns the adjusted series,
   the \code{plot} method shows a plot with the unadjusted
-  and the adjusted series. \code{summary} gives an overview
-  of the regARIMA model. \code{static} returns the static
-  call from above that is needed to replicate an automatic
-  seasonal adjustment procedure the model.
+  and the adjusted series.  \code{summary} gives an
+  overview of the regARIMA model. \code{static} returns the
+  static call from above that is needed to replicate an
+  automatic seasonal adjustment procedure the model.
 }
 \description{
   Core function of the seasonal package. By default,
@@ -97,25 +100,33 @@ static(x2)
 seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]",
 "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no",
 outlier.types = "none", transform.function = "log")
-#' final(x)
+
+final(x)
 original(x)
 resid(x)
 coef(x)
 
 plot(x2)
-plot(x2, trend = T) monthplot(x2) monthplot(x2, choice = "irregular")
+plot(x2, trend = TRUE)
+monthplot(x2)
+monthplot(x2, choice = "irregular")
 
 spectrum(final(x))
 spectrum(original(x))
 
-spc(x) mdl(x)
+spc(x)
+mdl(x)
 
-x3 <- seas(AirPassengers, out = T)
+x3 <- seas(AirPassengers, out = TRUE)
+\dontrun{
 out(x3)
+}
 
 x$est$variance
 x$lks
 
+\dontrun{
 inspect(AirPassengers)
+}
 }
 

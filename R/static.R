@@ -1,8 +1,19 @@
 #' Static Call of a seas Object
 #' 
+#' A static call is a static replication of a call. Automatic procedures are
+#' subistuted by the chosen options.
+#' 
+#' If \code{coef = TRUE}, the coefficients are treated as fixed, instead of
+#' beeing estimated. By df
+#' 
 #' @param x an object of class \code{seas}
-#' @param name character string, optionally specify the name of the input time
+#' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed,
+#'   instead of beeing estimated.
+#' @param name character string, optionally specify the name of the input time 
 #'   series
+#' @param test logical. By default the static call is executed and compared to
+#'   the input call. If the final series is not identical, an error is returned.
+#'   If \code{FALSE}, the option is disabled (useful for debugging)
 #'   
 #' @return Static call of an object of class \code{seas}. Can be copy/pasted 
 #'   into an R script.
@@ -10,7 +21,8 @@
 #' @examples
 #' x <- seas(AirPassengers)
 #' static(x)
-#' static(x, name = "ArbitrayName")
+#' static(x, name = "ArbitrayName", test = FALSE)
+#' 
 static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   
   stopifnot(inherits(x, "seas"))
@@ -51,8 +63,6 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
     }
   }
   
-
-  
   z <- as.call(lc)
 
   if (test){
@@ -69,9 +79,15 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
 }
 
 
-# x <- c("2342f", "324234")
-# SubFixed(x)
+
 SubFixed <- function(x){
+  # Make coefficents 'fixed'
+  #
+  # Put a "f" at the end of number, if not already there
+  #
+  # x <- c("2342f", "324234")
+  # SubFixed(x)
+  
   z <- paste0(x, "f")
   str_replace_all(z, "f+", "f")
 }

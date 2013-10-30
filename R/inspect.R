@@ -1,12 +1,17 @@
-
-
-#' Inspection Tool
+#' Inspection Function for Seasonal Adjustment (RStudio only)
+#' 
+#' Inspect the seasonal adjustment of a time series. \code{inspect} uses the
+#' \code{manipulate} package from RStudio and can not be used without.
 #' 
 #' @param x an object of class \code{"ts"}
-#' 
+#' @param ...  additional spec/arguments options
+#'   
 #' @export
 #' @examples
+#' \dontrun{
 #' inspect(AirPassengers)
+#' }
+#' 
 inspect <- function(x, ...){
   stopifnot(inherits(x, "ts"))
   
@@ -87,6 +92,5 @@ SubPlot <- function(x, tsname, view,
     static(s, name = tsname, test = TRUE)
   }
 
-  
 }
 

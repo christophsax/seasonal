@@ -1,8 +1,10 @@
-
-#' A time series with outliers
+#' Outlier Time series
 #' 
-#' @param x time series template
-#' @param outlier character string with outliers
+#' Returns a time series that contains the names of the outliers.
+#' 
+#' @param x   an object of class "seas".
+#' 
+#' @return character string time series with outliers.
 #' 
 #' @export
 #' @examples
