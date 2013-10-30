@@ -167,8 +167,13 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
     }
   }
   
+  
+  ### Write spc
+  spctxt <- parse_spclist(spc)
+  writeLines(spctxt, con = paste0(iofile, ".spc"))
+  
   ### Run X13
-  run_x13(spc, file = iofile)
+  run_x13(iofile)
   
   ### Import from X13
   z <- list()
@@ -337,26 +342,10 @@ consist_check_spclist <-function(x){
 }
 
 
-run_x13 <- function(x, file){
+run_x13 <- function(file){
   # run X13-ARIMA-SEATS platform dependently
-  #
-  # x  "spclist" object
-  # file   full path, without file ending
-  
-  stopifnot(inherits(x, "spclist"))
-  
-  # ---------------------
-  # if everything works, need to be platform independent
   
   x13dir <- system.file("exec", package = "seasonal")
-  
-#   x13dir <- "C:/Users/seco-sxh/github/seasonal/inst/"
-  
-#   x13dir <- "~/seasonal/inst/"
-  # ---------------------
-  
-  txt <- parse_spclist(x)
-  writeLines(txt, con = paste0(file, ".spc"))
   
   # platform dependent call to X13
   if (Sys.info()['sysname'] == "Darwin"){
@@ -364,9 +353,7 @@ run_x13 <- function(x, file){
   } else if (Sys.info()['sysname'] == "Linux"){
     system(paste0(x13dir, "/x13as-linux ", file))
   } else if (.Platform$OS.type == "windows"){
-#     system(paste0(x13dir, "x13/x13as.exe -p", file))
-    shell(paste0(x13dir, "/x13as.exe ", file))
-    #   shell(paste0(path, "x13/x13as.exe ", path, "io/", iofile, " ", path, "io/out/test")) 
+    shell(paste0(x13dir, "/x13as.exe ", file), intern = TRUE)
   }
   
 }
