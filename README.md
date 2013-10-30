@@ -20,10 +20,10 @@ seasonal includes the binary files of X-13ARIMA-SEATS. **No separate download of
 
 ### Getting started
 
-`seas` ist the core function of the seasonal package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `seas` that contains all necessary information on the adjustment process, as well as the series. The `predict` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
+`seas` ist the core function of the seasonal package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `seas` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
      x <- seas(AirPassengers)
-     predict(x)
+     final(x)
      plot(x)
      
 The first argument must be a time series of class `ts`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment filter, use the following option (see the next section for details on the syntax):
@@ -31,22 +31,20 @@ The first argument must be a time series of class `ts`. By default, `seas` calls
      seas(AirPassengers, x11 = list())
      
 Besides performing seasonal adjustment with SEATS, a default call of `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
-  - ARIMA model search
-  - Outlier detection
+  - transformation section (log, no log)
   - Detection of trading day and Easter effects
+  - Outlier detection
+  - ARIMA model search
 
 Alternatively, all inputs may be entered manually, as in the following example:
 
-    seas(AirPassengers,
-         regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
-         arima.model = "(0 1 1)(0 1 1)",
-         regression.aictest = NULL, outlier.types = "none"
-    )
+    seas(x = AirPassengers, arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no", 
+        outlier.types = "none", transform.function = "log")
 
 The `static` command reveals the static call from above that is needed to replicate an automatic seasonal adjustment procedure:
 
     static(x)
-    static(x, static.coeff = TRUE)  # also fixes the coefficients
+    static(x, coef = TRUE)  # also fixes the coefficients
     
 If you are using R Studio, the `inspect` command offers a way to analyze and modify a seasonal adjustment procedure (see the section below for details):
 
@@ -54,7 +52,6 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 
 ### X-13ARIMA-SEATS syntax
-
 
 Seasonal uses the same syntax as X-13ARIMA-SEATS. It is possible to invoke most options that are available in X-13ARIMA-SEATS. For details on the options, see the [manual][manual]. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. **An additional spec/argument can be added to the `seas` function by separating spec and argument by a `.`.** For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
@@ -98,28 +95,37 @@ Regression procedure
   2. `regression` (default)
   
 
-### Output
-
-
-`seas` returns an object of class `seas`, which is basically a list with the following elements:
-
-
-Element    | Description
------------|-----------------------------------------------
-`data`     | An object of class `ts`, containing the seasonally adjusted data, the raw data, the trend component, the irregular component and the seasonal component. Accessing `data` is for the advanced user. In general, the adjusted series should be extracted with `predict`.
-`spc`      | An object of class `spclist`, a list containing everything that is send to X-13ARIMA-SEATS. Each *spec* is on the first level, each *argument* is on the second level. Checking `spc` is useful for debugging.
-`mdl`      | A list with the model specification, similar to `spc`. It typically contains `regression`, which contains the regressors and parameter estimates, and `arima`, which contains the ARIMA specification and the parameter estimates. The `summary` function gives an overview of the model.
-
-
 ### Graphs
 
+All plots from Win X-13 should be reproducable in R. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally it also draws the trend of the seasonal decomposition.
 
+    x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
+    plot(x)
+    plot(x, outliers = FALSE)
+    plot(x, trend = TRUE)
+
+The `monthplot` function allows for a monthwise (or quarterwise) plot of the data. There is a method for `seas` objects:
+
+    monthplot(x)
+    monthplot(x, choice = "irregular")
+
+With `spectrum`, the spectral density of a series can be estimated:
+
+    spectrum(final(x))
+    spectrum(original(x))
 
 
 ### Inspect tool
 
+the `inspect` function is a powerful tool for choosing a good adjustem model. It uses the `manipulate` package, and can be used with the (free) [RStudio IDE][rstudio] only. The function uses a `ts` object as its first argument:
 
+    inspect(x)
+    
+Optionally, you can pass arbitrary spec/arguments to inspect. Here, the maximum of iterations during estimation is increased from 500 to 1000:
 
+    inspect(AirPassengers, estimate.maxiter = 1000) 
+    
+The inspect function opens an interactive window that allows for the manipulation of a number of arguments. It offer a several views to analyze the resulting series graphically. With each change, the adjustement process is recalculated. Summary statics are shown in the R console. With the `static.call` option, a replicable static call is also shown in the console. Note that this will double the time for recalculation, as the static function tests the static call each time.
 
 
 ### License
@@ -134,6 +140,7 @@ seasonal is free and open source, licensed under GPL-3. The package contains the
 
 [examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
+[rstudio]: http://www.rstudio.com/ide/
 
 
 

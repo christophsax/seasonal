@@ -17,6 +17,9 @@
 \examples{
 \dontrun{
 inspect(AirPassengers)
+
+# pass arbitrary spec/arguments to inspect:
+inspect(AirPassengers, estimate.maxiter = 1000)
 }
 }
 
