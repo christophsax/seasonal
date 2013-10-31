@@ -1,11 +1,11 @@
 Package: seasonal
 Type: Package
 Title: R interface to X-13ARIMA-SEATS
-Version: 0.02.0
-Date: 2013-10-30
+Version: 0.02.1
+Date: 2013-10-31
 Author: Christoph Sax
 Maintainer: Christoph Sax <c.sax@seco.admin.ch>
-Description: R interface to X-13ARIMA-SEATS
+Description: seasonal is an easy-to-use R-interface to X-13ARIMA-SEATS, a seasonal adjustment software produced, distributed, and maintained by the United States Census Bureau. 
 Imports:
     stringr
 Enhances: manipulate
