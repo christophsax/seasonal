@@ -28,7 +28,7 @@ inspect <- function(x, ...){
     method = picker("SEATS", "X11", label = "Adjustment method"),
     modelsearch = picker("automdl", "pickmdl", label = "Model search"),
     calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
-    outlier.critical = slider(2.5, 5, initial = 4),
+    outlier.critical = slider(2.5, 5, step = 0.1, initial = 4),
     view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
     is.static.call = checkbox(FALSE, "Show static call")
   )
