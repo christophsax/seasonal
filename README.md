@@ -3,9 +3,9 @@
 
 **seasonal** is an easy-to-use R-interface to X-13ARIMA-SEATS, a seasonal adjustment software produced, distributed, and maintained by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
 
-If you are new to seasonal adjustment or X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of some time series. Start with ["Getting started"](#getting-started) and skip the rest. 
+If you are new to seasonal adjustment or X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of some time series. Start with the [Getting started](#getting-started) section and skip the rest. 
 
-If you are already familiar with X-13ARIMA-SEATS, you may benefit from the consistent use of its syntax in **seasonal**. Read ["Syntax consistency"](#Syntax-consistency) and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
+If you are already familiar with X-13ARIMA-SEATS, you may benefit from the consistent use of its syntax in **seasonal**. Read the [Syntax consistency](#syntax-consistency) section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
 
 
 ### Installation
@@ -20,17 +20,18 @@ To install directly from github, use the devtools package:
 
 ### Getting started
 
-`seas` ist the core function of the **seasonal** package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `seas` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
+`seas` ist the core function of the **seasonal** package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `seas` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
     x <- seas(AirPassengers)
     final(x)
     plot(x)
      
-The first argument must be a time series of class `ts`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure, use the following option (see the next section for details on the syntax):
+The first argument must be a time series of class `"ts"`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure, use the following option (see the next section for details on the syntax):
 
     seas(AirPassengers, x11 = list())
      
 Besides performing seasonal adjustment with SEATS, a default call of `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
+
   - Transformation selection (log / no log)
   - Detection of trading day and Easter effects
   - Outlier detection
@@ -38,8 +39,9 @@ Besides performing seasonal adjustment with SEATS, a default call of `seas` invo
 
 Alternatively, all inputs may be entered manually, as in the following example:
 
-    seas(x = AirPassengers, arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no", 
-        outlier.types = "none", transform.function = "log")
+    seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]",
+    "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
+    outlier = NULL, transform.function = "log")
 
 The `static` command reveals the static call from above that is needed to replicate an automatic seasonal adjustment procedure:
 
@@ -53,7 +55,7 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 ### Syntax consistency
 
-The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas`by separating spec and argument by a dot (`.`). For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
+The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
     x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
    
@@ -74,27 +76,23 @@ translates to R in the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the `series` spec, so no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (as above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec/argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used with the default `automdl` spec, the latter is automatically disabled. 
+`seas` takes care of the `series` spec, so no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (as above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used with the default `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples].
 
-The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples].
-
-
-#### Priority rules
 
 There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs are included, X-13ARIMA-SEATS leads to an error. In contrast, `seas` follows a set of priority rules, where the lower priority is overwritten by the higher priority. Usually, the default has the lowest priority, and is overwritten if one or several of the following `spec` inputs are provided:
 
-Model selection
-  1. `arima`
-  2. `pickmdl`
-  3. `automdl` (default)
+- Model selection
+    1. `arima`
+    2. `pickmdl`
+    3. `automdl` (default)
 
-Adjustment procedure
-  1. `x11`
-  2. `seats` (default)
+- Adjustment procedure
+    1. `x11`
+    2. `seats` (default)
   
-Regression procedure
-  1. `x11regression`
-  2. `regression` (default)
+- Regression procedure
+    1. `x11regression`
+    2. `regression` (default)
   
 
 ### Graphs
@@ -119,11 +117,11 @@ With `spectrum`, the spectral density of a series can be estimated:
 
 ### Inspect tool
 
-the `inspect` function is a powerful tool for choosing a good seasonal adjustment model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. The function uses a `ts` object as its first argument:
+the `inspect` function is a powerful tool for choosing a good seasonal adjustment model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. `inspect` uses a `"ts"` object as its first argument:
 
     inspect(AirPassengers)
     
-Optionally, you can pass arbitrary spec/arguments to inspect. Here, the maximum of iterations during estimation is increased from 500 to 1000:
+Optionally, you can pass arbitrary spec-arguments to inspect. Here, the maximum of iterations during estimation is increased from 500 to 1000:
 
     inspect(AirPassengers, estimate.maxiter = 1000) 
     

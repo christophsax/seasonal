@@ -63,8 +63,6 @@ R-code:
 
     seas(AirPassengers,
          x11 = list(),
-         transform.function = "log",
-         regression.variables = c("season", "const"),
          arima.model = "([2] 1 0)"
     )
 
@@ -82,7 +80,7 @@ R-code:
     seas(AirPassengers,
          x11 = list(),
          transform.function = "log",
-         regression.variables = c("variables", "const"),
+         regression.variables = "const",
          arima.model = "(0 1 1)12"
     )
 
@@ -99,7 +97,7 @@ R-code:
          x11 = list(),
          transform.function = "log",
          regression.variables = c("const", "seasonal"),
-         arima.model = "(110)(100)3(001)"
+         arima.model = "(1 1 0)(1 0 0)3( 0 0 1)"
     )
 
 #### Example 7

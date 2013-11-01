@@ -1,4 +1,4 @@
-#' Seasonal Adjustment with X13-ARIMA-SEATS
+#' Seasonal Adjustment with X-13ARIMA-SEATS
 #' 
 #' Core function of the seasonal package. By default, \code{seas} calls the 
 #' automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
@@ -8,85 +8,116 @@
 #' most options that are available in X-13ARIMA-SEATS. The X-13ARIMA-SEATS 
 #' syntax uses specs and arguments, while each spec may contain some arguments. 
 #' An additional spec/argument can be added to the \code{seas} function by 
-#' separating spec and argument by a dot (\code{.}). For a more extensive description 
-#' of the X-13ARIMA-SEATS in \code{seas}, consider the website on github 
-#' (\url{https://github.com/christophsax/seasonal})
+#' separating spec and argument by a dot (\code{.}). For a more extensive
+#' description of the X-13ARIMA-SEATS in \code{seas}, consider the website on
+#' github (\url{https://github.com/christophsax/seasonal})
 #' 
 #' @param x   object of class \code{"ts"}": time series to seasonaly adjust.
-#' @param xreg   (optional) object of class \code{"ts"}": one or several user defined 
-#'   exogenous variables for regARIMA modelling.
+#' @param xreg   (optional) object of class \code{"ts"}": one or several user
+#'   defined exogenous variables for regARIMA modelling.
 #' @param seats   spec 'seats' without arguments (default). Seasonal adjustment 
 #'   by SEATS.
-#' @param transform.function   spec \code{transform} with argument \code{function = "auto"} 
-#'   (default). Automatic transformation detection.
-#' @param regression.chi2test   spec \code{regression} with argument \code{chi2test = "yes"} 
-#'   (default). Chi Square test for calendar effects.
+#' @param transform.function   spec \code{transform} with argument
+#'   \code{function = "auto"} (default). Automatic transformation detection.
+#' @param regression.chi2test   spec \code{regression} with argument
+#'   \code{chi2test = "yes"} (default). Chi Square test for calendar effects.
 #' @param outlier   spec \code{outlier} without arguments (default). Automatic 
 #'   oulier detection.
 #' @param automdl   spec \code{automdl} without arguments (default). Automatic 
 #'   model search with the automodl module.
-#' @param out   logical, should the standard output be saved in the \code{"seas"} 
-#'   object? (increases object size)
+#' @param out   logical, should the standard output be saved in the
+#'   \code{"seas"} object? (increases object size)
 #' @param dir   character string with output path. If specified, the 
 #'   X13-ARIMA-SEATS output files are copied to this folder.
 #' @param ...  additional spec/arguments options (see details).
 #'   
-#' @return returns an object of class \code{"seas"}, essentially a list 
-#'   with the following elements: \item{err}{Warning messages from
-#'   X13-ARIMA-SEATS.} \item{data}{An object of class \code{"ts"}", containing the
-#'   seasonally adjusted data, the raw data, the trend component, the irregular
-#'   component and the seasonal component.} \item{mdl}{A list with the model
-#'   specification, similar to \code{"spc"}". It typically contains \code{"regression"}", which
-#'   contains the regressors and parameter estimates, and \code{"arima"}", which
-#'   contains the ARIMA specification and the parameter estimates.} 
-#'   \item{est}{More detailed information on the estimation.} \item{lks}{Summary
-#'   statistics.} \item{coefficients}{Coefficients of the regARIMA model.} 
-#'   \item{se}{Standard errors of the regARIMA model.} \item{spc}{An object of
-#'   class \code{"spclist"}, a list containing everything that is send to
-#'   X-13ARIMA-SEATS. Each spec is on the first level, each argument is on the
+#' @return returns an object of class \code{"seas"}, essentially a list with the
+#'   following elements: \item{err}{Warning messages from X13-ARIMA-SEATS.}
+#'   \item{data}{An object of class \code{"ts"}", containing the seasonally
+#'   adjusted data, the raw data, the trend component, the irregular component
+#'   and the seasonal component.} \item{mdl}{A list with the model 
+#'   specification, similar to \code{"spc"}". It typically contains
+#'   \code{"regression"}", which contains the regressors and parameter
+#'   estimates, and \code{"arima"}", which contains the ARIMA specification and
+#'   the parameter estimates.} \item{est}{More detailed information on the
+#'   estimation.} \item{lks}{Summary statistics.}
+#'   \item{coefficients}{Coefficients of the regARIMA model.} \item{se}{Standard
+#'   errors of the regARIMA model.} \item{spc}{An object of class
+#'   \code{"spclist"}, a list containing everything that is send to 
+#'   X-13ARIMA-SEATS. Each spec is on the first level, each argument is on the 
 #'   second level. Checking \code{"spc"}" is good start for debugging.} 
 #'   \item{call}{Function call.}
 #'   
 #'   The \code{final} function returns the adjusted series, the \code{plot} 
-#'   method shows a plot with the unadjusted and the adjusted series.
-#'   \code{summary} gives an overview of the regARIMA model. \code{static}
+#'   method shows a plot with the unadjusted and the adjusted series. 
+#'   \code{summary} gives an overview of the regARIMA model. \code{static} 
 #'   returns the static call from above that is needed to replicate an automatic
 #'   seasonal adjustment procedure the model.
+#'   
+#' @references Github page with a more detailed description. \url{https://github.com/christophsax/seasonal}
+#'   
+#'   Wiki page with R examples from the X-13ARIMA-SEATS: 
+#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
+#'   X-13ARIMA-SEATS manual: 
+#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   
 #'   
 #' @import stringr
 #' @examples
 #' x <- seas(AirPassengers) 
 #' summary(x)
 #' 
-#' x2 <- seas(x = AirPassengers, regression.aictest = c("td", "easter")) 
-#' summary(x2) 
-#' static(x2)
+#' # invoke X-13ARIMA-SEATS options as 'spec.argument'
+#' # (consult the X-13ARIMA-SEATS manual for many more options and the wiki for
+#' # for more examples)
+#' seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
+#' seas(AirPassengers, force.type = "denton")  # force equality of annual values
+#' seas(AirPassengers, x11 = list())  # use x11, overrides the 'seats' spec
 #' 
+#' # turn off automatic procedures:
 #' seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]", 
-#' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.chi2test = "no", 
-#' outlier.types = "none", transform.function = "log")
+#' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL, 
+#' outlier = NULL, transform.function = "log")
 #' 
+#' # static replication of the first call
+#' static(x)  # this also tests the equivalence of the static call
+#' static(x, test = FALSE)  # no testing (for debuging)
+#' static(x, coef = TRUE)  # also fixes the coefficients
+#' 
+#' # extractor functions
 #' final(x) 
 #' original(x) 
 #' resid(x) 
 #' coef(x)
 #' 
-#' plot(x2) 
-#' plot(x2, trend = TRUE) 
-#' monthplot(x2) 
-#' monthplot(x2, choice = "irregular")
-#' 
+#' # replicating the default plots in Win X-13
+#' plot(x) 
+#' plot(x, trend = TRUE) 
+#' monthplot(x) 
+#' monthplot(x, choice = "irregular")
 #' spectrum(final(x)) 
 #' spectrum(original(x))
 #' 
-#' spc(x) 
-#' mdl(x)
+#' # user defined regressors
+#' # a level shift in R base:
+#' tls <- ts(0, start = 1949, end = 1965, freq = 12)
+#' window(tls, start = c(1955, 1), end = c(1957, 12)) <- 1
+#' seas(AirPassengers, xreg = tls, outlier = NULL)
+#' # identical to a manual specification of the the level shift
+#' seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"), 
+#'      outlier = NULL)
+#' 
+#' # analyzing X13-ARIMA-SEATS input and output files (for debuging)
+#' spc(x)  # the .spc file, as generated by seas
+#' mdl(x)  # the .mdl file, as received by seas
 #' 
 #' x3 <- seas(AirPassengers, out = TRUE) 
 #' \dontrun{
-#' out(x3)
+#' out(x3)  # the full .out output from X13-ARIMA-SEATS (very long!)
 #' }
 #' 
+#' # additional components of a "seats" object.
 #' x$est$variance  
 #' x$lks
 #' 
@@ -96,7 +127,7 @@
 #' 
 #' @export
 seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto", 
-                 regression.chi2test = "yes", outlier = list(), 
+                 regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
                  out = FALSE, dir = NULL, ...){
   
@@ -131,7 +162,7 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   
   # add the default options
   spc$transform$`function` <- transform.function
-  spc$regression$chi2test <- regression.chi2test
+  spc$regression$aictest <- regression.aictest
   spc$outlier <- outlier
   spc$automdl <- automdl
   spc$seats <- seats
@@ -207,8 +238,10 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   z$coefficients <- z$est$coefficients
   z$se <- z$est$se
   
+  outfile <-  readLines(paste0(iofile, ".out"))
+  z$is.log <- detect_log(outfile)
   if (out){
-    z$out <-  readLines(paste0(iofile, ".out"))
+    z$out <-  outfile
   }
   
   z$spc <- spc
@@ -230,6 +263,28 @@ seas <- function(x, xreg = NULL, seats = list(), transform.function = "auto",
   class(z) <- "seas"
   z
 }
+
+
+detect_log <- function(out){
+  # a dirty way to detect wether the series was transformed or not
+  #
+  # out  character vector, content of .out output file
+  #
+  # returns TRUE / FALSE 
+  
+  logn <- grep("prefers", out[50:150])
+  if (length(logn) == 1){
+    logstr <- out[50:150][logn]
+    z <- grepl("log", logstr)
+  } else if (length(logn) == 0){
+    z <- FALSE
+  } else {
+    stop("more than one match of 'prefers' in the .out file. Dont know what to do.")
+  }
+  z
+}
+
+
 
 
 
@@ -308,10 +363,6 @@ consist_check_spclist <-function(x){
     x$regression <- NULL
   }
   
-  # priority: 1. aictest, 2. chi2test (default)
-  if (!is.null(x$x11regression) & !is.null(x$regression)){
-    x$regression <- NULL
-  }
   
   ### ensure correct output
   

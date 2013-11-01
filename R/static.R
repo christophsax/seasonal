@@ -26,13 +26,35 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   
   lc <- as.list(x$call)  
   
-  # keep arguments if they are in this vector
+  # keep all arguments that do not interfer with input/output or the automatic
+  # options of seasonl
   keep <- c("", "x", "xreg",
+            "estimate.exact", "estimate.maxiter",
             
-            "force.type", 
+            "force.lambda", "force.mode", "force.rho", "force.round", 
+            "force.start", "force.target", "force.type", "force.usefcst", 
+            "force.indforce",
+            
+            "forecast.exclude", "forecast.lognormal", "forecast.maxback",
+            "forecast.maxlead", "forecast.probability",
+            
+            "regression.chi2test", "regression.chi2testcv", 
+            "regression.variables",
+            
+            "seats.hpcycle", "seats.qmax", "seats.signifsc", "seats.statseas",
+            "seats.bias", "seats.centerir", "seats.epsiv", "seats.epsphi", 
+            "seats.epsphi", "seats.maxbias", "seats.maxit", "seats.noadmiss",
+            "seats.rmod", "seats.xl",
+            
+            "series.type",
+            
+            "transform.adjust",
             
             "x11", "x11.mode", "x11.trendma", "x11.sigmalim", "x11.appendfcst", 
-            "x11.appendbcst", "x11.final"
+            "x11.appendbcst", "x11.final",
+            
+            "x11regression.variables", "x11regression.tdprior", 
+            "x11regression.usertype"
   )
   
   lc <- lc[names(lc) %in% keep]
@@ -43,10 +65,16 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   
   lc$regression.variables <- x$mdl$regression$variables
   lc$arima.model <- x$mdl$arima$model
-  lc$regression.chi2test <- "no"
-  lc$outlier.types <- "none"
   
-  lc$transform.function = "log"
+  # Turn off outomatic procedures:
+  # To assign NULL instead of removing the element
+  lc['regression.aictest'] <- NULL
+  names(lc['regression.aictest']) <- "regression.aictest"
+  
+  lc['outlier'] <- NULL
+  names(lc['outlier']) <- "regression.aictest"
+  
+  lc$transform.function = detect_trans(x)
   
   if (coef){
     if (!is.null(x$mdl$regression$b)) {
@@ -67,7 +95,7 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
     x.static <- eval(z)
     test <- (all.equal(final(x.static), final(x), tolerance = 1e-06))
     if (inherits(test, "character")){
-      warning(paste("Final Series of static and provided model differ.", test))
+      stop(paste("Final Series of static and provided model differ.", test))
     }
   }
 

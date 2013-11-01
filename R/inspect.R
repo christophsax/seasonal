@@ -25,36 +25,37 @@ inspect <- function(x, ...){
   tsname <- deparse(substitute(x))
 
   controls <- list(
-    view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
-    method = picker("SEATS", "X11", label = "Method"),
-    modelsearch = picker("automdl", "pickmdl", label = "Model"),
-    calendar = picker("chi2test", "aictest", label = "Calendar"),
+    method = picker("SEATS", "X11", label = "Adjustment method"),
+    modelsearch = picker("automdl", "pickmdl", label = "Model search"),
+    calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
     outlier.critical = slider(2.5, 5, initial = 4),
+    view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
     is.static.call = checkbox(FALSE, "Show static call")
   )
   
   manipulate({
-    lcall <- structure(list(quote(seas)), .Names = "")
-    lcall$x <- parse(text = tsname)[[1]]
-    lcall$outlier.critical <- outlier.critical
+    lc <- structure(list(quote(seas)), .Names = "")
+    lc$x <- parse(text = tsname)[[1]]
+    lc$outlier.critical <- outlier.critical
     
     if (method == "X11"){
-      lcall$x11 = list()
+      lc$x11 = list()
     }
     
     if (modelsearch == "pickmdl"){
-      lcall$pickmdl = list()
+      lc$pickmdl = list()
     }
     
-    if (calendar == "aictest"){
-      lcall$regression.aictest = c("td", "easter")
+    if (!calendar){
+      lc['regression.aictest'] <- NULL
+      names(lc['regression.aictest']) <- "regression.aictest"
     }
     
     if (length(dotlist) > 0){
-      lcall <- c(lcall, dotlist)
+      lc <- c(lc, dotlist)
     }
 
-    call <- as.call(lcall)
+    call <- as.call(lc)
     
     SubPlot(x, tsname, view,
             call,

@@ -43,9 +43,13 @@ summary.seas <- function(object, ...){
                                      c("Estimate", "Std. Error", "z value", 
                                        "Pr(>|z|)"))
   }
+  
+  
   class(z) <- "summary.seas"
   z
 }
+
+
 
 
 
@@ -77,7 +81,8 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   }
   
   cat("\nARIMA structure:", x$mdl$arima$model)
-  cat(", Number of obs.:", formatC(x$lks['nobs'], format = "d"))
+  cat("   Number of obs.:", formatC(x$lks['nobs'], format = "d"))
+  cat("\nTransform:", detect_trans(x))
   cat("\nAIC:", formatC(x$lks['aic'], digits = digits))
   cat(", AICC:", formatC(x$lks['Aicc'], digits = digits))
   cat(", BIC:", formatC(x$lks['bic'], digits = digits))
@@ -87,3 +92,19 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
 }
 
 
+detect_trans <- function(x){
+  if (!is.null(x$spc$transform$`function`)){
+    if (x$spc$transform$`function` == "auto"){
+      if (x$is.log){
+        z <- "log"
+      } else {
+        z <- "none"
+      }
+    } else {
+      z <- x$spc$transform$`function`
+    }
+  } else {
+    z <- "none"
+  }
+  z
+}
