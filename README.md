@@ -5,7 +5,7 @@
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of some time series. Start with the [Getting started](#getting-started) section and skip the rest. 
 
-If you are already familiar with X-13ARIMA-SEATS, you may benefit from the consistent use of its syntax in **seasonal**. Read the [Syntax consistency](#syntax-consistency) section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
+If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equivalent use of its syntax in **seasonal**. Read the [Syntax equivalence](#syntax-equivalence-to-x-13arima-seats) section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
 
 
 ### Installation
@@ -53,7 +53,7 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
     inspect(AirPassengers)
 
 
-### Syntax consistency
+### Syntax equivalence to X-13ARIMA-SEATS
 
 The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
