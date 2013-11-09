@@ -51,24 +51,39 @@ out <- function(x){
 #' @rdname spc
 #' @export
 final <- function(x){
-  x$data[,'final']
+  na_action(x, 'final')
 }
 
 #' @rdname spc
 #' @export
 original <- function(x){
-  x$data[,'original']
+  x$x
 }
 
 #' @rdname spc
 #' @export
 trend <- function(x){
-  x$data[,'trend']
+  na_action(x, 'trend')
 }
 
 #' @rdname spc
 #' @export
 irregular <- function(x){
-  x$data[,'irregular']
+  na_action(x, 'irregular')
 }
+
+
+
+
+na_action <- function(x, name){
+  z <- na.omit(x$data[, name])
+  if (!is.null(x$na.action)){
+    if (attr(x$na.action, "class") == "exclude") {
+      z <- ts(napredict(x$na.action, z))
+      tsp(z) <- tsp(original(x))
+    }
+  }
+  z
+}
+
 

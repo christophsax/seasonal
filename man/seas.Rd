@@ -5,8 +5,8 @@
   seas(x, xreg = NULL, seats.noadmiss = "yes",
     transform.function = "auto",
     regression.aictest = c("td", "easter"),
-    outlier = list(), automdl = list(), out = FALSE,
-    dir = NULL, ...)
+    outlier = list(), automdl = list(),
+    na.action = na.omit, out = FALSE, dir = NULL, ...)
 }
 \arguments{
   \item{x}{object of class \code{"ts"}": time series to
@@ -153,6 +153,13 @@ out(x3)  # the full .out output from X-13ARIMA-SEATS (very long!)
 # more components in a "seats" object
 x$est$variance
 x$lks
+
+# standard NA handling with na.action
+AirPassengersNA <- window(AirPassengers, start = c(1948, 6), end = c(1961, 4),
+                          extend = TRUE)
+final(seas(AirPassengersNA, na.action = na.omit))     # default
+final(seas(AirPassengersNA, na.action = na.exclude))
+# final(seas(AirPassengersNA, na.action = na.fail))   # fails
 
 # inspection tool
 \dontrun{

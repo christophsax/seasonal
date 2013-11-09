@@ -126,6 +126,13 @@
 #' x$est$variance  
 #' x$lks
 #' 
+#' # standard NA handling with na.action
+#' AirPassengersNA <- window(AirPassengers, start = c(1948, 6), end = c(1961, 4), 
+#'                           extend = TRUE)
+#' final(seas(AirPassengersNA, na.action = na.omit))     # default
+#' final(seas(AirPassengersNA, na.action = na.exclude)) 
+#' # final(seas(AirPassengersNA, na.action = na.fail))   # fails
+#' 
 #' # inspection tool
 #' \dontrun{
 #' inspect(AirPassengers)
@@ -135,9 +142,21 @@
 seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "auto", 
                  regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
+                 na.action = na.omit,
                  out = FALSE, dir = NULL, ...){
   
   stopifnot(inherits(x, "ts"))
+  
+  series.name <- deparse(substitute(x))
+  
+  # time series method for na.exclude
+  na.exclude.ts <- function(x){
+    z <- na.omit(x)
+    attr(attr(z, "na.action"), "class") <- "exclude"
+    z
+  }
+  
+  x.na <- na.action(x)
   
   # temporary working dir and filenames
   wdir <- paste0(tempdir(), "/x13")
@@ -152,16 +171,16 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   iofile <- paste0(wdir, "/iofile") 
   datafile <- paste0(wdir, "/data.dta")
   regfile <- paste0(wdir, "reg.dta")
-  
+
   ### Write the Data
-  write_ts_dat(x, file = datafile)
+  write_ts_dat(x.na, file = datafile)
   
   ### Construct the spclist
   spc <- list()
   class(spc) <- c("spclist", "list")
   
   # add data series
-  spc$series$title <- paste0("\"", deparse(substitute(x)), "\"")
+  spc$series$title <- paste0("\"", series.name, "\"")
   spc$series$file <- paste0("\"", datafile, "\"")
   spc$series$format <- "\"datevalue\""
   spc$series$period <- frequency(x)
@@ -182,7 +201,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   
   ### User defined Regressors
   if (!is.null(xreg)){
-    write_ts_dat(xreg, file = regfile)
+    write_ts_dat(na.action(xreg), file = regfile)
 
     # user names either from input (single "ts"), or from colnames ("mts)
     if (is.null(dim(xreg))){
@@ -264,8 +283,11 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   
   ### Final transformations
   cndata <- colnames(z$data)
-  z$data <- cbind(z$data, x)
-  colnames(z$data) <- c(cndata, 'original')
+  z$x <- x
+  
+  if (!is.null(attr(x.na, "na.action"))){
+    z$na.action <- attr(x.na, "na.action")
+  }
   
   z$call <- match.call()
   class(z) <- "seas"
