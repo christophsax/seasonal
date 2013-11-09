@@ -2,7 +2,7 @@
 \alias{seas}
 \title{Seasonal Adjustment with X-13ARIMA-SEATS}
 \usage{
-  seas(x, xreg = NULL, seats = list(),
+  seas(x, xreg = NULL, seats.noadmiss = "yes",
     transform.function = "auto",
     regression.aictest = c("td", "easter"),
     outlier = list(), automdl = list(), out = FALSE,
@@ -16,8 +16,10 @@
   or several user defined exogenous variables for regARIMA
   modelling.}
 
-  \item{seats}{spec 'seats' without arguments (default).
-  Seasonal adjustment by SEATS.}
+  \item{seats.noadmiss}{spec 'seats' with argument
+  \code{noadmiss = "yes"} (default). Seasonal adjustment by
+  SEATS, if SEATS decomposition is invalid, an alternative
+  model is used with a warning.}
 
   \item{transform.function}{spec \code{transform} with
   argument \code{function = "auto"} (default). Automatic
