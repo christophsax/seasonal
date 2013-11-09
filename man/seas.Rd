@@ -39,6 +39,10 @@
   (default). Automatic model search with the automodl
   module. Set equal to \code{NULL} to turn off.}
 
+  \item{na.action}{a function which indicates what should
+  happen when the data contain NAs. \code{na.omit}
+  (default), \code{na.exclude} or \code{na.fail}.}
+
   \item{out}{logical, should the X-13ARIMA-SEATS standard
   output be saved in the \code{"seas"} object? (increases
   object size)}

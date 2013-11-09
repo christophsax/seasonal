@@ -15,7 +15,7 @@
 #' @param x   object of class \code{"ts"}": time series to seasonaly adjust.
 #' @param xreg   (optional) object of class \code{"ts"}": one or several user 
 #'   defined exogenous variables for regARIMA modelling.
-#' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"}
+#' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"} 
 #'   (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
 #'   an alternative model is used with a warning.
 #' @param transform.function   spec \code{transform} with argument 
@@ -29,7 +29,9 @@
 #' @param automdl   spec \code{automdl} without arguments (default). Automatic 
 #'   model search with the automodl module. Set equal to \code{NULL} to turn 
 #'   off.
-#' @param out   logical, should the X-13ARIMA-SEATS standard output be saved in
+#' @param na.action  a function which indicates what should happen when the data
+#'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
+#' @param out   logical, should the X-13ARIMA-SEATS standard output be saved in 
 #'   the \code{"seas"} object? (increases object size)
 #' @param dir   character string with output path. If specified, the 
 #'   X-13ARIMA-SEATS output files are copied to this folder.
@@ -58,11 +60,12 @@
 #'   returns the static call from above that is needed to replicate an automatic
 #'   seasonal adjustment procedure the model.
 #'   
-#' @references Github page with a more detailed description.
+#' @references Github page with a more detailed description. 
 #'   \url{https://github.com/christophsax/seasonal}
 #'   
 #'   Wiki page with R examples from the X-13ARIMA-SEATS: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
 #'   
 #'   
 #'   X-13ARIMA-SEATS manual: \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
