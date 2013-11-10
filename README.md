@@ -55,9 +55,9 @@ If you are using R Studio, the `inspect` command offers a way to analyze and mod
 
 ### Syntax equivalence to X-13ARIMA-SEATS
 
-The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variable` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
+The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, while each spec may contain some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variables` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
-    x <- seas(AirPassengers, regression.variable = c("td", "ao1965.jan"))
+    x <- seas(AirPassengers, regression.variables = c("td", "ao1965.jan"))
    
 Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty `list()`. Several defaults of `seas` are such empty lists, like the default `seats = list()`. See the help page (`?seas`) for more details on the defaults.
 
@@ -111,8 +111,8 @@ The `monthplot` function allows for a monthwise (or quarterwise) plot of the dat
 
 With `spectrum`, the spectral density of a series can be estimated:
 
-    spectrum(final(x))
-    spectrum(original(x))
+    spectrum(diff(final(x)))
+    spectrum(diff(original(x)))
 
 
 ### Inspect tool

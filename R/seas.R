@@ -104,8 +104,8 @@
 #' plot(x, trend = TRUE) 
 #' monthplot(x) 
 #' monthplot(x, choice = "irregular")
-#' spectrum(final(x)) 
-#' spectrum(original(x))
+#' spectrum(diff(final(x)) )
+#' spectrum(diff(original(x)))
 #' residplot(x)
 #' 
 #' # user defined regressors:
