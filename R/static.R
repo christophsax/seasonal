@@ -94,7 +94,7 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
     
     # testing the static call
     x.static <- eval(z, envir = globalenv())
-    test <- (all.equal(final(x.static), final(x), tolerance = 1e-06))
+    test <- (all.equal(final(x.static), final(x), tolerance = 1e-05))
     if (inherits(test, "character")){
       stop(paste("Final Series of static and provided model differ.", test))
     }

@@ -87,3 +87,11 @@ na_action <- function(x, name){
 }
 
 
+
+#' @rdname seas
+#' @export
+fivebestmdl <- function(x){
+  cat(paste(x$fivebestmdl, collapse = "\n"))
+}
+
+

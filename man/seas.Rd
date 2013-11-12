@@ -1,4 +1,5 @@
 \name{seas}
+\alias{fivebestmdl}
 \alias{seas}
 \title{Seasonal Adjustment with X-13ARIMA-SEATS}
 \usage{
@@ -7,6 +8,8 @@
     regression.aictest = c("td", "easter"),
     outlier = list(), automdl = list(),
     na.action = na.omit, out = FALSE, dir = NULL, ...)
+
+  fivebestmdl(x)
 }
 \arguments{
   \item{x}{object of class \code{"ts"}": time series to
@@ -127,6 +130,9 @@ final(x)
 original(x)
 resid(x)
 coef(x)
+
+# five best models
+fivebestmdl(x)
 
 # replicating the default plots in Win X-13
 plot(x)

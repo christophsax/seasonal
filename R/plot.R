@@ -23,7 +23,7 @@
 #' plot(x, trend = TRUE) 
 #' 
 plot.seas <- function(x, outliers = TRUE, trend = FALSE, ...){
-  ts.plot(cbind(x$data[,'original'], final(x)), 
+  ts.plot(cbind(original(x), final(x)), 
           col = c("black", "red"), 
           lwd = c(1, 2),
           ylab = "value",
