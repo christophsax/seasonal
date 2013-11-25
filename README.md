@@ -15,7 +15,17 @@ To install directly from github, use the devtools package:
     require(devtools)
     install_github('seasonal', 'christophsax')
     
-**seasonal** currently includes the binary executables of X-13ARIMA-SEATS for **Windows** (official compilation from the Census Bureau) and **OS-X** (my own compilation). Both should work without additional installations. The Linux version will be included in the future.
+**seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows) or [here][census_linux]  (Linux). Make sure you use the standard and not the html verision. My own compilation for Mac OS-X can be obtained up on [request](mailto:christoph.sax@gmail.com).
+
+As a first step, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS. In order to do so, a specific environmental variable has to be set. This may be done temporarily in R:
+
+    Sys.setenv(X13_PATH = "YOUR_PATH_TO_X13" )
+    
+Exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS. Note that on Windows the Path `C:\something\somemore` hat to be entered Unix like `C:/something/somemore` or `C:\\something\\somemore`.
+
+If you want to set the environmental variable permanently, you may do so by adding it tho the `.Renviron` file, which is typically located in your home directory. Both on Windows and Unix systems, you may add a line to file using the terminal:
+
+    echo 'X13_PATH = YOUR_PATH_TO_X13' >> .Renviron
 
 
 ### Getting started
@@ -141,6 +151,11 @@ The inspect function opens an interactive window that allows for the manipulatio
 [qref]: http://www.census.gov/ts/x13as/pc/qrefX13ASpc.pdf "Quick Reference"
 
 [census]: http://www.census.gov/ts/x13as "United States Census Bureau"
+
+[census_win]: http://www.census.gov/srd/www/x13as/x13down_pc.html "Combined X-13ARIMA-SEATS archives"
+
+[census_linux]: http://www.census.gov/srd/www/x13as/x13down_unix.html "Combined X-13ARIMA-SEATS archives"
+
 
 [examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
