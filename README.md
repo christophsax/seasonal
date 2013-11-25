@@ -17,7 +17,7 @@ To install directly from github, use the devtools package:
     
 **seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows) or [here][census_linux]  (Linux). Make sure you use the standard and not the html verision. My own compilation for Mac OS-X can be obtained up on [request](mailto:christoph.sax@gmail.com).
 
-As a first step, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS. In order to do so, a specific environmental variable has to be set. This may be done temporarily in R:
+As a first step, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done temporarily in R:
 
     Sys.setenv(X13_PATH = "YOUR_PATH_TO_X13" )
     
