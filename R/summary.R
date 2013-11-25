@@ -61,15 +61,6 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n",
       sep = "")
-#   res <- x$data[,'residuals']
-#   cat("Residuals:\n")
-#   if (length(res) > 5) {
-#     nam <- c("Min", "1Q", "Median", "3Q", "Max")
-#     quantile.res <- zapsmall(quantile(res), digits + 1)
-#     print(structure(quantile.res, names = nam), digits = digits)
-#   } else {
-#     print(res, digits = digits)
-#   }
   
   if (is.null(coef(x))) {
     cat("\nNo Coefficients\n")
@@ -88,6 +79,9 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   cat(", BIC:", formatC(x$lks['bic'], digits = digits))
 
   cat("\n")
+  if (length(x$err) > 5){
+    cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")
+  } 
   invisible(x)
 }
 
