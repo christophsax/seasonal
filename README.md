@@ -146,7 +146,7 @@ The inspect function opens an interactive window that allows for the manipulatio
 
 ### License
 
-**seasonal** is free and open source, licensed under GPL-3. The binary packages for X-13ARIMA-SEATS from the United States Census Bureau and are in the public domain. Both may be freely copied and transferred. 
+**seasonal** is free and open source, licensed under GPL-3. It may be freely copied and transferred. 
 
 This is a very new package, and it may still contain bugs. Please report them on github or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
