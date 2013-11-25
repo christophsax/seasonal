@@ -156,7 +156,6 @@ The inspect function opens an interactive window that allows for the manipulatio
 
 [census_linux]: http://www.census.gov/srd/www/x13as/x13down_unix.html "Combined X-13ARIMA-SEATS archives"
 
-
 [examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
 [rstudio]: http://www.rstudio.com/ide/
