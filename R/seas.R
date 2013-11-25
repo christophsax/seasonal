@@ -477,15 +477,27 @@ consist_check_spclist <-function(x){
 run_x13 <- function(file){
   # run X-13ARIMA-SEATS platform dependently
   
-  x13dir <- system.file("exec", package = "seasonal")
+  env.path <- Sys.getenv("X13_PATH")
+  if (env.path == ""){
+    stop("Path to the binaries of X-13ARIMA-SEATS not specified. Use\n\n    Sys.setenv(X13_PATH = 'PATH_TO_X13_BINARIES')\n\n  to set it temporarily or store it permanently in the .Renviron file.")
+  }
+  
+  # platform dependent binaries
+  if (.Platform$OS.type == "windows"){
+    x13.bin <- file.path(env.path, "x13as.exe")
+  } else {
+    x13.bin <- file.path(env.path, "x13as")
+  }
+
+  if (!file.exists(x13.bin)){
+    stop(paste("Binaries x13as not found in", env.path))
+  }
   
   # platform dependent call to X13
-  if (Sys.info()['sysname'] == "Darwin"){
-    system(paste0(x13dir, "/x13as-mac ", file), intern = TRUE)
-  } else if (Sys.info()['sysname'] == "Linux"){
-    system(paste0(x13dir, "/x13as-linux ", file))
-  } else if (.Platform$OS.type == "windows"){
-    shell(paste0(x13dir, "/x13as.exe ", file), intern = TRUE)
+  if (.Platform$OS.type == "windows"){
+    shell(paste(x13.bin, file), intern = TRUE)
+  } else {
+    system(paste(x13.bin, file), intern = TRUE)
   }
   
 }
