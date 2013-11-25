@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title><strong>seasonal</strong>: R interface to X-13ARIMA-SEATS</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h2><strong>seasonal</strong>: R interface to X-13ARIMA-SEATS</h2>
+
+<p><strong>seasonal</strong> is an easy-to-use R-interface to X-13ARIMA-SEATS, a seasonal adjustment software from the <a href="http://www.census.gov/ts/x13as" title="United States Census Bureau">United States Census Bureau</a>. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. </p>
+
+<p>If you are new to seasonal adjustment or X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of some time series. Start with the <a href="#getting-started">Getting started</a> section and skip the rest. </p>
+
+<p>If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equivalent use of its syntax in <strong>seasonal</strong>. Read the <a href="#syntax-equivalence-to-x-13arima-seats">Syntax equivalence</a> section and have a look at the <a href="https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R" title="Wiki: Examples of X-13ARIMA-SEATS in R">wiki</a>, where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the <a href="http://www.census.gov/ts/x13as/docX13AS.pdf" title="Reference Manual">manual</a> or the <a href="http://www.census.gov/ts/x13as/pc/qrefX13ASpc.pdf" title="Quick Reference">quick reference</a>.</p>
+
+<h3>Installation</h3>
+
+<p>To install directly from github, use the devtools package:</p>
+
+<pre><code>require(devtools)
+install_github(&#39;seasonal&#39;, &#39;christophsax&#39;)
+</code></pre>
+
+<p><strong>seasonal</strong> does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from <a href="http://www.census.gov/srd/www/x13as/x13down_pc.html" title="Combined X-13ARIMA-SEATS archives">here</a> (Windows) or <a href="http://www.census.gov/srd/www/x13as/x13down_unix.html" title="Combined X-13ARIMA-SEATS archives">here</a>  (Linux). Make sure you download the standard and not the html verision. My own compilation for Mac OS-X can be obtained <a href="mailto:christoph.sax@gmail.com">up on request</a>.</p>
+
+<p>As a first step, you need to tell <strong>seasonal</strong> where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable <code>X13_PATH</code>. This may be done during your active session in R:</p>
+
+<pre><code>Sys.setenv(X13_PATH = &quot;YOUR_PATH_TO_X13&quot;)
+</code></pre>
+
+<p>Exchange <code>YOUR_PATH_TO_X13</code> with the path to your installation of X-13ARIMA-SEATS. Note that the Windows path <code>C:\something\somemore</code> has to be entered UNIX-like <code>C:/something/somemore</code> or <code>C:\\something\\somemore</code>.</p>
+
+<p>If you want to set the environmental variable permanently, you may do so by adding it tho the <code>Renviron.site</code> file, which is located in the <code>etc</code> subdirectory of your R home directory (use <code>R.home()</code> in R to reveal it). It does not exist by default; you have to create it in this case. Add the following line to  <code>Renviron.site</code> using your favorite text editor:</p>
+
+<pre><code>X13_PATH = YOUR_PATH_TO_X13
+</code></pre>
+
+<p>Alternatively, use the terminal both on Windows and UNIX systems (changing directories in Windows requires <code>\</code> instead of <code>/</code>):</p>
+
+<pre><code>cd YOUR_R_HOME_DIRECTORY/etc
+echo X13_PATH = YOUR_PATH_TO_X13 &gt;&gt; Renviron.site
+</code></pre>
+
+<p>There are more ways to set an environmental variable permanently, see <code>?Startup</code>.</p>
+
+<h3>Getting started</h3>
+
+<p><code>seas</code> ist the core function of the <strong>seasonal</strong> package. By default, <code>seas</code> calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class <code>&quot;seas&quot;</code> that contains all necessary information on the adjustment process, as well as the series. The <code>final</code> method for <code>&quot;seas&quot;</code> objects returns the adjusted series, the <code>plot</code> method shows a plot with the unadjusted and the adjusted series. </p>
+
+<pre><code>x &lt;- seas(AirPassengers)
+final(x)
+plot(x)
+</code></pre>
+
+<p>The first argument has to be a time series of class <code>&quot;ts&quot;</code>. By default, <code>seas</code> calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure, use the following option (see the next section for more details about the syntax):</p>
+
+<pre><code>seas(AirPassengers, x11 = list())
+</code></pre>
+
+<p>Besides performing seasonal adjustment with SEATS, a default call of <code>seas</code> invokes the following automatic procedures of X-13ARIMA-SEATS:</p>
+
+<ul>
+<li>Transformation selection (log / no log)</li>
+<li>Detection of trading day and Easter effects</li>
+<li>Outlier detection</li>
+<li>ARIMA model search</li>
+</ul>
+
+<p>Alternatively, all inputs may be entered manually, as in the following example:</p>
+
+<pre><code>seas(x = AirPassengers, regression.variables = c(&quot;td1coef&quot;, &quot;easter[1]&quot;,
+&quot;ao1951.May&quot;), arima.model = &quot;(0 1 1)(0 1 1)&quot;, regression.aictest = NULL,
+outlier = NULL, transform.function = &quot;log&quot;)
+</code></pre>
+
+<p>The <code>static</code> command reveals the static call from above that is needed to replicate the automatic seasonal adjustment procedure:</p>
+
+<pre><code>static(x)
+static(x, coef = TRUE)  # also fixes the coefficients
+</code></pre>
+
+<p>If you are using RStudio, the <code>inspect</code> command offers a way to analyze and modify a seasonal adjustment procedure (see the section below for details):</p>
+
+<pre><code>inspect(AirPassengers)
+</code></pre>
+
+<h3>Syntax equivalence to X-13ARIMA-SEATS</h3>
+
+<p>The X-13ARIMA-SEATS syntax uses <em>specs</em> and <em>arguments</em>, with each spec optionally containing some arguments. For details, see the <a href="http://www.census.gov/ts/x13as/docX13AS.pdf" title="Reference Manual">manual</a>. These spec-argument combinations can be added to <code>seas</code> by separating spec and argument by a dot (<code>.</code>). For example, in order to set the <code>variables</code> argument of the <code>regression</code> spec equal to <code>td</code> and <code>ao1999.jan</code>, the input to <code>seas</code> looks like this:</p>
+
+<pre><code>x &lt;- seas(AirPassengers, regression.variables = c(&quot;td&quot;, &quot;ao1965.jan&quot;))
+</code></pre>
+
+<p>Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty <code>list()</code>. Several defaults of <code>seas</code> are empty lists, such as the default <code>seats = list()</code>. See the help page (<code>?seas</code>) for more details on the defaults.</p>
+
+<p>It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way. For instance, example 1 in section 7.1 from the <a href="http://www.census.gov/ts/x13as/docX13AS.pdf" title="Reference Manual">manual</a>,</p>
+
+<pre><code>series { title  =  &quot;Quarterly Grape Harvest&quot; start = 1950.1
+       period =  4
+       data  = (8997 9401 ... 11346) }
+arima { model = (0 1 1) }
+estimate { }
+</code></pre>
+
+<p>translates to R in the following way:</p>
+
+<pre><code>seas(AirPassengers,
+     x11 = list(),
+     arima.model = &quot;(0 1 1)&quot;
+)
+</code></pre>
+
+<p><code>seas</code> takes care of the <code>series</code> spec, and no input beside the time series has to be provided. As <code>seas</code> uses the SEATS procedure by default, the use of X11 has to be specified manually. When the <code>x11</code> spec is added as an input (like above), the mutually exclusive and default <code>seats</code> spec is automatically disabled. With <code>arima.model</code>, an additional spec-argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the <code>automdl</code> spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the <a href="https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R" title="Wiki: Examples of X-13ARIMA-SEATS in R">wiki</a>.</p>
+
+<p>There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, X-13ARIMA-SEATS would return an error. In contrast, <code>seas</code> follows a set of priority rules, where the lower priority is overwritten by the higher priority. Usually, the default has the lowest priority and is overwritten if one or several of the following <code>spec</code> inputs are provided:</p>
+
+<ul>
+<li><p>Model selection</p>
+
+<ol>
+<li><code>arima</code></li>
+<li><code>pickmdl</code></li>
+<li><code>automdl</code> (default)</li>
+</ol></li>
+<li><p>Adjustment procedure</p>
+
+<ol>
+<li><code>x11</code></li>
+<li><code>seats</code> (default)</li>
+</ol></li>
+<li><p>Regression procedure</p>
+
+<ol>
+<li><code>x11regression</code></li>
+<li><code>regression</code> (default)</li>
+</ol></li>
+</ul>
+
+<h3>Graphs</h3>
+
+<p>All plots from Win X-13, a graphical Windows version of X-13ARIMA-SEATS, are reproducible in R. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally, it also draws the trend of the seasonal decomposition:</p>
+
+<pre><code>x &lt;- seas(AirPassengers, regression.aictest = c(&quot;td&quot;, &quot;easter&quot;))
+plot(x)
+plot(x, outliers = FALSE)
+plot(x, trend = TRUE)
+</code></pre>
+
+<p>The <code>monthplot</code> function allows for a monthwise plot (or quarterwise, with the identical function name) of the data. There is a method for <code>&quot;seas&quot;</code> objects:</p>
+
+<pre><code>monthplot(x)
+monthplot(x, choice = &quot;irregular&quot;)
+</code></pre>
+
+<p>With <code>spectrum</code>, the spectral density of any series can be estimated and plotted:</p>
+
+<pre><code>spectrum(diff(final(x)))
+spectrum(diff(original(x)))
+</code></pre>
+
+<h3>Inspect tool</h3>
+
+<p>The <code>inspect</code> function is a powerful tool for choosing a good seasonal adjustment model. It uses the <code>manipulate</code> package and can only be used with the (free) <a href="http://www.rstudio.com/ide/">RStudio IDE</a>. <code>inspect</code> uses a <code>&quot;ts&quot;</code> object as its first argument:</p>
+
+<pre><code>inspect(AirPassengers)
+</code></pre>
+
+<p>Optionally, you can pass arbitrary spec-arguments to inspect. Here, the maximum of iterations during estimation is increased from 500 to 1000:</p>
+
+<pre><code>inspect(AirPassengers, estimate.maxiter = 1000) 
+</code></pre>
+
+<p>The inspect function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statics are shown in the R console. With the &#39;Show static call&#39; option, a replicable static call is also shown in the console. Note that the last option will double the time for recalculation, as the static function also tests the static call each time (this is a beta feature of seasonal, which allows intensive testing; it may be disabled in more stable versions).</p>
+
+<h3>License</h3>
+
+<p><strong>seasonal</strong> is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS.</p>
+
+<p>This is a very new package, and it may still contain bugs. Please report them on github or send me an <a href="mailto:christoph.sax@gmail.com">e-mail</a>. Thank you!</p>
+
+</body>
+
+</html>
+

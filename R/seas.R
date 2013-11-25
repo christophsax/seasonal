@@ -479,7 +479,7 @@ run_x13 <- function(file){
   
   env.path <- Sys.getenv("X13_PATH")
   if (env.path == ""){
-    stop("Path to the binaries of X-13ARIMA-SEATS not specified. Use\n\n    Sys.setenv(X13_PATH = 'PATH_TO_X13_BINARIES')\n\n  to set it temporarily or store it permanently in the .Renviron file.")
+    stop("Path to the binaries of X-13ARIMA-SEATS not specified. Use\n\n    Sys.setenv(X13_PATH = 'PATH_TO_X13_BINARIES')\n\n  to set it temporarily. See https://github.com/christophsax/seasonal to set it permanently.")
   }
   
   # platform dependent binaries
