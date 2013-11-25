@@ -3,6 +3,8 @@ seas(AirPassengers)
 
 
 
+
+
 echo 'X13_PATH = YOUR_PATH_TO_X13' >> .Renviron
 
 # Don't forget to exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS.
@@ -30,6 +32,8 @@ Sys.getenv("X13_PATH")
 
 Sys.setenv(X13_PATH = "~/X13" )
 
+
+in the current or in the user's home directory (in that order)
 
 
 
