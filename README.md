@@ -21,13 +21,13 @@ As a first step, you need to tell **seasonal** where to find the binary executab
 
     Sys.setenv(X13_PATH = "YOUR_PATH_TO_X13" )
     
-Exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS. Note that on Windows the path `C:\something\somemore` hat to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`.
+Exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS. Note that the Windows path `C:\something\somemore` has to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`.
 
 If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is typically located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal it). You may add the following line to  `Renviron.site` using your favorite editor:
 
     X13_PATH = YOUR_PATH_TO_X13
 
-Or use the terminal both on Windows and UNIX systems (changing directories in Windows involvs `\` instead of `/`)
+Or use the terminal both on Windows and UNIX systems (changing directories in Windows requires `\` instead of `/`):
 
     cd YOUR_R_HOME_DIRECTORY/etc
     echo X13_PATH = YOUR_PATH_TO_X13 >> Renviron.site
