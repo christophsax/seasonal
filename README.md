@@ -21,9 +21,13 @@ As a first step, you need to tell **seasonal** where to find the binary executab
 
     Sys.setenv(X13_PATH = "YOUR_PATH_TO_X13" )
     
-Exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS. Note that on Windows the Path `C:\something\somemore` hat to be entered Unix like `C:/something/somemore` or `C:\\something\\somemore`.
+Exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS. Note that on Windows the path `C:\something\somemore` hat to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`.
 
-If you want to set the environmental variable permanently, you may do so by adding it tho the `.Renviron` file, which is typically located in your home directory. Both on Windows and Unix systems, you may add a line to file using the terminal:
+If you want to set the environmental variable permanently, you may do so by adding it tho the `.Renviron` file, which is typically located in your home directory (see ?Startup to learn about environmental variables in the start-up process). Both on Windows and UNIX systems, you may add the following line to  `.Renviron` using your favorite editor:
+
+    X13_PATH = YOUR_PATH_TO_X13
+
+of simply add the line via terminal:
 
     echo 'X13_PATH = YOUR_PATH_TO_X13' >> .Renviron
 
