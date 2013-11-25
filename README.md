@@ -19,9 +19,9 @@ To install directly from github, use the devtools package:
 
 As a first step, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done temporarily in R:
 
-    Sys.setenv(X13_PATH = "YOUR_PATH_TO_X13" )
+    Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY" )
     
-Exchange `YOUR_PATH_TO_X13` with the path to your installation of X-13ARIMA-SEATS. Note that the Windows path `C:\something\somemore` has to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`.
+Exchange `YOUR_X13_DIRECTORY` with the path to your installation of X-13ARIMA-SEATS. Note that the Windows path `C:\something\somemore` has to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`.
 
 If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is typically located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal it). You may add the following line to  `Renviron.site` using your favorite editor:
 
