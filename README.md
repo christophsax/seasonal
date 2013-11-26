@@ -10,29 +10,26 @@ If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equiv
 
 ### Installation
 
-To install directly from github, use the devtools package:
+**seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows) or [here][census_linux]  (Linux). Make sure you download the standard and not the html verision. My own compilation for Mac OS-X can be obtained [up on request](mailto:c.sax@seco.admin.ch).
 
-    require(devtools)
-    install_github('seasonal', 'christophsax')
-    
-**seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows) or [here][census_linux]  (Linux). Make sure you download the standard and not the html verision. My own compilation for Mac OS-X can be obtained [up on request](mailto:christoph.sax@gmail.com).
+Download the file, unzip it and copy it to the desired location in your file system. Next, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
 
-As a first step, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
+    Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")
+ 
+Exchange `YOUR_X13_DIRECTORY` with the path to your installation of X-13ARIMA-SEATS. Note that the Windows path `C:\something\somemore` has to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`. You can always check your installation with:
 
-    Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY" )
+    checkX13()
 
-Exchange `YOUR_X13_DIRECTORY` with the path to your installation of X-13ARIMA-SEATS. Note that the Windows path `C:\something\somemore` has to be entered UNIX-like `C:/something/somemore` or `C:\\something\\somemore`.
-
-If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal it). It does not exist by default; you have to create it in this case. Add the following line to  `Renviron.site` using your favorite text editor:
+If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal the home directory). `Renviron.site` does not exist by default; if not, you have to create a simple text file with the name `Renviron.site`. Add the following line to the file using your favorite text editor:
 
     X13_PATH = YOUR_PATH_TO_X13
 
-Alternatively, use the terminal both on Windows and UNIX systems (changing directories in Windows requires `\` instead of `/`):
+Alternatively, use the terminal/command prompt both on UNIX systems and on Windows (on Windows, the `cd` command requires `\` instead of `/`):
 
     cd YOUR_R_HOME_DIRECTORY/etc
     echo X13_PATH = YOUR_PATH_TO_X13 >> Renviron.site
 
-There are more ways to set an environmental variable permanently, see `?Startup`.
+There are other ways to set an environmental variable permanently in R, see `?Startup`.
 
 ### Getting started
 
@@ -148,13 +145,13 @@ The inspect function opens an interactive window that allows for the manipulatio
 
 **seasonal** is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS, which is in the Public Domain.
 
-This is a very new package, and it may still contain bugs. Please report them on github or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
+This is a very new package, and it may still contain bugs. Please report them on Github or send me an [e-mail](mailto:c.sax@seco.admin.ch). Thank you!
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
 
 [qref]: http://www.census.gov/ts/x13as/pc/qrefX13ASpc.pdf "Quick Reference"
 
-[census]: http://www.census.gov/ts/x13as "United States Census Bureau"
+[census]: http://www.census.gov/srd/www/x13as/ "United States Census Bureau"
 
 [census_win]: http://www.census.gov/srd/www/x13as/x13down_pc.html "Combined X-13ARIMA-SEATS archives"
 
