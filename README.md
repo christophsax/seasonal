@@ -145,7 +145,7 @@ The inspect function opens an interactive window that allows for the manipulatio
 
 **seasonal** is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS, which is in the Public Domain.
 
-This is a very new package, and it may still contain bugs. Please report them on Github or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
+This is a very new package, and it may still contain bugs. Please report them on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
 
@@ -161,7 +161,6 @@ This is a very new package, and it may still contain bugs. Please report them on
 
 [rstudio]: http://www.rstudio.com/ide/
 
-
-
+[github]: https://github.com/christophsax/seasonal
 
 
