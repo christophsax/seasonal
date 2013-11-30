@@ -12,7 +12,7 @@ If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equiv
 **seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows) or [here][census_linux]  (Linux). Make sure you download the standard and not the html verision. My own compilation for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com).
 
 
-Download the file, unzip it and copy it to the desired location in your file system. Next, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
+Download the file, unzip it and copy the folder to the desired location in your file system. Next, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
 
     Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")
  
@@ -39,7 +39,7 @@ There are other ways to set an environmental variable permanently in R, see `?St
     final(x)
     plot(x)
      
-The first argument has to be a time series of class `"ts"`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure, use the following option (see the next section for more details about the syntax):
+The first argument has to be a time series of class `"ts"`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure (this is what X-12ARIMA does), use the following option (see the next section for more details about the syntax):
 
     seas(AirPassengers, x11 = list())
      
