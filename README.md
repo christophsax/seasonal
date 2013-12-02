@@ -24,7 +24,7 @@ If you want to set the environmental variable permanently, you may do so by addi
 
     X13_PATH = YOUR_PATH_TO_X13
 
-Alternatively, use the system terminal (On Windows, it's called command prompt; also, the `cd` command requires `\` instead of `/`):
+Alternatively, use the system terminal (on Windows, it's called command prompt; also, the `cd` command requires `\` instead of `/`):
 
     cd YOUR_R_HOME_DIRECTORY/etc
     echo X13_PATH = YOUR_PATH_TO_X13 >> Renviron.site
