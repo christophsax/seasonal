@@ -24,6 +24,13 @@ inspect <- function(x, ...){
   
   tsname <- deparse(substitute(x))
 
+  method <- NULL
+  modelsearch <- NULL
+  calendar <- NULL
+  outlier.critical <- NULL
+  view <- NULL
+  is.static.call <- NULL
+  
   controls <- list(
     method = picker("SEATS", "X11", label = "Adjustment method"),
     modelsearch = picker("automdl", "pickmdl", label = "Model search"),

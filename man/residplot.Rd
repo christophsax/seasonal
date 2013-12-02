@@ -20,9 +20,11 @@
   the outliers. Optionally draw the trend series.
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 residplot(x)
 residplot(x, outliers = FALSE)
+}
 }
 \seealso{
   \code{\link{seas}} for the main function.

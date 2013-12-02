@@ -61,10 +61,11 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE, ...){
 #' @export
 #'   
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 #' residplot(x)  
 #' residplot(x, outliers = FALSE)  
-#' 
+#' }
 #' @export
 residplot <- function(x, outliers = TRUE, ...){
   ts.plot(resid(x), ylab = "value",
