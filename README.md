@@ -20,7 +20,7 @@ Exchange `YOUR_X13_DIRECTORY` with the path to your installation of X-13ARIMA-SE
 
     checkX13()
 
-If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal the home directory). `Renviron.site` does not exist by default; if not, you have to create a simple text file with the name `Renviron.site`. Add the following line to the file using your favorite text editor:
+If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal the home directory). `Renviron.site` does not exist by default; if not, you have to create a file with the name `Renviron.site` (on Windows, be careful with the 'show extensions for known file types' option, the extension `.site` may be hidden). Add the following line to the file using your favorite text editor:
 
     X13_PATH = YOUR_PATH_TO_X13
 
