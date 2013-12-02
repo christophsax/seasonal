@@ -1,9 +1,8 @@
-# Reading a .mdl file: Its a bit complicated, and could be probably simplified.
-
 read_mdl <- function(file){
   # Read an .mdl file from X13-ARIMA-SEATS
   # 
-  # file  full path without file ending
+  # file  full path without file ending. this is a bit complicated, and could be
+  # probably simplified.
   #
   # return "spclist" object, similar to the input specification
   #

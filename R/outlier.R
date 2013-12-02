@@ -8,8 +8,10 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers)
 #' outlier(x)
+#' }
 outlier <- function(x){
   stopifnot(inherits(x, "seas"))
   

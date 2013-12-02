@@ -21,9 +21,10 @@
 #'   The \code{print} method prints the summary output in a similar way as the method for \code{"lm"}.
 #'   
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers)
 #' summary(x)  
-#'   
+#' }
 #' @method summary seas
 #' @export
 summary.seas <- function(object, ...){

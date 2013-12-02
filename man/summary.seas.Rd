@@ -40,7 +40,9 @@
   \code{summary} method for class "seas".
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers)
 summary(x)
+}
 }
 

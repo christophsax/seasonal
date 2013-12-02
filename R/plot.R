@@ -17,11 +17,12 @@
 #' @method plot seas
 #'   
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 #' plot(x)  
 #' plot(x, outliers = FALSE)  
 #' plot(x, trend = TRUE) 
-#' 
+#' }
 plot.seas <- function(x, outliers = TRUE, trend = FALSE, ...){
   ts.plot(cbind(original(x), final(x)), 
           col = c("black", "red"), 
@@ -97,10 +98,11 @@ residplot <- function(x, outliers = TRUE, ...){
 #' @method monthplot seas
 #'   
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 #' monthplot(x)  
 #' monthplot(x, choice = "irregular")  
-#' 
+#' }
 #' @export
 #' @method monthplot seas
 monthplot.seas <- function(x, choice = "seasonal", ...){

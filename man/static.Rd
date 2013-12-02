@@ -29,8 +29,10 @@
   selected spec/argument options.
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers)
 static(x)
 static(x, name = "ArbitrayName", test = FALSE)
+}
 }
 

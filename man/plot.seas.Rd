@@ -24,10 +24,12 @@
   Optionally draw the trend series.
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 plot(x)
 plot(x, outliers = FALSE)
 plot(x, trend = TRUE)
+}
 }
 \seealso{
   \code{\link{seas}} for the main function.

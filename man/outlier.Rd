@@ -15,7 +15,9 @@
   names of the outliers.
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers)
 outlier(x)
+}
 }
 

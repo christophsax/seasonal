@@ -3,13 +3,14 @@
 #' These functions extract elements or series from a \code{"seas"} object.
 #' 
 #' @param x  an object of class \code{"seas"}.
-#' 
+#'   
 #' @return return an element or a series, depending on the function
-#' 
+#'   
 #' @seealso \code{\link{seas}} for the main function.
-#' 
+#'   
 #' @export
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers)
 #' 
 #' final(x)
@@ -23,6 +24,7 @@
 #' # out(x)  # returns an error
 #' x2 <- seas(AirPassengers, out = TRUE)
 #' out(x2)    # this works: X13-ARIMA-SEATS .out file
+#' }
 #' 
 spc <- function(x){
   x$spc

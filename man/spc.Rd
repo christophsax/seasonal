@@ -33,6 +33,7 @@
   \code{"seas"} object.
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers)
 
 final(x)
@@ -46,6 +47,7 @@ mdl(x)  # X13-ARIMA-SEATS .mdl file
 # out(x)  # returns an error
 x2 <- seas(AirPassengers, out = TRUE)
 out(x2)    # this works: X13-ARIMA-SEATS .out file
+}
 }
 \seealso{
   \code{\link{seas}} for the main function.

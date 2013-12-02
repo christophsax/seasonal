@@ -105,6 +105,7 @@
   (\url{https://github.com/christophsax/seasonal})
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers)
 summary(x)
 
@@ -172,7 +173,6 @@ final(seas(AirPassengersNA, na.action = na.exclude))
 # final(seas(AirPassengersNA, na.action = na.fail))   # fails
 
 # inspection tool
-\dontrun{
 inspect(AirPassengers)
 }
 }

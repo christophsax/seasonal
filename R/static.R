@@ -16,10 +16,11 @@
 #'   into an R script.
 #' @export
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers)
 #' static(x)
 #' static(x, name = "ArbitrayName", test = FALSE)
-#' 
+#' }
 static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   
   stopifnot(inherits(x, "seas"))

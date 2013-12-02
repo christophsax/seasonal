@@ -73,6 +73,7 @@
 #'   
 #' @import stringr
 #' @examples
+#' \dontrun{
 #' x <- seas(AirPassengers) 
 #' summary(x)
 #' 
@@ -140,7 +141,6 @@
 #' # final(seas(AirPassengersNA, na.action = na.fail))   # fails
 #' 
 #' # inspection tool
-#' \dontrun{
 #' inspect(AirPassengers)
 #' }
 #' 
@@ -514,7 +514,7 @@ run_x13 <- function(file){
 #' @export
 checkX13 <- function(fail = FALSE, confirmation = TRUE){
   no.path.message <- "No path to the binary executable of X-13ARIMA-SEATS specified.
-  \nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")"
+  \nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")\n"
   env.path <- Sys.getenv("X13_PATH")
   if (env.path == ""){
     if (fail){
@@ -532,7 +532,7 @@ checkX13 <- function(fail = FALSE, confirmation = TRUE){
     }
     
     no.file.message <- paste("Binary executable file", x13.bin, "not found.
-    \nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")")
+    \nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")\n")
     
     if (!file.exists(x13.bin)){
       if (fail){

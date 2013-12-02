@@ -22,9 +22,11 @@
   seasonal or irregular factors.
 }
 \examples{
+\dontrun{
 x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 monthplot(x)
 monthplot(x, choice = "irregular")
+}
 }
 \seealso{
   \code{\link{seas}} for the main function.

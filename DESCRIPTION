@@ -1,8 +1,8 @@
 Package: seasonal
 Type: Package
 Title: R interface to X-13ARIMA-SEATS
-Version: 0.19.0
-Date: 2013-11-25
+Version: 0.19.2
+Date: 2013-12-02
 Author: Christoph Sax
 Maintainer: Christoph Sax <christoph.sax@gmail.com>
 Description: seasonal is an easy-to-use R-interface to X-13ARIMA-SEATS, a
