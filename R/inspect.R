@@ -1,3 +1,8 @@
+# avoid NOTE in R CMD check 
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(c("picker", "checkbox", "slider", "manipulate"))
+}  
+
 #' Inspection Function for Seasonal Adjustment (RStudio only)
 #' 
 #' Inspect the seasonal adjustment of a time series. \code{inspect} uses the
@@ -17,12 +22,6 @@
 #' 
 inspect <- function(x, ...){
   stopifnot(inherits(x, "ts"))
-  
-  dotlist <- list(...)
-  
-  require(manipulate)
-  
-  tsname <- deparse(substitute(x))
 
   method <- NULL
   modelsearch <- NULL
@@ -30,6 +29,12 @@ inspect <- function(x, ...){
   outlier.critical <- NULL
   view <- NULL
   is.static.call <- NULL
+  
+  require(manipulate)
+  
+  dotlist <- list(...)
+  
+  tsname <- deparse(substitute(x))
   
   controls <- list(
     method = picker("SEATS", "X11", label = "Adjustment method"),
