@@ -1,4 +1,0 @@
-%\VignetteIndexEntry{Introduction to seasonal: R interface to X-13ARIMA-SEATS}
-\documentclass{article}
-\begin{document}
-\end{document}
