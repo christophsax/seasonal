@@ -93,8 +93,7 @@ translates to R in the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the `series` spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (like above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples].
-
+`seas` takes care of the `series` spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (like above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples]. Support of the `slidingspan` and `history` spec is currently unimplemented but planned for the near future.
 
 There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, X-13ARIMA-SEATS would return an error. In contrast, `seas` follows a set of priority rules, where the lower priority is overwritten by the higher priority. Usually, the default has the lowest priority and is overwritten if one or several of the following `spec` inputs are provided:
 
@@ -142,7 +141,7 @@ Optionally, you can pass arbitrary spec-arguments to inspect. Here, the maximum 
 
     inspect(AirPassengers, estimate.maxiter = 1000) 
     
-The inspect function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statics are shown in the R console. With the 'Show static call' option, a replicable static call is also shown in the console. Note that the last option will double the time for recalculation, as the static function also tests the static call each time (this is a beta feature of seasonal, which allows intensive testing; it may be disabled in more stable versions).
+The inspect function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statics are shown in the R console. With the 'Show static call' option, a replicable static call is also shown in the console. Note that the last option will double the time for recalculation, as the static function also tests the static call each time (this is a beta feature of seasonal, which allows intensive testing; it may be disabled in future versions).
 
 
 ### License
