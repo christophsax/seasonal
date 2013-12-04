@@ -9,6 +9,10 @@ If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equiv
 
 ### Installation
 
+To install the stable version directly from CRAN, type to the R console:
+
+    install.packages("seasonal")
+
 **seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows, filename `x13asall.zip`) or [here][census_linux]  (Linux, filename `x13asall.tar.gz`). My own compilation for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com).
 
 
