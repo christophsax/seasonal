@@ -1,11 +1,11 @@
-**seasonal**: R interface to X-13ARIMA-SEATS
---------------------------------------------
+R interface to X-13ARIMA-SEATS
+------------------------------
 
-**seasonal** is an easy-to-use R-interface to X-13ARIMA-SEATS, a seasonal adjustment software developed by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
+*seasonal* is an easy-to-use R-interface to X-13ARIMA-SEATS, a seasonal adjustment software developed by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank of Spain) software packages. 
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of time series. Start with the [Getting started](#getting-started) section and skip the rest. 
 
-If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equivalent use of its syntax in **seasonal**. Read the [Syntax equivalence](#syntax-equivalence-to-x-13arima-seats) section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
+If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equivalent use of its syntax in *seasonal*. Read the [Syntax equivalence](#syntax-equivalence-to-x-13arima-seats) section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
 
 ### Installation
 
@@ -13,10 +13,10 @@ To install the stable version directly from CRAN, type to the R console:
 
     install.packages("seasonal")
 
-**seasonal** does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows, filename `x13asall.zip`) or [here][census_linux]  (Linux, filename `x13asall.tar.gz`). My own compilation for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com).
+*seasonal* does not includes the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows, filename `x13asall.zip`) or [here][census_linux]  (Linux, filename `x13asall.tar.gz`). My own compilation for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com).
 
 
-Download the file, unzip it and copy the folder to the desired location in your file system. Next, you need to tell **seasonal** where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
+Download the file, unzip it and copy the folder to the desired location in your file system. Next, you need to tell *seasonal* where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
 
     Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")
  
@@ -37,7 +37,7 @@ There are other ways to set an environmental variable permanently in R, see `?St
 
 ### Getting started
 
-`seas` ist the core function of the **seasonal** package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `"seas"` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
+`seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `"seas"` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
     x <- seas(AirPassengers)
     final(x)
@@ -146,7 +146,7 @@ The inspect function opens an interactive window that allows for the manipulatio
 
 ### License
 
-**seasonal** is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS, which is in the Public Domain.
+*seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS, which is in the Public Domain.
 
 This is a very new package, and it may still contain bugs. Please report them on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
