@@ -39,14 +39,23 @@ mdl <- function(x){
 #' @rdname spc
 #' @export
 out <- function(x){
-  if (is.null(x$out)){
-    stop("Contains no 'out' data. Use 'seas' with the 'out = TRUE' option.")
-  }
-  # remove page breaks
-  #   x$output <- str_replace_all(x$output, '\\f', '')
-  page(x$out)
-  invisible(x$out)
+  z <- eval(recall(x$call, output = "out"), envir = globalenv())
+
+  cat(paste(z$out, collapse = "\n"))
+  invisible(z$out)
 }
+
+
+recall <- function(call, output = "out"){
+  stopifnot(inherits(call, "call"))
+  lc <- as.list(call)
+  lc$output <- output
+  as.call(lc)
+}
+
+
+
+
 
 
 

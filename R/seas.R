@@ -148,7 +148,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
                  regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
                  na.action = na.omit,
-                 out = FALSE, dir = NULL, ...){
+                 output = NULL, dir = NULL, ...){
   
   checkX13(fail = TRUE, confirmation = FALSE)
   
@@ -277,12 +277,8 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   z$is.log <- detect_log(outfile)
   z$fivebestmdl <- detect_fivebestmdl(outfile)
   
-
-  if (out){
-    z$out <-  outfile
-  }
-  
   z$spc <- spc
+  
   
   ### Save output files if 'dir' is specified
   
@@ -291,6 +287,16 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
     file.copy(flist, dir, overwrite = TRUE)
     message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
   }
+  
+  ### additional outputs
+  if (!is.null(output)){
+    if (output == "out"){
+      z$out <-  outfile
+    } else {
+      stop("Wrong 'output' argument.")
+    }
+  }
+
   
   ### Final transformations
   cndata <- colnames(z$data)
