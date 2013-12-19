@@ -3,11 +3,11 @@
 \alias{summary.seas}
 \title{Summary of a X13-ARIMA-SEATS seasonal adjustment}
 \usage{
-  \method{summary}{seas} (object, ...)
+\method{summary}{seas}(object, sarevisions = FALSE, slidingspans = FALSE,
+  ...)
 
-  \method{print}{summary.seas} (x,
-    digits = max(3, getOption("digits") - 3),
-    signif.stars = getOption("show.signif.stars"), ...)
+\method{print}{summary.seas}(x, digits = max(3, getOption("digits") - 3),
+  signif.stars = getOption("show.signif.stars"), ...)
 }
 \arguments{
   \item{object}{an object of class \code{"seas"}, usually,
@@ -26,18 +26,18 @@
   methods.}
 }
 \value{
-  \code{summary.seas} returns a list containing the summary
-  statistics included in \code{object}, and computes the
-  following additional statistics:
+\code{summary.seas} returns a list containing the summary
+statistics included in \code{object}, and computes the
+following additional statistics:
 
-  \item{coefficients}{a named matrix containing
-  coefficients, standard deviations, t-values and p-values}
+\item{coefficients}{a named matrix containing coefficients,
+standard deviations, t-values and p-values}
 
-  The \code{print} method prints the summary output in a
-  similar way as the method for \code{"lm"}.
+The \code{print} method prints the summary output in a
+similar way as the method for \code{"lm"}.
 }
 \description{
-  \code{summary} method for class "seas".
+\code{summary} method for class "seas".
 }
 \examples{
 \dontrun{

@@ -2,7 +2,7 @@
 \alias{residplot}
 \title{Plot the Residuals of an X13 regARIMA model}
 \usage{
-  residplot(x, outliers = TRUE, ...)
+residplot(x, outliers = TRUE, ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -13,11 +13,11 @@
   \item{\dots}{further arguments passed to \code{ts.plot}.}
 }
 \value{
-  returns a plot as its side effect.
+returns a plot as its side effect.
 }
 \description{
-  Plot the residuals of an X13 regARIMA model, as well as
-  the outliers. Optionally draw the trend series.
+Plot the residuals of an X13 regARIMA model, as well as the
+outliers. Optionally draw the trend series.
 }
 \examples{
 \dontrun{
@@ -27,6 +27,6 @@ residplot(x, outliers = FALSE)
 }
 }
 \seealso{
-  \code{\link{seas}} for the main function.
+\code{\link{seas}} for the main function.
 }
 

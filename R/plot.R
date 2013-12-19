@@ -106,16 +106,29 @@ residplot <- function(x, outliers = TRUE, ...){
 #' }
 #' @export
 #' @method monthplot seas
-monthplot.seas <- function(x, choice = "seasonal", ...){
+monthplot.seas <- function(x, choice = "SI", ...){
+  if (choice == "SI"){
+    monthplot(x$data[,'seasonal'], ylab = "factor", lwd = 2, col = "red", main = "seasonal component, SI ratio", ...)
+    monthplot(siratio(x), col = "blue", type = "h", add = TRUE, ...)
+  }
   if (choice == "seasonal"){
-    monthplot(x$data[,'adjustfac'], ylab = "factor", main = "seasonal component", ...)
+    monthplot(x$data[,'seasonal'], ylab = "factor", main = "irregular component", ...)
   }
   if (choice == "irregular"){
     monthplot(x$data[,'irregular'], ylab = "factor", main = "irregular component", ...)
   }
 }
 
-
+#' @export
+siratio <- function(x){
+  # TODO: make sure you get the right information wether mult or add
+  if (detect_transform(x) == "log"){
+    z <- x$data[, 'irregular'] * x$data[, 'seasonal']
+  } else {
+    z <- x$data[, 'irregular'] + x$data[, 'seasonal']
+  }
+  na.omit(z)
+}
 
 
 

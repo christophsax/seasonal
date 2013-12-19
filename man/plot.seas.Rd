@@ -2,8 +2,7 @@
 \alias{plot.seas}
 \title{Plot the Adjusted and Unadjusted Series}
 \usage{
-  \method{plot}{seas} (x, outliers = TRUE, trend = FALSE,
-    ...)
+\method{plot}{seas}(x, outliers = TRUE, trend = FALSE, ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -16,12 +15,12 @@
   \item{\dots}{further arguments passed to \code{ts.plot}.}
 }
 \value{
-  returns a plot as its side effect.
+returns a plot as its side effect.
 }
 \description{
-  \code{plot} method for class \code{"seas"}. Plot the
-  adjusted and unadjusted series, as well as the outliers.
-  Optionally draw the trend series.
+\code{plot} method for class \code{"seas"}. Plot the
+adjusted and unadjusted series, as well as the outliers.
+Optionally draw the trend series.
 }
 \examples{
 \dontrun{
@@ -32,6 +31,6 @@ plot(x, trend = TRUE)
 }
 }
 \seealso{
-  \code{\link{seas}} for the main function.
+\code{\link{seas}} for the main function.
 }
 

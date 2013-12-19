@@ -38,19 +38,91 @@ mdl <- function(x){
 
 #' @rdname spc
 #' @export
-out <- function(x){
-  z <- eval(recall(x$call, output = "out"), envir = globalenv())
-
-  cat(paste(z$out, collapse = "\n"))
-  invisible(z$out)
+out <- function(x, line = 1, n = 500, search = NULL){
+  
+  lc <- as.list(x$call)
+  lc$out <- TRUE
+  z <- eval(as.call(lc), envir = globalenv())
+  txt <- z$out
+  txt[grepl("^\f", txt)] <- ""
+  
+  if (!is.null(search)){
+    search.res <- which(grepl(search, txt))
+    if (length(search.res > 0)){
+      line <- search.res[1]
+    } else {
+      message("string not found")
+      return(NULL)
+    }
+  }
+  
+  l <- line
+  status <- 1
+  while (status == 1){
+    
+    if (l < 0){
+      l <- 1
+    }
+    if (l > (length(txt) - n + 1)){
+      l <- length(txt) - n + 1
+    }
+    
+    cat("\014")
+    
+    cat(txt[l:(l + n - 1)], sep = "\n")
+    cat ("\nline ", l, " to ", l + n - 1, " (of ", length(txt), ")\nnext [enter]  previous [p]  to line [number]  quit [q]",sep = "")
+    
+    inp <- readline()
+    if (inp == ""){
+      l <- l + n
+    } else if (inp == "p"){
+      l <- l - n
+    } else if (grepl("\\d+", inp)){
+      l <- as.numeric(inp)
+    } else if (inp == "q"){
+      status <- 0
+    }
+  }
+  return(invisible(NULL))
 }
 
 
-recall <- function(call, output = "out"){
-  stopifnot(inherits(call, "call"))
-  lc <- as.list(call)
-  lc$output <- output
-  as.call(lc)
+#' @rdname spc
+#' @export
+sarevisions <- function(x, verbose = TRUE, ...){
+  ldot <- list(...)
+  lc <- as.list(x$call)
+  lc <- c(lc, ldot)
+  if (length(ldot) == 0) {
+    lc$history <- list()
+  }
+  z <- eval(as.call(lc), envir = globalenv())
+  if (verbose){
+    txt <- z$history
+    txt[grepl("^\f", txt)] <- ""
+    cat(txt, sep = "\n")
+  }
+  invisible(z$saresvions)
+}
+
+
+
+#' @rdname spc
+#' @export
+slidingspans <- function(x, verbose = TRUE, ...){
+  ldot <- list(...)
+  lc <- as.list(x$call)
+  lc <- c(lc, ldot)
+  if (length(ldot) == 0) {
+    lc$slidingspans <- list()
+  }
+  z <- eval(as.call(lc), envir = globalenv())
+  if (verbose){
+    txt <- z$slidingspans$out
+    txt[grepl("^\f", txt)] <- ""
+    cat(txt, sep = "\n")
+  }
+  invisible(z$slidingspans)
 }
 
 
@@ -83,6 +155,29 @@ irregular <- function(x){
   na_action(x, 'irregular')
 }
 
+#' Show regressioneffects
+#' 
+#' matrix of regression variables multiplied by the vector of estimated 
+#' regression coefficients
+#' 
+#' @param x  object of class "seas"
+#' 
+#' @export
+#' @examples
+#' 
+#' # trading day and easter adjustment w/o seasonal adjustment:
+#' x <- seas(AirPassengers)
+#' 
+#' summary(x)
+#' re <- regressioneffects(x)
+#' ce <- re[, 'Trading.Day'] + re[, 'Holiday'] 
+#'  # be aware of log transformation
+#' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
+#' 
+regressioneffects <- function(x){
+  x$regressioneffects
+}
+
 
 
 
@@ -102,6 +197,9 @@ na_action <- function(x, name){
 #' @rdname seas
 #' @export
 fivebestmdl <- function(x){
+  if (is.null(x$spc$automdl)){
+    stop("only works with 'automdl' spc")
+  }
   cat(paste(x$fivebestmdl, collapse = "\n"))
 }
 

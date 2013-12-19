@@ -4,33 +4,39 @@
 \alias{mdl}
 \alias{original}
 \alias{out}
+\alias{sarevisions}
+\alias{slidingspans}
 \alias{spc}
 \alias{trend}
 \title{Extractor Functions for seas Elements and Series}
 \usage{
-  spc(x)
+spc(x)
 
-  mdl(x)
+mdl(x)
 
-  out(x)
+out(x, line = 1, n = 500, search = NULL)
 
-  final(x)
+sarevisions(x, verbose = TRUE, ...)
 
-  original(x)
+slidingspans(x, verbose = TRUE, ...)
 
-  trend(x)
+final(x)
 
-  irregular(x)
+original(x)
+
+trend(x)
+
+irregular(x)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}.}
 }
 \value{
-  return an element or a series, depending on the function
+return an element or a series, depending on the function
 }
 \description{
-  These functions extract elements or series from a
-  \code{"seas"} object.
+These functions extract elements or series from a
+\code{"seas"} object.
 }
 \examples{
 \dontrun{
@@ -50,6 +56,6 @@ out(x2)    # this works: X13-ARIMA-SEATS .out file
 }
 }
 \seealso{
-  \code{\link{seas}} for the main function.
+\code{\link{seas}} for the main function.
 }
 

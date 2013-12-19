@@ -8,7 +8,7 @@ read_est <- function(file){
   est <-  readLines(paste0(file, ".est"))
   
   dollars <- which(str_detect(est, "\\$"))
-  
+
   z <- list()
   
   reg.start <- which(str_detect(est, "\\$regression\\$estimates"))
@@ -54,12 +54,19 @@ read_est <- function(file){
   }
   
   variance.start <- which(str_detect(est, "\\$variance"))
-  variance.end <- length(est)
+  modelspan.start <- which(str_detect(est, "\\$modelspan"))
+  if (length(modelspan.start) > 0){
+    variance.end <- dollars[which(dollars==variance.start) + 1] - 1
+  } else {
+    variance.end <- length(est)
+  }
   
   z$variance <- read.table(text = est[(variance.start + 2):variance.end], 
                            stringsAsFactors = FALSE, sep = "\t")
+  
   z$coefficients <- c(reg.coef, arima.coef)
   z$se <- c(reg.se, arima.se)
+  
   
   z
 }

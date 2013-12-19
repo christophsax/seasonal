@@ -2,7 +2,7 @@
 \alias{monthplot.seas}
 \title{Plot Seasonal or Irregular Factors}
 \usage{
-  \method{monthplot}{seas} (x, choice = "seasonal", ...)
+\method{monthplot}{seas}(x, choice = "SI", ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -15,11 +15,11 @@
   \code{monthplot.default}.}
 }
 \value{
-  returns a plot as its side effect.
+returns a plot as its side effect.
 }
 \description{
-  \code{monthplot} method for class \code{"seas"}. Plot
-  seasonal or irregular factors.
+\code{monthplot} method for class \code{"seas"}. Plot
+seasonal or irregular factors.
 }
 \examples{
 \dontrun{
@@ -29,6 +29,6 @@ monthplot(x, choice = "irregular")
 }
 }
 \seealso{
-  \code{\link{seas}} for the main function.
+\code{\link{seas}} for the main function.
 }
 

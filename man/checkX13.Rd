@@ -2,7 +2,7 @@
 \alias{checkX13}
 \title{Check the installation of X-13ARIMA-SEATS}
 \usage{
-  checkX13(fail = FALSE, confirmation = TRUE)
+checkX13(fail = FALSE, confirmation = TRUE)
 }
 \arguments{
   \item{fail}{logical, wether an error should interrupt the
@@ -13,10 +13,10 @@
   everything works.}
 }
 \description{
-  The function checks the installation of the binary
-  executables of X-13ARIMA-SEATS. For installation details,
-  consider Section 2 of the package vignette:
-  \code{vignette("seas")}
+The function checks the installation of the binary
+executables of X-13ARIMA-SEATS. For installation details,
+consider Section 2 of the package vignette:
+\code{vignette("seas")}
 }
 \examples{
 \dontrun{

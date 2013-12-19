@@ -52,7 +52,7 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
             "transform.adjust",
             
             "x11", "x11.mode", "x11.trendma", "x11.sigmalim", "x11.appendfcst", 
-            "x11.appendbcst", "x11.final",
+            "x11.appendbcst", "x11.final", "x11.type",
             
             "x11regression.variables", "x11regression.tdprior", 
             "x11regression.usertype"
@@ -64,8 +64,8 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
     lc$x = parse(text = name)[[1]]
   }
   
-  lc$regression.variables <- x$mdl$regression$variables
-  lc$arima.model <- x$mdl$arima$model
+  lc$regression.variables <- x$model$regression$variables
+  lc$arima.model <- x$model$arima$model
   
   # Turn off outomatic procedures:
   # To assign NULL instead of removing the element
@@ -75,24 +75,25 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   lc['outlier'] <- NULL
   names(lc['outlier']) <- "regression.aictest"
   
-  lc$transform.function = detect_trans(x)
+  lc$transform.function = detect_transform(x)
   
   if (coef){
-    if (!is.null(x$mdl$regression$b)) {
-      lc$regression.b = c(SubFixed(x$mdl$regression$b))
+    if (!is.null(x$model$regression$b)) {
+      lc$regression.b = c(SubFixed(x$model$regression$b))
     }
-    if (!is.null(x$mdl$arima$ma)) {
-      lc$arima.ma = SubFixed(x$mdl$arima$ma)
+    if (!is.null(x$model$arima$ma)) {
+      lc$arima.ma = SubFixed(x$model$arima$ma)
     } 
-    if (!is.null(x$mdl$arima$ar)) {
-      lc$arima.ar = SubFixed(x$mdl$arima$ar)
+    if (!is.null(x$model$arima$ar)) {
+      lc$arima.ar = SubFixed(x$model$arima$ar)
     }
   }
   
   z <- as.call(lc)
 
+  cat(deparse(z), sep = "\n")
+  
   if (test){
-    
     # testing the static call
     x.static <- eval(z, envir = globalenv())
     test <- (all.equal(final(x.static), final(x), tolerance = 1e-05))
@@ -101,7 +102,6 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
     }
   }
 
-  cat(deparse(z), sep = "\n")
   invisible(z)
 }
 

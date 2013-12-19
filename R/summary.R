@@ -27,7 +27,7 @@
 #' }
 #' @method summary seas
 #' @export
-summary.seas <- function(object, ...){
+summary.seas <- function(object, sarevisions = FALSE, slidingspans = FALSE, ...){
   # build output on top of the input
   z <- object
   
@@ -45,6 +45,13 @@ summary.seas <- function(object, ...){
                                        "Pr(>|z|)"))
   }
   
+  if (sarevisions){
+    z$sarevisions <- mean(abs(sarevisions(object)))
+  }
+  
+  if (slidingspans){
+    z$slidingspans <- slidingspans(object)
+  }
   
   class(z) <- "summary.seas"
   z
@@ -72,13 +79,22 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                  na.print = "NA")
   }
   
-  cat("\nARIMA structure:", x$mdl$arima$model)
-  cat("   Number of obs.:", formatC(x$lks['nobs'], format = "d"))
-  cat("\nTransform:", detect_trans(x))
-  cat("\nAIC:", formatC(x$lks['aic'], digits = digits))
-  cat(", AICC:", formatC(x$lks['Aicc'], digits = digits))
-  cat(", BIC:", formatC(x$lks['bic'], digits = digits))
+  cat("\nARIMA structure:", x$model$arima$model)
+  cat("   Number of obs.:", formatC(x$lkstats['nobs'], format = "d"))
+  cat("   Transform:", detect_transform(x))
+  cat("\nAIC:", formatC(x$lkstats['aic'], digits = digits))
+  cat(", AICC:", formatC(x$lkstats['Aicc'], digits = digits))
+  cat(", BIC:", formatC(x$lkstats['bic'], digits = digits))
 
+  if (!is.null(x$sarevisions)){
+    cat("\nmean abs pc rev:", formatC(x$sarevisions, digits = digits))
+  }
+
+  if (!is.null(x$slidingspans)){
+    cat("\nunstable seasonal factors:", x$slidingspans$factors.text)
+    cat("\nunstable p-to-p changes:", x$slidingspans$changes.text)
+  }
+  
   cat("\n")
   if (length(x$err) > 5){
     cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")
@@ -87,7 +103,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
 }
 
 
-detect_trans <- function(x){
+detect_transform <- function(x){
   if (!is.null(x$spc$transform$`function`)){
     if (x$spc$transform$`function` == "auto"){
       if (x$is.log){

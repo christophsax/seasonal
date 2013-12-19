@@ -46,7 +46,7 @@
 #'   \code{"regression"}", which contains the regressors and parameter 
 #'   estimates, and \code{"arima"}", which contains the ARIMA specification and 
 #'   the parameter estimates.} \item{est}{More detailed information on the 
-#'   estimation.} \item{lks}{Summary statistics.} 
+#'   estimation.} \item{lkstats}{Summary statistics.} 
 #'   \item{coefficients}{Coefficients of the regARIMA model.} \item{se}{Standard
 #'   errors of the regARIMA model.} \item{spc}{An object of class 
 #'   \code{"spclist"}, a list containing everything that is send to 
@@ -130,7 +130,7 @@
 #' 
 #' # more components in a "seats" object
 #' x$est$variance  
-#' x$lks
+#' x$lkstats
 #' 
 #' # standard NA handling with na.action
 #' AirPassengersNA <- window(AirPassengers, start = c(1948, 6), end = c(1961, 4), 
@@ -148,7 +148,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
                  regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
                  na.action = na.omit,
-                 output = NULL, dir = NULL, ...){
+                 out = FALSE, dir = NULL, ...){
   
   checkX13(fail = TRUE, confirmation = FALSE)
   
@@ -205,7 +205,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
 
   # remove double entries, adjust outputs
   spc <- consist_check_spclist(spc)
-  
+
   ### User defined Regressors
   if (!is.null(xreg)){
     write_ts_dat(na.action(xreg), file = regfile)
@@ -238,6 +238,16 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   ### Run X13
   run_x13(iofile)
   
+  ### Save output files if 'dir' is specified
+  if (!is.null(dir)){
+    flist <- list.files(wdir, full.names = TRUE)
+    if (!file.exists(dir)){
+      dir.create(dir)
+    }
+    file.copy(flist, dir, overwrite = TRUE)
+    message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
+  }
+  
   ### Import from X13
   z <- list()
   class(spc) <- c("spclist", "list")
@@ -255,51 +265,49 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
     z$data <- read_data(method = "seats", file = iofile)
   } else if (!is.null(spc$x11)){
     z$data <- read_data(method = "x11", file = iofile)
-  } else {
-    warning("dont know what to read if neither 'seats' nor 'x11' are specified (TODO).")
-  }
+  } 
   
-  z$mdl <- read_mdl(iofile)
-  z$est <- read_est(iofile)
-  z$lks <- read_lks(iofile)
+  z$regressioneffects <- read_data_file(paste0(iofile, ".ref"))
+    
+  z$model <- read_mdl(iofile)
+
+  z$estimates <- read_est(iofile)
+  z$lkstats <- read_lks(iofile)
   
-  z$coefficients <- z$est$coefficients
-  z$se <- z$est$se
+  z$coefficients <- z$estimates$coefficients
+  z$se <- z$estimates$se
   
-  outfile <-  readLines(paste0(iofile, ".out"))
+  outfile <-  readLines(paste0(iofile, ".out"), encoding = "UTF-8")
   
   if (any(str_detect(z$err, "Model used for SEATS decomposition is different"))){
     z$seatsmdl <- detect_seatsmdl(outfile)
     warning(paste("Model used for SEATS decomposition is different:\n", 
                   z$seatsmdl))
   }
+
+  if (!is.null(spc$slidingspans)){
+    z$slidingspans <- detect_slidingspans(outfile) 
+  }
+  
+  if (!is.null(spc$history)){
+    z$history <- detect_history(outfile) 
+    z$sarevisions <- read_data_file((paste0(iofile, ".sar")))
+  }
   
   z$is.log <- detect_log(outfile)
   z$fivebestmdl <- detect_fivebestmdl(outfile)
-  
   z$spc <- spc
   
   
-  ### Save output files if 'dir' is specified
-  
-  if (!is.null(dir)){
-    flist <- list.files(wdir, full.names = TRUE)
-    file.copy(flist, dir, overwrite = TRUE)
-    message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
-  }
-  
+
   ### additional outputs
-  if (!is.null(output)){
-    if (output == "out"){
-      z$out <-  outfile
-    } else {
-      stop("Wrong 'output' argument.")
-    }
+  if (out){
+    z$out <-  outfile
   }
+  
 
   
   ### Final transformations
-  cndata <- colnames(z$data)
   z$x <- x
   
   if (!is.null(attr(x.na, "na.action"))){
@@ -339,10 +347,10 @@ detect_fivebestmdl <- function(outfile){
   #
   # returns character vector
 
-  relevant.area <- outfile[150:250]
+  relevant.area <- outfile[100:400]
   bestfive <- which(relevant.area == "  Best Five ARIMA Models")
   if (length(bestfive) == 0){
-    return("fivebestmdl section in .log file not found.")
+    return("fivebestmdl section in .out file not found.")
   } else {
     return(relevant.area[bestfive:(bestfive+10)])
   }
@@ -350,14 +358,14 @@ detect_fivebestmdl <- function(outfile){
 
 
 detect_seatsmdl <- function(outfile){
-  # a dirty way to detect fivebestmdl
+  # a dirty way to detect seatsmdl
   #
   # out  character vector, content of .out output file
   #
   # returns character vector
   seatsmdl <- which(outfile == "  MODEL CHANGED TO :")
   if (length(seatsmdl) == 0){
-    z <- "MODEL CHANGED TO section in .log file not found."
+    z <- "MODEL CHANGED TO section in .out file not found."
   } else {
     z <- outfile[seatsmdl+1]
     z <- str_replace_all(z, "\\s+", " ")
@@ -367,6 +375,40 @@ detect_seatsmdl <- function(outfile){
   z
 }
 
+
+
+detect_history <- function(outfile){
+  outfile[grep("History", outfile)[1]:length(outfile)]
+}
+
+
+detect_slidingspans <- function(outfile){
+  slid.line <- which(outfile == " S  2.  Percentage of months flagged as unstable.")
+  z <- list()
+  txt.sf <- outfile[slid.line + 3]
+  n.sf <- as.numeric(gsub(".*(\\d) out of.*", "\\1", txt.sf))
+  N.sf <- as.numeric(gsub(".* out of \\s?(\\d*) .*", "\\1", txt.sf))
+  z$factors <- c(n.sf, N.sf, n.sf/N.sf)
+  
+  z$factors.text <- paste0(n.sf, " out of ", N.sf, " (", formatC(100*n.sf/N.sf, digits = 0), "%",
+                           symnum(n.sf/N.sf, cutpoints = c(0, 0.15, 0.25, 1), 
+                                  symbols = c(")", ": too high)", ": much too high)"), legend = FALSE
+                           )
+  )
+  
+  txt.ch <- outfile[slid.line + 5]
+  n.ch <- as.numeric(gsub(".*(\\d) out of.*", "\\1", txt.ch))
+  N.ch <- as.numeric(gsub(".* out of \\s?(\\d*) .*", "\\1", txt.ch))
+  z$changes <- c(n.ch, N.ch, n.ch/N.ch)
+  
+  z$changes.text <- paste0(n.ch, " out of ", N.ch, " (", formatC(100*n.ch/N.ch, digits = 0), "%",
+                           symnum(n.ch/N.ch, cutpoints = c(0, 0.35, 0.40, 1), 
+                                  symbols = c(")", ": too high)", ": much too high)"), legend = FALSE
+                           )
+  )
+  z$out <- outfile[grep("[Ss]liding spans", outfile)[1]:length(outfile)]
+  z
+}
 
 
 mod_spclist <- function(x, ...){
@@ -447,20 +489,17 @@ consist_check_spclist <-function(x){
   
   ### ensure correct output
   
+  
   # seats and x11 have different output tables
   if (!is.null(x$seats)){
     x <- mod_spclist(x, seats.save = c("s10", "s11", "s12", "s13", "s16", "s18"))
   } else if (!is.null(x$x11)){
     x <- mod_spclist(x, x11.save = c("d10", "d11", "d12", "d13", "d16", "e18"))
-  } else {
-    stop("wrong method.")
-  }
+  } 
   
   if (!is.null(x$automdl)){
     x <- mod_spclist(x, automdl.print = "bestfivemdl")
   }
-  
-  
   
   
   # if force is present, return adjusted output
@@ -469,12 +508,23 @@ consist_check_spclist <-function(x){
   }
   
   # always return estimate model
-  always.add <- c("model", "estimates", "residuals", "lkstats")
+  always.add <- c("model", "estimates", "residuals", "lkstats", "regressioneffects")
   if (is.null(x$estimate$save)){
     x$estimate$save <- always.add
   } else {
     to.add <- always.add[!(always.add %in% x$estimate$save)]
     x$estimate$save <- c(x$estimate$save, to.add)
+  }
+  
+  # additional outputs for history spec
+  if (!is.null(x$history)){
+    always.add <- c("sar")
+    if (is.null(x$history$save)){
+      x$history$save <- always.add
+    } else {
+      to.add <- always.add[!(always.add %in% x$history$save)]
+      x$history$save <- c(x$history$save, to.add)
+    }
   }
   
   x
