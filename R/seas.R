@@ -250,12 +250,12 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   }
 
   # read big output file...
-  outfile <-  readLines(paste0(iofile, ".out"), encoding = "UTF-8")
+  outtxt <-  readLines(paste0(iofile, ".out"), encoding = "UTF-8")
   
   # ...and warn if model choosen by seats is different
   if (any(grepl("Model used for SEATS decomposition is different", z$err))){
     warning(paste("Model used for SEATS decomposition is different:\n", 
-                  detect_seatsmdl(outfile)))
+                  detect_seatsmdl(outtxt)))
   }
   
   # data tables (names depend on method, thus a separate call is needed)
@@ -271,10 +271,10 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   z$estimates <- read_est(iofile)
   z$lkstats <- read_lks(iofile)
   
-  # additional information from outfile 
-  # (this is part of the output, outfile is not kept by default)
-  z$is.log <- detect_log(outfile)
-  z$fivebestmdl <- detect_fivebestmdl(outfile)
+  # additional information from outtxt 
+  # (this is part of the output, outtxt is not kept by default)
+  z$is.log <- detect_log(outtxt)
+  z$fivebestmdl <- detect_fivebestmdl(outtxt)
   
 
   ### final additions to output
@@ -284,8 +284,8 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   }
   
   if (out){
-    outfile[grepl("^\f", outfile)] <- ""  # remove page breaks
-    z$out <-  outfile
+    outtxt[grepl("^\f", outtxt)] <- ""  # remove page breaks
+    z$out <-  outtxt
   }
     
   z$x <- x
