@@ -2,7 +2,7 @@
 \alias{out}
 \title{Diagnostical Re-Evaluation}
 \usage{
-out(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...)
+out(x, viewer = TRUE, line = 1, n = 500, search = NULL, ...)
 }
 \arguments{
   \item{x}{an object of class "seas" to re-evaluate}

@@ -275,6 +275,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   # (this is part of the output, outtxt is not kept by default)
   z$is.log <- detect_log(outtxt)
   z$fivebestmdl <- detect_fivebestmdl(outtxt)
+  z$qs <- detect_qs(outtxt)
   
 
   ### final additions to output

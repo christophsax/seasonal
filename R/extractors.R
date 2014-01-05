@@ -117,3 +117,9 @@ fivebestmdl <- function(x){
 }
 
 
+#' @rdname seas
+#' @export
+qs <- function(x){
+  x$qs
+}
+

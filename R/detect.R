@@ -40,20 +40,31 @@ detect_fivebestmdl <- function(outtxt){
 }
 
 
-detect_seatsmdl <- function(outtxt){
-  # parse seatsmdl from .out txt
+detect_qs <- function(outtxt){
+  # parse QS test for seasonality from .out txt
   #
   # outtxt  character vector, content of .out output file
   #
   # returns character vector
   
-  first <- which(outtxt == "  MODEL CHANGED TO :")
+  first <- which(outtxt == "  QS statistic for seasonality:")
   
   if (length(first) == 1){
-    z <- outtxt[seatsmdl+1]
-    z <- gsub("\\s+", " ", z)      # subst several spaces by one space
-    z <- gsub(",", "", z)          # remove , 
-    z <- gsub("^\\s|\\s$", "", z)  # trim lead. and trail spaces
+    
+    txt <- outtxt[first:(first + 8)]
+    # parse fixed width table
+    descr <- substr(txt, start = 3, stop = 51)
+    descr <- gsub("^\\s+|\\s+$", "", descr)   # trim lead. and trail spaces
+    stat <- as.numeric(substr(txt, start = 52, stop = 60))
+    pval <- as.numeric(substr(txt, start = 71, stop = 81))
+    
+    df <- cbind(stat, pval)
+    rownames(df) <- descr
+    
+    z <- list()
+    z <- df[2:8,]
+    z <- z[!is.na(z[, "stat"]), ]
+    
   } else {
     z <- NULL
   }
@@ -62,5 +73,106 @@ detect_seatsmdl <- function(outtxt){
 
 
 
-
-
+# 
+# detect_satest.original <- function(outtxt){
+#   # parse f-test for seasonality from .out txt
+#   #
+#   # outtxt  character vector, content of .out output file
+#   #
+#   # returns character vector
+#   
+#   first <- which(outtxt == " D 8.A  F-tests for seasonality")
+#   
+#   if (length(first) == 1){
+#     z <- outtxt[first:(first + 35)]
+#   } else {
+#     z <- NULL
+#   }
+#   z
+# }
+# 
+# 
+# detect_satest <- function(outtxt){
+#   # parse f-test for seasonality from .out txt
+#   #
+#   # outtxt  character vector, content of .out output file
+#   #
+#   # returns character vector
+#   
+#   lookup <- "   F 2.I:                                                    Statistic   Prob."
+#   first <- which(outtxt == lookup)
+#   
+#   if (length(first) == 1){
+#     z <- outtxt[first:(first + 6)]
+#   } else {
+#     z <- NULL
+#   }
+#   z
+# }
+# 
+# 
+# detect_quality <- function(outtxt){
+#   # parse f-test for seasonality from .out txt
+#   #
+#   # outtxt  character vector, content of .out output file
+#   #
+#   # returns character vector
+#   
+#   lookup <- " F 3. Monitoring and Quality Assessment Statistics"
+#   first <- which(outtxt == lookup)
+#   
+#   if (length(first) == 1){
+#     z <- outtxt[first:(first + 30)]
+#   } else {
+#     z <- NULL
+#   }
+#   z
+# }
+# 
+# 
+# 
+# 
+# detect_satest.final <- function(outtxt){
+#   # parse f-test for seasonality from .out txt
+#   #
+#   # outtxt  character vector, content of .out output file
+#   #
+#   # returns character vector
+#   
+#   first <- which(outtxt == 
+#         "                    Test for the presence of residual seasonality.")
+#   
+#   if (length(first) == 1){
+#     z <- outtxt[first:(first + 12)]
+#   } else {
+#     z <- NULL
+#   }
+#   z
+# }
+# 
+# 
+# 
+# detect_seatsmdl <- function(outtxt){
+#   # parse seatsmdl from .out txt
+#   #
+#   # outtxt  character vector, content of .out output file
+#   #
+#   # returns character vector
+#   
+#   first <- which(outtxt == "  MODEL CHANGED TO :")
+#   
+#   if (length(first) == 1){
+#     z <- outtxt[seatsmdl+1]
+#     z <- gsub("\\s+", " ", z)      # subst several spaces by one space
+#     z <- gsub(",", "", z)          # remove , 
+#     z <- gsub("^\\s|\\s$", "", z)  # trim lead. and trail spaces
+#   } else {
+#     z <- NULL
+#   }
+#   z
+# }
+# 
+# 
+# 
+# 
+# 

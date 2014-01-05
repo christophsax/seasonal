@@ -82,6 +82,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                  na.print = "NA")
   }
   
+
   cat("\nARIMA structure:", x$model$arima$model)
   cat("   Number of obs.:", formatC(x$lkstats['nobs'], format = "d"))
   cat("   Transform:", x$transform)
@@ -89,15 +90,6 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   cat(", AICC:", formatC(x$lkstats['Aicc'], digits = digits))
   cat(", BIC:", formatC(x$lkstats['bic'], digits = digits))
 
-  if (!is.null(x$sarevisions)){
-    cat("\nmean abs pc rev:", formatC(x$sarevisions, digits = digits))
-  }
-
-  if (!is.null(x$slidingspans)){
-    cat("\nunstable seasonal factors:", x$slidingspans$factors.text)
-    cat("\nunstable p-to-p changes:", x$slidingspans$changes.text)
-  }
-  
   cat("\n")
   if (length(x$err) > 5){
     cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")

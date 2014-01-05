@@ -27,7 +27,7 @@
 #'   vector is shown as a side effect.
 #'   
 #' @export
-out <- function(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...){
+out <- function(x, viewer = TRUE, line = 1, n = 500, search = NULL, ...){
   ldots <- list(...)
   z <- reeval(x, ldots)
   if (viewer){
@@ -39,7 +39,7 @@ out <- function(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...){
 
 
 #' @export
-revisions <- function(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...){
+revisions <- function(x, ...){
   ldots <- list(...)
   if (length(ldots) == 0){
     ldots$history = list()
@@ -50,16 +50,14 @@ revisions <- function(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...){
   }
   z <- reeval(x, ldots)
   z <- z[grep("History", z)[1]:length(z)]
-  if (viewer){
-    viewer(z, line = line, n = n, search = search)
-  }
+  viewer(z, line = 1, n = length(z))
   return(invisible(z))
 }
 
 
 
 #' @export
-slidingspans <- function(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...){
+slidingspans <- function(x, ...){
   ldots <- list(...)
   if (length(ldots) == 0){
     ldots$slidingspans = list()
@@ -70,9 +68,7 @@ slidingspans <- function(x, viewer = TRUE, line = 1, n = 25, search = NULL, ...)
   }
   z <- reeval(x, ldots)
   z <- z[grep("[Ss]liding spans", z)[1]:length(z)]
-  if (viewer){
-    viewer(z, line = line, n = n, search = search)
-  }
+  viewer(z, line = 1, n = length(z))
   return(invisible(z))
 }
 
@@ -104,12 +100,14 @@ viewer <- function(x, line = 1, n = 25, search = NULL){
   status <- 1
   while (status == 1){
     
+    if (l >= (length(x) - n + 1)){
+      l <- length(x) - n + 1
+      status <- 0
+    }
     if (l < 0){
       l <- 1
     }
-    if (l > (length(x) - n + 1)){
-      l <- length(x) - n + 1
-    }
+
     
     cat("\014")
     
@@ -117,22 +115,21 @@ viewer <- function(x, line = 1, n = 25, search = NULL){
     cat(z, sep = "\n")
     cat("\nline ", l, " to ", l + n - 1, " (of ", length(x), ")")
     
-    if(!is.null(search)){
-      return(invisible(z))
+    if (status == 1){
+      cat("\nnext [enter]  previous [p]  to line [number]  quit [q]",sep = "")
+      
+      inp <- readline()
+      if (inp == ""){
+        l <- l + n
+      } else if (inp == "p"){
+        l <- l - n
+      } else if (grepl("\\d+", inp)){
+        l <- as.numeric(inp)
+      } else if (inp == "q"){
+        status <- 0
+      }
     }
-    
-    cat("\nnext [enter]  previous [p]  to line [number]  quit [q]",sep = "")
-    
-    inp <- readline()
-    if (inp == ""){
-      l <- l + n
-    } else if (inp == "p"){
-      l <- l - n
-    } else if (grepl("\\d+", inp)){
-      l <- as.numeric(inp)
-    } else if (inp == "q"){
-      status <- 0
-    }
+
   }
 }
 
