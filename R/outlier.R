@@ -14,8 +14,8 @@
 #' }
 outlier <- function(x){
   stopifnot(inherits(x, "seas"))
-  
-  ol <- x$mdl$regression$variables[str_detect(x$mdl$regression$variables, "\\.")]
+
+  ol <- x$model$regression$variables[grepl("\\.", x$model$regression$variables)]
   
   z <- final(x)
   z[1:length(z)] <- NA
@@ -27,20 +27,14 @@ outlier <- function(x){
   
   stopifnot(inherits(ol, "character"))
   
-  ol.type <- str_sub(ol, start = 1, end = 2)
-  ol.time <- str_sub(ol, start = 3, end = -1)
+  ol.type <- substr(ol, start = 1, stop = 2)
+  ol.time <- substr(ol, start = 3, stop = nchar(ol))
   
   if (frequency(z) == 12){
-    MonthToNum <- function(x){
-      switch(x, "Jan" = 1, "Feb" = 2, "Mar" = 3, "Apr" = 4, "May" = 5, "Jun" = 6,
-             "Jul" = 7, "Aug" = 8, "Sep" = 9, "Oct" = 10, "Nov" = 11, "Dec" = 12)
-    }
-    
     ol.time.R <- lapply(strsplit(ol.time, "\\."), 
-                        function(el) {c(el[1], MonthToNum(el[2]))}
+                        function(el) {c(el[1], which(month.abb == el[2]))}
     )
   } else if (frequency(z) == 4){
-    
     ol.time.R <- lapply(strsplit(ol.time, "\\."), 
                         function(el) {c(el[1], (el[2]))}
     )

@@ -1,67 +1,103 @@
 read_mdl <- function(file){
-  # Read an .mdl file from X13-ARIMA-SEATS
+  # read and parse a .mdl file
   # 
-  # file  full path without file ending. this is a bit complicated, and could be
-  # probably simplified.
+  # file  full path without file ending
   #
   # return "spclist" object, similar to the input specification
   #
-  # depends: ReadFile, ReadSpec, ReadText, CleanElement
+  # requires parse_spec
   
-  z <- ReadFile(paste0(file, ".mdl"))
+  # collapse char vector to single char element
+  txt = paste(readLines(paste0(file, ".mdl")), collapse = " ")
+  
+
+  
+  # positions of curly braces
+  op <- gregexpr("\\{", txt)[[1]]
+  cl <- gregexpr("\\}", txt)[[1]]
+
+  stopifnot(length(op) == length(cl))
+
+  # separate individual specs
+  z0 <- list()
+  for (i in 1:length(op)){
+    # content in the curly braces (spec)
+    z0[[i]] <- substr(txt, start = (op[i] + 1), stop = (cl[i] - 1))  
+    
+    # name of the spec
+    start.name <- ifelse(i == 1, 1, cl[i - 1] + 1)
+    name.i <- substr(txt, start = start.name, stop = (op[i] - 1))
+    names(z0)[i] <- gsub(" ","", name.i)   # remove whitespace
+  }
+
+  
+  # parse each element
+  z <- lapply(z0, parse_spec)  
+  
   class(z) <- c("spclist", "list")
   
-  # keep arima models as a single string, 
-  # transform other SPC vectors to R vectors
-  for (i in seq_along(z)){
-    z[[i]] <- as.list(z[[i]])
-    for (j in seq_along(z[[i]])){
-      if (names(z[[i]])[j] != "model"){
-        z[[i]][[j]] <- CleanElement(z[[i]][[j]])
-      } else {
-        z[[i]][[j]] <- str_trim(z[[i]][[j]])
-      }
-    }    
-  }  
   z
 }
 
 
 
-ReadSpec <- function(txt){
-  # Read a single Spec from a file formated like .spc or .mdl
+parse_spec <- function(txt){
+  # parse a single spec into arguments
+  #
+  # txt  character string, content of a spec
+  #
+  # returns a named list the arguments
+  #
+  # requires tidyup_arg
   
-  st <- str_split(txt, '=')[[1]]  # split at '='
+  # positions of curly braces (ignore subsequent bracktets form arima model)
   
-  if (length(st) > 2){
-    st.red <- st[2:(length(st)-1)]  # exclude last and first element
-    sl.red <- str_match_all(st.red, '(.*)\\s([a-z]+)')  # match to a list
-    sm.red <- do.call(rbind, sl.red)  # convert to a matrix
+
+  
+  op <- gregexpr("[^\\)]\\(", txt)[[1]] + 1
+  cl <- gregexpr("\\)[^\\(]", txt)[[1]]
+  
+  # separate individual arguments
+  z <- list()
+  for (i in 1:length(op)){
+    # content in the brackets (argument)
+    z[[i]] <- substr(txt, start = op[i], stop = (cl[i]))  
     
-    z <- c(sm.red[,2], st[length(st)])  # combine with the excluded last content
-    names(z) <- c(st[1], sm.red[,3])  # combine with the excluded first name
-  } else if (length(st) == 2){
-    z <- st[2]
-    names(z) <- st[1]
-  } else {
-    z <- NULL
+    # name of the argument
+    start.name <- ifelse(i == 1, 1, cl[i - 1] + 1)
+    name.i <- substr(txt, start = start.name, stop = (op[i] - 1))
+    names(z)[i] <- gsub("[ =]","", name.i)   # remove whitespace and "="
+    
+    # tidy up unless its a 'model' entry (containing the arima argument)
+    if (names(z)[i] != "model"){
+      z[[i]] <- tidyup_arg(z[[i]])
+    } else {
+      z[[i]] <- gsub("^\\s+|\\s+$", "", z[[i]])  # trim lead. and trail spaces
+    }
   }
   z
 }
 
-# removes brackets and converts to (numeric if possible) vector
-#
-# x   character vector of length 1
-#
-CleanElement <- function(x){
+
+
+
+tidyup_arg <- function(x){
+  # tidy up an argument from a spec
+  # removes brackets, converts to (numeric) vector
+  #
+  # x   character vector of length 1
+  #
+  # returns a character string
+  
   stopifnot(length(x) == 1)
   
   # remove curved brackets
-  x.nb <- str_replace_all(x, '[\\(\\)]', ' ')
+  x.nb <- gsub("[\\(\\)]", " ", x)
   
-  # slit along spaces (if not double quoted)
-  if (!str_detect(x.nb, '[\\"].*[\\"]')){
-    z <- str_split(str_trim(x.nb), '\\s+')[[1]]
+  # split along spaces (if not double quoted)
+  if (!grepl('[\\"].*[\\"]', x.nb)){
+    z <- strsplit(x.nb, '\\s+')[[1]]
+    z <- z[z != ""]    # remove emtpy elements
   } else {
     z <- x.nb
   }
@@ -75,23 +111,4 @@ CleanElement <- function(x){
   z
 }
 
-
-
-# Read a file formated like .spc or .mdl
-ReadFile <- function(file){
-  txt = paste(readLines(file), collapse = " ")
-  curly.txt <- ReadText(txt)
-  z <- lapply(curly.txt, ReadSpec)
-  #   z <- lapply(z, function(el) lapply(el, ReadElement))
-  z
-}
-
-
-ReadText <- function(txt){
-  mat <- str_match_all(txt, '(?:([a-zA-Z1-9]+))\\{(.*?)\\}')[[1]]
-  z <- mat[,3]
-  names(z) <- mat[,2]
-  z <- str_replace_all(z, pattern = '\\s+', " ")
-  str_trim(z)
-}
 

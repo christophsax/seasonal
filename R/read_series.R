@@ -1,5 +1,5 @@
 read_data <- function(method = "seats", file){
-  # Read data from X13-ARIMA-SEATS
+  # read and parse the main data series
   # 
   # method  "seats" or "x11", series are in different files, depending on mehtod
   # file  full path without file ending
@@ -8,25 +8,25 @@ read_data <- function(method = "seats", file){
 
 
   if (identical(method, "seats")){
-    seasonal        <- read_data_file(paste0(file, ".s10"))
-    seasonaladj     <- read_data_file(paste0(file, ".s11"))
-    trend           <- read_data_file(paste0(file, ".s12"))
-    irregular       <- read_data_file(paste0(file, ".s13"))
-    adjustfac       <- read_data_file(paste0(file, ".s16"))
+    seasonal        <- read_series(paste0(file, ".s10"))
+    seasonaladj     <- read_series(paste0(file, ".s11"))
+    trend           <- read_series(paste0(file, ".s12"))
+    irregular       <- read_series(paste0(file, ".s13"))
+    adjustfac       <- read_series(paste0(file, ".s16"))
   } else if (identical(method, "x11")){
-    seasonal        <- read_data_file(paste0(file, ".d10"))
-    seasonaladj     <- read_data_file(paste0(file, ".d11"))
-    trend           <- read_data_file(paste0(file, ".d12"))
-    irregular       <- read_data_file(paste0(file, ".d13"))
-    adjustfac       <- read_data_file(paste0(file, ".d16"))
+    seasonal        <- read_series(paste0(file, ".d10"))
+    seasonaladj     <- read_series(paste0(file, ".d11"))
+    trend           <- read_series(paste0(file, ".d12"))
+    irregular       <- read_series(paste0(file, ".d13"))
+    adjustfac       <- read_series(paste0(file, ".d16"))
   } else {
     stop("wrong method.")
   }
     
-  residuals <- read_data_file(paste0(file, ".rsd"))
+  residuals <- read_series(paste0(file, ".rsd"))
 
   if (file.exists(paste0(file, ".saa"))){
-    final <- read_data_file(paste0(file, ".saa"))
+    final <- read_series(paste0(file, ".saa"))
   } else {
     final <- seasonaladj
   }
@@ -36,7 +36,7 @@ read_data <- function(method = "seats", file){
 }
 
 
-read_data_file <- function(file){
+read_series <- function(file){
   # Read data from a particular X13-ARIMA-SEATS file
   # 
   # file  full path including file ending
@@ -47,8 +47,9 @@ read_data_file <- function(file){
   dta <- apply(dta.raw[-1, ], 2, as.numeric)
 
   time.raw <- as.numeric(dta[, 1])
-  year <- str_sub(time.raw, start = 1, end = 4)
-  per <- str_sub(time.raw, start = 5, end = 6)
+  
+  year <- substr(time.raw, start = 1, stop = 4)
+  per <- substr(time.raw, start = 5, stop = 6)
   
   if (length(unique(per)) == 4){
     frequency <- 4

@@ -1,0 +1,17 @@
+
+
+
+new features
+- na handling like lm ???
+- slidingspans analysis
+- revisions (history analysis)
+- easier access to X-13 .out content
+- regression effects can be easily extracted
+
+minor changes
+- monthplot also shows SI ratios
+
+bug fixes
+- quotes in the series name do not lead to X-13 error
+
+various code improvements

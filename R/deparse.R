@@ -1,5 +1,5 @@
-parse_spc <- function(x){
-  # Parse a single spec from a spclist 
+deparse_spc <- function(x){
+  # deparse a single spec from a spclist 
   #
   # x   list element in a spclist
   #
@@ -11,10 +11,11 @@ parse_spc <- function(x){
     if (length(x[[i]]) > 1){
       # put brackets around several elements
       x.i <- paste0(nx[i], " = (", paste(x[[i]], collapse = " "), ")")
-      z[i] <- str_wrap(x.i, indent = 2, exdent = 4)
+      
+      z[i] <- strwrap(x.i, indent = 2, exdent = 4)
     } else if (length(x[[i]] == 1)){
       # put brackets around elements containing a comma
-      if (str_detect(x[[i]], ',')){
+      if (grepl(',', x[[i]])){
         x.i <- paste0("(", x[[i]], ")")
       } else {
         x.i <- x[[i]]
@@ -27,14 +28,14 @@ parse_spc <- function(x){
   paste(z, collapse = "\n")
 }
 
-parse_spclist <- function(x){
-  # Parse a spclist
+deparse_spclist <- function(x){
+  # deparse a spclist
   #
   # x   a "spclist" object
   #
   # returns the parsed text for writing to a .spc file
-  
-  xl <- lapply(x, parse_spc)
+
+  xl <- lapply(x, deparse_spc)
   paste(paste0(names(x), "{\n", xl, "\n}"), collapse = "\n\n")
 }
 
@@ -54,6 +55,7 @@ write_ts_dat <- function(x, file = "data.dat"){
   write.table(data, file = file, sep = " ", 
               row.names = FALSE,
               col.names = FALSE)
+
 }
 
 

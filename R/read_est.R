@@ -1,5 +1,5 @@
 read_est <- function(file){
-  # Read a .est file from X13-ARIMA-SEATS
+  # read and parse a .est file
   # 
   # file  full path without file ending
   #
@@ -7,11 +7,13 @@ read_est <- function(file){
   
   est <-  readLines(paste0(file, ".est"))
   
-  dollars <- which(str_detect(est, "\\$"))
+  # lines on which a section (or subsection) starts
+  dollars <- grep("\\$", est)
 
   z <- list()
   
-  reg.start <- which(str_detect(est, "\\$regression\\$estimates"))
+  # regression section
+  reg.start <- grep("\\$regression\\$estimates", est)
   if (length(reg.start) > 0){
     reg.end <- dollars[which(dollars==reg.start) + 1] - 1
     z$reg <- read.table(text = est[(reg.start + 1):reg.end], sep = "\t", 
@@ -31,8 +33,8 @@ read_est <- function(file){
     reg.se <- NULL
   }
   
-
-  arima.start <- which(str_detect(est, "\\$arima\\$estimates"))
+  # arima section
+  arima.start <- grep("\\$arima\\$estimates", est)
   if (length(arima.start) > 0){
     arima.end <- dollars[which(dollars==arima.start) + 1] - 1
     z$arima <- read.table(text = est[(arima.start + 1):arima.end], sep = "\t", 
@@ -53,20 +55,21 @@ read_est <- function(file){
     arima.se <- NULL
   }
   
-  variance.start <- which(str_detect(est, "\\$variance"))
-  modelspan.start <- which(str_detect(est, "\\$modelspan"))
+  # variance / modelspan section
+  variance.start <- grep("\\$variance", est)
+  modelspan.start <- grep("\\$modelspan", est)
   if (length(modelspan.start) > 0){
-    variance.end <- dollars[which(dollars==variance.start) + 1] - 1
+    variance.end <- dollars[which(dollars == variance.start) + 1] - 1
   } else {
     variance.end <- length(est)
   }
   
+  # output
   z$variance <- read.table(text = est[(variance.start + 2):variance.end], 
                            stringsAsFactors = FALSE, sep = "\t")
   
   z$coefficients <- c(reg.coef, arima.coef)
   z$se <- c(reg.se, arima.se)
-  
   
   z
 }

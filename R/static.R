@@ -75,17 +75,17 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   lc['outlier'] <- NULL
   names(lc['outlier']) <- "regression.aictest"
   
-  lc$transform.function = detect_transform(x)
+  lc$transform.function = transform_function(x)
   
   if (coef){
     if (!is.null(x$model$regression$b)) {
-      lc$regression.b = c(SubFixed(x$model$regression$b))
+      lc$regression.b = c(add_f(x$model$regression$b))
     }
     if (!is.null(x$model$arima$ma)) {
-      lc$arima.ma = SubFixed(x$model$arima$ma)
+      lc$arima.ma = add_f(x$model$arima$ma)
     } 
     if (!is.null(x$model$arima$ar)) {
-      lc$arima.ar = SubFixed(x$model$arima$ar)
+      lc$arima.ar = add_f(x$model$arima$ar)
     }
   }
   
@@ -107,7 +107,7 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
 
 
 
-SubFixed <- function(x){
+add_f <- function(x){
   # Make coefficents 'fixed'
   #
   # Put a "f" at the end of number, if not already there
@@ -116,5 +116,5 @@ SubFixed <- function(x){
   # SubFixed(x)
   
   z <- paste0(x, "f")
-  str_replace_all(z, "f+", "f")
+  gsub("f+", "f", z)
 }

@@ -12,13 +12,16 @@
 #' @param \dots       further arguments passed to or from other methods.
 
 #' @return \code{summary.seas} returns a list containing the summary statistics 
-#'   included in \code{object}, and computes the following additional
+#'   included in \code{object}, and computes the following additional 
 #'   statistics:
-#'  
-#'   \item{coefficients}{a named matrix containing coefficients, standard
+#'   
+#'   \item{coefficients}{a named matrix containing coefficients, standard 
 #'   deviations, t-values and p-values}
 #'   
-#'   The \code{print} method prints the summary output in a similar way as the method for \code{"lm"}.
+#'   \item{transform}{character string with the type of intial transformation}
+#'   
+#'   The \code{print} method prints the summary output in a similar way as the
+#'   method for \code{"lm"}.
 #'   
 #' @examples
 #' \dontrun{
@@ -34,7 +37,7 @@ summary.seas <- function(object, sarevisions = FALSE, slidingspans = FALSE, ...)
   # coefficents matrix
   if (!is.null(coef(object))){
     est  <- coef(object)
-    se   <- object$se
+    se   <- object$estimates$se
     tval <- est/se
     pval <- 2 * pnorm(-abs(tval))
     
@@ -45,19 +48,19 @@ summary.seas <- function(object, sarevisions = FALSE, slidingspans = FALSE, ...)
                                        "Pr(>|z|)"))
   }
   
-  if (sarevisions){
-    z$sarevisions <- mean(abs(sarevisions(object)))
-  }
-  
-  if (slidingspans){
-    z$slidingspans <- slidingspans(object)
-  }
+#   if (sarevisions){
+#     z$sarevisions <- mean(abs(sarevisions(object)))
+#   }
+#   
+#   if (slidingspans){
+#     z$slidingspans <- slidingspans(object)
+#   }
+
+  z$transform <- transform_function(object)
   
   class(z) <- "summary.seas"
   z
 }
-
-
 
 
 
@@ -81,7 +84,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   
   cat("\nARIMA structure:", x$model$arima$model)
   cat("   Number of obs.:", formatC(x$lkstats['nobs'], format = "d"))
-  cat("   Transform:", detect_transform(x))
+  cat("   Transform:", x$transform)
   cat("\nAIC:", formatC(x$lkstats['aic'], digits = digits))
   cat(", AICC:", formatC(x$lkstats['Aicc'], digits = digits))
   cat(", BIC:", formatC(x$lkstats['bic'], digits = digits))
@@ -103,7 +106,16 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
 }
 
 
-detect_transform <- function(x){
+transform_function <- function(x){
+  # subfunction to evaluate the tranformation, both automatically or manually 
+  # choosen 
+  # 
+  # x  "seas" object
+  #
+  # returns: character string with the type of intial transformation
+  # 
+  # used by: summary.seas, static
+  #
   if (!is.null(x$spc$transform$`function`)){
     if (x$spc$transform$`function` == "auto"){
       if (x$is.log){

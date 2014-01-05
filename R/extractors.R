@@ -36,105 +36,11 @@ mdl <- function(x){
   x$mdl
 }
 
-#' @rdname spc
-#' @export
-out <- function(x, line = 1, n = 500, search = NULL){
-  
-  lc <- as.list(x$call)
-  lc$out <- TRUE
-  z <- eval(as.call(lc), envir = globalenv())
-  txt <- z$out
-  txt[grepl("^\f", txt)] <- ""
-  
-  if (!is.null(search)){
-    search.res <- which(grepl(search, txt))
-    if (length(search.res > 0)){
-      line <- search.res[1]
-    } else {
-      message("string not found")
-      return(NULL)
-    }
-  }
-  
-  l <- line
-  status <- 1
-  while (status == 1){
-    
-    if (l < 0){
-      l <- 1
-    }
-    if (l > (length(txt) - n + 1)){
-      l <- length(txt) - n + 1
-    }
-    
-    cat("\014")
-    
-    cat(txt[l:(l + n - 1)], sep = "\n")
-    cat ("\nline ", l, " to ", l + n - 1, " (of ", length(txt), ")\nnext [enter]  previous [p]  to line [number]  quit [q]",sep = "")
-    
-    inp <- readline()
-    if (inp == ""){
-      l <- l + n
-    } else if (inp == "p"){
-      l <- l - n
-    } else if (grepl("\\d+", inp)){
-      l <- as.numeric(inp)
-    } else if (inp == "q"){
-      status <- 0
-    }
-  }
-  return(invisible(NULL))
-}
-
-
-#' @rdname spc
-#' @export
-sarevisions <- function(x, verbose = TRUE, ...){
-  ldot <- list(...)
-  lc <- as.list(x$call)
-  lc <- c(lc, ldot)
-  if (length(ldot) == 0) {
-    lc$history <- list()
-  }
-  z <- eval(as.call(lc), envir = globalenv())
-  if (verbose){
-    txt <- z$history
-    txt[grepl("^\f", txt)] <- ""
-    cat(txt, sep = "\n")
-  }
-  invisible(z$saresvions)
-}
-
-
-
-#' @rdname spc
-#' @export
-slidingspans <- function(x, verbose = TRUE, ...){
-  ldot <- list(...)
-  lc <- as.list(x$call)
-  lc <- c(lc, ldot)
-  if (length(ldot) == 0) {
-    lc$slidingspans <- list()
-  }
-  z <- eval(as.call(lc), envir = globalenv())
-  if (verbose){
-    txt <- z$slidingspans$out
-    txt[grepl("^\f", txt)] <- ""
-    cat(txt, sep = "\n")
-  }
-  invisible(z$slidingspans)
-}
-
-
-
-
-
-
 
 #' @rdname spc
 #' @export
 final <- function(x){
-  na_action(x, 'final')
+  extract_w_na_action(x, 'final')
 }
 
 #' @rdname spc
@@ -146,13 +52,13 @@ original <- function(x){
 #' @rdname spc
 #' @export
 trend <- function(x){
-  na_action(x, 'trend')
+  extract_w_na_action(x, 'trend')
 }
 
 #' @rdname spc
 #' @export
 irregular <- function(x){
-  na_action(x, 'irregular')
+  extract_w_na_action(x, 'irregular')
 }
 
 #' Show regressioneffects
@@ -180,8 +86,15 @@ regressioneffects <- function(x){
 
 
 
-
-na_action <- function(x, name){
+extract_w_na_action <- function(x, name){
+  # extract a data series and applies na_action according to the attribute
+  #
+  # x "seas" object
+  # 
+  # returns a "ts" object
+  # 
+  # used by: time series extractor functions
+  #
   z <- na.omit(x$data[, name])
   if (!is.null(x$na.action)){
     if (attr(x$na.action, "class") == "exclude") {

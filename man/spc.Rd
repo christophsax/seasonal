@@ -3,9 +3,6 @@
 \alias{irregular}
 \alias{mdl}
 \alias{original}
-\alias{out}
-\alias{sarevisions}
-\alias{slidingspans}
 \alias{spc}
 \alias{trend}
 \title{Extractor Functions for seas Elements and Series}
@@ -13,12 +10,6 @@
 spc(x)
 
 mdl(x)
-
-out(x, line = 1, n = 500, search = NULL)
-
-sarevisions(x, verbose = TRUE, ...)
-
-slidingspans(x, verbose = TRUE, ...)
 
 final(x)
 
