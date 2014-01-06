@@ -4,15 +4,14 @@ deparse_spc <- function(x){
   # x   list element in a spclist
   #
   # returns the parsed text for writing to a .spc file
-  
   nx <- names(x)
   z <- character(length = length(x))
   for (i in seq_along(x)){
     if (length(x[[i]]) > 1){
       # put brackets around several elements
-      x.i <- paste0(nx[i], " = (", paste(x[[i]], collapse = " "), ")")
+      z[i] <- paste0(nx[i], " = (", paste(x[[i]], collapse = " "), ")")
       
-      z[i] <- strwrap(x.i, indent = 2, exdent = 4)
+#       z[i] <- strwrap(x.i, indent = 2, exdent = 4)
     } else if (length(x[[i]] == 1)){
       # put brackets around elements containing a comma
       if (grepl(',', x[[i]])){

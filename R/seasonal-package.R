@@ -17,3 +17,4 @@
 #' @keywords package
 #' @seealso \code{\link{seas}} for more information on usage.
 NULL
+
