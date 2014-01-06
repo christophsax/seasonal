@@ -1,14 +1,20 @@
 #' Extractor Functions for seas Elements and Series
 #' 
-#' These functions extract elements or series from a \code{"seas"} object.
+#' These functions extract elements or series from a \code{"seas"} object. The 
+#' extractor functions for time series also deal with the treatment of NA 
+#' values.
 #' 
 #' @param x  an object of class \code{"seas"}.
 #'   
 #' @return return an element or a series, depending on the function
 #'   
 #' @seealso \code{\link{seas}} for the main function.
+#' @seealso \code{\link{regressioneffects}}, for how to extract the regression effects
+#'   of the regARIMA model.
+#' @seealso \code{\link{fivebestmdl}}, for how to extract the five best ARIMA models.
 #'   
 #' @export
+#' 
 #' @examples
 #' \dontrun{
 #' x <- seas(AirPassengers)
@@ -18,12 +24,11 @@
 #' irregular(x)
 #' trend(x)
 #' 
+#' # QS seasonality statistics
+#' qs(x)
+#' 
 #' spc(x)  # X13-ARIMA-SEATS .spc file
 #' mdl(x)  # X13-ARIMA-SEATS .mdl file
-#' 
-#' # out(x)  # returns an error
-#' x2 <- seas(AirPassengers, out = TRUE)
-#' out(x2)    # this works: X13-ARIMA-SEATS .out file
 #' }
 #' 
 spc <- function(x){
@@ -35,7 +40,6 @@ spc <- function(x){
 mdl <- function(x){
   x$mdl
 }
-
 
 #' @rdname spc
 #' @export
@@ -70,7 +74,7 @@ irregular <- function(x){
 #' 
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' # trading day and easter adjustment w/o seasonal adjustment:
 #' x <- seas(AirPassengers)
 #' 
@@ -79,9 +83,39 @@ irregular <- function(x){
 #' ce <- re[, 'Trading.Day'] + re[, 'Holiday'] 
 #'  # be aware of log transformation
 #' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
-#' 
+#' }
 regressioneffects <- function(x){
   x$regressioneffects
+}
+
+
+
+
+#' Extract the five best ARIMA models
+#' 
+#' if the \code{automdl} spec is activated (as in the default), the function
+#' \code{fivebestmdl} returns the five best models as chosen by the BIC
+#' criterion.
+#' 
+#' @param x  object of class "seas"
+#'   
+#' @export
+#' @examples
+#' \dontrun{
+#' x <- seas(AirPassengers)
+#' fivebestmdl(x)
+#' }
+#' @export
+fivebestmdl <- function(x){
+  if (!is.null(x$spc$automdl)){
+    txt <- x$fivebestmdl[3:7]
+    arima <- substr(txt, start = 19, stop = 32)
+    bic <- as.numeric(substr(txt, start = 51, stop = 56))
+    z <- data.frame(arima, bic, stringsAsFactors = FALSE)
+  } else {
+    z <- NULL
+  }
+  z
 }
 
 
@@ -105,16 +139,6 @@ extract_w_na_action <- function(x, name){
   z
 }
 
-
-
-#' @rdname seas
-#' @export
-fivebestmdl <- function(x){
-  if (is.null(x$spc$automdl)){
-    stop("only works with 'automdl' spc")
-  }
-  cat(paste(x$fivebestmdl, collapse = "\n"))
-}
 
 
 #' @rdname seas

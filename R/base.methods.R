@@ -40,8 +40,8 @@ residuals.seas <- function(object, ...){
 
 #' @export
 #' @method coef seas
-coef.seas <- function(x){
-  x$estimates$coefficients
+coef.seas <- function(object, ...){
+  object$estimates$coefficients
 }
 
 

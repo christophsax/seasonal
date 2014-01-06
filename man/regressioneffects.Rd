@@ -12,6 +12,7 @@ matrix of regression variables multiplied by the vector of
 estimated regression coefficients
 }
 \examples{
+\dontrun{
 # trading day and easter adjustment w/o seasonal adjustment:
 x <- seas(AirPassengers)
 
@@ -20,5 +21,6 @@ re <- regressioneffects(x)
 ce <- re[, 'Trading.Day'] + re[, 'Holiday']
  # be aware of log transformation
 AirPassengersWoTd <- exp(log(AirPassengers) - ce)
+}
 }
 

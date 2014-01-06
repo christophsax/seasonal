@@ -10,7 +10,7 @@ if (getRversion() >= "2.15.1") {
 #' 
 #' @param x an object of class \code{"ts"}
 #' @param ...  additional spec/arguments options
-#'   
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -23,6 +23,7 @@ if (getRversion() >= "2.15.1") {
 inspect <- function(x, ...){
   stopifnot(inherits(x, "ts"))
 
+  model <- NULL
   method <- NULL
   modelsearch <- NULL
   calendar <- NULL
@@ -36,9 +37,15 @@ inspect <- function(x, ...){
   
   tsname <- deparse(substitute(x))
   
+  firstrun <- seas(x, ...)
+  fb <- fivebestmdl(firstrun)[,1]
+  
+  
   controls <- list(
     method = picker("SEATS", "X11", label = "Adjustment method"),
-    modelsearch = picker("automdl", "pickmdl", label = "Model search"),
+    model = picker(fb[1], fb[2], fb[3], fb[4], fb[5],
+                   label = "5 best models"),
+    
     calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
     outlier.critical = slider(2.5, 5, step = 0.1, initial = 4),
     view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
@@ -50,14 +57,16 @@ inspect <- function(x, ...){
     lc$x <- parse(text = tsname)[[1]]
     lc$outlier.critical <- outlier.critical
     
+    lc$arima.model <- model
+      
     if (method == "X11"){
       lc$x11 = list()
     }
     
-    if (modelsearch == "pickmdl"){
-      lc$pickmdl = list()
-    }
-    
+#     if (modelsearch == "pickmdl"){
+#       lc$pickmdl = list()
+#     }
+#     
     if (!calendar){
       lc['regression.aictest'] <- NULL
       names(lc['regression.aictest']) <- "regression.aictest"

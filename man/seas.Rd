@@ -1,9 +1,9 @@
-\name{fivebestmdl}
-\alias{fivebestmdl}
+\name{qs}
+\alias{qs}
 \alias{seas}
 \title{Seasonal Adjustment with X-13ARIMA-SEATS}
 \usage{
-fivebestmdl(x)
+qs(x)
 
 seas(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "auto",
   regression.aictest = c("td", "easter"), outlier = list(),
@@ -171,8 +171,8 @@ inspect(AirPassengers)
 }
 }
 \references{
-Github page with a more detailed description.
-\url{https://github.com/christophsax/seasonal}
+Vignette with a more detailed description:
+\url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 
 Wiki page with R examples from the X-13ARIMA-SEATS:
 \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}

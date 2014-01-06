@@ -10,7 +10,7 @@
 #' @param signif.stars logical. If \code{TRUE}, 'significance stars' are printed 
 #'                    for each coefficient.
 #' @param \dots       further arguments passed to or from other methods.
-
+#' 
 #' @return \code{summary.seas} returns a list containing the summary statistics 
 #'   included in \code{object}, and computes the following additional 
 #'   statistics:
@@ -30,7 +30,7 @@
 #' }
 #' @method summary seas
 #' @export
-summary.seas <- function(object, sarevisions = FALSE, slidingspans = FALSE, ...){
+summary.seas <- function(object, ...){
   # build output on top of the input
   z <- object
   
@@ -47,16 +47,6 @@ summary.seas <- function(object, sarevisions = FALSE, slidingspans = FALSE, ...)
                                      c("Estimate", "Std. Error", "z value", 
                                        "Pr(>|z|)"))
   }
-  
-#   if (sarevisions){
-#     z$sarevisions <- mean(abs(sarevisions(object)))
-#   }
-#   
-#   if (slidingspans){
-#     z$slidingspans <- slidingspans(object)
-#   }
-
-  z$transform <- transform_function(object)
   
   class(z) <- "summary.seas"
   z
@@ -85,7 +75,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
 
   cat("\nARIMA structure:", x$model$arima$model)
   cat("   Number of obs.:", formatC(x$lkstats['nobs'], format = "d"))
-  cat("   Transform:", x$transform)
+  cat("   Transform:", x$transform.function)
   cat("\nAIC:", formatC(x$lkstats['aic'], digits = digits))
   cat(", AICC:", formatC(x$lkstats['Aicc'], digits = digits))
   cat(", BIC:", formatC(x$lkstats['bic'], digits = digits))
@@ -97,29 +87,29 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   invisible(x)
 }
 
-
-transform_function <- function(x){
-  # subfunction to evaluate the tranformation, both automatically or manually 
-  # choosen 
-  # 
-  # x  "seas" object
-  #
-  # returns: character string with the type of intial transformation
-  # 
-  # used by: summary.seas, static
-  #
-  if (!is.null(x$spc$transform$`function`)){
-    if (x$spc$transform$`function` == "auto"){
-      if (x$is.log){
-        z <- "log"
-      } else {
-        z <- "none"
-      }
-    } else {
-      z <- x$spc$transform$`function`
-    }
-  } else {
-    z <- "none"
-  }
-  z
-}
+# 
+# transform_function <- function(x){
+#   # subfunction to evaluate the tranformation, both automatically or manually 
+#   # choosen 
+#   # 
+#   # x  "seas" object
+#   #
+#   # returns: character string with the type of intial transformation
+#   # 
+#   # used by: summary.seas, static
+#   #
+#   if (!is.null(x$spc$transform$`function`)){
+#     if (x$spc$transform$`function` == "auto"){
+#       if (x$is.log){
+#         z <- "log"
+#       } else {
+#         z <- "none"
+#       }
+#     } else {
+#       z <- x$spc$transform$`function`
+#     }
+#   } else {
+#     z <- "none"
+#   }
+#   z
+# }

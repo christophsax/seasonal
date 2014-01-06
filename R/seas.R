@@ -60,16 +60,15 @@
 #'   returns the static call from above that is needed to replicate an automatic
 #'   seasonal adjustment procedure the model.
 #'   
-#' @references Github page with a more detailed description. 
-#'   \url{https://github.com/christophsax/seasonal}
+#' @references Vignette with a more detailed description:
+#'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
 #'   Wiki page with R examples from the X-13ARIMA-SEATS: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 #'   
-#'   
-#'   
 #'   X-13ARIMA-SEATS manual: \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
-#'   
+#' @export
+#' 
 #' @examples
 #' \dontrun{
 #' x <- seas(AirPassengers) 
@@ -140,7 +139,6 @@
 #' inspect(AirPassengers)
 #' }
 #' 
-#' @export
 seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "auto", 
                  regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
@@ -220,7 +218,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
       stop ("either 'regression' or 'x11regression' has to be specied if 'xreg' is present")
     }
   }
-  
+
   ### write spc
   spctxt <- deparse_spclist(spc)
   writeLines(spctxt, con = paste0(iofile, ".spc"))
@@ -273,7 +271,11 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   
   # additional information from outtxt 
   # (this is part of the output, outtxt is not kept by default)
-  z$is.log <- detect_log(outtxt)
+  if (transform.function == "auto"){
+    z$transform.function <- detect_auto(outtxt)
+  } else {
+    z$transform.function <- transform.function
+  }
   z$fivebestmdl <- detect_fivebestmdl(outtxt)
   z$qs <- detect_qs(outtxt)
   

@@ -4,13 +4,14 @@
 #' seas and capture the full content or parts of the .out file from 
 #' X-13ARIMA-SEATS.
 #' 
-#' The \code{out} function shows the full content of the \code{.out} file form
-#' X-13ARIMA-SEATS. The \code{slidingspans} and \code{revisions} function call
-#' the \code{slidingspans} and \code{history} spec of X-13ARIMA-SEATS and show
-#' the respective parts of the \code{.out} file. Note that against the
-#' convention, the \code{history} spec is called by the function
-#' \code{revision}, in order to avoid a naming collision with the function from
-#' the \code{utils} pacakge.
+#' The \code{out} function shows the full content of the \code{.out} file form 
+#' X-13ARIMA-SEATS. The \code{slidingspans} and \code{revisions} function call 
+#' the \code{slidingspans} and \code{history} spec of X-13ARIMA-SEATS and show 
+#' the respective parts of the \code{.out} file. Note that against the 
+#' convention, the \code{history} spec is called by the function 
+#' \code{revision}, in order to avoid a naming collision with the function from 
+#' the \code{utils} pacakge. For a description of the \code{slidingsspan} and 
+#' \code{history} spec, consider the X-13ARIMA-SEATS manual.
 #' 
 #' For how to enter spec-arguments options, see the details in 
 #' \code{"\link{seas}"}. In the \code{out} function, \code{...} are useful to 
@@ -18,28 +19,56 @@
 #' \code{revisions} function, \code{...} are used to add aditional options to 
 #' the \code{slidingspans} and \code{history} spec.
 #' 
-#' @param x an object of class "seas" to re-evaluate
-#'   
+#' @param x an object of class "seas" to re-evaluate.
+#' @param view  logical, should the content be shown in the console.
+#' @param line  if \code{view = TRUE}, starting line of the content.
+#' @param n  if \code{view = TRUE}, number of lines to show at once.
+#' @param search   chracter string. If \code{view = TRUE}, the \code{.out}
+#'   content is searched for the first occurence of the string (see examples).
 #' @param ... aditional spec-arguments options (see details).
 #'   
 #' @return invisible, the full content or parts of the .out file as a (large) 
 #'   character vector. If \code{viewer = TRUE}, the content of the character 
 #'   vector is shown as a side effect.
 #'   
+#' @references Vignette with a more detailed description: 
+#'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+#'   
+#'   Wiki page with R examples from the X-13ARIMA-SEATS: 
+#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
+#'   X-13ARIMA-SEATS manual: \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   
 #' @export
-out <- function(x, viewer = TRUE, line = 1, n = 500, search = NULL, ...){
+#' 
+#' @examples
+#' 
+#' \dontrun{
+#' x <- seas(AirPassengers) 
+#' 
+#' # exit from the viewer with [q]
+#' out(x)  
+#' out(x, search = "regARIMA model residuals")
+#' 
+#' slidingspans(x)
+#' revisions(x)
+#' 
+#' }
+#' 
+out <- function(x, view = TRUE, line = 1, n = 500, search = NULL, ...){
   ldots <- list(...)
   z <- reeval(x, ldots)
-  if (viewer){
-    viewer(z, line = line, n = n, search = search)
+  if (view){
+    view(z, line = line, n = n, search = search)
   }
   return(invisible(z))
 }
 
 
 
+#' @rdname out
 #' @export
-revisions <- function(x, ...){
+revisions <- function(x, view = TRUE, ...){
   ldots <- list(...)
   if (length(ldots) == 0){
     ldots$history = list()
@@ -50,14 +79,16 @@ revisions <- function(x, ...){
   }
   z <- reeval(x, ldots)
   z <- z[grep("History", z)[1]:length(z)]
-  viewer(z, line = 1, n = length(z))
+  if (view){
+    view(z, line = 1, n = length(z))
+  }
   return(invisible(z))
 }
 
 
-
+#' @rdname out
 #' @export
-slidingspans <- function(x, ...){
+slidingspans <- function(x, view = TRUE, ...){
   ldots <- list(...)
   if (length(ldots) == 0){
     ldots$slidingspans = list()
@@ -68,7 +99,9 @@ slidingspans <- function(x, ...){
   }
   z <- reeval(x, ldots)
   z <- z[grep("[Ss]liding spans", z)[1]:length(z)]
-  viewer(z, line = 1, n = length(z))
+  if (view){
+    view(z, line = 1, n = length(z))
+  }
   return(invisible(z))
 }
 
@@ -83,7 +116,7 @@ reeval <- function(x, ldots){
 }
 
 
-viewer <- function(x, line = 1, n = 25, search = NULL){
+view <- function(x, line = 1, n = 25, search = NULL){
   stopifnot(inherits(x, "character"))
   
   if (!is.null(search)){

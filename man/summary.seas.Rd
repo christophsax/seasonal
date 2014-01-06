@@ -3,8 +3,7 @@
 \alias{summary.seas}
 \title{Summary of a X13-ARIMA-SEATS seasonal adjustment}
 \usage{
-\method{summary}{seas}(object, sarevisions = FALSE, slidingspans = FALSE,
-  ...)
+\method{summary}{seas}(object, ...)
 
 \method{print}{summary.seas}(x, digits = max(3, getOption("digits") - 3),
   signif.stars = getOption("show.signif.stars"), ...)
