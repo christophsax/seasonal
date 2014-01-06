@@ -159,21 +159,6 @@ The `slidingspans` and `revisions` function call the `slidingspans` and `history
     slidingspans(x)
     revisions(x)
 
-
-###  Diagnostical Re-Evaluation
-
-For diagnostical purposes, some functions re-evaluate an object of class seas and capture the full content or parts of the .out file from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and reduces the size of a `"seas"` object.
-
-The `out` function shows the full searchable content of the `.out` file form X-13ARIMA-SEATS in the console. Exit form the viewer by pressing `q`.
-
-    out(x)
-
-The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revision`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyses the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. For a detailed description, consider section 7.16 and 7.8 in the [manual][manual].
-
-    slidingspans(x)
-    revisions(x)
-
-
 ### License
 
 *seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS, which is in the Public Domain.
