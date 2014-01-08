@@ -123,7 +123,7 @@ monthplot.seas <- function(x, choice = "SI", ...){
 #' @export
 siratio <- function(x){
   # TODO: make sure you get the right information wether mult or add
-  if (x$transform_function == "log"){
+  if (x$transform.function == "log"){
     z <- x$data[, 'irregular'] * x$data[, 'seasonal']
   } else {
     z <- x$data[, 'irregular'] + x$data[, 'seasonal']

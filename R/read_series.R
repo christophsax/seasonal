@@ -6,7 +6,6 @@ read_data <- function(method = "seats", file){
   #
   # return "mts" object
 
-
   if (identical(method, "seats")){
     seasonal        <- read_series(paste0(file, ".s10"))
     seasonaladj     <- read_series(paste0(file, ".s11"))

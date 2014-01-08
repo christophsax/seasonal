@@ -38,13 +38,11 @@ inspect <- function(x, ...){
   tsname <- deparse(substitute(x))
   
   firstrun <- seas(x, ...)
-  fb <- fivebestmdl(firstrun)[,1]
-  
-  
+  fb <- c(firstrun$model$arima$model, fivebestmdl(firstrun)[,1])
   controls <- list(
     method = picker("SEATS", "X11", label = "Adjustment method"),
-    model = picker(fb[1], fb[2], fb[3], fb[4], fb[5],
-                   label = "5 best models"),
+    model = picker(fb[1], fb[2], fb[3], fb[4], fb[5], fb[6],
+                   label = "model"),
     
     calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
     outlier.critical = slider(2.5, 5, step = 0.1, initial = 4),
@@ -62,11 +60,7 @@ inspect <- function(x, ...){
     if (method == "X11"){
       lc$x11 = list()
     }
-    
-#     if (modelsearch == "pickmdl"){
-#       lc$pickmdl = list()
-#     }
-#     
+     
     if (!calendar){
       lc['regression.aictest'] <- NULL
       names(lc['regression.aictest']) <- "regression.aictest"
@@ -97,7 +91,7 @@ SubPlot <- function(x, tsname, view,
   if (view == "Series"){
     plot(s)
   } else if (view == "Seasonal component"){
-    monthplot(s, choice = "seasonal")
+    monthplot(s)
   } else if (view == "Irregular component"){
     monthplot(s, choice = "irregular")
   } else if (view == "Spectrum original"){

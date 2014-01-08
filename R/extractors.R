@@ -37,12 +37,6 @@ spc <- function(x){
 
 #' @rdname spc
 #' @export
-mdl <- function(x){
-  x$mdl
-}
-
-#' @rdname spc
-#' @export
 final <- function(x){
   extract_w_na_action(x, 'final')
 }
@@ -141,7 +135,11 @@ extract_w_na_action <- function(x, name){
 
 
 
-#' @rdname seas
+#' QS Statistic For Seasonality
+#' 
+#' Null Hypothetis: No Seasonality
+#' 
+#' @param x  object of class \code{"seas"}
 #' @export
 qs <- function(x){
   x$qs

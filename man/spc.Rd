@@ -1,7 +1,6 @@
 \name{spc}
 \alias{final}
 \alias{irregular}
-\alias{mdl}
 \alias{original}
 \alias{siratio}
 \alias{spc}
@@ -9,8 +8,6 @@
 \title{Extractor Functions for seas Elements and Series}
 \usage{
 spc(x)
-
-mdl(x)
 
 final(x)
 

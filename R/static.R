@@ -75,7 +75,7 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   lc['outlier'] <- NULL
   names(lc['outlier']) <- "regression.aictest"
   
-  lc$transform.function = x$transform_function
+  lc$transform.function = x$transform.function
   
   if (coef){
     if (!is.null(x$model$regression$b)) {
