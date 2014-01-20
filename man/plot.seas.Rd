@@ -2,7 +2,8 @@
 \alias{plot.seas}
 \title{Plot the Adjusted and Unadjusted Series}
 \usage{
-\method{plot}{seas}(x, outliers = TRUE, trend = FALSE, ...)
+\method{plot}{seas}(x, outliers = TRUE, trend = FALSE,
+  main = "unadjusted and seasonally adjusted series", ylab = "value", ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a

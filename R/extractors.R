@@ -145,3 +145,27 @@ qs <- function(x){
   x$qs
 }
 
+
+#' Structure of the ARIMA Model
+#' 
+#' Numerical vector of the form (p d q)(P D Q), containing the non-seasonal and 
+#' seasonal part of the ARIMA model.
+#' 
+#' @param x  object of class \code{"seas"}
+#' @return numerical vector of length 6
+#' @export
+arimamodel <- function(x){
+  stopifnot(inherits(x, "seas"))
+  str <- x$model$arima$model
+  str <- gsub("[ \\(\\)]", "", str)
+  z <- c(substr(str, 1, 1),
+         substr(str, 2, 2),
+         substr(str, 3, 3),
+         substr(str, 4, 4),
+         substr(str, 5, 5),
+         substr(str, 6, 6)
+  )
+  as.numeric(z)
+}
+
+

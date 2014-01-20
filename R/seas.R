@@ -192,6 +192,11 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
 
   ### user defined regressors
   if (!is.null(xreg)){
+    
+    if (frequency(xreg) != frequency(x)){
+      stop('xreg and x must be of the same frequency.')
+    }
+    
     write_ts_dat(na.action(xreg), file = regfile)
 
     # user names either from input (single "ts"), or from colnames ("mts)

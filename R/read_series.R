@@ -40,7 +40,11 @@ read_series <- function(file){
   # 
   # file  full path including file ending
   #
-  # return a "ts" object
+  # return a "ts" object, NULL if no file is present
+  
+  if (!file.exists(file)){
+    return(NULL)
+  }
   
   dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE)
   dta <- apply(dta.raw[-1, ], 2, as.numeric)

@@ -1,0 +1,130 @@
+\name{genhol}
+\alias{genhol}
+\title{Generate Holiday Regression Variables}
+\usage{
+genhol(x, start = 0, end = 0, frequency = 12, center = "none")
+}
+\arguments{
+  \item{start}{integer, shift start of the holiday. Use
+  negative values if start is before the specified date.}
+
+  \item{end}{integer, shift end of the holiday. Use
+  negative values if start is before the specified date.}
+
+  \item{frequency}{integer, frequency of the resulting
+  series}
+
+  \item{center}{character string. Either \code{"calendar"},
+  \code{"mean"} or \code{"none"} (default). Centering
+  avoids a bias in the resultign series.  Use
+  \code{"calendar"} for Easter or Chinese New Year,
+  \code{"mean"} for Ramadan. See references.}
+}
+\value{
+an object of class \code{"ts"} that can be used as a user
+defined variable in \code{\link{seas}}.
+}
+\description{
+This is a replacement for genhol, a utility that uses the
+same procedure as X-12-ARIMA to create regressors for the
+U. S. holidays of Easter, Labor Day, and Thanksgiving.
+}
+\details{
+The resulting time series can be used as a user defined
+variable in \code{\link{seas}}. Usually, you want the
+holiday effect to be removed from the final series, so you
+need to specify \code{regression.usertype = "holiday"}.
+(The default is to include user defined variables in the
+final series.)
+}
+\examples{
+data(holiday)
+
+
+### using genhol
+
+# 10 day before Easter day to one day after, quarterly data:
+genhol(easter, start = -10, end = 1, frequency = 4)
+genhol(easter, frequency = 2)  # easter is allways in the first half-year
+
+# centering for overall mean or monthly calendar means
+genhol(easter, center = "mean")
+genhol(easter, center = "calendar")
+
+
+### replicating X13's integrated easter adjustment
+
+# integrated adjustment
+m1 <- seas(x = AirPassengers,
+regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
+arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
+outlier = NULL, transform.function = "log")
+summary(m1)
+
+# user defined easter variable
+ea1 <- genhol(easter, start = -1, end = -1, center = "calendar")
+
+# regression.usertype = "holiday" ensures that the effect is removed from
+# the final series.
+m2 <- seas(x = AirPassengers,
+           regression.variables = c("td1coef", "ao1951.May"),
+           xreg = ea1, regression.usertype = "holiday",
+           arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
+           outlier = NULL, transform.function = "log")
+summary(m2)
+
+all.equal(final(m2), final(m1), tolerance = 1e-06)
+
+
+# with genhol, its possible to do sligtly better, by adjusting to the length
+# of easter
+
+ea2 <- genhol(easter, start = -2, end = +1, center = "calendar")
+m3 <- seas(x = AirPassengers,
+           regression.variables = c("td1coef", "ao1951.May"),
+           xreg = ea2,
+           arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
+           outlier = NULL, transform.function = "log")
+summary(m3)
+
+
+### Chinese New Year
+
+data(exports)  # Swiss exports to China
+data(holiday)
+
+# exact specification
+# (de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year)
+cny1 <- genhol(cny, start = 0, end = 6, center = "calendar")
+m1 <- seas(exports, xreg = cny1, regression.usertype = "holiday",
+           regression.aictest = NULL,
+           regression.variables = c("td1coef", "easter[1]")
+)
+summary(m1)
+
+# AICC minimzation (same idea as auto Easter adjustment in X-13ARIMA-SEATS)
+cny2 <- genhol(cny, start = 0, end = 15, center = "calendar")
+m2 <- seas(exports, xreg = cny2, regression.usertype = "holiday",
+           regression.aictest = NULL,
+           regression.variables = c("td1coef", "easter[1]")
+)
+summary(m2)
+
+# compare to no-CNY model:
+m3 <- seas(exports,
+           regression.aictest = NULL,
+           regression.variables = c("td1coef", "easter[1]")
+)
+
+# effects are visible, but it's not a whole new story
+ts.plot(diff(log((cbind(final(m2), final(m3))))), col = c("red", "black"))
+}
+\references{
+United States Census Bureau, Notes on centering holiday
+regressors:
+\url{http://www.census.gov/srd/www/genhol/genhol_center.html}
+
+X-13ARIMA-SEATS manual:
+\url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+}
+

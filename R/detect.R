@@ -31,11 +31,12 @@ detect_fivebestmdl <- function(outtxt){
   # outtxt  character vector, content of .out output file
   #
   # returns character vector
-  
+
   first <- which(outtxt == "  Best Five ARIMA Models")
   
-  if (length(first) == 1){
-    z <- outtxt[first:(first + 10)]
+  # if there are several runs, take the last
+  if (length(first) >= 1) {
+    z <- outtxt[first[length(first)]:(first[length(first)] + 10)]
   } else {
     z <- NULL
   }

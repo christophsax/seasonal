@@ -23,12 +23,14 @@
 #' plot(x, outliers = FALSE)  
 #' plot(x, trend = TRUE) 
 #' }
-plot.seas <- function(x, outliers = TRUE, trend = FALSE, ...){
+plot.seas <- function(x, outliers = TRUE, trend = FALSE, main = "unadjusted and seasonally adjusted series", 
+                      ylab = "value",...){
+
   ts.plot(cbind(original(x), final(x)), 
           col = c("black", "red"), 
           lwd = c(1, 2),
           ylab = "value",
-          main = "unadjusted and seasonally adjusted series", ...
+          main = main, ...
   )
   
   if (identical(trend, TRUE)){

@@ -38,12 +38,14 @@ inspect <- function(x, ...){
   tsname <- deparse(substitute(x))
   
   firstrun <- seas(x, ...)
-  fb <- c(firstrun$model$arima$model, fivebestmdl(firstrun)[,1])
+
+  
+  fb <- unique(c(firstrun$model$arima$model, fivebestmdl(firstrun)[,1]))
+  
+
   controls <- list(
     method = picker("SEATS", "X11", label = "Adjustment method"),
-    model = picker(fb[1], fb[2], fb[3], fb[4], fb[5], fb[6],
-                   label = "model"),
-    
+    model = picker(fb[1], fb[2], fb[3], fb[4], fb[5], fb[6], label = "model"),
     calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
     outlier.critical = slider(2.5, 5, step = 0.1, initial = 4),
     view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
