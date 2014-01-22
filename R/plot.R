@@ -108,16 +108,19 @@ residplot <- function(x, outliers = TRUE, ...){
 #' }
 #' @export
 #' @method monthplot seas
-monthplot.seas <- function(x, choice = "SI", ...){
-  if (choice == "SI"){
-    monthplot(x$data[,'seasonal'], ylab = "factor", lwd = 2, col = "red", main = "seasonal component, SI ratio", ...)
-    monthplot(siratio(x), col = "blue", type = "h", add = TRUE, ...)
-  }
+monthplot.seas <- function(x, choice = "seasonal", main = NULL, ...){
   if (choice == "seasonal"){
-    monthplot(x$data[,'seasonal'], ylab = "factor", main = "irregular component", ...)
+    if (is.null(main)){
+      ylab <- "seasonal component, SI ratio"
+    }
+    monthplot(x$data[,'seasonal'], ylab = ylab, lwd = 2, col = "red")
+    monthplot(siratio(x), col = "blue", type = "h", add = TRUE)
   }
   if (choice == "irregular"){
-    monthplot(x$data[,'irregular'], ylab = "factor", main = "irregular component", ...)
+    if (is.null(main)){
+      ylab <- "irregular component"
+    }
+    monthplot(x$data[,'irregular'], ylab = ylab, main = main)
   }
 }
 
@@ -134,4 +137,15 @@ siratio <- function(x){
 }
 
 
+
+#' @export
+hist.seas <- function(x, ...){
+  residuals <- resid(x)
+  h <- hist(residuals, ...)
+  
+  xfit<-seq(min(residuals),max(residuals),length=40) 
+  yfit<-dnorm(xfit,mean=mean(residuals),sd=sd(residuals)) 
+  yfit <- yfit*diff(h$mids[1:2])*length(residuals) 
+  lines(xfit, yfit, col = "red", lwd = 2)
+}
 

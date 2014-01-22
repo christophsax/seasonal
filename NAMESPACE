@@ -1,4 +1,5 @@
 S3method(coef,seas)
+S3method(hist,seas)
 S3method(monthplot,seas)
 S3method(nobs,seas)
 S3method(plot,seas)
