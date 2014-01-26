@@ -101,11 +101,19 @@ regressioneffects <- function(x){
 #' }
 #' @export
 fivebestmdl <- function(x){
-  if (!is.null(x$spc$automdl)){
+  if (!is.null(x$fivebestmdl)){
     txt <- x$fivebestmdl[3:7]
     arima <- substr(txt, start = 19, stop = 32)
     bic <- as.numeric(substr(txt, start = 51, stop = 56))
     z <- data.frame(arima, bic, stringsAsFactors = FALSE)
+  } else if (is.null(x$reeval)) {
+    # if no fivebestmdl, try reevaluating with automdl
+    lc <- as.list(x$call)
+    lc$automdl <- list()
+    lc$arima.model <- NULL
+    rx <- eval(as.call(lc), envir = globalenv())
+    rx$reeval <- TRUE  # avoid infinite looping
+    z <- fivebestmdl(rx)
   } else {
     z <- NULL
   }
