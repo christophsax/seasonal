@@ -2,7 +2,7 @@
 \alias{monthplot.seas}
 \title{Plot Seasonal or Irregular Factors}
 \usage{
-\method{monthplot}{seas}(x, choice = "seasonal", main = NULL, ...)
+\method{monthplot}{seas}(x, choice = "seasonal", ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a

@@ -12,6 +12,8 @@ if (getRversion() >= "2.15.1") {
 #' @param ...  additional spec/arguments options
 #'
 #' @export
+#' @method inspect seas
+#' 
 #' @examples
 #' \dontrun{
 #' inspect(AirPassengers)
@@ -20,8 +22,8 @@ if (getRversion() >= "2.15.1") {
 #' inspect(AirPassengers, estimate.maxiter = 1000)  
 #' }
 #' 
-inspect <- function(x, ...){
-  stopifnot(inherits(x, "ts"))
+inspect.seas <- function(x, ...){
+#   stopifnot(inherits(x, "ts"))
 
   model <- NULL
   method <- NULL
@@ -35,26 +37,27 @@ inspect <- function(x, ...){
   
   dotlist <- list(...)
   
-  tsname <- deparse(substitute(x))
+#   tsname <- deparse(substitute(x))
   
-  firstrun <- seas(x, ...)
+#   firstrun <- seas(x, ...)
 
   
-  fb <- unique(c(firstrun$model$arima$model, fivebestmdl(firstrun)[,1]))
+  fb <- unique(c(x$model$arima$model, fivebestmdl(x)[,1]))
   
 
   controls <- list(
-    method = picker("SEATS", "X11", label = "Adjustment method"),
+    method = picker("SEATS", "X11", label = "adjustment method"),
     model = picker(fb[1], fb[2], fb[3], fb[4], fb[5], fb[6], label = "model"),
     calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
     outlier.critical = slider(2.5, 5, step = 0.1, initial = 4),
-    view = picker("Series", "Seasonal component", "Irregular component", "Spectrum original", "Spectrum final", "Residuals of regARIMA", label = "View"),
-    is.static.call = checkbox(FALSE, "Show static call")
+    view = picker("unadjusted and adjusted series", 
+                  "seasonal component, SI ratio", 
+                  "residuals of regARIMA", "residual partial autocorrelation", "sliding spans", "revisions", label = "view"),
+    is.static.call = checkbox(FALSE, "show static call")
   )
   
   manipulate({
-    lc <- structure(list(quote(seas)), .Names = "")
-    lc$x <- parse(text = tsname)[[1]]
+    lc <- as.list(x$call)
     lc$outlier.critical <- outlier.critical
     
     lc$arima.model <- model
@@ -74,7 +77,7 @@ inspect <- function(x, ...){
 
     call <- as.call(lc)
     
-    SubPlot(x, tsname, view,
+    SubPlot(view,
             call,
             is.static.call
             )
@@ -83,25 +86,31 @@ inspect <- function(x, ...){
 }
 
 
-SubPlot <- function(x, tsname, view,
+SubPlot <- function(view,
                     call,
                     is.static.call
                     ){
 
   s <- eval(call)
   
-  if (view == "Series"){
+  if (view == "unadjusted and adjusted series"){
     plot(s)
-  } else if (view == "Seasonal component"){
+  } else if (view == "seasonal component, SI ratio"){
     monthplot(s)
-  } else if (view == "Irregular component"){
-    monthplot(s, choice = "irregular")
-  } else if (view == "Spectrum original"){
-    spectrum(original(s))
-  } else if (view == "Spectrum final"){
-    spectrum(final(s))
-  } else if (view == "Residuals of regARIMA"){
+  } else if (view == "residuals of regARIMA"){
     residplot(s)
+  } else if (view == "residual partial autocorrelation"){
+    pacf(resid(s), main = "residual partial autocorrelation", ylab = "")
+  } else if (view == "sliding spans"){
+    plot(slidingspans(s))
+  } else if (view == "revisions"){
+    # the revision history delivers strange results 
+    # drop for R2
+    plot(revisions(s))
+    
+#     # DPKJ version as a temporary workaround (slow)
+#     require(tstools)
+#     print(recursive(s))
   } else {
     stop("something wrong.")
   }
@@ -110,8 +119,17 @@ SubPlot <- function(x, tsname, view,
   
   if (is.static.call){
     cat("\nStatic Call:\n")
-    static(s, name = tsname, test = TRUE)
+    static(s, test = TRUE)
   }
 
 }
 
+#' @export
+inspect <- function(x) UseMethod("inspect")
+
+
+#' @method inspect ts
+#' @export
+inspect.ts <- function(x){
+  message("inspect method for 'ts' objects is deprecated. Use it on inspect(seas(x)) instead.")
+}

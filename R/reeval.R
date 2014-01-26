@@ -57,53 +57,12 @@
 #' 
 out <- function(x, view = TRUE, line = 1, n = 500, search = NULL, ...){
   ldots <- list(...)
-  z <- reeval(x, ldots)
-  if (view){
-    view(z, line = line, n = n, search = search)
-  }
-  return(invisible(z))
+  z <- reeval(x, ldots)$out
+  class(z) <- "out"
+  z
 }
 
 
-
-#' @rdname out
-#' @export
-revisions <- function(x, view = TRUE, ...){
-  ldots <- list(...)
-  if (length(ldots) == 0){
-    ldots$history = list()
-  } else {
-    if (!any(grepl("history", names(ldots)))){
-      ldots$history = list()
-    }
-  }
-  z <- reeval(x, ldots)
-  z <- z[grep("History", z)[1]:length(z)]
-  if (view){
-    view(z, line = 1, n = length(z))
-  }
-  return(invisible(z))
-}
-
-
-#' @rdname out
-#' @export
-slidingspans <- function(x, view = TRUE, ...){
-  ldots <- list(...)
-  if (length(ldots) == 0){
-    ldots$slidingspans = list()
-  } else {
-    if (!any(grepl("slidingspans", names(ldots)))){
-      ldots$slidingspans = list()
-    }
-  }
-  z <- reeval(x, ldots)
-  z <- z[grep("[Ss]liding spans", z)[1]:length(z)]
-  if (view){
-    view(z, line = 1, n = length(z))
-  }
-  return(invisible(z))
-}
 
 
 
@@ -111,13 +70,17 @@ reeval <- function(x, ldots){
   lc <- as.list(x$call)
   lc <- c(lc, ldots)
   lc$out <- TRUE
+
   z <- eval(as.call(lc), envir = globalenv())
-  z$out
+  z
 }
 
 
-view <- function(x, line = 1, n = 25, search = NULL){
-  stopifnot(inherits(x, "character"))
+
+print.out <- function(x, line = 1, n = 500, search = NULL){ 
+  if (length(x) < n){
+    n <- length(x)
+  }
   
   if (!is.null(search)){
     search.res <- which(grepl(search, x))
@@ -146,7 +109,7 @@ view <- function(x, line = 1, n = 25, search = NULL){
     
     z <- x[l:(l + n - 1)]
     cat(z, sep = "\n")
-    cat("\nline ", l, " to ", l + n - 1, " (of ", length(x), ")")
+    cat("\nX-13-as output: line ", l, " to ", l + n - 1, " (of ", length(x), ")", sep = "")
     
     if (status == 1){
       cat("\nnext [enter]  previous [p]  to line [number]  quit [q]",sep = "")

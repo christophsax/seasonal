@@ -269,6 +269,12 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   z$estimates <- read_est(iofile)
   z$lkstats <- read_lks(iofile)
   
+  z$sfspans <- read_series(paste0(iofile, ".sfs"))
+  z$sfspans[z$sfspans==-999] <- NA
+  
+  z$sarevisions <- read_series(paste0(iofile, ".sar"))
+  z$sae <- read_series(paste0(iofile, ".sae"))
+  
   # additional information from outtxt 
   # (this is part of the output, outtxt is not kept by default)
   if (transform.function == "auto"){
@@ -393,6 +399,13 @@ consist_spclist <-function(x){
     x <- mod_spclist(x, automdl.print = "bestfivemdl")
   }
   
+  if (!is.null(x$history)){
+    x <- mod_spclist(x, history.save = c("sarevisions", "saestimates"))
+  }
+  
+  if (!is.null(x$slidingspans)){
+    x <- mod_spclist(x, slidingspans.save = c("sfspans"))
+  }
   
   # if force is present, return adjusted output
   if (!is.null(x$force$type)){

@@ -150,14 +150,17 @@ With the 'Show static call' option, a replicable static call is also shown in th
 
 For diagnostical purposes, some functions re-evaluate an object of class `"seas"` and capture the full content or parts of the `.out` file from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and reduces the size of a `"seas"` object.
 
-The `out` function shows the full searchable content of the `.out` file form X-13ARIMA-SEATS in the console. Exit form the viewer by pressing `q`.
+The `out` function shows the full content of the `.out` file form X-13ARIMA-SEATS in a console viewer. Exit form the viewer by pressing `q`.
 
     out(x)
 
-The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revision`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. For a detailed description, consider section 7.16 and 7.8 in the [manual][manual].
+The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revisions`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. By default, the `print` method shows the output form X-13ARIMA-SEATS. The `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
 
     slidingspans(x)
+    plot(slidingspans(x))
+    
     revisions(x)
+    plot(revisions(x))
 
 ### License
 

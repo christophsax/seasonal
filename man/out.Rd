@@ -6,9 +6,9 @@
 \usage{
 out(x, view = TRUE, line = 1, n = 500, search = NULL, ...)
 
-revisions(x, view = TRUE, ...)
+revisions(x, view = FALSE, ...)
 
-slidingspans(x, view = TRUE, ...)
+slidingspans(x, view = FALSE, ...)
 }
 \arguments{
   \item{x}{an object of class "seas" to re-evaluate.}
