@@ -58,7 +58,6 @@
 out <- function(x, view = TRUE, line = 1, n = 500, search = NULL, ...){
   ldots <- list(...)
   z <- reeval(x, ldots)$out
-  class(z) <- "out"
   z
 }
 

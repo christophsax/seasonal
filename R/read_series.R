@@ -54,11 +54,10 @@ read_series <- function(file){
   year <- substr(time.raw, start = 1, stop = 4)
   per <- substr(time.raw, start = 5, stop = 6)
   
-  if (length(unique(per)) == 4){
-    frequency <- 4
-  } else if (length(unique(per)) >= 5){
-    frequency <- 12
-  } else {
+  frequency <- length(unique(per))
+  if (length(per) / 12 < 1) { 
+    # this is an unlikely case. X-13 probably probably does not allow such a
+    # short series.
     warning("Frequency determination is unclear. Assuming monthly data.")
     frequency <- 12
   }

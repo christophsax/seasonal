@@ -11,10 +11,15 @@ revisions <- function(x, view = FALSE, ...){
     }
   }
   z <- reeval(x, ldots)
-  z$revisions <- z$out[grep("  History analysis", z$out)[1]:length(z$out)]
-  class(z$revisions) <- "out"
+
+  n.line <- grep("history analysis", z$out)
+  if (length(n.line) == 0){
+    warning("No history analysis found in the output. Returning the standard output.")
+  } else {
+    z$revisions <- z$out[grep("  History analysis", z$out)[1]:length(z$out)]
+    class(z$revisions) <- "out"
+  }
   class(z) <- "revisions"
-  z
   z
 }
 

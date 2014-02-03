@@ -1,5 +1,6 @@
-extract.seas <- function (model, include.diff = TRUE, include.sdiff = TRUE, include.aicc = TRUE, include.trans = TRUE,
-          include.nobs = TRUE, ...) 
+extract.seas <- function (model, include.diff = TRUE, include.sdiff = TRUE, 
+                          include.aicc = TRUE, include.trans = TRUE,
+                          include.nobs = TRUE, ...) 
 {
   s <- summary(model, ...)
   names <- rownames(s$coef)
@@ -39,17 +40,19 @@ extract.seas <- function (model, include.diff = TRUE, include.sdiff = TRUE, incl
     gof.names <- c(gof.names, "Num. obs.")
     gof.decimal <- c(gof.decimal, FALSE)
   }
-  tr <- createTexreg(coef.names = names, coef = co, se = se, 
-                     pvalues = pval, gof.names = gof.names, gof = gof, gof.decimal = gof.decimal)
+  tr <- createTexreg(coef.names = names, coef = co, se = se, pvalues = pval, 
+                     gof.names = gof.names, gof = gof, 
+                     gof.decimal = gof.decimal)
   return(tr)
 }
 
 
-require(texreg)
+require(texreg, quietly = TRUE)
 
 setClass("seas")
 
 #' @export
 #' @import texreg
-setMethod("extract", signature = className("seas", "seasonal"), definition = extract.seas)
+setMethod("extract", signature = className("seas", "seasonal"), 
+          definition = extract.seas)
 

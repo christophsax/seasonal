@@ -142,7 +142,12 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   
   # intial checks
   checkX13(fail = TRUE, confirmation = FALSE)
-  stopifnot(inherits(x, "ts"))
+  if (!inherits(x, "ts")){
+    stop("'x' is not a time series.")
+  }
+  if (!inherits(xreg, "ts") & !is.null(xreg)){
+    stop("'xreg' is not a time series.")
+  }
 
   # save series name
   series.name <- deparse(substitute(x))
@@ -206,16 +211,14 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
       user <- colnames(xreg)
     }
         
-    if (!is.null(spc$regression)){
-      spc$regression$user <- user
-      spc$regression$file <- paste0("\"", regfile, "\"")
-      spc$regression$format <- "\"datevalue\""
-    } else if (!is.null(spc$x11regression)){
+    if (!is.null(spc$x11regression)){
       spc$x11regression$user <- user
       spc$x11regression$file <- paste0("\"", regfile, "\"")
       spc$x11regression$format <- "\"datevalue\""
     } else {
-      stop ("either 'regression' or 'x11regression' has to be specied if 'xreg' is present")
+      spc$regression$user <- user
+      spc$regression$file <- paste0("\"", regfile, "\"")
+      spc$regression$format <- "\"datevalue\""
     }
   }
 
@@ -263,6 +266,9 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
     z$data <- read_data(method = "x11", file = iofile)
   } 
   
+  # check whether freq detection in read_seris has worked.
+  stopifnot(frequency(z$data) == frequency(x))
+  
   # read additional output files
   z$regressioneffects <- read_series(paste0(iofile, ".ref"))
   z$model <- read_mdl(iofile)
@@ -295,6 +301,7 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   if (out){
     outtxt[grepl("^\f", outtxt)] <- ""  # remove page breaks
     z$out <-  outtxt
+    class(z$out) <- "out"
   }
     
   z$x <- x
