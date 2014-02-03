@@ -10,8 +10,6 @@ deparse_spc <- function(x){
     if (length(x[[i]]) > 1){
       # put brackets around several elements
       z[i] <- paste0("  ", nx[i], " = (", paste(x[[i]], collapse = " "), ")")
-      
-#       z[i] <- strwrap(x.i, indent = 2, exdent = 4)
     } else if (length(x[[i]] == 1)){
       # put brackets around elements containing a comma
       if (grepl(',', x[[i]])){

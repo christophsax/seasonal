@@ -9,6 +9,9 @@ detect_auto <- function(outtxt){
   # returns character string, "log" or "none"
   first <- which(outtxt == 
             " Likelihood statistics for model fit to log transformed series.")
+  if (length(first) == 0){
+    return(NULL)
+  }
   area <- outtxt[(first + 10):(first + 30)]
   line <- area[grepl("prefers", area)]
   

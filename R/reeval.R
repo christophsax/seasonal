@@ -75,7 +75,8 @@ reeval <- function(x, ldots){
 }
 
 
-
+#' @export
+#' @method print out
 print.out <- function(x, line = 1, n = 500, search = NULL){ 
   if (length(x) < n){
     n <- length(x)

@@ -9,12 +9,12 @@
 #' syntax uses specs and arguments, while each spec may contain some arguments. 
 #' An additional spec-argument can be added to the \code{seas} function by 
 #' separating spec and argument by a dot (\code{.}). For a more extensive 
-#' description of the X-13ARIMA-SEATS in \code{seas}, consider the website on 
-#' github (\url{https://github.com/christophsax/seasonal})
+#' description of the X-13ARIMA-SEATS in \code{seas}, consider the wiki 
+#' (\url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R})
 #' 
 #' @param x   object of class \code{"ts"}": time series to seasonaly adjust.
 #' @param xreg   (optional) object of class \code{"ts"}": one or several user 
-#'   defined exogenous variables for regARIMA modelling.
+#'   defined exogenous variables for regARIMA modelling, can be used both with \code{regression} or \code{x11regression}.
 #' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"} 
 #'   (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
 #'   an alternative model is used with a warning.
@@ -134,19 +134,22 @@
 #' inspect(AirPassengers)
 #' }
 #' 
-seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "auto", 
+seas <- function(x, regression.xreg = NULL, x11regression.xreg = NULL, transform.xreg = NULL, 
+                 seats.noadmiss = "yes", transform.function = "auto", 
                  regression.aictest = c("td", "easter"), outlier = list(), 
                  automdl = list(), 
                  na.action = na.omit,
-                 out = FALSE, dir = NULL, ...){
+                 out = FALSE, dir = NULL, xreg = NULL, ...){
+  
+  if (!is.null(xreg)){
+    warning("'xreg' is depreciated soon. Use 'regression.xreg' instead")
+    regression.xreg <- xreg
+  }
   
   # intial checks
   checkX13(fail = TRUE, confirmation = FALSE)
   if (!inherits(x, "ts")){
     stop("'x' is not a time series.")
-  }
-  if (!inherits(xreg, "ts") & !is.null(xreg)){
-    stop("'xreg' is not a time series.")
   }
 
   # save series name
@@ -167,8 +170,11 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   # file names for 
   iofile <- file.path(wdir, "iofile")      # inputs and outputs (w/o suffix)
   datafile <- file.path(wdir, "data.dta")  # series to adjust
-  regfile <- file.path(wdir, "reg.dta")    # user defined regressors
-
+  # user defined variables
+  xreg.file <- file.path(wdir, "regression.xreg.dta")  
+  x11regression.xreg.file <- file.path(wdir, "x11regression.xreg.dta") 
+  transform.xreg.file <- file.path(wdir, "transform.xreg.dta")       
+  
   ### write data
   write_ts_dat(x.na, file = datafile)
   
@@ -196,32 +202,54 @@ seas <- function(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "a
   spc <- consist_spclist(spc)
 
   ### user defined regressors
-  if (!is.null(xreg)){
-    
+  if (!is.null(regression.xreg)){
     if (frequency(xreg) != frequency(x)){
-      stop('xreg and x must be of the same frequency.')
+      stop('regression.xreg and x must be of the same frequency.')
     }
-    
-    write_ts_dat(na.action(xreg), file = regfile)
-
+    write_ts_dat(na.action(regression.xreg), file = regression.xreg.file)
     # user names either from input (single "ts"), or from colnames ("mts)
-    if (is.null(dim(xreg))){
-      user <- deparse(substitute(xreg))
+    if (is.null(dim(regression.xreg))){
+      user <- deparse(substitute(regression.xreg))
     } else {
-      user <- colnames(xreg)
+      user <- colnames(regression.xreg)
     }
-        
-    if (!is.null(spc$x11regression)){
-      spc$x11regression$user <- user
-      spc$x11regression$file <- paste0("\"", regfile, "\"")
-      spc$x11regression$format <- "\"datevalue\""
-    } else {
-      spc$regression$user <- user
-      spc$regression$file <- paste0("\"", regfile, "\"")
-      spc$regression$format <- "\"datevalue\""
-    }
+    spc$regression$user <- user
+    spc$regression$file <- paste0("\"", regression.xreg.file, "\"")
+    spc$regression$format <- "\"datevalue\""
   }
-
+  
+  if (!is.null(x11regression.xreg)){
+    if (frequency(x11regression.xreg) != frequency(x)){
+      stop('x11regression.xreg and x must be of the same frequency.')
+    }
+    write_ts_dat(na.action(x11regression.xreg), file = x11regression.xreg.file)
+    # user names either from input (single "ts"), or from colnames ("mts)
+    if (is.null(dim(x11regression.xreg))){
+      user <- deparse(substitute(x11regression.xreg))
+    } else {
+      user <- colnames(x11regression.xreg)
+    }
+    spc$x11regression$user <- user
+    spc$x11regression$file <- paste0("\"", x11regression.xreg.file, "\"")
+    spc$x11regression$format <- "\"datevalue\""
+  }
+    
+  if (!is.null(transform.xreg)){
+    if (frequency(transform.xreg) != frequency(x)){
+      stop('transform.xreg and x must be of the same frequency.')
+    }
+    write_ts_dat(na.action(transform.xreg), file = transform.xreg.file)
+    # user names either from input (single "ts"), or from colnames ("mts)
+    if (is.null(dim(transform.xreg))){
+      name <- deparse(substitute(transform.xreg))
+    } else {
+      name <- colnames(transform.xreg)
+    }
+    spc$transform$name = name
+    spc$transform$file <- paste0("\"", transform.xreg.file, "\"")
+    spc$transform$format <- "\"datevalue\""
+  }
+  
   ### write spc
   spctxt <- deparse_spclist(spc)
   writeLines(spctxt, con = paste0(iofile, ".spc"))

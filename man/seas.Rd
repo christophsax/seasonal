@@ -12,7 +12,8 @@ seas(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "auto",
 
   \item{xreg}{(optional) object of class \code{"ts"}": one
   or several user defined exogenous variables for regARIMA
-  modelling.}
+  modelling, can be used both with \code{regression} or
+  \code{x11regression}.}
 
   \item{seats.noadmiss}{spec 'seats' with argument
   \code{noadmiss = "yes"} (default). Seasonal adjustment by
