@@ -1,15 +1,29 @@
-#' Plot the Adjusted and Unadjusted Series
+#' Plot Functions for Seasonal Adjustment Models
 #' 
-#' \code{plot} method for class \code{"seas"}. Plot the adjusted and unadjusted
-#' series, as well as the outliers. Optionally draw the trend series.
+#' Functions to graphically analyze a seasonal adjustment model.
+#' 
+#' \code{plot} calls the plot method for class \code{"seas"}. It plots the adjusted and unadjusted
+#' series, as well as the outliers. Optionally draws the trend series.
+#' 
+#' \code{monthplot} calls the monthplot method for class \code{"seas"}. It plot the seasonal and SI component periodwise. Like the default method `monthplot` can be used for all frequencies.
+
+#' \code{residplot} plots the residuals and the outliers.
+#' 
+#' \code{plot.slidingspans} calls the plot method for models of class \code{"slidingspans"}. It draws the seasonal component for the analyzed spans.
+#' 
+#' \code{plot.revisions} calls the plot method for models of class \code{"revisons"}. It draws concurrent and the latest estimation of the seasonal component.
+#' 
+#' \code{hist.revisions} calls the hist method for models of class \code{"seas"}. Plots a histogram of the residuals and compares it to a normal distribution.
+#' 
 #' 
 #' @param x  an object of class \code{"seas"}, usually, a result of a 
 #'   call to \code{\link{seas}}.
 #' @param outliers   logical, should the oultiers be drawn
 #' @param trend   logical, should the trend be drawn
-#' @param \dots   further arguments passed to \code{ts.plot}.
+#' @param choice   character string, \code{"seasonal"} (default) or \code{"irregular"}.
+#' @param \dots   further arguments passed to other methods.
 #'   
-#' @return returns a plot as its side effect.
+#' @return All plot functions returns a plot as their side effect.
 #'   
 #' @seealso \code{\link{seas}} for the main function.
 #'   
@@ -18,10 +32,27 @@
 #'   
 #' @examples
 #' \dontrun{
-#' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
+#' x <- seas(AirPassengers)
+#' 
 #' plot(x)  
 #' plot(x, outliers = FALSE)  
 #' plot(x, trend = TRUE) 
+#' 
+#' residplot(x)
+#' residplot(x, outliers = FALSE)  
+#' 
+#' monthplot(x)
+#' 
+#' plot(slidingspans(x))
+#' 
+#' plot(revisions(x))
+#' 
+#' hist(x)
+#' 
+#' # Using R base functions for analyzing "seas" models.
+#' pacf(resid(x))
+#' spectrum(diff(resid(x)))
+#' 
 #' }
 plot.seas <- function(x, outliers = TRUE, trend = FALSE, main = "unadjusted and seasonally adjusted series", 
                       ylab = "value",...){
@@ -46,28 +77,7 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE, main = "unadjusted and 
   }
 }
 
-#' Plot the Residuals of an X13 regARIMA model
-#' 
-#' Plot the residuals of an X13 regARIMA model, as well as the outliers.
-#' Optionally draw the trend series.
-#' 
-#' @param x  an object of class \code{"seas"}, usually, a result of a call to 
-#'   \code{\link{seas}}.
-#' @param outliers   logical, should the oultiers be drawn.
-#' @param \dots   further arguments passed to \code{ts.plot}.
-#'   
-#' @return returns a plot as its side effect.
-#'   
-#' @seealso \code{\link{seas}} for the main function.
-#'   
-#' @export
-#'   
-#' @examples
-#' \dontrun{
-#' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
-#' residplot(x)  
-#' residplot(x, outliers = FALSE)  
-#' }
+#' @rdname plot.seas
 #' @export
 residplot <- function(x, outliers = TRUE, ...){
   ts.plot(resid(x), ylab = "value",
@@ -84,28 +94,7 @@ residplot <- function(x, outliers = TRUE, ...){
 }
 
 
-#' Plot Seasonal or Irregular Factors
-#' 
-#' \code{monthplot} method for class \code{"seas"}. Plot seasonal or irregular factors. 
-#' 
-#' @param x  an object of class \code{"seas"}, usually, a result of a call to 
-#'   \code{\link{seas}}.
-#' @param choice  character string, either \code{"seasonal"} or \code{"irregular"}.
-#' @param \dots   further arguments passed to \code{monthplot.default}.
-#'   
-#' @return returns a plot as its side effect.
-#'   
-#' @seealso \code{\link{seas}} for the main function.
-#'   
-#' @export
-#' @method monthplot seas
-#'   
-#' @examples
-#' \dontrun{
-#' x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
-#' monthplot(x)  
-#' monthplot(x, choice = "irregular")  
-#' }
+#' @rdname plot.seas
 #' @export
 #' @method monthplot seas
 monthplot.seas <- function(x, choice = "seasonal", ...){
@@ -121,10 +110,9 @@ monthplot.seas <- function(x, choice = "seasonal", ...){
   }
 }
 
-#' @rdname spc
-#' @export
+
+
 siratio <- function(x){
-  # TODO: make sure you get the right information wether mult or add
   if (x$transform.function == "log"){
     z <- x$data[, 'irregular'] * x$data[, 'seasonal']
   } else {
@@ -134,7 +122,8 @@ siratio <- function(x){
 }
 
 
-
+#' @rdname plot.seas
+#' @method hist seas
 #' @export
 hist.seas <- function(x, ...){
   residuals <- resid(x)

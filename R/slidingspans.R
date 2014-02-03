@@ -17,18 +17,21 @@ slidingspans <- function(x, view = FALSE, ...){
   z
 }
 
-#' @export
+#' @rdname plot.seas
 #' @method plot slidingspans
+#' @export
 plot.slidingspans <- function(x, main = "sliding spans", ylab = "Seasonal Component", xlab = "", ...){
-  
   ser <- x$sfspans
   nser <- dim(ser)[2]
   col = rev(rainbow(nser-1))
   ts.plot(ser[, -nser], col = col, lty = 1, lwd = 2, main = main, ylab = ylab, xlab = "", ...)
   legend("topleft", colnames(ser)[-nser], lwd = 2, lty = 1, col = col, bty = "n", horiz = TRUE)
-  
-  
+#   mae <- formatC(mean(ser[, nser], na.rm = TRUE), 
+#           digits = max(3, getOption("digits") - 3))
+#   legend("bottomleft", paste("MAE:", mae), bty = "n", horiz = TRUE)
 }
+
+
 
 #' @export
 #' @method print slidingspans

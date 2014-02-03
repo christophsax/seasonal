@@ -23,8 +23,9 @@ revisions <- function(x, view = FALSE, ...){
   z
 }
 
-#' @export
+#' @rdname plot.seas
 #' @method plot revisions
+#' @export
 plot.revisions <- function(x){
   ts.plot(x$sae, col = c("black", "red"), main = "revisions")
   legend("topleft", colnames(x$sae), lty = 1, col = c("black", "red"), bty = "n", horiz = TRUE)

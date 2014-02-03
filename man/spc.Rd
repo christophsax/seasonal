@@ -2,7 +2,6 @@
 \alias{final}
 \alias{irregular}
 \alias{original}
-\alias{siratio}
 \alias{spc}
 \alias{trend}
 \title{Extractor Functions for seas Elements and Series}
@@ -16,8 +15,6 @@ original(x)
 trend(x)
 
 irregular(x)
-
-siratio(x)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}.}
