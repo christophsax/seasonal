@@ -95,7 +95,7 @@ translates to R in the following way:
     
 `seas` takes care of the `series` spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (like above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples]. Support of the `slidingspan` and `history` spec is currently unimplemented but planned for the near future.
 
-There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, X-13ARIMA-SEATS would return an error. In contrast, `seas` follows a set of priority rules, where the lower priority is overwritten by the higher priority. Usually, the default has the lowest priority and is overwritten if one or several of the following `spec` inputs are provided:
+There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included `seas` follows a set of priority rules, where the lower priority is overwritten by the higher priority:
 
 - Model selection
     1. `arima`
@@ -105,11 +105,6 @@ There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one 
 - Adjustment procedure
     1. `x11`
     2. `seats` (default)
-  
-- Regression procedure
-    1. `x11regression`
-    2. `regression` (default)
-  
 
 ### Graphs
 
@@ -164,7 +159,7 @@ The `slidingspans` and `revisions` function call the `slidingspans` and `history
 
 ### License
 
-*seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is completely independent of X-13ARIMA-SEATS, which is in the Public Domain.
+*seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is not connected to the development of X-13ARIMA-SEATS, which is in the Public Domain.
 
 This is a new package, and it may still contain bugs. Please report them on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 

@@ -166,7 +166,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   datafile <- file.path(wdir, "data.dta")  # series to adjust
   # user defined variables
   xreg.file <- file.path(wdir, "xreg.dta")  
-#   xreg.x11.file <- file.path(wdir, "xreg.x11.dta") 
   xtrans.file <- file.path(wdir, "xtrans.dta")       
   
   ### write data
