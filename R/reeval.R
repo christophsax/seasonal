@@ -55,9 +55,15 @@
 #' 
 #' }
 #' 
-out <- function(x, view = TRUE, line = 1, n = 500, search = NULL, ...){
+out <- function(x, line = 1, n = 100, search = NULL, ...){
   ldots <- list(...)
   z <- reeval(x, ldots)$out
+  
+  # print attributes
+  attr(z, "line") <- line
+  attr(z, "n") <- n
+  attr(z, "search") <- search
+  
   z
 }
 
@@ -77,11 +83,23 @@ reeval <- function(x, ldots){
 
 #' @export
 #' @method print out
-print.out <- function(x, line = 1, n = 500, search = NULL){ 
+print.out <- function(x, line = 1, n = 500, search = NULL){
+  
+  # use print parameters if present
+  if (!is.null(attr(x, "line"))){
+    line <- attr(x, "line")
+  }
+  if (!is.null(attr(x, "n"))){
+    n <- attr(x, "n")
+  }
+  if (!is.null(attr(x, "search"))){
+    search <- attr(x, "search")
+  }
+  
   if (length(x) < n){
     n <- length(x)
   }
-  
+
   if (!is.null(search)){
     search.res <- which(grepl(search, x))
     if (length(search.res > 0)){

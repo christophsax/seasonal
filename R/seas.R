@@ -134,18 +134,12 @@
 #' inspect(AirPassengers)
 #' }
 #' 
-seas <- function(x, regression.xreg = NULL, x11regression.xreg = NULL, transform.xreg = NULL, 
+seas <- function(x, xreg = NULL, xtrans = NULL, 
                  seats.noadmiss = "yes", transform.function = "auto", 
                  regression.aictest = c("td", "easter"), outlier = list(), 
-                 automdl = list(), 
-                 na.action = na.omit,
-                 out = FALSE, dir = NULL, xreg = NULL, ...){
-  
-  if (!is.null(xreg)){
-    warning("'xreg' is depreciated soon. Use 'regression.xreg' instead")
-    regression.xreg <- xreg
-  }
-  
+                 automdl = list(), na.action = na.omit,
+                 out = FALSE, dir = NULL, ...){
+
   # intial checks
   checkX13(fail = TRUE, confirmation = FALSE)
   if (!inherits(x, "ts")){
@@ -171,9 +165,9 @@ seas <- function(x, regression.xreg = NULL, x11regression.xreg = NULL, transform
   iofile <- file.path(wdir, "iofile")      # inputs and outputs (w/o suffix)
   datafile <- file.path(wdir, "data.dta")  # series to adjust
   # user defined variables
-  xreg.file <- file.path(wdir, "regression.xreg.dta")  
-  x11regression.xreg.file <- file.path(wdir, "x11regression.xreg.dta") 
-  transform.xreg.file <- file.path(wdir, "transform.xreg.dta")       
+  xreg.file <- file.path(wdir, "xreg.dta")  
+#   xreg.x11.file <- file.path(wdir, "xreg.x11.dta") 
+  xtrans.file <- file.path(wdir, "xtrans.dta")       
   
   ### write data
   write_ts_dat(x.na, file = datafile)
@@ -202,51 +196,42 @@ seas <- function(x, regression.xreg = NULL, x11regression.xreg = NULL, transform
   spc <- consist_spclist(spc)
 
   ### user defined regressors
-  if (!is.null(regression.xreg)){
+  if (!is.null(xreg)){
     if (frequency(xreg) != frequency(x)){
-      stop('regression.xreg and x must be of the same frequency.')
+      stop('xreg and x must be of the same frequency.')
     }
-    write_ts_dat(na.action(regression.xreg), file = regression.xreg.file)
+    write_ts_dat(na.action(xreg), file = xreg.file)
     # user names either from input (single "ts"), or from colnames ("mts)
-    if (is.null(dim(regression.xreg))){
-      user <- deparse(substitute(regression.xreg))
+    if (is.null(dim(xreg))){
+      user <- deparse(substitute(xreg))
     } else {
-      user <- colnames(regression.xreg)
+      user <- colnames(xreg)
     }
-    spc$regression$user <- user
-    spc$regression$file <- paste0("\"", regression.xreg.file, "\"")
-    spc$regression$format <- "\"datevalue\""
-  }
-  
-  if (!is.null(x11regression.xreg)){
-    if (frequency(x11regression.xreg) != frequency(x)){
-      stop('x11regression.xreg and x must be of the same frequency.')
+
+    if (!is.null(spc$regression)){
+      spc$regression$user <- user
+      spc$regression$file <- paste0("\"", xreg.file, "\"")
+      spc$regression$format <- "\"datevalue\""
+    } else if (!is.null(spc$x11regression)){
+      spc$x11regression$user <- user
+      spc$x11regression$file <- paste0("\"", xreg.file, "\"")
+      spc$x11regression$format <- "\"datevalue\""
     }
-    write_ts_dat(na.action(x11regression.xreg), file = x11regression.xreg.file)
-    # user names either from input (single "ts"), or from colnames ("mts)
-    if (is.null(dim(x11regression.xreg))){
-      user <- deparse(substitute(x11regression.xreg))
-    } else {
-      user <- colnames(x11regression.xreg)
-    }
-    spc$x11regression$user <- user
-    spc$x11regression$file <- paste0("\"", x11regression.xreg.file, "\"")
-    spc$x11regression$format <- "\"datevalue\""
   }
     
-  if (!is.null(transform.xreg)){
-    if (frequency(transform.xreg) != frequency(x)){
-      stop('transform.xreg and x must be of the same frequency.')
+  if (!is.null(xtrans)){
+    if (frequency(xtrans) != frequency(x)){
+      stop('xtrans and x must be of the same frequency.')
     }
-    write_ts_dat(na.action(transform.xreg), file = transform.xreg.file)
+    write_ts_dat(na.action(xtrans), file = xtrans.file)
     # user names either from input (single "ts"), or from colnames ("mts)
-    if (is.null(dim(transform.xreg))){
-      name <- deparse(substitute(transform.xreg))
+    if (is.null(dim(xtrans))){
+      name <- deparse(substitute(xtrans))
     } else {
-      name <- colnames(transform.xreg)
+      name <- colnames(xtrans)
     }
     spc$transform$name = name
-    spc$transform$file <- paste0("\"", transform.xreg.file, "\"")
+    spc$transform$file <- paste0("\"", xtrans.file, "\"")
     spc$transform$format <- "\"datevalue\""
   }
   
@@ -293,8 +278,12 @@ seas <- function(x, regression.xreg = NULL, x11regression.xreg = NULL, transform
   } else if (!is.null(spc$x11)){
     z$data <- read_data(method = "x11", file = iofile)
   } 
+
+  if (is.null(z$data)){
+    stop("no series have been generated.")
+  }
   
-  # check whether freq detection in read_seris has worked.
+  # check whether freq detection in read_series has worked.
   stopifnot(frequency(z$data) == frequency(x))
   
   # read additional output files
@@ -377,7 +366,7 @@ mod_spclist <- function(x, ...){
       }
       x[[spc.name]][[spc.arg]] <- content.i
     } else {
-      stop("Arguments should contain a Spc and an optional Argument after the dot.")
+      stop("X-13ARIMA-SEATA options should contain a spec and an optional argument after the dot.")
     }
   }
   x
@@ -415,11 +404,11 @@ consist_spclist <-function(x){
     x$seats <- NULL
   }
   
-  # priority: 1. x11regression, 2. regression (default)
-  if (!is.null(x$x11regression) & !is.null(x$regression)){
-    x$regression <- NULL
-  }
-  
+#   # priority: 1. x11regression, 2. regression (default)
+#   if (!is.null(x$x11regression) & !is.null(x$regression)){
+#     x$regression <- NULL
+#   }
+#   
   
   ### ensure correct output
   
