@@ -2,9 +2,11 @@
 \alias{seas}
 \title{Seasonal Adjustment with X-13ARIMA-SEATS}
 \usage{
-seas(x, xreg = NULL, seats.noadmiss = "yes", transform.function = "auto",
-  regression.aictest = c("td", "easter"), outlier = list(),
-  automdl = list(), na.action = na.omit, out = FALSE, dir = NULL, ...)
+seas(x, regression.xreg = NULL, x11regression.xreg = NULL,
+  transform.xreg = NULL, seats.noadmiss = "yes",
+  transform.function = "auto", regression.aictest = c("td", "easter"),
+  outlier = list(), automdl = list(), na.action = na.omit, out = FALSE,
+  dir = NULL, xreg = NULL, ...)
 }
 \arguments{
   \item{x}{object of class \code{"ts"}": time series to
@@ -95,8 +97,8 @@ arguments, while each spec may contain some arguments. An
 additional spec-argument can be added to the \code{seas}
 function by separating spec and argument by a dot
 (\code{.}). For a more extensive description of the
-X-13ARIMA-SEATS in \code{seas}, consider the website on
-github (\url{https://github.com/christophsax/seasonal})
+X-13ARIMA-SEATS in \code{seas}, consider the wiki
+(\url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R})
 }
 \examples{
 \dontrun{
