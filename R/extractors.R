@@ -1,125 +1,94 @@
-#' Extractor Functions for seas Elements and Series
+#' Time Series from a Seasonal Adjustment Model
 #' 
-#' These functions extract elements or series from a \code{"seas"} object. The 
-#' extractor functions for time series also deal with the treatment of NA 
-#' values.
+#' These functions extract time series from a \code{"seas"} object.
 #' 
-#' @param x  an object of class \code{"seas"}.
+#' @param object  an object of class \code{"seas"}.
 #'   
-#' @return return an element or a series, depending on the function
-#'   
-#' @seealso \code{\link{seas}} for the main function.
-#' @seealso \code{\link{regressioneffects}}, for how to extract the regression effects
-#'   of the regARIMA model.
-#' @seealso \code{\link{fivebestmdl}}, for how to extract the five best ARIMA models.
-#'   
-#' @export
+#' @return returns a \code{"ts"} object, depending on the function.
 #' 
-#' @examples
-#' \dontrun{
-#' x <- seas(AirPassengers)
-#' 
-#' final(x)
-#' original(x)
-#' irregular(x)
-#' trend(x)
-#' 
-#' # QS seasonality statistics
-#' qs(x)
-#' 
-#' spc(x)  # X13-ARIMA-SEATS .spc file
-#' mdl(x)  # X13-ARIMA-SEATS .mdl file
-#' }
-#' 
-spc <- function(x){
-  x$spc
-}
-
-#' @rdname spc
-#' @export
-final <- function(x){
-  extract_w_na_action(x, 'final')
-}
-
-#' @rdname spc
-#' @export
-original <- function(x){
-  x$x
-}
-
-#' @rdname spc
-#' @export
-trend <- function(x){
-  extract_w_na_action(x, 'trend')
-}
-
-#' @rdname spc
-#' @export
-irregular <- function(x){
-  extract_w_na_action(x, 'irregular')
-}
-
-#' Show regressioneffects
-#' 
-#' matrix of regression variables multiplied by the vector of estimated 
+#' @return \code{regressioneffects} returns a \code{"mts"} object, containing the regression variables multiplied by the vector of estimated 
 #' regression coefficients
+#'   
+#' @seealso \code{\link{seas}} for the main function of seasonal.
 #' 
-#' @param x  object of class "seas"
-#' 
+#' @references Vignette with a more detailed description: 
+#'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+#'   
+#'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
+#'   manual: 
+#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
+#'   Official X-13ARIMA-SEATS manual: 
+#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   
 #' @export
+#' 
 #' @examples
 #' \dontrun{
-#' # trading day and easter adjustment w/o seasonal adjustment:
-#' x <- seas(AirPassengers)
 #' 
-#' summary(x)
-#' re <- regressioneffects(x)
+#' m <- seas(AirPassengers)
+#' 
+#' final(m)
+#' original(m)
+#' irregular(m)
+#' trend(m)
+#' regressioneffects(m)
+#' 
+#' # trading day and easter adjustment w/o seasonal adjustment
+#' summary(m)
+#' re <- regressioneffects(m)
 #' ce <- re[, 'Trading.Day'] + re[, 'Holiday'] 
-#'  # be aware of log transformation
+#' # be aware of the log transformation
 #' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
+#' 
+#' # NA handling
+#' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
+#' final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
+#' final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
+#' final(seas(AirPassengersNA, na.action = na.fail))    # fails
 #' }
-regressioneffects <- function(x){
-  x$regressioneffects
+#' @export
+final <- function(object){
+  extract_w_na_action(object, 'final')
+}
+
+#' @rdname final
+#' @export
+original <- function(object){
+  object$x
+}
+
+#' @rdname final
+#' @export
+trend <- function(object){
+  extract_w_na_action(object, 'trend')
+}
+
+#' @rdname final
+#' @export
+irregular <- function(object){
+  extract_w_na_action(object, 'irregular')
 }
 
 
+#' @export
+#' @rdname final
+regressioneffects <- function(object){
+  object$regressioneffects
+}
 
 
-#' Extract the five best ARIMA models
-#' 
-#' if the \code{automdl} spec is activated (as in the default), the function
-#' \code{fivebestmdl} returns the five best models as chosen by the BIC
-#' criterion.
-#' 
-#' @param x  object of class "seas"
-#'   
+#' @method residuals seas
+#' @rdname final
 #' @export
-#' @examples
-#' \dontrun{
-#' x <- seas(AirPassengers)
-#' fivebestmdl(x)
-#' }
-#' @export
-fivebestmdl <- function(x){
-  if (!is.null(x$fivebestmdl)){
-    txt <- x$fivebestmdl[3:7]
-    arima <- substr(txt, start = 19, stop = 32)
-    bic <- as.numeric(substr(txt, start = 51, stop = 56))
-    z <- data.frame(arima, bic, stringsAsFactors = FALSE)
-  } else if (is.null(x$reeval)) {
-    # if no fivebestmdl, try reevaluating with automdl
-    lc <- as.list(x$call)
-    lc$automdl <- list()
-    lc$arima.model <- NULL
-    rx <- eval(as.call(lc), envir = globalenv())
-    rx$reeval <- TRUE  # avoid infinite looping
-    z <- fivebestmdl(rx)
+residuals.seas <- function(object, ...){
+  if ('residuals' %in% colnames(object$data)){
+    z <- na.omit(object$data[,'residuals'])
   } else {
     z <- NULL
   }
   z
 }
-
 
 
 extract_w_na_action <- function(x, name){
@@ -143,37 +112,7 @@ extract_w_na_action <- function(x, name){
 
 
 
-#' QS Statistic For Seasonality
-#' 
-#' Null Hypothetis: No Seasonality
-#' 
-#' @param x  object of class \code{"seas"}
-#' @export
-qs <- function(x){
-  x$qs
-}
 
 
-#' Structure of the ARIMA Model
-#' 
-#' Numerical vector of the form (p d q)(P D Q), containing the non-seasonal and 
-#' seasonal part of the ARIMA model.
-#' 
-#' @param x  object of class \code{"seas"}
-#' @return numerical vector of length 6
-#' @export
-arimamodel <- function(x){
-  stopifnot(inherits(x, "seas"))
-  str <- x$model$arima$model
-  str <- gsub("[ \\(\\)]", "", str)
-  z <- c(substr(str, 1, 1),
-         substr(str, 2, 2),
-         substr(str, 3, 3),
-         substr(str, 4, 4),
-         substr(str, 5, 5),
-         substr(str, 6, 6)
-  )
-  as.numeric(z)
-}
 
 

@@ -1,11 +1,10 @@
 \name{plot.seas}
-\alias{hist.seas}
 \alias{monthplot.seas}
 \alias{plot.revisions}
 \alias{plot.seas}
 \alias{plot.slidingspans}
 \alias{residplot}
-\title{Plot Functions for Seasonal Adjustment Models}
+\title{Seasonal Adjustment Plots}
 \usage{
 \method{plot}{seas}(x, outliers = TRUE, trend = FALSE,
   main = "unadjusted and seasonally adjusted series", ylab = "value", ...)
@@ -14,12 +13,9 @@ residplot(x, outliers = TRUE, ...)
 
 \method{monthplot}{seas}(x, choice = "seasonal", ...)
 
-\method{hist}{seas}(x, ...)
+\method{plot}{revisions}(x, main = "revisions of seasonal component", ...)
 
-\method{plot}{revisions}(x)
-
-\method{plot}{slidingspans}(x, main = "sliding spans",
-  ylab = "Seasonal Component", xlab = "", ...)
+\method{plot}{slidingspans}(x, main = "sliding spans", ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -32,14 +28,17 @@ residplot(x, outliers = TRUE, ...)
   \item{choice}{character string, \code{"seasonal"}
   (default) or \code{"irregular"}.}
 
-  \item{\dots}{further arguments passed to other methods.}
+  \item{\dots}{further arguments passed to the plotting
+  functions.}
 }
 \value{
 All plot functions returns a plot as their side effect.
 }
 \description{
-Functions to graphically analyze a seasonal adjustment
-model.
+Functions to graphically analyze a \code{"seas"} object.
+More graphs can be plotted with standard R functions (see
+examples). For diagnostical statistics, see
+\code{\link{qs}}.
 }
 \details{
 \code{plot} calls the plot method for class \code{"seas"}.
@@ -50,7 +49,7 @@ outliers. Optionally draws the trend series.
 \code{"seas"}. It plot the seasonal and SI component
 periodwise. Like the default method `monthplot` can be used
 for all frequencies. \code{residplot} plots the residuals
-and the outliers.
+and the outliers. It plots
 
 \code{plot.slidingspans} calls the plot method for models
 of class \code{"slidingspans"}. It draws the seasonal
@@ -59,37 +58,45 @@ component for the analyzed spans.
 \code{plot.revisions} calls the plot method for models of
 class \code{"revisons"}. It draws concurrent and the latest
 estimation of the seasonal component.
-
-\code{hist.revisions} calls the hist method for models of
-class \code{"seas"}. Plots a histogram of the residuals and
-compares it to a normal distribution.
 }
 \examples{
 \dontrun{
-x <- seas(AirPassengers)
 
-plot(x)
-plot(x, outliers = FALSE)
-plot(x, trend = TRUE)
+m <- seas(AirPassengers)
 
-residplot(x)
-residplot(x, outliers = FALSE)
+plot(m)
+plot(m, outliers = FALSE)
+plot(m, trend = TRUE)
 
-monthplot(x)
+residplot(m)
+residplot(m, outliers = FALSE)
 
-plot(slidingspans(x))
+monthplot(m)
 
-plot(revisions(x))
+plot(slidingspans(m))
+plot(revisions(m))
 
-hist(x)
-
-# Using R base functions for analyzing "seas" models.
-pacf(resid(x))
-spectrum(diff(resid(x)))
-
+# use R functions to analyze "seas" models
+pacf(resid(m))
+spectrum(diff(resid(m)))
+plot(density(resid(m)))
+qqnorm(resid(m))
 }
+}
+\references{
+Vignette with a more detailed description:
+\url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+
+Wiki page with a comprehensive list of R examples from the
+X-13ARIMA-SEATS manual:
+\url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+
+Official X-13ARIMA-SEATS manual:
+\url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 }
 \seealso{
 \code{\link{seas}} for the main function.
+
+\code{\link{qs}}, for diagnostical statistics.
 }
 

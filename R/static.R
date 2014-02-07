@@ -1,27 +1,46 @@
 #' Static Call of a seas Object
 #' 
-#' A static call is a static replication of a call. Automatic procedures are
-#' subistuted by the automatically selected spec/argument options.
+#' A static call is a static replication of a call. Automatic procedures are 
+#' subistuted by the automatically selected spec-argument options.
+#' 
+#' By default, the static call is tested. It is executed and compared to the
+#' input call. If the final series is not identical, an error is returned.
+#' 
+#' If \code{coef = TRUE}, the coefficients are fixed as well. 
 #' 
 #' @param x an object of class \code{seas}
-#' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed,
+#' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed, 
 #'   instead of beeing estimated.
 #' @param name character string, optionally specify the name of the input time 
 #'   series
-#' @param test logical. By default the static call is executed and compared to
+#' @param test logical. By default the static call is executed and compared to 
 #'   the input call. If the final series is not identical, an error is returned.
-#'   If \code{FALSE}, the option is disabled (useful for debugging)
+#'   If \code{FALSE}, the option is disabled.
 #'   
 #' @return Static call of an object of class \code{seas}. Can be copy/pasted 
 #'   into an R script.
+#'   
+#' @seealso \code{\link{seas}} for the main function of seasonal.
+#' 
+#' @references Vignette with a more detailed description: 
+#'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+#'   
+#'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
+#'   manual: 
+#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
+#'   Official X-13ARIMA-SEATS manual: 
+#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   
 #' @export
 #' @examples
 #' \dontrun{
-#' x <- seas(AirPassengers)
-#' static(x)
-#' static(x, name = "ArbitrayName", test = FALSE)
+#' 
+#' m <- seas(AirPassengers)
+#' static(m)
+#' static(m, test = FALSE)
 #' }
-static <- function(x, coef = FALSE, name = NULL, test = TRUE){
+static <- function(x, coef = FALSE, test = TRUE){
   
   stopifnot(inherits(x, "seas"))
   
@@ -59,10 +78,6 @@ static <- function(x, coef = FALSE, name = NULL, test = TRUE){
   )
   
   lc <- lc[names(lc) %in% keep]
-  
-  if (!is.null(name)){
-    lc$x = parse(text = name)[[1]]
-  }
   
   lc$regression.variables <- x$model$regression$variables
   lc$arima.model <- x$model$arima$model

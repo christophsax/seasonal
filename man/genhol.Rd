@@ -5,11 +5,17 @@
 genhol(x, start = 0, end = 0, frequency = 12, center = "none")
 }
 \arguments{
-  \item{start}{integer, shift start of the holiday. Use
-  negative values if start is before the specified date.}
+  \item{x}{a vector of class \code{"\link{Date}"},
+  containing the occurences of the holiday. It can be
+  generated with \code{\link{as.Date}}.}
 
-  \item{end}{integer, shift end of the holiday. Use
-  negative values if start is before the specified date.}
+  \item{start}{integer, shifts the start point of the
+  holiday. Use negative values if \code{start} is before
+  the specified date.}
+
+  \item{end}{integer, shifts end point of the holiday. Use
+  negative values if \code{end} is before the specified
+  date.}
 
   \item{frequency}{integer, frequency of the resulting
   series}
@@ -18,16 +24,18 @@ genhol(x, start = 0, end = 0, frequency = 12, center = "none")
   \code{"mean"} or \code{"none"} (default). Centering
   avoids a bias in the resultign series.  Use
   \code{"calendar"} for Easter or Chinese New Year,
-  \code{"mean"} for Ramadan. See references.}
+  \code{"mean"} for Ramadan. See references: Notes on
+  centering holiday.}
 }
 \value{
 an object of class \code{"ts"} that can be used as a user
 defined variable in \code{\link{seas}}.
 }
 \description{
-This is a replacement for genhol, a utility that uses the
-same procedure as X-12-ARIMA to create regressors for the
-U. S. holidays of Easter, Labor Day, and Thanksgiving.
+A replacement for the genhol software by the U.S. Census
+Bureau, a utility that uses the same procedure as
+X-12-ARIMA to create regressors for the U. S. holidays of
+Easter, Labor Day, and Thanksgiving.
 }
 \details{
 The resulting time series can be used as a user defined
@@ -38,8 +46,9 @@ need to specify \code{regression.usertype = "holiday"}.
 final series.)
 }
 \examples{
-data(holiday)
+\dontrun{
 
+data(holiday)
 
 ### using genhol
 
@@ -50,7 +59,6 @@ genhol(easter, frequency = 2)  # easter is allways in the first half-year
 # centering for overall mean or monthly calendar means
 genhol(easter, center = "mean")
 genhol(easter, center = "calendar")
-
 
 ### replicating X13's integrated easter adjustment
 
@@ -76,13 +84,13 @@ summary(m2)
 all.equal(final(m2), final(m1), tolerance = 1e-06)
 
 
-# with genhol, its possible to do sligtly better, by adjusting to the length
+# with genhol, its possible to do sligtly better, by adjusting the length
 # of easter
 
 ea2 <- genhol(easter, start = -2, end = +1, center = "calendar")
 m3 <- seas(x = AirPassengers,
            regression.variables = c("td1coef", "ao1951.May"),
-           xreg = ea2,
+           xreg = ea2, regression.usertype = "holiday",
            arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
            outlier = NULL, transform.function = "log")
 summary(m3)
@@ -102,7 +110,7 @@ m1 <- seas(exports, xreg = cny1, regression.usertype = "holiday",
 )
 summary(m1)
 
-# AICC minimzation (same idea as auto Easter adjustment in X-13ARIMA-SEATS)
+# AICC minimzation (same idea as for Easter adjustment in X-13ARIMA-SEATS)
 cny2 <- genhol(cny, start = 0, end = 15, center = "calendar")
 m2 <- seas(exports, xreg = cny2, regression.usertype = "holiday",
            regression.aictest = NULL,
@@ -118,13 +126,15 @@ m3 <- seas(exports,
 
 # effects are visible, but it's not a whole new story
 ts.plot(diff(log((cbind(final(m2), final(m3))))), col = c("red", "black"))
+
+}
 }
 \references{
 United States Census Bureau, Notes on centering holiday
 regressors:
 \url{http://www.census.gov/srd/www/genhol/genhol_center.html}
-
-X-13ARIMA-SEATS manual:
-\url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+}
+\seealso{
+\code{\link{seas}} for the main function of seasonal.
 }
 

@@ -39,7 +39,7 @@ There are other ways to set an environmental variable permanently in R, see `?St
 
 `seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `"seas"` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
-    x <- seas(AirPassengers)
+    m <- seas(AirPassengers)
     final(x)
     plot(x)
      
@@ -74,7 +74,7 @@ If you are using RStudio, the `inspect` command offers a way to analyze and modi
 
 The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec optionally containing some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variables` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
-    x <- seas(AirPassengers, regression.variables = c("td", "ao1965.jan"))
+    m <- seas(AirPassengers, regression.variables = c("td", "ao1965.jan"))
    
 Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty `list()`. Several defaults of `seas` are empty lists, such as the default `seats = list()`. See the help page (`?seas`) for more details on the defaults.
 
@@ -110,35 +110,31 @@ There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one 
 
 All plots from Win X-13, a graphical Windows version of X-13ARIMA-SEATS, are reproducible in R. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally, it also draws the trend of the seasonal decomposition:
 
-    x <- seas(AirPassengers, regression.aictest = c("td", "easter"))
-    plot(x)
-    plot(x, outliers = FALSE)
-    plot(x, trend = TRUE)
+    m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
+    plot(m)
+    plot(m, outliers = FALSE)
+    plot(m, trend = TRUE)
 
 The `monthplot` function allows for a monthwise plot (or quarterwise, with the identical function name) of the data. There is a method for `"seas"` objects:
 
-    monthplot(x)
-    monthplot(x, choice = "irregular")
+    monthplot(m)
+    monthplot(m, choice = "irregular")
 
 With `spectrum`, the spectral density of any series can be estimated and plotted:
 
-    spectrum(diff(final(x)))
-    spectrum(diff(original(x)))
+    spectrum(diff(final(m)))
+    spectrum(diff(original(m)))
 
 
 ### Inspect tool
 
-The `inspect` function is a powerful tool for choosing a good seasonal adjustment model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. `inspect` uses a `"ts"` object as its first argument:
+The `inspect` function is a powerful tool for choosing a good seasonal adjustment model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. The goal of `inspect` is to summarize all relevant options, plots and statistics that should be usually considered. `inspect` uses a `"seas"` object as its only argument:
 
-    inspect(AirPassengers)
-    
-Optionally, you can pass arbitrary spec-arguments to inspect. Here, the maximum of iterations during estimation is increased from 500 to 1000:
+    inspect(m)
 
-    inspect(AirPassengers, estimate.maxiter = 1000) 
-    
 The `inspect` function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statics are shown in the R console. 
 
-With the 'Show static call' option, a replicable static call is also shown in the console. Note that this option will double the time for recalculation, as the static function also tests the static call each time (this is a beta feature of seasonal, which allows intensive testing; it may be disabled in future versions).
+With the 'Show static call' option, a replicable static call is also shown in the console. Note that this option will double the time for recalculation, as the static function also tests the static call each time (this is a beta feature of seasonal, which allows intensive testing; it may be disabled in future versions). 
 
 
 ###  Diagnostical Re-Evaluation
@@ -147,15 +143,15 @@ For diagnostical purposes, some functions re-evaluate an object of class `"seas"
 
 The `out` function shows the full content of the `.out` file form X-13ARIMA-SEATS in a console viewer. Exit form the viewer by pressing `q`.
 
-    out(x)
+    out(m)
 
 The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revisions`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
 
-    slidingspans(x)
-    plot(slidingspans(x))
+    slidingspans(m)
+    plot(slidingspans(m))
     
-    revisions(x)
-    plot(revisions(x))
+    revisions(m)
+    plot(revisions(m))
 
 ### License
 
