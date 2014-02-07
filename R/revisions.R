@@ -1,7 +1,7 @@
 
 #' @rdname out
 #' @export
-revisions <- function(x, view = FALSE, ...){
+revisions <- function(x, ...){
   ldots <- list(...)
   if (length(ldots) == 0){
     ldots$history = list()
@@ -26,9 +26,10 @@ revisions <- function(x, view = FALSE, ...){
 #' @rdname plot.seas
 #' @method plot revisions
 #' @export
-plot.revisions <- function(x){
-  ts.plot(x$sae, col = c("black", "red"), main = "revisions")
-  legend("topleft", colnames(x$sae), lty = 1, col = c("black", "red"), bty = "n", horiz = TRUE)
+plot.revisions <- function(x, main = "revisions of seasonal component", ...){
+  ts.plot(x$sae, col = c("black", "red"), main = main, ...)
+
+  legend("topleft", c("concurrent estimation", "final estimation"), lty = 1, col = c("black", "red"), bty = "n", horiz = TRUE)
 }
 
 #' @export

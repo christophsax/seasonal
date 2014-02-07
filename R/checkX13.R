@@ -5,8 +5,8 @@
 #' vignette: \code{vignette("seas")}
 #' 
 #' @param fail  logical, wether an error should interrupt the process. If 
-#' \code{FALSE}, only a message will be returned.
-#' @param full  logical, wether a full test should be performed. Runs {Testairline.spc} which is shiped with X-13ARIMA-SEATS to test the working of your binaries. Returns a message.   
+#' \code{FALSE}, a message is returned.
+#' @param full  logical, wether a full test should be performed. Runs \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the working of your binaries. Returns a message.   
 #' @examples
 #' \dontrun{
 #' old.path <- Sys.getenv("X13_PATH")

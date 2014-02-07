@@ -30,12 +30,6 @@ print.spclist <- function(x, ...){
 }
 
 
-#' @method residuals seas
-#' @export
-residuals.seas <- function(object, ...){
-  na.omit(object$data[,'residuals'])
-}
-
 
 
 #' @export

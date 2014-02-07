@@ -93,25 +93,25 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   
   cat("   QS seas. test (adj. series):", formatC(qsval[2], digits = digits)," ", qsstars[2], sep = "")
   
-  
-  # Box Ljung Test
-  bltest <- Box.test(x$resid, lag = 24, type = "Ljung")
-  blstars <- symnum(bltest$p.value, 
-                    corr = FALSE, na = FALSE, legend = FALSE,
-                    cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
-                    symbols = c("***", "**", "*", ".", " "))
-  cat("\nBox-Ljung (no autocorr.):", 
-      formatC(bltest$statistic, digits = digits), blstars)
-  
-
-  # Normality
-  swtest <- shapiro.test(x$resid)
-  swstars <- symnum(swtest$p.value, 
-                    corr = FALSE, na = FALSE, legend = FALSE,
-                    cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
-                    symbols = c("***", "**", "*", ".", " "))
-  cat("  Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
-  
+  if (!is.null(x$resid)){
+    # Box Ljung Test
+    bltest <- Box.test(x$resid, lag = 24, type = "Ljung")
+    blstars <- symnum(bltest$p.value, 
+                      corr = FALSE, na = FALSE, legend = FALSE,
+                      cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
+                      symbols = c("***", "**", "*", ".", " "))
+    cat("\nBox-Ljung (no autocorr.):", 
+        formatC(bltest$statistic, digits = digits), blstars)
+    
+    
+    # Normality
+    swtest <- shapiro.test(x$resid)
+    swstars <- symnum(swtest$p.value, 
+                      corr = FALSE, na = FALSE, legend = FALSE,
+                      cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
+                      symbols = c("***", "**", "*", ".", " "))
+    cat("  Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
+  }
   cat("\n")
   if (length(x$err) > 5){
     cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")

@@ -19,7 +19,10 @@
 #' \code{revisions} function, \code{...} are used to add aditional options to 
 #' the \code{slidingspans} and \code{history} spec.
 #' 
-#' @param x an object of class "seas" to re-evaluate.
+#' In the current version of X-13ARIMA-SEATS, the \code{history} spec delivers 
+#' some implausible results. It should be used carefully.
+#' 
+#' @param x an object of class \code{"seas"} to re-evaluate.
 #' @param view  logical, should the content be shown in the console.
 #' @param line  if \code{view = TRUE}, starting line of the content.
 #' @param n  if \code{view = TRUE}, number of lines to show at once.
@@ -31,27 +34,35 @@
 #'   character vector. If \code{viewer = TRUE}, the content of the character 
 #'   vector is shown as a side effect.
 #'   
+#' @seealso \code{\link{seas}} for the main function of seasonal.
+#' 
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
-#'   Wiki page with R examples from the X-13ARIMA-SEATS: 
+#'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
+#'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 #'   
-#'   X-13ARIMA-SEATS manual: \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   Official X-13ARIMA-SEATS manual: 
+#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #'   
 #' @export
 #' 
 #' @examples
 #' 
 #' \dontrun{
-#' x <- seas(AirPassengers) 
+#' m <- seas(AirPassengers) 
 #' 
 #' # exit from the viewer with [q]
-#' out(x)  
-#' out(x, search = "regARIMA model residuals")
+#' out(m)  
+#' out(m, search = "regARIMA model residuals")
 #' 
-#' slidingspans(x)
-#' revisions(x)
+#' slidingspans(m)
+#' revisions(m)
+#' 
+#' # plot method for slingspans and revisions (see ?plot.seas)
+#' plot(slidingspans(m))
+#' plot(revisions(m))
 #' 
 #' }
 #' 
