@@ -6,8 +6,7 @@
 #' 
 #' @param fail  logical, wether an error should interrupt the process. If 
 #' \code{FALSE}, only a message will be returned.
-#' @param confirmation  logical, a message is returned if everything works.
-#'   
+#' @param full  logical, wether a full test should be performed. Runs {Testairline.spc} which is shiped with X-13ARIMA-SEATS to test the working of your binaries. Returns a message.   
 #' @examples
 #' \dontrun{
 #' old.path <- Sys.getenv("X13_PATH")
@@ -19,7 +18,7 @@
 #' }
 #' 
 #' @export
-checkX13 <- function(fail = FALSE, confirmation = TRUE){
+checkX13 <- function(fail = FALSE, full = TRUE){
   no.path.message <- "No path to the binary executable of X-13ARIMA-SEATS specified.
   \nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")\n"
   env.path <- Sys.getenv("X13_PATH")
@@ -49,8 +48,30 @@ checkX13 <- function(fail = FALSE, confirmation = TRUE){
         packageStartupMessage(no.file.message)
       }
     } else {
-      if (confirmation){
-        message("Congratulations! The X13_PATH is correctly specified and the binary\nexecutable file has been found.")
+      if (full){
+        # perform a full working test
+        
+        # temporary working dir and filenames
+        wdir <- file.path(tempdir(), "x13")
+        if (!file.exists(wdir)){
+          dir.create(wdir)
+        }
+        file.remove(list.files(wdir, full.names = TRUE))
+        
+        testfile <- file.path(path.package("seasonal"), "tests", "Testairline.spc")
+        file.copy(testfile, wdir)
+        run_x13(file.path(wdir, "Testairline"))
+        if (file.exists(file.path(wdir, "Testairline.out"))){
+          message("Congratulations! 'seasonal' should work fine!
+  - the X13_PATH is correctly specified
+  - the binary executable file has been found
+  - a test run has been successful")
+        } else {
+          message("There is something wrong with your X-13ARIMA-SEATS binaries:
+  - the X13_PATH is correctly specified
+  - the binary executable file has been found
+  - however, a test run has failed")
+        }
       }
     }
   }

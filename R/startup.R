@@ -1,5 +1,5 @@
 .onLoad <- function(...){
-  checkX13(confirmation = FALSE)
+  checkX13(full = FALSE)
 }
 
 

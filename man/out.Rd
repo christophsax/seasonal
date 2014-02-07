@@ -4,7 +4,7 @@
 \alias{slidingspans}
 \title{Diagnostical Re-Evaluation}
 \usage{
-out(x, view = TRUE, line = 1, n = 500, search = NULL, ...)
+out(x, line = 1, n = 100, search = NULL, ...)
 
 revisions(x, view = FALSE, ...)
 

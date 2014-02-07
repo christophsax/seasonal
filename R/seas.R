@@ -141,7 +141,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                  out = FALSE, dir = NULL, ...){
 
   # intial checks
-  checkX13(fail = TRUE, confirmation = FALSE)
+  checkX13(fail = TRUE, full = FALSE)
   if (!inherits(x, "ts")){
     stop("'x' is not a time series.")
   }
