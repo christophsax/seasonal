@@ -46,9 +46,14 @@ write_ts_dat <- function(x, file = "data.dat"){
   # x  a "ts" object
   # 
   # WriteDatavalue(austres, file = "data.dat")
-  
+
   stopifnot(inherits(x, "ts"))
-  data <- cbind(floor(time(x)), cycle(x), x)
+  # 10e-4 avoids rounding error
+  year <- floor(time(x) + 10e-4)
+  per <- cycle(x)
+  data <- cbind(year, per, x)
+  
+  
   write.table(data, file = file, sep = " ", 
               row.names = FALSE,
               col.names = FALSE)
