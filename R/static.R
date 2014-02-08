@@ -59,7 +59,7 @@ static <- function(x, coef = FALSE, test = TRUE){
             "forecast.maxlead", "forecast.probability",
             
             "regression.chi2test", "regression.chi2testcv", 
-            "regression.variables",
+            "regression.variables", "regression.usertype",
             
             "seats.hpcycle", "seats.qmax", "seats.signifsc", "seats.statseas",
             "seats.bias", "seats.centerir", "seats.epsiv", "seats.epsphi", 

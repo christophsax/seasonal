@@ -48,9 +48,9 @@ final series.)
 \examples{
 \dontrun{
 
-data(holiday)
+data(holiday)  # Dates of Chinese New Year and Easter
 
-### using genhol
+### use of genhol
 
 # 10 day before Easter day to one day after, quarterly data:
 genhol(easter, start = -10, end = 1, frequency = 4)
@@ -60,16 +60,16 @@ genhol(easter, frequency = 2)  # easter is allways in the first half-year
 genhol(easter, center = "mean")
 genhol(easter, center = "calendar")
 
-### replicating X13's integrated easter adjustment
+### replicating X-13's built-in Easter adjustment
 
-# integrated adjustment
+# built-in
 m1 <- seas(x = AirPassengers,
 regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
 arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
 outlier = NULL, transform.function = "log")
 summary(m1)
 
-# user defined easter variable
+# user defined variable
 ea1 <- genhol(easter, start = -1, end = -1, center = "calendar")
 
 # regression.usertype = "holiday" ensures that the effect is removed from
@@ -98,35 +98,18 @@ summary(m3)
 
 ### Chinese New Year
 
-data(exports)  # Swiss exports to China
+data(cnprod)    # industrial production of China
 data(holiday)
 
-# exact specification
-# (de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year)
-cny1 <- genhol(cny, start = 0, end = 6, center = "calendar")
-m1 <- seas(exports, xreg = cny1, regression.usertype = "holiday",
-           regression.aictest = NULL,
-           regression.variables = c("td1coef", "easter[1]")
-)
-summary(m1)
+# de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year
+cny1 <- genhol(cny, start = 0, end = 6, center = "none")
 
-# AICC minimzation (same idea as for Easter adjustment in X-13ARIMA-SEATS)
-cny2 <- genhol(cny, start = 0, end = 15, center = "calendar")
-m2 <- seas(exports, xreg = cny2, regression.usertype = "holiday",
-           regression.aictest = NULL,
-           regression.variables = c("td1coef", "easter[1]")
-)
-summary(m2)
+m1 <- seas(x = cement, xreg = cny1, regression.usertype = "holiday")
 
 # compare to no-CNY model:
-m3 <- seas(exports,
-           regression.aictest = NULL,
-           regression.variables = c("td1coef", "easter[1]")
-)
+m2 <- seas(x = cement)
 
-# effects are visible, but it's not a whole new story
-ts.plot(diff(log((cbind(final(m2), final(m3))))), col = c("red", "black"))
-
+ts.plot(final(m1), final(m2), col = c("red", "black"))
 }
 }
 \references{
