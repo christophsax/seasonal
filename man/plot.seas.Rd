@@ -7,7 +7,7 @@
 \title{Seasonal Adjustment Plots}
 \usage{
 \method{plot}{seas}(x, outliers = TRUE, trend = FALSE,
-  main = "unadjusted and seasonally adjusted series", ylab = "value", ...)
+  main = "unadjusted and seasonally adjusted series", ...)
 
 residplot(x, outliers = TRUE, ...)
 
@@ -21,12 +21,14 @@ residplot(x, outliers = TRUE, ...)
   \item{x}{an object of class \code{"seas"}, usually, a
   result of a call to \code{\link{seas}}.}
 
-  \item{outliers}{logical, should the oultiers be drawn}
+  \item{outliers}{logical, should the oultiers be drawn.}
 
-  \item{trend}{logical, should the trend be drawn}
+  \item{trend}{logical, should the trend be drawn.}
 
   \item{choice}{character string, \code{"seasonal"}
   (default) or \code{"irregular"}.}
+
+  \item{main}{character string, title of the graph.}
 
   \item{\dots}{further arguments passed to the plotting
   functions.}

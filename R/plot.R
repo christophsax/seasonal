@@ -16,9 +16,10 @@
 #'  
 #' @param x  an object of class \code{"seas"}, usually, a result of a 
 #'   call to \code{\link{seas}}.
-#' @param outliers   logical, should the oultiers be drawn
-#' @param trend      logical, should the trend be drawn
+#' @param outliers   logical, should the oultiers be drawn.
+#' @param trend      logical, should the trend be drawn.
 #' @param choice     character string, \code{"seasonal"} (default) or \code{"irregular"}.
+#' @param main    character string, title of the graph.
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
 #' @return All plot functions returns a plot as their side effect.
@@ -62,13 +63,11 @@
 #' plot(density(resid(m)))
 #' qqnorm(resid(m))
 #' }
-plot.seas <- function(x, outliers = TRUE, trend = FALSE, main = "unadjusted and seasonally adjusted series", 
-                      ylab = "value",...){
+plot.seas <- function(x, outliers = TRUE, trend = FALSE, main = "unadjusted and seasonally adjusted series",...){
 
   ts.plot(cbind(original(x), final(x)), 
           col = c("black", "red"), 
           lwd = c(1, 2),
-          ylab = "value",
           main = main, ...
   )
   
@@ -114,7 +113,7 @@ monthplot.seas <- function(x, choice = "seasonal", ...){
     if (is.null(main)){
       main <- "irregular component"
     }
-    monthplot(x$data[,'irregular'], ylab = ylab, main = main)
+    monthplot(x$data[,'irregular'], ylab = "", main = main)
   }
 }
 

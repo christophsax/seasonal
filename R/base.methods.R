@@ -41,6 +41,6 @@ coef.seas <- function(object, ...){
 
 #' @export
 #' @method nobs seas
-nobs.seas <- function(x, ...){
-  x$lkstats['nobs']
+nobs.seas <- function(object, ...){
+  object$lkstats['nobs']
 }

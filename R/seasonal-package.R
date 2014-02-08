@@ -18,3 +18,55 @@
 #' @seealso \code{\link{seas}} for more information on usage.
 NULL
 
+
+
+#' Consumer Price Index of Switzerland
+#' 
+#' Monthly consumer price index of Switzerland. Base year is 1993.
+#' 
+#' @docype data
+#' 
+#' @format Each time series is an object of class \code{"ts"}.
+#' 
+#' @source Swiss Federal Statistical Office 
+#' \url{http://www.bfs.admin.ch/bfs/portal/de/index/themen/05/02/blank/key/basis_aktuell.html} 
+#' (cc-d-05.02.12)
+#' 
+#' @name cpi
+#' @keywords datasets
+NULL
+
+
+
+#' Dates of Easter and Chinese New Year
+#' 
+#' @docype data
+#' 
+#' @format Objects of class \code{"Date"}.
+#' 
+#' @source 
+#' \url{http://www.census.gov/srd/www/genhol/genhol_downloads.html} 
+#' \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php} 
+#' 
+#' @name easter
+#' @aliases cny
+#' @keywords datasets
+NULL
+
+
+#' Industrial Production of China
+#' 
+#' Industrial Production of China
+#' 
+#' @docype data
+#' 
+#' @format Each time series is an object of class \code{"ts"}.
+#' 
+#' @source National Bureau of Statistics of China
+#' \url{http://www.stats.gov.cn/english/} 
+#' 
+#' @name cement
+#' @aliases oil clothes plastic ore
+#' @keywords datasets
+NULL
+

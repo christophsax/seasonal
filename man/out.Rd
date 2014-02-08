@@ -14,14 +14,9 @@ slidingspans(x, ...)
   \item{x}{an object of class \code{"seas"} to
   re-evaluate.}
 
-  \item{view}{logical, should the content be shown in the
-  console.}
+  \item{line}{starting line of the content.}
 
-  \item{line}{if \code{view = TRUE}, starting line of the
-  content.}
-
-  \item{n}{if \code{view = TRUE}, number of lines to show
-  at once.}
+  \item{n}{number of lines to show at once.}
 
   \item{search}{chracter string. If \code{view = TRUE}, the
   \code{.out} content is searched for the first occurence

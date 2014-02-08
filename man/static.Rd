@@ -10,9 +10,6 @@ static(x, coef = FALSE, test = TRUE)
   \item{coef}{logical, if \code{TRUE}, the coefficients are
   treated as fixed, instead of beeing estimated.}
 
-  \item{name}{character string, optionally specify the name
-  of the input time series}
-
   \item{test}{logical. By default the static call is
   executed and compared to the input call. If the final
   series is not identical, an error is returned.  If

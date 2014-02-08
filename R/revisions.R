@@ -34,7 +34,7 @@ plot.revisions <- function(x, main = "revisions of seasonal component", ...){
 
 #' @export
 #' @method print revisions
-print.revisions <- function(x){
+print.revisions <- function(x, ...){
   print(x$revisions)
 }
 

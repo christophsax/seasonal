@@ -23,9 +23,8 @@
 #' some implausible results. It should be used carefully.
 #' 
 #' @param x an object of class \code{"seas"} to re-evaluate.
-#' @param view  logical, should the content be shown in the console.
-#' @param line  if \code{view = TRUE}, starting line of the content.
-#' @param n  if \code{view = TRUE}, number of lines to show at once.
+#' @param line  starting line of the content.
+#' @param n  number of lines to show at once.
 #' @param search   chracter string. If \code{view = TRUE}, the \code{.out}
 #'   content is searched for the first occurence of the string (see examples).
 #' @param ... aditional spec-arguments options (see details).
@@ -94,7 +93,7 @@ reeval <- function(x, ldots){
 
 #' @export
 #' @method print out
-print.out <- function(x, line = 1, n = 500, search = NULL){
+print.out <- function(x, line = 1, n = 500, search = NULL, ...){
   
   # use print parameters if present
   if (!is.null(attr(x, "line"))){

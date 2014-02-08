@@ -21,6 +21,8 @@ regressioneffects(object)
 }
 \arguments{
   \item{object}{an object of class \code{"seas"}.}
+
+  \item{...}{not used. For compatibility with the generic.}
 }
 \value{
 returns a \code{"ts"} object, depending on the function.
@@ -55,7 +57,7 @@ AirPassengersWoTd <- exp(log(AirPassengers) - ce)
 AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
 final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
-final(seas(AirPassengersNA, na.action = na.fail))    # fails
+# final(seas(AirPassengersNA, na.action = na.fail))    # fails
 }
 }
 \references{

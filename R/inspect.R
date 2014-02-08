@@ -55,6 +55,7 @@ inspect.seas <- function(x){
   outlier.critical <- NULL
   view <- NULL
   is.static.call <- NULL
+  logtrans <- NULL
   
   require(manipulate)
 

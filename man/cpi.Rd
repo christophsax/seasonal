@@ -1,0 +1,15 @@
+\name{cpi}
+\alias{cpi}
+\title{Consumer Price Index of Switzerland}
+\format{Each time series is an object of class \code{"ts"}.}
+\source{
+Swiss Federal Statistical Office
+\url{http://www.bfs.admin.ch/bfs/portal/de/index/themen/05/02/blank/key/basis_aktuell.html}
+(cc-d-05.02.12)
+}
+\description{
+Monthly consumer price index of Switzerland. Base year is
+1993.
+}
+\keyword{datasets}
+

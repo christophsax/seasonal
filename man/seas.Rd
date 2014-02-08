@@ -169,7 +169,7 @@ out(m)  # display the .out file (see ?out, for details)
 AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
 final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
-final(seas(AirPassengersNA, na.action = na.fail))    # fails
+# final(seas(AirPassengersNA, na.action = na.fail))    # fails
 
 # inspect tool
 inspect(m)

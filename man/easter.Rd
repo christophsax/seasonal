@@ -1,0 +1,14 @@
+\name{easter}
+\alias{cny}
+\alias{easter}
+\title{Dates of Easter and Chinese New Year}
+\format{Objects of class \code{"Date"}.}
+\source{
+\url{http://www.census.gov/srd/www/genhol/genhol_downloads.html}
+\url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
+}
+\description{
+Dates of Easter and Chinese New Year
+}
+\keyword{datasets}
+

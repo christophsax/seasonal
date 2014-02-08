@@ -32,7 +32,7 @@ plot.slidingspans <- function(x, main = "sliding spans", ...){
 
 #' @export
 #' @method print slidingspans
-print.slidingspans <- function(x){
+print.slidingspans <- function(x, ...){
   print(x$slidingspans)
 }
 

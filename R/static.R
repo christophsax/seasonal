@@ -11,8 +11,6 @@
 #' @param x an object of class \code{seas}
 #' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed, 
 #'   instead of beeing estimated.
-#' @param name character string, optionally specify the name of the input time 
-#'   series
 #' @param test logical. By default the static call is executed and compared to 
 #'   the input call. If the final series is not identical, an error is returned.
 #'   If \code{FALSE}, the option is disabled.

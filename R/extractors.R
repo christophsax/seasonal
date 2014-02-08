@@ -3,6 +3,7 @@
 #' These functions extract time series from a \code{"seas"} object.
 #' 
 #' @param object  an object of class \code{"seas"}.
+#' @param ...  not used. For compatibility with the generic.
 #'   
 #' @return returns a \code{"ts"} object, depending on the function.
 #' 
@@ -45,7 +46,7 @@
 #' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 #' final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
 #' final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
-#' final(seas(AirPassengersNA, na.action = na.fail))    # fails
+#' # final(seas(AirPassengersNA, na.action = na.fail))    # fails
 #' }
 #' @export
 final <- function(object){
