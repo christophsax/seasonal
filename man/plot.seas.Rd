@@ -13,7 +13,7 @@ residplot(x, outliers = TRUE, ...)
 
 \method{monthplot}{seas}(x, choice = "seasonal", ...)
 
-\method{plot}{revisions}(x, main = "revisions of seasonal component", ...)
+\method{plot}{revisions}(x, main = "revisions", ...)
 
 \method{plot}{slidingspans}(x, main = "sliding spans", ...)
 }

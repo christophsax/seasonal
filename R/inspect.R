@@ -77,7 +77,7 @@ inspect.seas <- function(x){
                   "seasonal component, SI ratio", 
                   "residuals of regARIMA", "residual partial autocorrelation", 
                   "sliding spans", 
-# drop for R2                 "revisions of seasonal component", 
+                  "revisions", 
                   label = "view"),
     is.static.call = checkbox(FALSE, "show static call")
   )
@@ -137,13 +137,8 @@ SubPlot <- function(view,
     pacf(resid(s), main = "residual partial autocorrelation", ylab = "")
   } else if (view == "sliding spans"){
     plot(slidingspans(s))
-#   } else if (view == "revisions of seasonal component"){
-#     # the revision history delivers strange results 
-#     # drop for R2
-#     plot(revisions(s))
-#     # DPKJ version as a temporary workaround (slow)
-#     require(tstools)
-#     print(recursive(s))
+  } else if (view == "revisions"){
+    plot(revisions(s))
   } else {
     stop("something wrong.")
   }
