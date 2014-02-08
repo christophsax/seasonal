@@ -5,7 +5,7 @@ R interface to X-13ARIMA-SEATS
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, you may use the automated procedures to quickly produce seasonal adjustments of time series. Start with the [Getting started](#getting-started) section and skip the rest. 
 
-If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equivalent use of its syntax in *seasonal*. Read the [Syntax equivalence](#syntax-equivalence-to-x-13arima-seats) section and have a look at the [wiki][examples], where most examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
+If you are already familiar with X-13ARIMA-SEATS, you may benefit from the equivalent use of its syntax in *seasonal*. Read the [Syntax equivalence](#syntax-equivalence-to-x-13arima-seats) section and have a look at the [wiki][examples], where almost all examples from the original X-13ARIMA-SEATS manual are reproduced in R. For more details on X-13ARIMA-SEATS, as well as for explanations on the X-13ARIMA-SEATS syntax, see the [manual][manual] or the [quick reference][qref].
 
 ### Installation
 
@@ -37,7 +37,7 @@ There are other ways to set an environmental variable permanently in R, see `?St
 
 ### Getting started
 
-`seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works very well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `"seas"` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
+`seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` method for `"seas"` objects returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
     m <- seas(AirPassengers)
     final(x)
@@ -62,19 +62,19 @@ Alternatively, all inputs may be entered manually, as in the following example:
 
 The `static` command reveals the static call from above that is needed to replicate the automatic seasonal adjustment procedure:
 
-    static(x)
-    static(x, coef = TRUE)  # also fixes the coefficients
+    static(m)
+    static(m, coef = TRUE)  # also fixes the coefficients
     
 If you are using RStudio, the `inspect` command offers a way to analyze and modify a seasonal adjustment procedure (see the section below for details):
 
-    inspect(AirPassengers)
+    inspect(m)
 
 
 ### Syntax equivalence to X-13ARIMA-SEATS
 
 The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec optionally containing some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variables` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
-    m <- seas(AirPassengers, regression.variables = c("td", "ao1965.jan"))
+    m <- seas(AirPassengers, regression.variables = c("td", "ao1955.jan"))
    
 Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty `list()`. Several defaults of `seas` are empty lists, such as the default `seats = list()`. See the help page (`?seas`) for more details on the defaults.
 
@@ -93,9 +93,9 @@ translates to R in the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the `series` spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (like above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument entry is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the growing list of examples in the [wiki][examples]. Support of the `slidingspan` and `history` spec is currently unimplemented but planned for the near future.
+`seas` takes care of the `series` spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (like above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the comprehensive list of examples in the [wiki][examples]. 
 
-There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included `seas` follows a set of priority rules, where the lower priority is overwritten by the higher priority:
+There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, a set of priority rule is followed, where the lower priority is overwritten by the higher priority:
 
 - Model selection
     1. `arima`
@@ -108,7 +108,7 @@ There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one 
 
 ### Graphs
 
-All plots from Win X-13, a graphical Windows version of X-13ARIMA-SEATS, are reproducible in R. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally, it also draws the trend of the seasonal decomposition:
+There are several graphical tools to analyze a `seas` model. The main plot function draws the seasonally adjusted and unadjusted series, as well as the outliers. Optionally, it also draws the trend of the seasonal decomposition:
 
     m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
     plot(m)
@@ -120,10 +120,31 @@ The `monthplot` function allows for a monthwise plot (or quarterwise, with the i
     monthplot(m)
     monthplot(m, choice = "irregular")
 
-With `spectrum`, the spectral density of any series can be estimated and plotted:
+Also, many R function can be used to analyze a `"seas"` model:
 
-    spectrum(diff(final(m)))
-    spectrum(diff(original(m)))
+    pacf(resid(m))
+    spectrum(diff(resid(m)))
+    plot(density(resid(m)))
+    qqnorm(resid(m))
+
+
+
+###  Diagnostical Re-Evaluation
+
+For diagnostical purposes, some functions re-evaluate a `"seas"` object and capture the full content or parts of the `.out` file from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and reduces the size of a `"seas"` object.
+
+The `out` function shows the full content of the `.out` file form X-13ARIMA-SEATS in a console viewer. It can also be searched for an arbitary term:
+
+    out(m)
+    out(m, search = "regARIMA model residuals")
+
+The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revisions`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
+
+    slidingspans(m)
+    plot(slidingspans(m))
+    
+    revisions(m)
+    plot(revisions(m))
 
 
 ### Inspect tool
@@ -134,24 +155,8 @@ The `inspect` function is a powerful tool for choosing a good seasonal adjustmen
 
 The `inspect` function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statics are shown in the R console. 
 
-With the 'Show static call' option, a replicable static call is also shown in the console. Note that this option will double the time for recalculation, as the static function also tests the static call each time (this is a beta feature of seasonal, which allows intensive testing; it may be disabled in future versions). 
+With the 'Show static call' option, a replicable static call is also shown in the console. Note that this option will double the time for recalculation, as the static function also tests the static call each time. 
 
-
-###  Diagnostical Re-Evaluation
-
-For diagnostical purposes, some functions re-evaluate an object of class `"seas"` and capture the full content or parts of the `.out` file from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and reduces the size of a `"seas"` object.
-
-The `out` function shows the full content of the `.out` file form X-13ARIMA-SEATS in a console viewer. Exit form the viewer by pressing `q`.
-
-    out(m)
-
-The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revisions`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
-
-    slidingspans(m)
-    plot(slidingspans(m))
-    
-    revisions(m)
-    plot(revisions(m))
 
 ### License
 
