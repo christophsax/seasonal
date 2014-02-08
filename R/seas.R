@@ -496,7 +496,7 @@ run_x13 <- function(file){
 
   env.path <- Sys.getenv("X13_PATH")
   if (.Platform$OS.type == "windows"){
-    x13.bin <- file.path(env.path, "x13as.exe")
+    x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
     shell(paste(x13.bin, file), intern = TRUE)
   } else {
     x13.bin <- file.path(env.path, "x13as")
