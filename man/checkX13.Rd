@@ -5,10 +5,10 @@
 checkX13(fail = FALSE, full = TRUE)
 }
 \arguments{
-  \item{fail}{logical, wether an error should interrupt the
-  process. If \code{FALSE}, a message is returned.}
+  \item{fail}{logical, whether an error should interrupt
+  the process. If \code{FALSE}, a message is returned.}
 
-  \item{full}{logical, wether a full test should be
+  \item{full}{logical, whether a full test should be
   performed. Runs \code{Testairline.spc} (which is shiped
   with X-13ARIMA-SEATS) to test the working of your
   binaries. Returns a message.}

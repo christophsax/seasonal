@@ -4,9 +4,9 @@
 #' X-13ARIMA-SEATS. For installation details, consider Section 2 of the package
 #' vignette: \code{vignette("seas")}
 #' 
-#' @param fail  logical, wether an error should interrupt the process. If 
+#' @param fail  logical, whether an error should interrupt the process. If 
 #' \code{FALSE}, a message is returned.
-#' @param full  logical, wether a full test should be performed. Runs \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the working of your binaries. Returns a message.   
+#' @param full  logical, whether a full test should be performed. Runs \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the working of your binaries. Returns a message.   
 #' @examples
 #' \dontrun{
 #' old.path <- Sys.getenv("X13_PATH")
