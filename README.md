@@ -47,7 +47,7 @@ The first argument has to be a time series of class `"ts"`. By default, `seas` c
 
     seas(AirPassengers, x11 = list())
      
-Besides performing seasonal adjustment with SEATS, a default call of `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
+Besides performing seasonal adjustment with SEATS, a default call to `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
 
   - Transformation selection (log / no log)
   - Detection of trading day and Easter effects
@@ -72,7 +72,7 @@ If you are using RStudio, the `inspect` command offers a way to analyze and modi
 
 ### Syntax equivalence to X-13ARIMA-SEATS
 
-The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec optionally containing some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the `variables` argument of the `regression` spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
+The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec optionally containing some arguments. For details, see the [manual][manual]. These spec-argument combinations can be added to `seas` by separating spec and argument by a dot (`.`). For example, in order to set the 'variables' argument of the 'regression' spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
     m <- seas(AirPassengers, regression.variables = c("td", "ao1955.jan"))
    
@@ -93,7 +93,7 @@ translates to R in the following way:
          arima.model = "(0 1 1)"
     )
     
-`seas` takes care of the `series` spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the `x11` spec is added as an input (like above), the mutually exclusive and default `seats` spec is automatically disabled. With `arima.model`, an additional spec-argument is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the `automdl` spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and seasonal is to study the comprehensive list of examples in the [wiki][examples]. 
+`seas` takes care of the 'series' spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the 'x11' spec is added as an input (like above), the mutually exclusive and default 'seats' spec is automatically disabled. With `arima.model`, an additional spec-argument is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the 'automdl' spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and *seasonal* is to study the comprehensive list of examples in the [wiki][examples]. 
 
 There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, a set of priority rule is followed, where the lower priority is overwritten by the higher priority:
 
@@ -115,12 +115,12 @@ There are several graphical tools to analyze a `seas` model. The main plot funct
     plot(m, outliers = FALSE)
     plot(m, trend = TRUE)
 
-The `monthplot` function allows for a monthwise plot (or quarterwise, with the identical function name) of the data. There is a method for `"seas"` objects:
+The `monthplot` function allows for a monthwise plot (or quarterwise, with the same function name) of the seasonal and the SI component:
 
     monthplot(m)
     monthplot(m, choice = "irregular")
 
-Also, many R function can be used to analyze a `"seas"` model:
+Also, many standard R function can be used to analyze a `"seas"` model:
 
     pacf(resid(m))
     spectrum(diff(resid(m)))
@@ -129,7 +129,7 @@ Also, many R function can be used to analyze a `"seas"` model:
 
 
 
-###  Diagnostical Re-Evaluation
+###  Diagnostical re-evaluation
 
 For diagnostical purposes, some functions re-evaluate a `"seas"` object and capture the full content or parts of the `.out` file from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and reduces the size of a `"seas"` object.
 
@@ -138,7 +138,7 @@ The `out` function shows the full content of the `.out` file form X-13ARIMA-SEAT
     out(m)
     out(m, search = "regARIMA model residuals")
 
-The `slidingspans` and `revisions` function call the `slidingspans` and `history` spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the `history` spec is called by the function `revisions`, in order to avoid a naming collision with the function from the `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `history` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
+The `slidingspans` and `revisions` function call the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the 'history' spec is called by the function `revisions`, in order to avoid a naming collision with the function from the preloaded `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `revisions` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
 
     slidingspans(m)
     plot(slidingspans(m))
