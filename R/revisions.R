@@ -23,14 +23,6 @@ revisions <- function(x, ...){
   z
 }
 
-#' @rdname plot.seas
-#' @method plot revisions
-#' @export
-plot.revisions <- function(x, main = "revisions", ...){
-  ts.plot(x$sae, col = c("black", "red"), main = main, ...)
-
-  legend("topleft", c("concurrent estimation", "final estimation"), lty = 1, col = c("black", "red"), bty = "n", horiz = TRUE)
-}
 
 #' @export
 #' @method print revisions

@@ -197,6 +197,6 @@ adjustment model.
 
 \code{\link{qs}}, for diagnostical statistics.
 
-\code{\link{out}}, for diagnostical re-evaluation
+\code{\link{out}}, for diagnostical re-evaluation.
 }
 

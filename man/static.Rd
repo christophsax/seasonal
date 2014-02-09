@@ -12,7 +12,7 @@ static(x, coef = FALSE, test = TRUE)
 
   \item{test}{logical. By default the static call is
   executed and compared to the input call. If the final
-  series is not identical, an error is returned.  If
+  series is not identical, a warning is returned.  If
   \code{FALSE}, the option is disabled.}
 }
 \value{
@@ -21,13 +21,13 @@ copy/pasted into an R script.
 }
 \description{
 A static call is a static replication of a call. Automatic
-procedures are subistuted by the automatically selected
-spec-argument options.
+procedures are substituted by the selected spec-argument
+options.
 }
 \details{
 By default, the static call is tested. It is executed and
 compared to the input call. If the final series is not
-identical, an error is returned.
+identical, a warning is returned.
 
 If \code{coef = TRUE}, the coefficients are fixed as well.
 }

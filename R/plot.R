@@ -1,38 +1,48 @@
 #' Seasonal Adjustment Plots
 #' 
-#' Functions to graphically analyze a \code{"seas"} object. More graphs can be plotted with standard R functions
-#' (see examples). For diagnostical statistics, see \code{\link{qs}}.
+#' Functions to graphically analyze a \code{"seas"} object. More graphs can be 
+#' plotted with standard R functions (see examples). For diagnostical 
+#' statistics, see \code{\link{qs}}.
 #' 
-#' \code{plot} calls the plot method for class \code{"seas"}. It plots the adjusted and unadjusted
-#' series, as well as the outliers. Optionally draws the trend series.
+#' \code{plot} calls the plot method for class \code{"seas"}. It plots the 
+#' adjusted and unadjusted series, as well as the outliers. Optionally draws the
+#' trend series.
 #' 
-#' \code{monthplot} calls the monthplot method for class \code{"seas"}. It plot the seasonal and SI component periodwise. Like the default method `monthplot` can be used for all frequencies.
-
-#' \code{residplot} plots the residuals and the outliers. It plots 
+#' \code{residplot} plots the residuals and the outliers.
 #' 
-#' \code{plot.slidingspans} calls the plot method for models of class \code{"slidingspans"}. It draws the seasonal component for the analyzed spans.
+#' \code{monthplot} calls the monthplot method for class \code{"seas"}. It plot 
+#' the seasonal and SI component periodwise. Like the default method `monthplot`
+#' can be used for all frequencies.
 #' 
-#' \code{plot.revisions} calls the plot method for models of class \code{"revisons"}. It draws concurrent and the latest estimation of the seasonal component.
-#'  
-#' @param x  an object of class \code{"seas"}, usually, a result of a 
-#'   call to \code{\link{seas}}.
+#' \code{plot.slidingspans} calls the plot method for objects of class
+#' \code{"slidingspans"}. It draws the seasonal component for the analyzed
+#' spans.
+#' 
+#' \code{plot.revisions} calls the plot method for objects of class
+#' \code{"revisons"}. It draws concurrent and the latest estimation of the
+#' seasonal adjusted series.
+#' 
+#' @param x  an object of class \code{"seas"}, usually, a result of a call to
+#'   \code{\link{seas}}.
 #' @param outliers   logical, should the oultiers be drawn.
 #' @param trend      logical, should the trend be drawn.
-#' @param choice     character string, \code{"seasonal"} (default) or \code{"irregular"}.
+#' @param choice     character string, \code{"seasonal"} (default) or
+#'   \code{"irregular"}.
 #' @param main    character string, title of the graph.
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
 #' @return All plot functions returns a plot as their side effect.
 #'   
-#' @seealso \code{\link{seas}} for the main function.
+#' @seealso \code{\link{seas}}, for the main function.
 #' @seealso \code{\link{qs}}, for diagnostical statistics.
-#' 
+#'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
@@ -129,3 +139,24 @@ siratio <- function(x){
 }
 
 
+
+#' @rdname plot.seas
+#' @method plot slidingspans
+#' @export
+plot.slidingspans <- function(x, main = "sliding spans", ...){
+  ser <- x$sfspans
+  nser <- dim(ser)[2]
+  col = rev(rainbow(nser-1))
+  ts.plot(ser[, -nser], col = col, lty = 1, main = main, ...)
+  legend("topleft", colnames(ser)[-nser], lwd = 2, lty = 1, col = col, bty = "n", horiz = TRUE)
+}
+
+
+#' @rdname plot.seas
+#' @method plot revisions
+#' @export
+plot.revisions <- function(x, main = "revisions", ...){
+  ts.plot(x$sae, col = c("black", "red"), main = main, ...)
+  
+  legend("topleft", c("concurrent estimation", "final estimation"), lty = 1, col = c("black", "red"), bty = "n", horiz = TRUE)
+}

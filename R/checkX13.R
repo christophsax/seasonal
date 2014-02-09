@@ -1,12 +1,14 @@
 #' Check the installation of X-13ARIMA-SEATS
 #' 
-#' The function checks the installation of the binary executables of
-#' X-13ARIMA-SEATS. For installation details, consider Section 2 of the package
-#' vignette: \code{vignette("seas")}
+#' Check the installation of the binary executables of X-13ARIMA-SEATS. For
+#' installation details, consider Section 2 of the package vignette:
+#' \code{vignette("seas")}
 #' 
 #' @param fail  logical, whether an error should interrupt the process. If 
-#' \code{FALSE}, a message is returned.
-#' @param full  logical, whether a full test should be performed. Runs \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the working of your binaries. Returns a message.   
+#'   \code{FALSE}, a message is returned.
+#' @param full  logical, whether a full test should be performed. Runs
+#'   \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the
+#'   working of the binaries. Returns a message.
 #' @examples
 #' \dontrun{
 #' old.path <- Sys.getenv("X13_PATH")

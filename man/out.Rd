@@ -18,17 +18,17 @@ slidingspans(x, ...)
 
   \item{n}{number of lines to show at once.}
 
-  \item{search}{chracter string. If \code{view = TRUE}, the
-  \code{.out} content is searched for the first occurence
-  of the string (see examples).}
+  \item{search}{chracter string. If specified, the content
+  is searched for the first occurence of the string (see
+  examples).}
 
   \item{...}{aditional spec-arguments options (see
   details).}
 }
 \value{
 invisible, the full content or parts of the .out file as a
-(large) character vector. If \code{viewer = TRUE}, the
-content of the character vector is shown as a side effect.
+(large) character vector. The content of the vector is
+displayed by a viewer function in the R console.
 }
 \description{
 For diagnostical purposes, these functions re-evaluate an
@@ -50,15 +50,11 @@ spec, consider the X-13ARIMA-SEATS manual.
 
 For how to enter spec-arguments options, see the details in
 \code{"\link{seas}"}. In the \code{out} function,
-\code{...} are useful to add adtional outputs to the
+\code{...} are useful to add additional outputs to the
 \code{.out} file. In the \code{slidingspans} and
 \code{revisions} function, \code{...} are used to add
-aditional options to the \code{slidingspans} and
+additional options to the \code{slidingspans} and
 \code{history} spec.
-
-In the current version of X-13ARIMA-SEATS, the
-\code{history} spec delivers some implausible results. It
-should be used carefully.
 }
 \examples{
 \dontrun{
@@ -90,5 +86,8 @@ Official X-13ARIMA-SEATS manual:
 }
 \seealso{
 \code{\link{seas}} for the main function of seasonal.
+
+\code{\link{plot.seas}}, for plot methods for
+\code{slidingspans} and \code{revisions}.
 }
 

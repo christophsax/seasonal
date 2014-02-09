@@ -46,6 +46,7 @@ NULL
 #' 
 #' @source 
 #' \url{http://www.census.gov/srd/www/genhol/genhol_downloads.html} 
+#' 
 #' \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php} 
 #' 
 #' @name easter

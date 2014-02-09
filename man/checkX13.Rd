@@ -10,14 +10,13 @@ checkX13(fail = FALSE, full = TRUE)
 
   \item{full}{logical, whether a full test should be
   performed. Runs \code{Testairline.spc} (which is shiped
-  with X-13ARIMA-SEATS) to test the working of your
+  with X-13ARIMA-SEATS) to test the working of the
   binaries. Returns a message.}
 }
 \description{
-The function checks the installation of the binary
-executables of X-13ARIMA-SEATS. For installation details,
-consider Section 2 of the package vignette:
-\code{vignette("seas")}
+Check the installation of the binary executables of
+X-13ARIMA-SEATS. For installation details, consider Section
+2 of the package vignette: \code{vignette("seas")}
 }
 \examples{
 \dontrun{

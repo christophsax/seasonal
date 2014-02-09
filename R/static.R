@@ -1,10 +1,10 @@
 #' Static Call of a seas Object
 #' 
 #' A static call is a static replication of a call. Automatic procedures are 
-#' subistuted by the automatically selected spec-argument options.
+#' substituted by the selected spec-argument options.
 #' 
 #' By default, the static call is tested. It is executed and compared to the
-#' input call. If the final series is not identical, an error is returned.
+#' input call. If the final series is not identical, a warning is returned.
 #' 
 #' If \code{coef = TRUE}, the coefficients are fixed as well. 
 #' 
@@ -12,7 +12,7 @@
 #' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed, 
 #'   instead of beeing estimated.
 #' @param test logical. By default the static call is executed and compared to 
-#'   the input call. If the final series is not identical, an error is returned.
+#'   the input call. If the final series is not identical, a warning is returned.
 #'   If \code{FALSE}, the option is disabled.
 #'   
 #' @return Static call of an object of class \code{seas}. Can be copy/pasted 

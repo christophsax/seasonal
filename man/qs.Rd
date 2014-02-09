@@ -27,7 +27,7 @@ Analyzing the \code{spc} output is useful for debugging.
 \code{fivebestmdl} returns the five best models as chosen
 by the BIC criterion. It needs the \code{automdl} spec to
 be activated (default). If it is not activated, the
-function tries to reevaluate the model with the
+function tries to re-evaluate the model with the
 \code{automdl} spec activated.
 
 \code{arimamodel} retrurs the structure of a the ARIMA

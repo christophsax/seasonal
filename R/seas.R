@@ -86,7 +86,7 @@
 #'   adjustment model.
 #' @seealso \code{\link{plot.seas}}, for diagnostical plots.
 #' @seealso \code{\link{qs}}, for diagnostical statistics.
-#' @seealso \code{\link{out}}, for diagnostical re-evaluation
+#' @seealso \code{\link{out}}, for diagnostical re-evaluation.
 #'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}

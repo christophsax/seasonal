@@ -13,9 +13,9 @@ residplot(x, outliers = TRUE, ...)
 
 \method{monthplot}{seas}(x, choice = "seasonal", ...)
 
-\method{plot}{revisions}(x, main = "revisions", ...)
-
 \method{plot}{slidingspans}(x, main = "sliding spans", ...)
+
+\method{plot}{revisions}(x, main = "revisions", ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -47,19 +47,20 @@ examples). For diagnostical statistics, see
 It plots the adjusted and unadjusted series, as well as the
 outliers. Optionally draws the trend series.
 
+\code{residplot} plots the residuals and the outliers.
+
 \code{monthplot} calls the monthplot method for class
 \code{"seas"}. It plot the seasonal and SI component
 periodwise. Like the default method `monthplot` can be used
-for all frequencies. \code{residplot} plots the residuals
-and the outliers. It plots
+for all frequencies.
 
-\code{plot.slidingspans} calls the plot method for models
+\code{plot.slidingspans} calls the plot method for objects
 of class \code{"slidingspans"}. It draws the seasonal
 component for the analyzed spans.
 
-\code{plot.revisions} calls the plot method for models of
+\code{plot.revisions} calls the plot method for objects of
 class \code{"revisons"}. It draws concurrent and the latest
-estimation of the seasonal component.
+estimation of the seasonal adjusted series.
 }
 \examples{
 \dontrun{
@@ -97,7 +98,7 @@ Official X-13ARIMA-SEATS manual:
 \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 }
 \seealso{
-\code{\link{seas}} for the main function.
+\code{\link{seas}}, for the main function.
 
 \code{\link{qs}}, for diagnostical statistics.
 }
