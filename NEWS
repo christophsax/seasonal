@@ -18,10 +18,11 @@ enhancements
 - fewer, more structured help pages
 - comprehensive list of examples from the official manual
 
-bug fixes
-- quotes in the series name do not lead to X-13 error
+misc
+- fixed issue where quotes in series name led to an error
 - support for unorthodox frequencies, e.g. 2
-- spaces in folder names on windows are allowed
+- spaces in folder names on windows are now allowed
 - regression and x11regression can be combined
-
+- uses only standard R functions, no dependency on 'stringr'
+- various code improvements
 
