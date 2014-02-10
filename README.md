@@ -133,12 +133,12 @@ Also, many standard R function can be used to analyze a `"seas"` model:
 
 For diagnostical purposes, some functions re-evaluate a `"seas"` object and capture the full content or parts of the `.out` file from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and reduces the size of a `"seas"` object.
 
-The `out` function shows the full content of the `.out` file form X-13ARIMA-SEATS in a console viewer. It can also be searched for an arbitary term:
+The `out` function shows the full content of the `.out` file from X-13ARIMA-SEATS in a console viewer. It can also be searched for an arbitary term:
 
     out(m)
     out(m, search = "regARIMA model residuals")
 
-The `slidingspans` and `revisions` function call the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS and show the respective parts of the `.out` file. Note that against the convention, the 'history' spec is called by the function `revisions`, in order to avoid a naming collision with the function from the preloaded `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `revisions` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
+The `slidingspans` and `revisions` function call the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS and show the corresponding parts of the `.out` file. Note that against the convention, the 'history' spec is called by the differently named function `revisions`, in order to avoid a naming collision with the function from the preloaded `utils` pacakge. `slidingspans` analyzes the stability of a seasonal adjustment, `revisions` computes an out-of-sample revision history. A `plot` method shows a graphical overview of the analysis. For a detailed description of the two specs, consider section 7.16 and 7.8 in the [manual][manual].
 
     slidingspans(m)
     plot(slidingspans(m))

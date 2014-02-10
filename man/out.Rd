@@ -39,22 +39,21 @@ of the .out file from X-13ARIMA-SEATS.
 The \code{out} function shows the full content of the
 \code{.out} file form X-13ARIMA-SEATS. The
 \code{slidingspans} and \code{revisions} function call the
-\code{slidingspans} and \code{history} spec of
-X-13ARIMA-SEATS and show the respective parts of the
-\code{.out} file. Note that against the convention, the
-\code{history} spec is called by the function
-\code{revision}, in order to avoid a naming collision with
-the function from the \code{utils} pacakge. For a
-description of the \code{slidingsspan} and \code{history}
-spec, consider the X-13ARIMA-SEATS manual.
+'slidingspans' and 'history' spec of X-13ARIMA-SEATS and
+show the respective parts of the \code{.out} file. Note
+that against the convention, the 'history' spec is called
+by the function \code{revision}, in order to avoid a naming
+collision with the function from the preloaded \code{utils}
+package. For a description of the 'slidingsspan' and
+'history' spec, consider the X-13ARIMA-SEATS manual.
 
 For how to enter spec-arguments options, see the details in
 \code{"\link{seas}"}. In the \code{out} function,
 \code{...} are useful to add additional outputs to the
 \code{.out} file. In the \code{slidingspans} and
 \code{revisions} function, \code{...} are used to add
-additional options to the \code{slidingspans} and
-\code{history} spec.
+additional options to the 'slidingspans' and 'history'
+spec.
 }
 \examples{
 \dontrun{

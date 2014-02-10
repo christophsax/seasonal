@@ -1,28 +1,28 @@
-0.39.0  2014-02-08
+0.39.0  2014-02-10
 
 new features
-- slidingspans and history support
+- support for 'slidingspans' and 'history' spec
 - genhol, a function to generate holiday regression variables
-- user defined variable for the transform spec
-- new diagnostical statistics
-- NA handling as in R base
-- inspect function with model and transformation selection, new views
+- user defined variable for 'transform' spec
+- NA handling like in standard R
+- inspect function with model and transform selection, new views
 
 enhancements
-- monthplot also shows SI ratios
+- new diagnostical statistics
 - summary shows some useful statistics
+- monthplot also shows SI ratios
 - easier access to X-13 .out content
 - regression effects can be extracted
 - checkX13 performs a test run
-- various code improvements
+- 'regression' and 'x11regression' specs can be combined
 - fewer, more structured help pages
 - comprehensive list of examples from the official manual
 
-misc
-- fixed issue where quotes in series name led to an error
-- support for unorthodox frequencies, e.g. 2
+bug fixes
+- quotes in series name are now allowed
+- support for unorthodox frequencies (e.g. 2)
 - spaces in folder names on windows are now allowed
-- regression and x11regression can be combined
-- uses only standard R functions, no dependency on 'stringr'
-- various code improvements
 
+code improvements
+- uses only standard R functions, no dependency on 'stringr'
+- clearer code structure
