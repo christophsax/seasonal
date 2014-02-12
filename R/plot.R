@@ -120,10 +120,7 @@ monthplot.seas <- function(x, choice = "seasonal", ...){
     monthplot(siratio(x), col = "blue", type = "h", add = TRUE)
   }
   if (choice == "irregular"){
-    if (is.null(main)){
-      main <- "irregular component"
-    }
-    monthplot(x$data[,'irregular'], ylab = "", main = main)
+    monthplot(x$data[,'irregular'], ylab = "", main = "irregular component")
   }
 }
 

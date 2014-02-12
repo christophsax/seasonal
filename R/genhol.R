@@ -34,7 +34,7 @@
 #' 
 #' \dontrun{
 #' 
-#' data(holiday)  # Dates of Chinese New Year and Easter
+#' data(holiday)  # dates of Chinese New Year and Easter
 #' 
 #' ### use of genhol
 #' 
@@ -84,17 +84,24 @@
 #' 
 #' ### Chinese New Year
 #' 
-#' data(cnprod)    # industrial production of China
-#' data(holiday) 
+#' data(cntrade)  # exports and imports of China
+#' data(holiday)  # dates of Chinese New Year and Easter
 #' 
 #' # de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year
-#' cny1 <- genhol(cny, start = 0, end = 6, center = "none")
+#' cny.ts <- genhol(cny, start = 0, end = 6, center = "calendar")
 #' 
-#' m1 <- seas(x = cement, xreg = cny1, 
-#'            regression.usertype = "holiday", x11 = list())
+#' m1 <- seas(x = imp, xreg = cny.ts, regression.usertype = "holiday", x11 = list(), 
+#'            regression.variables = c("td1coef", "ls1985.Jan", "ls2008.Nov"), 
+#'            arima.model = "(0 1 2)(0 1 1)", regression.aictest = NULL, 
+#'            outlier = NULL, transform.function = "log")
+#' summary(m1)
 #' 
-#' # compare to no-CNY model:
-#' m2 <- seas(x = cement)
+#' # compare to identical no-CNY model:
+#' m2 <- seas(x = imp, x11 = list(), 
+#'            regression.variables = c("td1coef", "ls1985.Jan", "ls2008.Nov"), 
+#'            arima.model = "(0 1 2)(0 1 1)", regression.aictest = NULL, 
+#'            outlier = NULL, transform.function = "log")
+#' summary(m2)
 #' 
 #' ts.plot(final(m1), final(m2), col = c("red", "black"))
 #' }

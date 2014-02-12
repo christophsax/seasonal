@@ -1,4 +1,4 @@
-0.39.0  2014-02-10
+0.40.0  2014-02-12
 
 new features
 - support for 'slidingspans' and 'history' spec
@@ -20,7 +20,7 @@ enhancements
 
 bug fixes
 - quotes in series name are now allowed
-- support for unorthodox frequencies (e.g. 2)
+- support for unorthodox frequencies (e.g. 2, 'seats' only)
 - spaces in folder names on windows are now allowed
 
 code improvements

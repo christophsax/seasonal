@@ -290,7 +290,7 @@ from X-13ARIMA-SEATS. Re-evaluation on demand saves computing time and
 reduces the size of a \texttt{"seas"} object.
 
 The \texttt{out} function shows the full content of the \texttt{.out}
-file form X-13ARIMA-SEATS in a console viewer. It can also be searched
+file from X-13ARIMA-SEATS in a console viewer. It can also be searched
 for an arbitary term:
 
 \begin{verbatim}
@@ -300,10 +300,10 @@ out(m, search = "regARIMA model residuals")
 
 The \texttt{slidingspans} and \texttt{revisions} function call the
 `slidingspans' and `history' spec of X-13ARIMA-SEATS and show the
-respective parts of the \texttt{.out} file. Note that against the
-convention, the `history' spec is called by the function
-\texttt{revisions}, in order to avoid a naming collision with the
-function from the preloaded \texttt{utils} pacakge.
+corresponding parts of the \texttt{.out} file. Note that against the
+convention, the `history' spec is called by the differently named
+function \texttt{revisions}, in order to avoid a naming collision with
+the function from the preloaded \texttt{utils} pacakge.
 \texttt{slidingspans} analyzes the stability of a seasonal adjustment,
 \texttt{revisions} computes an out-of-sample revision history. A
 \texttt{plot} method shows a graphical overview of the analysis. For a

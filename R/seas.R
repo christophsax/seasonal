@@ -17,11 +17,11 @@
 #' which contains replications of almost all examples from the official
 #' X-13ARIMA-SEATS manual.
 #' 
-#' @param x   object of class \code{"ts"}": time series to seasonaly adjust.
-#' @param xreg   (optional) object of class \code{"ts"}": one or several user 
+#' @param x   object of class \code{"ts"}: time series to seasonaly adjust.
+#' @param xreg   (optional) object of class \code{"ts"}: one or several user 
 #'   defined exogenous variables for regARIMA modelling, can be used both with 
 #'   \code{regression} or \code{x11regression}.
-#' @param xtrans   (optional) object of class \code{"ts"}": one or two user 
+#' @param xtrans   (optional) object of class \code{"ts"}: one or two user 
 #'   defined exogenous variables for the \code{transform} spec. Can be specifed 
 #'   together with \code{xreg}.
 #' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"} 

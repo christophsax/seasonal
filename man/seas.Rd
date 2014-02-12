@@ -8,16 +8,16 @@ seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
   dir = NULL, ...)
 }
 \arguments{
-  \item{x}{object of class \code{"ts"}": time series to
+  \item{x}{object of class \code{"ts"}: time series to
   seasonaly adjust.}
 
-  \item{xreg}{(optional) object of class \code{"ts"}": one
+  \item{xreg}{(optional) object of class \code{"ts"}: one
   or several user defined exogenous variables for regARIMA
   modelling, can be used both with \code{regression} or
   \code{x11regression}.}
 
-  \item{xtrans}{(optional) object of class \code{"ts"}":
-  one or two user defined exogenous variables for the
+  \item{xtrans}{(optional) object of class \code{"ts"}: one
+  or two user defined exogenous variables for the
   \code{transform} spec. Can be specifed together with
   \code{xreg}.}
 
