@@ -1,5 +1,5 @@
 
-mod_spclist <- function(x, overwrite = TRUE, ...){
+mod_spclist <- function(x, ...){
   # Add one or several X-13ARIMA-SEATS specs/arguments to a spclist
   #
   # x  "spclist" object
@@ -33,7 +33,7 @@ mod_spclist <- function(x, overwrite = TRUE, ...){
       if (is.null(x[[spc.name]][[spc.arg]])){
         x[[spc.name]][[spc.arg]] <- list()
       }
-      if (overwrite){
+      if (length(x[[spc.name]][[spc.arg]]) == 0){
         x[[spc.name]][[spc.arg]] <- content.i
       } else {
         x[[spc.name]][[spc.arg]] <- unique(c(x[[spc.name]][[spc.arg]], content.i))
@@ -76,19 +76,19 @@ consist_spclist <-function(x){
   if (!is.null(x$seats) & !is.null(x$x11)){
     x$seats <- NULL
   }
+
+  ### general output modification
   
-  #   # priority: 1. x11regression, 2. regression (default)
-  #   if (!is.null(x$x11regression) & !is.null(x$regression)){
-  #     x$regression <- NULL
-  #   }
-  #   
+  x <- mod_spclist(x, estimate.save = c("model", "estimates", "lkstats", 
+                                        "regressioneffects"))
   
-  ### ensure correct output
+  ### spec specific output modification
   
-  # seats and x11 have different output tables
   if (!is.null(x$seats)){
     x <- mod_spclist(x, seats.save = c("s10", "s11", "s12", "s13", "s16", "s18"))
-  } else if (!is.null(x$x11)){
+  } 
+  
+  if (!is.null(x$x11)){
     x <- mod_spclist(x, x11.save = c("d10", "d11", "d12", "d13", "d16", "e18"))
   } 
   
@@ -104,23 +104,9 @@ consist_spclist <-function(x){
     x <- mod_spclist(x, slidingspans.save = c("sfspans"))
   }
   
-  # if force is present, return adjusted output
-  if (!is.null(x$force$type)){
-    x$force$save = "saa"
+  if (!is.null(x$force)){
+    x <- mod_spclist(x, force.save = "saa")
   }
-  
-  # always return estimate model
-  x <- mod_spclist(x, overwrite = FALSE, 
-                   estimate.save = c("model", "estimates", "lkstats", 
-                                     "regressioneffects"))
-  
-#   always.add <- c("model", "estimates", "residuals", "lkstats", "regressioneffects")
-#   if (is.null(x$estimate$save)){
-#     x$estimate$save <- always.add
-#   } else {
-#     to.add <- always.add[!(always.add %in% x$estimate$save)]
-#     x$estimate$save <- c(x$estimate$save, to.add)
-#   }
   
   x
 }
