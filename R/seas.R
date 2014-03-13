@@ -169,6 +169,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                  automdl = list(), na.action = na.omit,
                  out = FALSE, dir = NULL, ...){
 
+  # TMP
+  SERIES_SUFFIX <- c("fct", "s11")
+  
+  
   # intial checks
   checkX13(fail = TRUE, full = FALSE)
   if (!inherits(x, "ts")){
@@ -270,21 +274,30 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   ### Run X13
   run_x13(iofile)
 
+  flist <- list.files(wdir)
+
   ### Save output files if 'dir' is specified
   if (!is.null(dir)){
-    flist <- list.files(wdir, full.names = TRUE)
     if (!file.exists(dir)){
       dir.create(dir)
     }
-    file.copy(flist, dir, overwrite = TRUE)
+    file.copy(file.path(wdir, flist), dir, overwrite = TRUE)
     message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
   }
   
+  
+
   ### Import from X13
   z <- list()
   class(spc) <- c("spclist", "list")
   
-
+  # add all series that are specified in SERIES_SUFFIX
+  file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[2]]))
+  is.series <- file.suffix %in% SERIES_SUFFIX
+  series.list <- lapply(file.path(wdir, flist[is.series]), read_series)
+  names(series.list) <- file.suffix[is.series]
+  z$series <- series.list
+    
   # data tables (names depend on method, thus a separate call is needed)
   if (!is.null(spc$seats)){
     z$data <- read_data(method = "seats", file = iofile)
@@ -321,7 +334,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   
   # check whether freq detection in read_series has worked.
   stopifnot(frequency(z$data) == frequency(x))
-  
+
   # read additional output files
   z$regressioneffects <- read_series(paste0(iofile, ".ref"))
   z$model <- read_mdl(iofile)
@@ -363,127 +376,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   class(z) <- "seas"
   z
 }
-
-
-
-mod_spclist <- function(x, ...){
-  # Add one or several X-13ARIMA-SEATS specs/arguments to a spclist
-  #
-  # x  "spclist" object
-  #
-  # returns a "spclist"
-  #
-  # required by seas
-  
-  stopifnot(inherits(x, "spclist"))
-  
-  mod.list <- list(...)
-  
-  for (i in seq_along(mod.list)){
-    content.i <- mod.list[[i]]
-    names.i <- names(mod.list)[i]
-    
-    split.names.i <- strsplit(names.i, "\\.")
-    
-    stopifnot(length(split.names.i) == 1)
-    
-    spc.name <- split.names.i[[1]][1]
-    
-    if (is.null(x[[spc.name]])){
-      x[[spc.name]] <- list()
-    }
-    
-    if (length(split.names.i[[1]]) == 1){
-      x[[spc.name]] <- content.i
-    } else if (length(split.names.i[[1]]) == 2){
-      spc.arg <- split.names.i[[1]][2]
-      if (is.null(x[[spc.name]][[spc.arg]])){
-        x[[spc.name]][[spc.arg]] <- list()
-      }
-      x[[spc.name]][[spc.arg]] <- content.i
-    } else {
-      stop("X-13ARIMA-SEATA options should contain a spec and an optional argument after the dot.")
-    }
-  }
-  x
-}
-
-consist_spclist <-function(x){
-  # ensure consistency of a spclist
-  # 
-  # removes exclusive spec.arguments. See 'priority rules' on website..
-  # ensures the necessary output
-  #
-  # x  "spclist" object
-  #
-  # returns a "spclist"
-  #
-  # required by seas
-  
-  stopifnot(inherits(x, "spclist"))
-  
-  ### avoid mutually exclusive alternatives
-  
-  # priority: 1. arima, 2. pickmdl, 3. automdl (default)
-  if (!is.null(x$automdl) & !is.null(x$arima)){
-    x$automdl <- NULL
-  }
-  if (!is.null(x$pickmdl) & !is.null(x$arima)){
-    x$pickmdl <- NULL
-  }
-  if (!is.null(x$pickmdl) & !is.null(x$automdl)){
-    x$automdl <- NULL
-  }
-  
-  # priority: 1. x11, 2. seats (default)
-  if (!is.null(x$seats) & !is.null(x$x11)){
-    x$seats <- NULL
-  }
-  
-#   # priority: 1. x11regression, 2. regression (default)
-#   if (!is.null(x$x11regression) & !is.null(x$regression)){
-#     x$regression <- NULL
-#   }
-#   
-  
-  ### ensure correct output
-  
-  # seats and x11 have different output tables
-  if (!is.null(x$seats)){
-    x <- mod_spclist(x, seats.save = c("s10", "s11", "s12", "s13", "s16", "s18"))
-  } else if (!is.null(x$x11)){
-    x <- mod_spclist(x, x11.save = c("d10", "d11", "d12", "d13", "d16", "e18"))
-  } 
-  
-  if (!is.null(x$automdl)){
-    x <- mod_spclist(x, automdl.print = "bestfivemdl")
-  }
-  
-  if (!is.null(x$history)){
-    x <- mod_spclist(x, history.save = c("sarevisions", "saestimates"))
-  }
-  
-  if (!is.null(x$slidingspans)){
-    x <- mod_spclist(x, slidingspans.save = c("sfspans"))
-  }
-  
-  # if force is present, return adjusted output
-  if (!is.null(x$force$type)){
-    x$force$save = "saa"
-  }
-  
-  # always return estimate model
-  always.add <- c("model", "estimates", "residuals", "lkstats", "regressioneffects")
-  if (is.null(x$estimate$save)){
-    x$estimate$save <- always.add
-  } else {
-    to.add <- always.add[!(always.add %in% x$estimate$save)]
-    x$estimate$save <- c(x$estimate$save, to.add)
-  }
-  
-  x
-}
-
 
 run_x13 <- function(file){
   # run X-13ARIMA-SEATS platform dependently
