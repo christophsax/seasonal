@@ -169,10 +169,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                  automdl = list(), na.action = na.omit,
                  out = FALSE, dir = NULL, ...){
 
-  # TMP
-  SERIES_SUFFIX <- c("fct", "s11")
+  data(specs)
+  SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
   
-  
+
   # intial checks
   checkX13(fail = TRUE, full = FALSE)
   if (!inherits(x, "ts")){
