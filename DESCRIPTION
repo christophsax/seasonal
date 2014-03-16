@@ -1,16 +1,18 @@
 Package: seasonal
-SystemRequirements: Binary executables of X-13ARIMA-SEATS (installation notes: see README)
+SystemRequirements: Binary executables of X-13ARIMA-SEATS (installation notes:
+    see README or vignette)
 Type: Package
 Title: R interface to X-13ARIMA-SEATS
 Version: 0.41.0
 Date: 2014-02-12
 Author: Christoph Sax
 Maintainer: Christoph Sax <christoph.sax@gmail.com>
-Description: seasonal is an easy-to-use R-interface to X-13ARIMA-SEATS, a
-    seasonal adjustment software developed by the United States Census Bureau.
-    X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA
-    (developed by the Census Bureau) and the TRAMO-SEATS (developed by the Bank
-    of Spain) software packages. For installation details, see the vignette.
+Description: seasonal is an easy-to-use and (almost) full-featured R-interface
+    to X-13ARIMA-SEATS, the newest seasonal adjustment software developed by
+    the United States Census Bureau. X-13ARIMA-SEATS combines and extends the
+    capabilities of the older X-12ARIMA (developed by the Census Bureau) and
+    TRAMO-SEATS (developed by the Bank of Spain). For installation notes, see
+    the README file or the vignette.
 Enhances: manipulate
 License: GPL-3
 BugReports: https://github.com/christophsax/seasonal
