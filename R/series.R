@@ -31,6 +31,7 @@ series <- function(x, series, reeval = TRUE){
       series.NA <- setdiff(series, names(x$series))
     }
     
+    activated <- NULL
     reeval.dots <- list()
     for (i in seq_along(series.NA)){
       series.NA.i <- series.NA[i]
@@ -38,7 +39,7 @@ series <- function(x, series, reeval = TRUE){
       spec.i <- as.character(SPECS[SPECS$short == series.NA.i, ]$spec)
       
       if (!spec.i %in% names(x$spc)){
-        warning(paste0("\'", spec.i, "\' spec activated"))
+        activated <- c(activated, spec.i)
       }
       
       reeval.dots[[i]] <- series.NA.i
@@ -47,7 +48,10 @@ series <- function(x, series, reeval = TRUE){
     x <- reeval(x, reeval.dots)
   }
 
-
+  if (length(activated) > 0){
+    warning(paste("specs have been added to the model:", 
+                  paste(unique(activated), collapse = ", ")))
+  }
   do.call(cbind, x$series[series])
 }
 

@@ -45,10 +45,16 @@ read_series <- function(file){
   if (!file.exists(file)){
     return(NULL)
   }
-  
   dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE)
+  
+  # if not numeric, return as it is
+  if (grepl("[a-zA-Z]", dta.raw[2, 1])){
+    z <- dta.raw[-1, ]
+    rownames(z) <- NULL
+    return(z)
+  }
+        
   dta <- apply(dta.raw[-1, ], 2, as.numeric)
-
   time.raw <- as.numeric(dta[, 1])
     
   if (nchar(time.raw[1]) == 6){  # time series
@@ -64,9 +70,10 @@ read_series <- function(file){
     }
     
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
+
     z <- ts(dta[, -1], start = time[1], frequency = frequency)
   } else {
-    z <- dta[, -1]
+    z <- dta
   }
   z
 }
