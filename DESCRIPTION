@@ -1,6 +1,5 @@
 Package: seasonal
-SystemRequirements: Binary executables of X-13ARIMA-SEATS (installation details
-    included)
+SystemRequirements: Binary executables of X-13ARIMA-SEATS (installation notes: see README)
 Type: Package
 Title: R interface to X-13ARIMA-SEATS
 Version: 0.41.0
