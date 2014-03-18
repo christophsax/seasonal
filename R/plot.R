@@ -29,6 +29,7 @@
 #' @param choice     character string, \code{"seasonal"} (default) or
 #'   \code{"irregular"}.
 #' @param main    character string, title of the graph.
+#' @param series  name of the series to plot
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
 #' @return All plot functions returns a plot as their side effect.
@@ -65,7 +66,8 @@
 #' monthplot(m)
 #' 
 #' plot(slidingspans(m))
-#' plot(revisions(m))
+#' rev <- revisions(m)
+#' plot(rev, "chngestimates")
 #' 
 #' # use R functions to analyze "seas" models
 #' pacf(resid(m))
@@ -149,11 +151,4 @@ plot.slidingspans <- function(x, main = "sliding spans", ...){
 }
 
 
-#' @rdname plot.seas
-#' @method plot revisions
-#' @export
-plot.revisions <- function(x, main = "revisions", ...){
-  ts.plot(x$sae, col = c("black", "red"), main = main, ...)
-  
-  legend("topleft", c("concurrent estimation", "final estimation"), lty = 1, col = c("black", "red"), bty = "n", horiz = TRUE)
-}
+

@@ -96,10 +96,10 @@ consist_spclist <-function(x){
     x <- mod_spclist(x, automdl.print = "bestfivemdl")
   }
   
-  if (!is.null(x$history)){
-    x <- mod_spclist(x, history.save = c("sarevisions", "saestimates"))
-  }
-  
+#   if (!is.null(x$history)){
+#     x <- mod_spclist(x, history.save = c("sarevisions", "saestimates"))
+#   }
+#   
   if (!is.null(x$slidingspans)){
     x <- mod_spclist(x, slidingspans.save = c("sfspans"))
   }

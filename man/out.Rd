@@ -68,7 +68,9 @@ revisions(m)
 
 # plot method for slingspans and revisions (see ?plot.seas)
 plot(slidingspans(m))
-plot(revisions(m))
+rev <- revisions(m)
+plot(rev)
+plot(rev, series = "trendestimates")
 
 }
 }

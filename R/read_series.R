@@ -45,16 +45,21 @@ read_series <- function(file){
   if (!file.exists(file)){
     return(NULL)
   }
-  dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE)
-  
+
+  if (grepl("\\.ipc$|\\.iac$", file)){  # exception handling for ipc and iac files
+    dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE, skip = 2)
+  } else {
+    dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE)
+  }
+
   # if not numeric, return as it is
   if (grepl("[a-zA-Z]", dta.raw[2, 1])){
     z <- dta.raw[-1, ]
     rownames(z) <- NULL
     return(z)
   }
-        
-  dta <- apply(dta.raw[-1, ], 2, as.numeric)
+
+  dta <- apply(dta.raw[-1, ], 2, type.convert)
   time.raw <- as.numeric(dta[, 1])
     
   if (nchar(time.raw[1]) == 6){  # time series
@@ -74,6 +79,7 @@ read_series <- function(file){
     z <- ts(dta[, -1], start = time[1], frequency = frequency)
   } else {
     z <- dta
+    rownames(z) <- NULL
   }
   z
 }

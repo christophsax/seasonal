@@ -1,14 +1,35 @@
-#' Universal import of X-13 data series 
+#' Universal import of X-13ARIMA-SEATS output
+#' 
+#' With the \code{series} function, it is possible to import all tables that can
+#' be saved in X-13ARIMA-SEATS (exception: composite spec).
+#' 
+#' If the save argument has not been specified in the model call, \code{series}
+#' re-evaluates the call with the 'forecast' spec enabled. Note that
+#' re-evaluation doubles the overall computational time. If you want to speed it
+#' up, you have to be explicit about the output in the model call.
 #' 
 #' @param x  an object of class \code{"seas"}.
-#' @param series  short name of an X-13 data table. 
-#'  
+#' @param series  character, short or long names of an X-13ARIMA-SEATS save file. See the
+#'   manual for a description. If a long name is specified, it needs to be
+#'   combined with the spec name and separated by a dot (it is not unique,
+#'   otherwise). More than one series can be specified. See examples.
+#'   
+#'   
 #' @export
 #' 
 #' @examples
 #' 
 #' \dontrun{
-
+#' 
+#' m <- seas(AirPassengers)
+#' series(m, "fct")  # re-evaluate with the forcast activated 
+#' 
+#' 
+#' # more than one series
+#' series(m, c("d7", "d8"))
+#' 
+#' m <- seas(AirPassengers, forecast.save = "fct")
+#' series(m, "fct")
 #' 
 #' }
 #' 
@@ -22,9 +43,9 @@ series <- function(x, series, reeval = TRUE){
   is.valid <- logical(length = length(series))
   is.valid[is.dotted] <- series[is.dotted] %in% SPECS$long[SPECS$is.series]
   is.valid[!is.dotted] <- series[!is.dotted] %in% SPECS$short[SPECS$is.series]
-  
+
   if (any(!is.valid)){
-    stop(paste0("\nseries not valid: ", paste(series[!is.valid], collapse = ", "), ".\nsee ?series for all importable series. "))
+    stop(paste0("\nseries not valid: ", paste(series[!is.valid], collapse = ", "), "\nsee ?series for a list of importable series "))
   }
   
   # unique short names
@@ -44,9 +65,8 @@ series <- function(x, series, reeval = TRUE){
     reeval.dots <- list()
     for (i in seq_along(series.NA)){
       series.NA.i <- series.NA[i]
-      
-      spec.i <- as.character(SPECS[SPECS$short == series.NA.i, ]$spec)
-      
+      spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
+      if (length(spec.i) > 1) stop("not unique!!!!!!!!!!")
       if (!spec.i %in% names(x$spc)){
         activated <- c(activated, spec.i)
       }
@@ -54,14 +74,18 @@ series <- function(x, series, reeval = TRUE){
       reeval.dots[[i]] <- series.NA.i
       names(reeval.dots)[i] <- paste0(spec.i, '.save')
     }
-    x <- reeval(x, reeval.dots)
+    
+    if (length(activated) > 0){
+      message(paste("specs have been added to the model:", 
+                    paste(unique(activated), collapse = ", ")))
+    }
+    
+    if (length(reeval.dots) > 0){
+      x <- reeval(x, reeval.dots, out = FALSE)
+    }
   }
 
-  if (length(activated) > 0){
-    message(paste("specs have been added to the model:", 
-                  paste(unique(activated), collapse = ", ")))
-  }
-  do.call(cbind, x$series[series])
+  do.call(cbind, x$series[series.short])
 }
 
 

@@ -64,7 +64,9 @@
 #' 
 #' # plot method for slingspans and revisions (see ?plot.seas)
 #' plot(slidingspans(m))
-#' plot(revisions(m))
+#' rev <- revisions(m)
+#' plot(rev)
+#' plot(rev, series = "trendestimates")
 #' 
 #' }
 #' 
@@ -84,10 +86,12 @@ out <- function(x, line = 1, n = 100, search = NULL, ...){
 
 
 
-reeval <- function(x, ldots){
+reeval <- function(x, ldots, out = TRUE){
   lc <- as.list(x$call)
   lc <- c(lc, ldots)
-  lc$out <- TRUE
+  if (out){
+    lc$out <- TRUE
+  }
 
   z <- eval(as.call(lc), envir = globalenv())
   z
@@ -96,7 +100,7 @@ reeval <- function(x, ldots){
 
 #' @export
 #' @method print out
-print.out <- function(x, line = 1, n = 500, search = NULL, ...){
+print.out <- function(x, line = 1, n = 600, search = NULL, ...){
   
   # use print parameters if present
   if (!is.null(attr(x, "line"))){

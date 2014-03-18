@@ -3,14 +3,15 @@
 #' @export
 revisions <- function(x, ...){
   ldots <- list(...)
-  if (length(ldots) == 0){
-    ldots$history = list()
-  } else {
-    if (!any(grepl("history", names(ldots)))){
-      ldots$history = list()
-    }
-  }
-  z <- reeval(x, ldots)
+  
+  reeval.dots <- list(
+    history.estimates = c("sadj", "sadjchng", "trend", "trendchng", "seasonal"),
+    history.save = c("saestimates", "chngestimates", "sarevisions", "sfestimates", "trendestimates")
+    )
+  
+  reeval.dots <- c(reeval.dots, ldots)
+
+  z <- reeval(x, reeval.dots)
 
   n.line <- grep("history analysis", z$out)
   if (length(n.line) == 0){
@@ -28,6 +29,26 @@ revisions <- function(x, ...){
 #' @method print revisions
 print.revisions <- function(x, ...){
   print(x$revisions)
+}
+
+
+
+#' @rdname plot.seas
+#' @method plot revisions
+#' @export
+plot.revisions <- function(x, series = c("saestimates", "chngestimates", "sarevisions", "sfestimates", "trendestimates")){
+  series <- match.arg(series)
+  
+  class(x) <- "seas"
+  dta <- series(x, paste0("history.", series), reeval = FALSE)
+  
+  nc <- NCOL(dta)
+  ncol <- rainbow(nc)
+  ts.plot(dta, col = ncol, main = series)
+  
+  if (nc > 1){
+    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+  }
 }
 
 

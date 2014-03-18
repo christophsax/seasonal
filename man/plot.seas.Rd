@@ -15,7 +15,8 @@ residplot(x, outliers = TRUE, ...)
 
 \method{plot}{slidingspans}(x, main = "sliding spans", ...)
 
-\method{plot}{revisions}(x, main = "revisions", ...)
+\method{plot}{revisions}(x, series = c("saestimates", "chngestimates",
+  "sarevisions", "sfestimates", "trendestimates"))
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -29,6 +30,8 @@ residplot(x, outliers = TRUE, ...)
   (default) or \code{"irregular"}.}
 
   \item{main}{character string, title of the graph.}
+
+  \item{series}{name of the series to plot}
 
   \item{\dots}{further arguments passed to the plotting
   functions.}
@@ -77,7 +80,8 @@ residplot(m, outliers = FALSE)
 monthplot(m)
 
 plot(slidingspans(m))
-plot(revisions(m))
+rev <- revisions(m)
+plot(rev, "chngestimates")
 
 # use R functions to analyze "seas" models
 pacf(resid(m))
