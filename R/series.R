@@ -16,19 +16,28 @@ series <- function(x, series, reeval = TRUE){
   stopifnot(inherits(x, "seas"))
   data(specs)
   
-  is.valid <- series %in% SPECS$short[SPECS$is.series]
+  is.dotted <- grepl("\\.", series)
+  
+  # check validiy of short or long names
+  is.valid <- logical(length = length(series))
+  is.valid[is.dotted] <- series[is.dotted] %in% SPECS$long[SPECS$is.series]
+  is.valid[!is.dotted] <- series[!is.dotted] %in% SPECS$short[SPECS$is.series]
   
   if (any(!is.valid)){
-    stop(paste("series not allowed:", paste(series[!is.valid], collapse = ", ")))
+    stop(paste0("\nseries not valid: ", paste(series[!is.valid], collapse = ", "), ".\nsee ?series for all importable series. "))
   }
   
+  # unique short names
+  series.short <- unique(c(series[!is.dotted], 
+    merge(data.frame(long = series[is.dotted]), SPECS)$short))
+
   # reeval with non present output
   if (reeval){
     # check which series are already there
     if (is.null(x$series)){
-      series.NA <- series
+      series.NA <- series.short
     } else {
-      series.NA <- setdiff(series, names(x$series))
+      series.NA <- setdiff(series.short, names(x$series))
     }
     
     activated <- NULL
@@ -49,7 +58,7 @@ series <- function(x, series, reeval = TRUE){
   }
 
   if (length(activated) > 0){
-    warning(paste("specs have been added to the model:", 
+    message(paste("specs have been added to the model:", 
                   paste(unique(activated), collapse = ", ")))
   }
   do.call(cbind, x$series[series])
