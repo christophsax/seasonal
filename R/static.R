@@ -81,12 +81,12 @@ static <- function(x, coef = FALSE, test = TRUE){
   lc$arima.model <- x$model$arima$model
   
   # Turn off outomatic procedures:
-  # To assign NULL instead of removing the element
+  # To assign NULL instead of removing the element, do this magic
   lc['regression.aictest'] <- NULL
   names(lc['regression.aictest']) <- "regression.aictest"
   
   lc['outlier'] <- NULL
-  names(lc['outlier']) <- "regression.aictest"
+  names(lc['outlier']) <- "outlier"
   
   lc$transform.function = x$transform.function
   
