@@ -16,7 +16,7 @@ residplot(x, outliers = TRUE, ...)
 \method{plot}{slidingspans}(x, main = "sliding spans", ...)
 
 \method{plot}{revisions}(x, series = c("saestimates", "chngestimates",
-  "sarevisions", "sfestimates", "trendestimates"))
+  "sarevisions", "sfestimates", "trendestimates"), ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a

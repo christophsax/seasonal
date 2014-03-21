@@ -1,23 +1,29 @@
-#' Time Series from a Seasonal Adjustment Model
+#' Time Series of a Seasonal Adjustment Model
 #' 
-#' These functions extract time series from a \code{"seas"} object.
+#' Functions to extract the main time series from a \code{"seas"} object. For
+#' universal import of X-13ARIMA-SEATS tables, use the \code{\link{series}}
+#' function.
+#' 
+#' These functions support R default NA handling. If \code{na.action = 
+#' na.exclude} is specified in the call to \code{seas}, the time series will 
+#' also contain NAs.
 #' 
 #' @param object  an object of class \code{"seas"}.
 #' @param ...  not used. For compatibility with the generic.
 #'   
 #' @return returns a \code{"ts"} object, depending on the function.
-#' 
-#' @return \code{regressioneffects} returns a \code{"mts"} object, containing the regression variables multiplied by the vector of estimated 
-#' regression coefficients
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
-#' 
+#' @seealso \code{\link{series}}, for universal X-13 output extraction.
+#'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
+#'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
@@ -33,14 +39,6 @@
 #' original(m)
 #' irregular(m)
 #' trend(m)
-#' regressioneffects(m)
-#' 
-#' # trading day and easter adjustment w/o seasonal adjustment
-#' summary(m)
-#' re <- regressioneffects(m)
-#' ce <- re[, 'Trading.Day'] + re[, 'Holiday'] 
-#' # be aware of the log transformation
-#' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
 #' 
 #' # NA handling
 #' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
@@ -51,6 +49,7 @@
 #' @export
 final <- function(object){
   extract_w_na_action(object, 'final')
+  
 }
 
 #' @rdname final
@@ -69,14 +68,6 @@ trend <- function(object){
 #' @export
 irregular <- function(object){
   extract_w_na_action(object, 'irregular')
-}
-
-
-#' @export
-#' @rdname final
-regressioneffects <- function(object){
-  message("function is deprecated and will be removed soon. \nuse instead the more general function:\n  series(x, \"estimate.regressioneffects\") ")   
-  series(object, "estimate.regressioneffects") 
 }
 
 

@@ -36,7 +36,9 @@ print.revisions <- function(x, ...){
 #' @rdname plot.seas
 #' @method plot revisions
 #' @export
-plot.revisions <- function(x, series = c("saestimates", "chngestimates", "sarevisions", "sfestimates", "trendestimates")){
+plot.revisions <- function(x, series = c("saestimates", "chngestimates", 
+                                         "sarevisions", "sfestimates", 
+                                         "trendestimates"), ...){
   series <- match.arg(series)
   
   class(x) <- "seas"

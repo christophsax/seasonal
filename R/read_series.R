@@ -21,8 +21,6 @@ read_data <- function(method = "seats", file){
   } else {
     stop("wrong method.")
   }
-    
-  residuals <- read_series(paste0(file, ".rsd"))
 
   if (file.exists(paste0(file, ".saa"))){
     final <- read_series(paste0(file, ".saa"))
@@ -30,8 +28,7 @@ read_data <- function(method = "seats", file){
     final <- seasonaladj
   }
 
-  cbind(final, seasonal, seasonaladj, trend, irregular, adjustfac,
-        residuals)
+  cbind(final, seasonal, seasonaladj, trend, irregular, adjustfac)
 }
 
 

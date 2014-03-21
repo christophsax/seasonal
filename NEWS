@@ -1,3 +1,22 @@
+NEXT
+
+new features
+- 'series' function, which allows the import of almost all tables produced by X-13
+
+enhancements
+- 'slidingspans' and 'revisions' analyses include more components of a series.
+- improved help pages
+- 'series' function part of the examples in the wiki
+
+bug fixes
+- quotes in series name are now allowed
+- support for unorthodox frequencies (e.g. 2, 'seats' only)
+- spaces in folder names on windows are now allowed
+
+code improvements
+- code takes advantage of the series function, simplified import from X-13.
+
+
 0.40.0  2014-02-12
 
 new features

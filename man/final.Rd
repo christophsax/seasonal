@@ -2,10 +2,9 @@
 \alias{final}
 \alias{irregular}
 \alias{original}
-\alias{regressioneffects}
 \alias{residuals.seas}
 \alias{trend}
-\title{Time Series from a Seasonal Adjustment Model}
+\title{Time Series of a Seasonal Adjustment Model}
 \usage{
 final(object)
 
@@ -14,8 +13,6 @@ original(object)
 trend(object)
 
 irregular(object)
-
-regressioneffects(object)
 
 \method{residuals}{seas}(object, ...)
 }
@@ -26,14 +23,17 @@ regressioneffects(object)
 }
 \value{
 returns a \code{"ts"} object, depending on the function.
-
-\code{regressioneffects} returns a \code{"mts"} object,
-containing the regression variables multiplied by the
-vector of estimated regression coefficients
 }
 \description{
-These functions extract time series from a \code{"seas"}
-object.
+Functions to extract the main time series from a
+\code{"seas"} object. For universal import of
+X-13ARIMA-SEATS tables, use the \code{\link{series}}
+function.
+}
+\details{
+These functions support R default NA handling. If
+\code{na.action = na.exclude} is specified in the call to
+\code{seas}, the time series will also contain NAs.
 }
 \examples{
 \dontrun{
@@ -44,14 +44,6 @@ final(m)
 original(m)
 irregular(m)
 trend(m)
-regressioneffects(m)
-
-# trading day and easter adjustment w/o seasonal adjustment
-summary(m)
-re <- regressioneffects(m)
-ce <- re[, 'Trading.Day'] + re[, 'Holiday']
-# be aware of the log transformation
-AirPassengersWoTd <- exp(log(AirPassengers) - ce)
 
 # NA handling
 AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
@@ -73,5 +65,7 @@ Official X-13ARIMA-SEATS manual:
 }
 \seealso{
 \code{\link{seas}} for the main function of seasonal.
+
+\code{\link{series}}, for universal X-13 output extraction.
 }
 

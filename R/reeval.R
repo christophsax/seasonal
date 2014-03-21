@@ -1,17 +1,17 @@
 #' Diagnostical Re-Evaluation
 #' 
 #' For diagnostical purposes, these functions re-evaluate an object of class 
-#' seas and capture the full content or parts of the .out file from 
+#' \code{"seas"} and capture the full content or parts of the .out file from 
 #' X-13ARIMA-SEATS.
 #' 
 #' The \code{out} function shows the full content of the \code{.out} file form 
 #' X-13ARIMA-SEATS. The \code{slidingspans} and \code{revisions} function call 
-#' the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS and show the
-#' respective parts of the \code{.out} file. Note that against the convention,
-#' the 'history' spec is called by the function \code{revision}, in order to
-#' avoid a naming collision with the function from the preloaded \code{utils}
-#' package. For a description of the 'slidingsspan' and 'history' spec, consider
-#' the X-13ARIMA-SEATS manual.
+#' the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS and show the 
+#' respective parts of the \code{.out} file. Note that against the convention, 
+#' the 'history' spec is called by the function \code{revision}, in order to 
+#' avoid a naming collision with the function from the preloaded \code{utils} 
+#' package. For a description of the 'slidingsspans' and 'history' spec,
+#' consider the X-13ARIMA-SEATS manual.
 #' 
 #' For how to enter spec-arguments options, see the details in 
 #' \code{"\link{seas}"}. In the \code{out} function, \code{...} are useful to 
@@ -26,9 +26,16 @@
 #'   the first occurence of the string (see examples).
 #' @param ... aditional spec-arguments options (see details).
 #'   
-#' @return invisible, the full content or parts of the .out file as a (large) 
-#'   character vector. The content of the vector is displayed by a viewer 
-#'   function in the R console.
+#' @return an object of class \code{"out"}, \code{"revisions"} or
+#'   \code{"slidingspans"}, which is basically a \code{"seas"} object that
+#'   contatins the \code{out} element from the X-13ARIMA-SEATS \code{.out} file.
+#'   \code{"revisions"} and \code{"slidingspans"} also contain some additional
+#'   time series.
+#'   
+#'   If printed, the objects show the content of the \code{.out} file.
+#'   
+#'   There are \code{plot} methods for \code{"revisions"} and
+#'   \code{"slidingspans"} that visualize the spec.
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #'   
@@ -41,8 +48,6 @@
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
-#'   
-#'   
 #'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
@@ -61,6 +66,10 @@
 #' 
 #' slidingspans(m)
 #' revisions(m)
+#' 
+#' # passing options
+#' revisions(m, history.start = "1959.Aug")
+#' slidingspans(m, slidingspans.fixreg = "td")
 #' 
 #' # plot method for slingspans and revisions (see ?plot.seas)
 #' plot(slidingspans(m))

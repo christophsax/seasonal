@@ -26,14 +26,23 @@ slidingspans(x, ...)
   details).}
 }
 \value{
-invisible, the full content or parts of the .out file as a
-(large) character vector. The content of the vector is
-displayed by a viewer function in the R console.
+an object of class \code{"out"}, \code{"revisions"} or
+\code{"slidingspans"}, which is basically a \code{"seas"}
+object that contatins the \code{out} element from the
+X-13ARIMA-SEATS \code{.out} file.  \code{"revisions"} and
+\code{"slidingspans"} also contain some additional time
+series.
+
+If printed, the objects show the content of the \code{.out}
+file.
+
+There are \code{plot} methods for \code{"revisions"} and
+\code{"slidingspans"} that visualize the spec.
 }
 \description{
 For diagnostical purposes, these functions re-evaluate an
-object of class seas and capture the full content or parts
-of the .out file from X-13ARIMA-SEATS.
+object of class \code{"seas"} and capture the full content
+or parts of the .out file from X-13ARIMA-SEATS.
 }
 \details{
 The \code{out} function shows the full content of the
@@ -44,7 +53,7 @@ show the respective parts of the \code{.out} file. Note
 that against the convention, the 'history' spec is called
 by the function \code{revision}, in order to avoid a naming
 collision with the function from the preloaded \code{utils}
-package. For a description of the 'slidingsspan' and
+package. For a description of the 'slidingsspans' and
 'history' spec, consider the X-13ARIMA-SEATS manual.
 
 For how to enter spec-arguments options, see the details in
@@ -65,6 +74,10 @@ out(m, search = "regARIMA model residuals")
 
 slidingspans(m)
 revisions(m)
+
+# passing options
+revisions(m, history.start = "1959.Aug")
+slidingspans(m, slidingspans.fixreg = "td")
 
 # plot method for slingspans and revisions (see ?plot.seas)
 plot(slidingspans(m))

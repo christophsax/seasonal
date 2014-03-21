@@ -1,8 +1,8 @@
 #' Diagnostical Statistics
 #' 
-#' Functions to access diagnostical statics in a \code{"seas"} object. More 
-#' statistics can be calculated with standard R functions (see examples). For 
-#' accessing the complete output of X-13ARIMA-SEATS, use the \code{\link{out}} 
+#' Functions to access some specific diagnostical statics in a \code{"seas"} object.  
+#' For universal import of X-13ARIMA-SEATS tables, use the \code{\link{series}} function. For 
+#' accessing the \code{.out} file of X-13ARIMA-SEATS, use the \code{\link{out}} 
 #' function. For diagnostical plots, see \code{\link{plot.seas}}.
 #' 
 #' @param x  object of class \code{"seas"}
@@ -24,6 +24,7 @@
 #'   non-seasonal and seasonal part of the ARIMA model.
 #'   
 #' @seealso \code{\link{seas}} for the main function.
+#' @seealso \code{\link{series}}, for universal X-13 output extraction.
 #' @seealso \code{\link{plot.seas}}, for diagnostical plots.
 #' @seealso \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
 #' 
@@ -52,11 +53,10 @@
 #' spc(m2)           # arima overwrites the automdl spec
 #' fivebestmdl(m2)   # re-evaluation with automdl
 #' 
-#' # more diagnostical statistics with R functions
-#' shapiro.test(resid(m))  # no rejection of normality
-#' Box.test(resid(m), lag = 24, type = "Ljung-Box")  # no auto-correlation
+#' universal output extraction (see ?series)
+#' series(m, "identify.pacf")
 #' 
-#' # accessing the full output (see ?out)
+#' # accessing the .out file (see ?out)
 #' out(m)
 #' out(m, search = "Ljung-Box")
 #' }

@@ -1,12 +1,13 @@
 #' seasonal: R interface to X-13ARIMA-SEATS
 #' 
-#' @description seasonal is an easy-to-use R-interface to X-13ARIMA-SEATS, a
-#'   seasonal adjustment software developed by the United States Census
-#'   Bureau. X-13ARIMA-SEATS combines and extends the capabilities of
-#'   the older X-12ARIMA (developed by the Census Bureau) and the TRAMO-SEATS
-#'   (developed by the Bank of Spain) software packages.
+#' @description seasonal is an easy-to-use and (almost) full-featured 
+#'   R-interface to X-13ARIMA-SEATS, the newest seasonal adjustment software 
+#'   developed by the United States Census Bureau. X-13ARIMA-SEATS combines and 
+#'   extends the capabilities of the older X-12ARIMA (developed by the Census 
+#'   Bureau) and TRAMO-SEATS (developed by the Bank of Spain).
 #'   
-#'   The best way to start is to have a look at the vignette:
+#'   The best way to start is to have a look at the vignette, where installation
+#'   and usage is described.
 #'   
 #'   \code{vignette("seas")}
 #'   
@@ -15,7 +16,8 @@
 #' @docType package
 #' @author Christoph Sax \email{christoph.sax@@gmail.com}
 #' @keywords package
-#' @seealso \code{\link{seas}} for more information on usage.
+#' @seealso \code{\link{seas}} for the core function and more information on
+#'   package usage.
 NULL
 
 
@@ -72,3 +74,23 @@ NULL
 #' @keywords datasets
 NULL
 
+
+
+#' List of Available X-13ARIMA-SEATS Outputs
+#' 
+#' The data is used by several functions as a look-up table. Users
+#' should consider the tables in the official manual.
+#' 
+#' @docype data
+#'   
+#' @format An object of class \code{"data.frame"}.
+#'   
+#' @source United States Census Bureau
+#'   
+#' @references Official X-13ARIMA-SEATS manual: 
+#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   
+#' @name SPECS
+#' @aliases SPECS
+#' @keywords datasets
+NULL
