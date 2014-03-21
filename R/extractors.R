@@ -83,12 +83,7 @@ regressioneffects <- function(object){
 #' @rdname final
 #' @export
 residuals.seas <- function(object, ...){
-  if ('residuals' %in% colnames(object$data)){
-    z <- na.omit(object$data[,'residuals'])
-  } else {
-    z <- NULL
-  }
-  z
+  series(x, "rsd")
 }
 
 
