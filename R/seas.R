@@ -2,19 +2,19 @@
 #' 
 #' Core function of the seasonal package. By default, \code{seas} calls the 
 #' automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
-#' works well in most circumstances. Through the \code{...} argument, it is 
+#' works well in most circumstances. Via the \code{...} argument, it is 
 #' possible to invoke almost all options that are available in X-13ARIMA-SEATS 
 #' (see details). The default options are specified as explicit arguments and 
 #' are discussed in the arguments section.
 #' 
-#' \emph{seasonal} uses a very similar syntax than the official X-13ARIMA-SEATS.
-#' The X-13ARIMA-SEATS syntax uses \emph{specs} and \emph{arguments}, and each
-#' spec optionally contains some arguments. In \code{seas}, an additional 
-#' spec-argument can be added by separating spec and argument by a dot 
-#' (\code{.}) (see examples).
+#' It is possible to use the (almost) complete syntax of X-13ARIMA-SEAT via the
+#' \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
+#' \emph{arguments}, and each spec optionally contains some arguments. In
+#' \code{seas}, an additional spec-argument can be added by separating spec and
+#' argument by a dot (\code{.}) (see examples).
 #' 
-#' For a more extensive description, consider the vignette or the wiki page,
-#' which contains replications of almost all examples from the official
+#' For a more extensive description, consider the vignette or the wiki page, 
+#' which contains replications of almost all examples from the official 
 #' X-13ARIMA-SEATS manual.
 #' 
 #' @param x   object of class \code{"ts"}: time series to seasonaly adjust.
@@ -36,14 +36,13 @@
 #' @param outlier   spec \code{outlier} without arguments (default). Automatic 
 #'   oulier detection. Set equal to \code{NULL} to turn off.
 #' @param automdl   spec \code{automdl} without arguments (default). Automatic 
-#'   model search with the automdl spec. Set equal to \code{NULL} to turn 
-#'   off.
+#'   model search with the automdl spec. Set equal to \code{NULL} to turn off.
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
 #' @param out   logical, should the X-13ARIMA-SEATS standard output be saved in 
 #'   the \code{"seas"} object? (this increases object size substantially, it is 
-#'   recommended to re-evaluate the model using the \code{\link{out}} 
-#'   function instead.)
+#'   recommended to re-evaluate the model using the \code{\link{out}} function 
+#'   instead.)
 #' @param dir   character string with a user defined file path. If specified, 
 #'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for 
 #'   debugging.
@@ -51,33 +50,24 @@
 #'   details).
 #'   
 #' @return returns an object of class \code{"seas"}, essentially a list with the
-#'   following elements: 
-#'   \item{err}{warning messages from X-13ARIMA-SEATS} 
-#'   \item{data}{seasonally 
-#'   adjusted data, the raw data, the trend component, the irregular component 
-#'   and the seasonal component} 
-#'   \item{regressioneffects}{regression variables multiplied by the vector of estimated regression coefficients} 
-#'   \item{model}{list with the model 
-#'   specification, similar to \code{"spc"}. It typically contains 
-#'   \code{"regression"}, which contains the regressors and parameter 
-#'   estimates, and \code{"arima"}, which contains the ARIMA specification and 
-#'   the parameter estimates.} 
-#'   \item{estimates}{detailed information on the 
-#'   estimation} 
-#'   \item{lkstats}{summary statistics} 
-#'   \item{sfspans}{(optional) data from sliding spans analysis} 
-#'   \item{transform.function}{character string, applied transformation}
-#'   \item{fivebestmdl}{five best models according to BIC criterion}
-#'   \item{qs}{QS statistics}
-#'   \item{x}{input series}
-#'   \item{spc}{object of class 
-#'   \code{"spclist"}, a list containing everything that is send to 
-#'   X-13ARIMA-SEATS. Each spec is on the first level, each argument is on the 
-#'   second level.} 
-#'   \item{call}{function call}
+#'   following elements: \item{err}{warning messages from X-13ARIMA-SEATS} 
+#'   \item{series}{a list containing the output tables of X-13. To be accessed 
+#'   by the \code{series} function.} \item{data}{seasonally adjusted data, the 
+#'   raw data, the trend component, the irregular component and the seasonal 
+#'   component (deprecated).} \item{model}{list with the model specification, 
+#'   similar to \code{"spc"}. It typically contains \code{"regression"}, which 
+#'   contains the regressors and parameter estimates, and \code{"arima"}, which 
+#'   contains the ARIMA specification and the parameter estimates.} 
+#'   \item{estimates}{detailed information on the estimation} 
+#'   \item{lkstats}{summary statistics} \item{transform.function}{character 
+#'   string, applied transformation} \item{fivebestmdl}{five best models 
+#'   according to BIC criterion} \item{qs}{QS statistics} \item{x}{input series}
+#'   \item{spc}{object of class \code{"spclist"}, a list containing everything 
+#'   that is send to X-13ARIMA-SEATS. Each spec is on the first level, each 
+#'   argument is on the second level.} \item{call}{function call}
 #'   
-#'   The \code{final} function returns the final adjusted series, the
-#'   \code{plot} method shows a plot with the unadjusted and the adjusted
+#'   The \code{final} function returns the final adjusted series, the 
+#'   \code{plot} method shows a plot with the unadjusted and the adjusted 
 #'   series. \code{summary} gives an overview of the regARIMA model.
 #'   
 #' @seealso \code{\link{static}}, to return the static call that is needed to 
@@ -96,6 +86,8 @@
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 #'   
 #'   
+#'   
+#'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #' @export
@@ -105,7 +97,7 @@
 #' m <- seas(AirPassengers) 
 #' summary(m)
 #' 
-#' # invoke X-13ARIMA-SEATS options as 'spec.argument'
+#' # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
 #' # (consult the X-13ARIMA-SEATS manual for many more options and the wiki for
 #' # for more examples)
 #' seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
@@ -122,24 +114,17 @@
 #' static(m, test = FALSE)  # no testing (useful for debugging)
 #' static(m, coef = TRUE)  # also fixes the coefficients
 #' 
-#' # extractor functions
+#' # specific extractor functions
 #' final(m) 
 #' original(m) 
 #' resid(m) 
 #' coef(m)
-#' 
-#' # five best models
 #' fivebestmdl(m)
+#' out(m)                  # the X-13 .out file (see ?out, for details)
+#' spc(m)                  # the .spc input file to X-13 (for debugging)
 #' 
-#' # replicating the default plots in Win X-13
-#' plot(m) 
-#' plot(m, trend = TRUE) 
-#' monthplot(m) 
-#' monthplot(m, choice = "irregular")
-#' spectrum(diff(final(m)) )
-#' spectrum(diff(original(m)))
-#' residplot(m)
-#' 
+#' # generic extractor function for any X-13ARIMA-SEATS output (see ?series)
+#' series(m, "forecast.forecasts")
 #' 
 #' # user defined regressors
 #' # a temporary level shift in R base
@@ -149,10 +134,6 @@
 #' # identical to a X-13ARIMA-SEATS specification of the the level shift
 #' seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"), 
 #'      outlier = NULL)
-#' 
-#' # input and output from and to X-13ARIMA-SEATS
-#' spc(m)  # analyzing the .spc file (for debugging)
-#' out(m)  # display the .out file (see ?out, for details)
 #' 
 #' # NA handling
 #' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)

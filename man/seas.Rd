@@ -64,19 +64,18 @@ seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
 \value{
 returns an object of class \code{"seas"}, essentially a
 list with the following elements: \item{err}{warning
-messages from X-13ARIMA-SEATS} \item{data}{seasonally
-adjusted data, the raw data, the trend component, the
-irregular component and the seasonal component}
-\item{regressioneffects}{regression variables multiplied by
-the vector of estimated regression coefficients}
+messages from X-13ARIMA-SEATS} \item{series}{a list
+containing the output tables of X-13. To be accessed by the
+\code{series} function.} \item{data}{seasonally adjusted
+data, the raw data, the trend component, the irregular
+component and the seasonal component (deprecated).}
 \item{model}{list with the model specification, similar to
 \code{"spc"}. It typically contains \code{"regression"},
 which contains the regressors and parameter estimates, and
 \code{"arima"}, which contains the ARIMA specification and
 the parameter estimates.} \item{estimates}{detailed
 information on the estimation} \item{lkstats}{summary
-statistics} \item{sfspans}{(optional) data from sliding
-spans analysis} \item{transform.function}{character string,
+statistics} \item{transform.function}{character string,
 applied transformation} \item{fivebestmdl}{five best models
 according to BIC criterion} \item{qs}{QS statistics}
 \item{x}{input series} \item{spc}{object of class
@@ -101,12 +100,13 @@ options are specified as explicit arguments and are
 discussed in the arguments section.
 }
 \details{
-\emph{seasonal} uses a very similar syntax than the
-official X-13ARIMA-SEATS. The X-13ARIMA-SEATS syntax uses
-\emph{specs} and \emph{arguments}, and each spec optionally
-contains some arguments. In \code{seas}, an additional
-spec-argument can be added by separating spec and argument
-by a dot (\code{.}) (see examples).
+It is possible to use the (almost) complete syntax of
+X-13ARIMA-SEAT via the \code{...} argument. The syntax of
+X-13ARIMA-SEATS uses \emph{specs} and \emph{arguments}, and
+each spec optionally contains some arguments. In
+\code{seas}, an additional spec-argument can be added by
+separating spec and argument by a dot (\code{.}) (see
+examples).
 
 For a more extensive description, consider the vignette or
 the wiki page, which contains replications of almost all
@@ -117,7 +117,7 @@ examples from the official X-13ARIMA-SEATS manual.
 m <- seas(AirPassengers)
 summary(m)
 
-# invoke X-13ARIMA-SEATS options as 'spec.argument'
+# invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
 # (consult the X-13ARIMA-SEATS manual for many more options and the wiki for
 # for more examples)
 seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
@@ -134,23 +134,17 @@ static(m)  # this also tests the equivalence of the static call
 static(m, test = FALSE)  # no testing (useful for debugging)
 static(m, coef = TRUE)  # also fixes the coefficients
 
-# extractor functions
+# specific extractor functions
 final(m)
 original(m)
 resid(m)
 coef(m)
-
-# five best models
 fivebestmdl(m)
+out(m)                  # the X-13 .out file (see ?out, for details)
+spc(m)                  # the .spc input file to X-13 (for debugging)
 
-# replicating the default plots in Win X-13
-plot(m)
-plot(m, trend = TRUE)
-monthplot(m)
-monthplot(m, choice = "irregular")
-spectrum(diff(final(m)) )
-spectrum(diff(original(m)))
-residplot(m)
+# generic extractor function for any X-13ARIMA-SEATS output (see ?series)
+series(m, "forecast.forecasts")
 
 # user defined regressors
 # a temporary level shift in R base
@@ -160,10 +154,6 @@ seas(AirPassengers, xreg = tls, outlier = NULL)
 # identical to a X-13ARIMA-SEATS specification of the the level shift
 seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"),
      outlier = NULL)
-
-# input and output from and to X-13ARIMA-SEATS
-spc(m)  # analyzing the .spc file (for debugging)
-out(m)  # display the .out file (see ?out, for details)
 
 # NA handling
 AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
