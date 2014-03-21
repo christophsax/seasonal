@@ -80,7 +80,7 @@ consist_spclist <-function(x){
   ### general output modification
   
   x <- mod_spclist(x, estimate.save = c("model", "estimates", "lkstats", 
-                                        "regressioneffects", "residuals"))
+                                        "residuals"))
   
   ### spec specific output modification
   

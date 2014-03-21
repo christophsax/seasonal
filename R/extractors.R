@@ -75,7 +75,8 @@ irregular <- function(object){
 #' @export
 #' @rdname final
 regressioneffects <- function(object){
-  object$regressioneffects
+  message("function is deprecated and will be removed soon. \nuse instead the more general function:\n  series(x, \"estimate.regressioneffects\") ")   
+  series(object, "estimate.regressioneffects") 
 }
 
 
