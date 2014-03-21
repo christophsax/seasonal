@@ -169,9 +169,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                  automdl = list(), na.action = na.omit,
                  out = FALSE, dir = NULL, ...){
 
-  data(specs)
+  data(specs, envir = environment())  # avoid side effects
   SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
-  
 
   # intial checks
   checkX13(fail = TRUE, full = FALSE)

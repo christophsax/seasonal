@@ -35,7 +35,8 @@
 #' 
 series <- function(x, series, reeval = TRUE){
   stopifnot(inherits(x, "seas"))
-  data(specs)
+  
+  data(specs, envir = environment())  # avoid side effects
   
   is.dotted <- grepl("\\.", series)
   
