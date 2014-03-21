@@ -24,12 +24,31 @@
 #' m <- seas(AirPassengers)
 #' series(m, "fct")  # re-evaluate with the forcast activated 
 #' 
-#' 
 #' # more than one series
 #' series(m, c("d7", "d8"))
 #' 
 #' m <- seas(AirPassengers, forecast.save = "fct")
 #' series(m, "fct")
+#' 
+#' # using long names
+#' series(m, "forecast.forecasts")
+#' 
+#' 
+#' # Some X-13ARIMA-SEATS functions can be replicated in R:
+#' 
+#' # X-13ARIMA-SEATS spectrum
+#' plot(series(m, "spectrum.specorig")[,-1], t = "l")
+#' # R equivalent: spectrum from stats
+#' spectrum(diff(log(AirPassengers)), method = "ar")
+#' 
+#' # X-13ARIMA-SEATS pacf
+#' x13.pacf <- series(m, "identify.pacf")
+#' plot(x13.pacf[,1:2])
+#' lines(x13.pacf[,3])
+#' lines(-x13.pacf[,3])
+#' 
+#' # R equivalent: pacf from stats
+#' pacf(AirPassengers, lag.max = 35)
 #' 
 #' }
 #' 

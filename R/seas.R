@@ -140,6 +140,7 @@
 #' spectrum(diff(original(m)))
 #' residplot(m)
 #' 
+#' 
 #' # user defined regressors
 #' # a temporary level shift in R base
 #' tls <- ts(0, start = 1949, end = 1965, freq = 12)
