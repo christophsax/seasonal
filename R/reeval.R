@@ -5,13 +5,16 @@
 #' X-13ARIMA-SEATS.
 #' 
 #' The \code{out} function shows the full content of the \code{.out} file form 
-#' X-13ARIMA-SEATS. The \code{slidingspans} and \code{revisions} function call 
-#' the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS and show the 
-#' respective parts of the \code{.out} file. Note that against the convention, 
-#' the 'history' spec is called by the function \code{revision}, in order to 
-#' avoid a naming collision with the function from the preloaded \code{utils} 
-#' package. For a description of the 'slidingsspans' and 'history' spec,
-#' consider the X-13ARIMA-SEATS manual.
+#' X-13ARIMA-SEATS. The \code{logfile} function does the same for the
+#' \code{.log} file.
+#' 
+#' The \code{slidingspans} and \code{revisions} function call the 'slidingspans'
+#' and 'history' spec of X-13ARIMA-SEATS and show the respective parts of the
+#' \code{.out} file. Note that against the convention, the 'history' spec is
+#' called by the function \code{revision}, in order to avoid a naming collision
+#' with the function from the preloaded \code{utils} package. For a description
+#' of the 'slidingsspans' and 'history' spec, consider the X-13ARIMA-SEATS
+#' manual.
 #' 
 #' For how to enter spec-arguments options, see the details in 
 #' \code{"\link{seas}"}. In the \code{out} function, \code{...} are useful to 
@@ -26,15 +29,16 @@
 #'   the first occurence of the string (see examples).
 #' @param ... aditional spec-arguments options (see details).
 #'   
-#' @return an object of class \code{"out"}, \code{"revisions"} or
-#'   \code{"slidingspans"}, which is basically a \code{"seas"} object that
+#' @return an object of class \code{"out"}, \code{"revisions"} or 
+#'   \code{"slidingspans"}, which is basically a \code{"seas"} object that 
 #'   contatins the \code{out} element from the X-13ARIMA-SEATS \code{.out} file.
-#'   \code{"revisions"} and \code{"slidingspans"} objects also contain additional spec specific time series
-#'   time series that can be plotted with the \code{plot} method.
+#'   \code{"revisions"} and \code{"slidingspans"} objects also contain
+#'   additional spec specific time series time series that can be plotted with
+#'   the \code{plot} method.
 #'   
 #'   If printed, the objects show the content of the \code{.out} file.
 #'   
-#'   There are \code{plot} methods for \code{"revisions"} and
+#'   There are \code{plot} methods for \code{"revisions"} and 
 #'   \code{"slidingspans"} that visualize the spec.
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
@@ -48,6 +52,7 @@
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
 #'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
@@ -94,7 +99,17 @@ out <- function(x, line = 1, n = 100, search = NULL, ...){
   z
 }
 
-
+#' @rdname out
+#' @export
+logfile <- function(x, line = 1, n = 100, search = NULL){
+  z <- x$logfile
+  
+  # print attributes
+  attr(z, "line") <- line
+  attr(z, "n") <- n
+  attr(z, "search") <- search
+  z
+}
 
 
 

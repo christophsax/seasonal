@@ -1,10 +1,13 @@
 \name{out}
+\alias{logfile}
 \alias{out}
 \alias{revisions}
 \alias{slidingspans}
 \title{Diagnostical Re-Evaluation}
 \usage{
 out(x, line = 1, n = 100, search = NULL, ...)
+
+logfile(x, line = 1, n = 100, search = NULL)
 
 revisions(x, ...)
 
@@ -47,10 +50,12 @@ or parts of the .out file from X-13ARIMA-SEATS.
 }
 \details{
 The \code{out} function shows the full content of the
-\code{.out} file form X-13ARIMA-SEATS. The
-\code{slidingspans} and \code{revisions} function call the
-'slidingspans' and 'history' spec of X-13ARIMA-SEATS and
-show the respective parts of the \code{.out} file. Note
+\code{.out} file form X-13ARIMA-SEATS. The \code{logfile}
+function does the same for the \code{.log} file.
+
+The \code{slidingspans} and \code{revisions} function call
+the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS
+and show the respective parts of the \code{.out} file. Note
 that against the convention, the 'history' spec is called
 by the function \code{revision}, in order to avoid a naming
 collision with the function from the preloaded \code{utils}
