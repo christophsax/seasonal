@@ -47,7 +47,9 @@ seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
 
   \item{na.action}{a function which indicates what should
   happen when the data contain NAs. \code{na.omit}
-  (default), \code{na.exclude} or \code{na.fail}.}
+  (default), \code{na.exclude} or \code{na.fail}.  If
+  \code{na.action = na.x13}, NA handling is done by X-13,
+  i.e. NA values are substituted by -99999.}
 
   \item{out}{logical, should the X-13ARIMA-SEATS standard
   output be saved in the \code{"seas"} object? (this
@@ -132,9 +134,9 @@ seas(AirPassengers, regression.variables = c("td1coef", "easter[1]",
 "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
 outlier = NULL, transform.function = "log")
 
-# static replication of the first call
+# static replication of 'm <- seas(AirPassengers)'
 static(m)  # this also tests the equivalence of the static call
-static(m, test = FALSE)  # no testing (useful for debugging)
+static(m, test = FALSE)  # no testing (much faster)
 static(m, coef = TRUE)  # also fixes the coefficients
 
 # specific extractor functions
@@ -166,6 +168,10 @@ AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
 final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
 # final(seas(AirPassengersNA, na.action = na.fail))    # fails
+
+# NA handling by X-13 (works with internal NAs)
+AirPassengersNA[20] <- NA
+final(seas(AirPassengersNA, na.action = na.x13))
 
 # inspect tool
 inspect(m)

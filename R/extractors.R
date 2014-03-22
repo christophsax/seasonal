@@ -75,7 +75,7 @@ irregular <- function(object){
 #' @rdname final
 #' @export
 residuals.seas <- function(object, ...){
-  series(x, "rsd")
+  series(object, "rsd")
 }
 
 

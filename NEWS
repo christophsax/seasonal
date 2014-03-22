@@ -2,6 +2,7 @@ NEXT
 
 new features
 - 'series' function, which allows the import of almost all tables produced by X-13
+- optional NA handling by X-13 (including interpolation)
 
 enhancements
 - 'slidingspans' and 'revisions' analyses include more components of a series.

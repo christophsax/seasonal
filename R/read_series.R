@@ -72,8 +72,10 @@ read_series <- function(file){
     }
     
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
-
     z <- ts(dta[, -1], start = time[1], frequency = frequency)
+    
+    z[z==-999] <- NA   # usual NA code
+    
   } else {
     z <- dta
     rownames(z) <- NULL

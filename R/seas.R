@@ -11,8 +11,8 @@
 #' \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and 
 #' \emph{arguments}, and each spec optionally contains some arguments. In 
 #' \code{seas}, an additional spec-argument can be added by separating spec and 
-#' argument by a dot (\code{.}) (see examples). Similarily, the
-#' \code{\link{series}} function can be used to read (almost) every output from
+#' argument by a dot (\code{.}) (see examples). Similarily, the 
+#' \code{\link{series}} function can be used to read (almost) every output from 
 #' X-13ARIMA-SEATS.
 #' 
 #' For a more extensive description, consider the vignette or the wiki page, 
@@ -42,6 +42,8 @@
 #'   model search with the automdl spec. Set equal to \code{NULL} to turn off.
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
+#'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values
+#'   are substituted by -99999.
 #' @param out   logical, should the X-13ARIMA-SEATS standard output be saved in 
 #'   the \code{"seas"} object? (this increases object size substantially, it is 
 #'   recommended to re-evaluate the model using the \code{\link{out}} function 
@@ -89,6 +91,7 @@
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 #'   
+#'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #' @export
@@ -110,9 +113,9 @@
 #' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL, 
 #' outlier = NULL, transform.function = "log")
 #' 
-#' # static replication of the first call
+#' # static replication of 'm <- seas(AirPassengers)'
 #' static(m)  # this also tests the equivalence of the static call
-#' static(m, test = FALSE)  # no testing (useful for debugging)
+#' static(m, test = FALSE)  # no testing (much faster)
 #' static(m, coef = TRUE)  # also fixes the coefficients
 #' 
 #' # specific extractor functions
@@ -145,6 +148,10 @@
 #' final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
 #' # final(seas(AirPassengersNA, na.action = na.fail))    # fails
 #' 
+#' # NA handling by X-13 (works with internal NAs)
+#' AirPassengersNA[20] <- NA 
+#' final(seas(AirPassengersNA, na.action = na.x13))
+#' 
 #' # inspect tool
 #' inspect(m)
 #' }
@@ -155,6 +162,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                  automdl = list(), na.action = na.omit,
                  out = FALSE, dir = NULL, ...){
 
+  
+  SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects
   SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
 
@@ -379,24 +388,6 @@ run_x13 <- function(file){
     x13.bin <- file.path(env.path, "x13as")
     system(paste(x13.bin, file), intern = TRUE)
   }
-}
-
-
-na.exclude.ts <- function(x){
-  # time series method for na.exclude
-  # 
-  # does not exist in the base package
-  # 
-  # x  a "ts" object
-  # 
-  # returns a "ts" object
-  #
-  # required by seas
-  z <- na.omit(x)
-  if (!is.null(attr(z, "na.action"))){
-    attr(attr(z, "na.action"), "class") <- "exclude"
-  }
-  z
 }
 
 

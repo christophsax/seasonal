@@ -16,8 +16,21 @@
 #'   series can be specified (see examples).
 #' @param reeval logical, if TRUE, the model is re-evaluated with the
 #'   corresponding specs enabled (also returning a message)
+#'
+#' @seealso \code{\link{seas}} for the main function.
+#'   
+#' @references Vignette with a more detailed description: 
+#'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+#'   
+#'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
+#'   manual: 
+#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
+#'   Official X-13ARIMA-SEATS manual: 
+#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #'   
 #' @export
+#' 
 #' 
 #' @examples
 #' 
@@ -54,6 +67,7 @@
 #' 
 #' 
 #' ### advanced examples
+#' # (for more, see the wiki.)
 #' 
 #' # trading day and easter adjustment w/o seasonal adjustment
 #' summary(m)
@@ -61,12 +75,12 @@
 #' ce <- re[, 'Trading.Day'] + re[, 'Holiday'] 
 #' # be aware of the log transformation
 #' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
-#' 
 #' }
 #' 
 series <- function(x, series, reeval = TRUE){
   stopifnot(inherits(x, "seas"))
   
+  SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects
   
   is.dotted <- grepl("\\.", series)

@@ -14,22 +14,23 @@
 #' the seasonal and SI component periodwise. Like the default method `monthplot`
 #' can be used for all frequencies.
 #' 
-#' \code{plot.slidingspans} calls the plot method for objects of class
-#' \code{"slidingspans"}. It draws the seasonal component for the analyzed
+#' \code{plot.slidingspans} calls the plot method for objects of class 
+#' \code{"slidingspans"}. It draws the seasonal component for the analyzed 
 #' spans.
 #' 
-#' \code{plot.revisions} calls the plot method for objects of class
-#' \code{"revisons"}. It draws concurrent and the latest estimation of the
+#' \code{plot.revisions} calls the plot method for objects of class 
+#' \code{"revisons"}. It draws concurrent and the latest estimation of the 
 #' seasonal adjusted series.
 #' 
-#' @param x  an object of class \code{"seas"}, usually, a result of a call to
+#' @param x  an object of class \code{"seas"}, usually, a result of a call to 
 #'   \code{\link{seas}}.
 #' @param outliers   logical, should the oultiers be drawn.
 #' @param trend      logical, should the trend be drawn.
-#' @param choice     character string, \code{"seasonal"} (default) or
+#' @param choice     character string, \code{"seasonal"} (default) or 
 #'   \code{"irregular"}.
 #' @param main    character string, title of the graph.
-#' @param series  name of the series to plot
+#' @param series  X-13 name of the series to plot, see the manual for a
+#'   description.
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
 #' @return All plot functions returns a plot as their side effect.
@@ -43,6 +44,7 @@
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
 #'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
@@ -65,11 +67,16 @@
 #' 
 #' monthplot(m)
 #' 
-#' plot(slidingspans(m))
-#' rev <- revisions(m)
-#' plot(rev, "chngestimates")
+#' # revisions and slidingspans (see ?plot.seas)
+#' rr <- revisions(m)
+#' plot(rr)
+#' plot(rr, series = "trendestimates")
 #' 
-#' # use R functions to analyze "seas" models
+#' ss <- slidingspans(m)
+#' plot(ss)
+#' plot(ss, series = "chngspans")
+#' 
+#' # use standard R functions to analyze "seas" models
 #' pacf(resid(m))
 #' spectrum(diff(resid(m)))
 #' plot(density(resid(m)))
@@ -138,16 +145,50 @@ siratio <- function(x){
 }
 
 
+#' @rdname plot.seas
+#' @method plot revisions
+#' @export
+plot.revisions <- function(x, series = c("saestimates", "chngestimates", 
+                                         "sarevisions", "sfestimates", 
+                                         "trendestimates"), ...){
+  series <- match.arg(series)
+  
+  class(x) <- "seas"
+  dta <- series(x, paste0("history.", series), reeval = FALSE)
+  
+  nc <- NCOL(dta)
+  ncol <- rainbow(nc)
+  ts.plot(dta, col = ncol, main = series)
+  
+  if (nc > 1){
+    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+  }
+}
+
+
 
 #' @rdname plot.seas
 #' @method plot slidingspans
 #' @export
-plot.slidingspans <- function(x, main = "sliding spans", ...){
-  ser <- x$sfspans
-  nser <- dim(ser)[2]
-  col = rev(rainbow(nser-1))
-  ts.plot(ser[, -nser], col = col, lty = 1, main = main, ...)
-  legend("topleft", colnames(ser)[-nser], lwd = 2, lty = 1, col = col, bty = "n", horiz = TRUE)
+plot.slidingspans <- function(x, series = c("sfspans", "saspans", "tdspans", 
+                              "chngspans", "ychngspans"), ...){
+  series <- match.arg(series)
+  
+  class(x) <- "seas"
+  dta <- series(x, paste0("slidingspans.", series), reeval = FALSE)
+  
+  # 0.40.0 behavior, do not show Max Diff
+  if (series == "sfspans"){
+    dta <- dta[, -dim(dta)[2]]
+  }
+  
+  nc <- NCOL(dta)
+  ncol <- rainbow(nc)
+  ts.plot(dta, col = ncol, main = series)
+  
+  if (nc > 1){
+    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+  }
 }
 
 

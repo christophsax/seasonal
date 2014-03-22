@@ -64,6 +64,7 @@ pacf(AirPassengers, lag.max = 35)
 
 
 ### advanced examples
+# (for more, see the wiki.)
 
 # trading day and easter adjustment w/o seasonal adjustment
 summary(m)
@@ -71,7 +72,20 @@ re <- series(m, "estimate.regressioneffects")
 ce <- re[, 'Trading.Day'] + re[, 'Holiday']
 # be aware of the log transformation
 AirPassengersWoTd <- exp(log(AirPassengers) - ce)
-
 }
+}
+\references{
+Vignette with a more detailed description:
+\url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+
+Wiki page with a comprehensive list of R examples from the
+X-13ARIMA-SEATS manual:
+\url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+
+Official X-13ARIMA-SEATS manual:
+\url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+}
+\seealso{
+\code{\link{seas}} for the main function.
 }
 

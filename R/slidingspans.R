@@ -2,17 +2,21 @@
 #' @export
 slidingspans <- function(x, ...){
   ldots <- list(...)
-  if (length(ldots) == 0){
-    ldots$slidingspans = list()
-  } else {
-    if (!any(grepl("slidingspans", names(ldots)))){
-      ldots$slidingspans = list()
-    }
-  }
-  z <- reeval(x, ldots)
   
-  z$slidingspans <- z$out[grep("  Sliding spans analysis", z$out)[1]:length(z$out)]
-  class(z$slidingspans) <- "out"
+  reeval.dots <- list(
+    slidingspans.save = c("saspans", "sfspans", "tdspans", "chngspans", 
+                          "ychngspans")
+  )
+  reeval.dots <- c(reeval.dots, ldots)
+  z <- reeval(x, reeval.dots)
+  
+  n.line <- grep("  Sliding spans analysis", z$out)
+  if (length(n.line) == 0){
+    warning("No history analysis found in the output. Returning the standard output.")
+  } else {
+    z$slidingspans <- z$out[n.line[1]:length(z$out)]
+    class(z$slidingspans) <- "out"
+  }
   class(z) <- "slidingspans"
   z
 }

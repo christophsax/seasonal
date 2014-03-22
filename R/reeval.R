@@ -29,8 +29,8 @@
 #' @return an object of class \code{"out"}, \code{"revisions"} or
 #'   \code{"slidingspans"}, which is basically a \code{"seas"} object that
 #'   contatins the \code{out} element from the X-13ARIMA-SEATS \code{.out} file.
-#'   \code{"revisions"} and \code{"slidingspans"} also contain some additional
-#'   time series.
+#'   \code{"revisions"} and \code{"slidingspans"} objects also contain additional spec specific time series
+#'   time series that can be plotted with the \code{plot} method.
 #'   
 #'   If printed, the objects show the content of the \code{.out} file.
 #'   
@@ -71,11 +71,14 @@
 #' revisions(m, history.start = "1959.Aug")
 #' slidingspans(m, slidingspans.fixreg = "td")
 #' 
-#' # plot method for slingspans and revisions (see ?plot.seas)
-#' plot(slidingspans(m))
-#' rev <- revisions(m)
-#' plot(rev)
-#' plot(rev, series = "trendestimates")
+#' # plot method for revisions and slidingspans (see ?plot.seas)
+#' rr <- revisions(m)
+#' plot(rr)
+#' plot(rr, series = "trendestimates")
+#' 
+#' ss <- slidingspans(m)
+#' plot(ss)
+#' plot(ss, series = "chngspans")
 #' 
 #' }
 #' 

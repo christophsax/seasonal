@@ -1,0 +1,23 @@
+\name{na.x13}
+\alias{na.x13}
+\title{Handle Missing Values by X-13}
+\usage{
+na.x13(x)
+}
+\arguments{
+  \item{x}{an object of class \code{"ts"}}
+}
+\value{
+a time series, with NA values substituted by -99999.
+}
+\description{
+Utility function to substitute NA values by -99999. Useful
+as a value for the \code{na.action} argument in
+\code{\link{seas}}.
+}
+\examples{
+AirPassengersNA <- AirPassengers
+AirPassengersNA[20] <- NA
+na.x13(AirPassengersNA)
+}
+

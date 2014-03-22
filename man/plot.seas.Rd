@@ -13,10 +13,11 @@ residplot(x, outliers = TRUE, ...)
 
 \method{monthplot}{seas}(x, choice = "seasonal", ...)
 
-\method{plot}{slidingspans}(x, main = "sliding spans", ...)
-
 \method{plot}{revisions}(x, series = c("saestimates", "chngestimates",
   "sarevisions", "sfestimates", "trendestimates"), ...)
+
+\method{plot}{slidingspans}(x, series = c("sfspans", "saspans", "tdspans",
+  "chngspans", "ychngspans"), ...)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}, usually, a
@@ -31,7 +32,8 @@ residplot(x, outliers = TRUE, ...)
 
   \item{main}{character string, title of the graph.}
 
-  \item{series}{name of the series to plot}
+  \item{series}{X-13 name of the series to plot, see the
+  manual for a description.}
 
   \item{\dots}{further arguments passed to the plotting
   functions.}
@@ -79,11 +81,16 @@ residplot(m, outliers = FALSE)
 
 monthplot(m)
 
-plot(slidingspans(m))
-rev <- revisions(m)
-plot(rev, "chngestimates")
+# revisions and slidingspans (see ?plot.seas)
+rr <- revisions(m)
+plot(rr)
+plot(rr, series = "trendestimates")
 
-# use R functions to analyze "seas" models
+ss <- slidingspans(m)
+plot(ss)
+plot(ss, series = "chngspans")
+
+# use standard R functions to analyze "seas" models
 pacf(resid(m))
 spectrum(diff(resid(m)))
 plot(density(resid(m)))
