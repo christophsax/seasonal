@@ -2,7 +2,7 @@
 \alias{static}
 \title{Static Call of a seas Object}
 \usage{
-static(x, coef = FALSE, test = TRUE)
+static(x, coef = FALSE, test = TRUE, verbose = FALSE)
 }
 \arguments{
   \item{x}{an object of class \code{seas}}
@@ -12,17 +12,22 @@ static(x, coef = FALSE, test = TRUE)
 
   \item{test}{logical. By default the static call is
   executed and compared to the input call. If the final
-  series is not identical, a warning is returned.  If
+  series is not identical, a warning is returned. If
   \code{FALSE}, the option is disabled.}
+
+  \item{verbose}{logical, if \code{TRUE}, droped and kept
+  series are listed.}
 }
 \value{
-Static call of an object of class \code{seas}. Can be
-copy/pasted into an R script.
+Object of class \code{"call"}. Static call of an object of
+class \code{seas}. Can be copy/pasted into an R script.
 }
 \description{
 A static call is a static replication of a call. Automatic
-procedures are substituted by the selected spec-argument
-options.
+procedures are substituted by the automatically chosen
+spec-argument options. The call can be copy/pasted to a
+script and used for further manipulations or future
+evaluation of the identical model.
 }
 \details{
 By default, the static call is tested. It is executed and

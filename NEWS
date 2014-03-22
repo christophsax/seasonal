@@ -9,9 +9,7 @@ enhancements
 - 'logfile' function, to extract the content of the '.log' file.
 - improved help pages
 - except of the composite spec examples, all examples are shown in the wiki
-
-bug fixes
-
+- 'static' replicates a wider set of calls
 
 code improvements
 - code takes advantage of the series function, simplified import from X-13.

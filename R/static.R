@@ -1,25 +1,28 @@
 #' Static Call of a seas Object
 #' 
 #' A static call is a static replication of a call. Automatic procedures are 
-#' substituted by the selected spec-argument options.
+#' substituted by the automatically chosen spec-argument options. The call can
+#' be copy/pasted to a script and used for further manipulations or future 
+#' evaluation of the identical model.
 #' 
-#' By default, the static call is tested. It is executed and compared to the
+#' By default, the static call is tested. It is executed and compared to the 
 #' input call. If the final series is not identical, a warning is returned.
 #' 
-#' If \code{coef = TRUE}, the coefficients are fixed as well. 
+#' If \code{coef = TRUE}, the coefficients are fixed as well.
 #' 
 #' @param x an object of class \code{seas}
 #' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed, 
 #'   instead of beeing estimated.
 #' @param test logical. By default the static call is executed and compared to 
-#'   the input call. If the final series is not identical, a warning is returned.
-#'   If \code{FALSE}, the option is disabled.
+#'   the input call. If the final series is not identical, a warning is 
+#'   returned. If \code{FALSE}, the option is disabled.
+#' @param verbose logical, if \code{TRUE}, droped and kept series are listed.
 #'   
-#' @return Static call of an object of class \code{seas}. Can be copy/pasted 
-#'   into an R script.
+#' @return Object of class \code{"call"}. Static call of an object of class
+#'   \code{seas}. Can be copy/pasted into an R script.
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
-#' 
+#'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
@@ -38,58 +41,31 @@
 #' static(m)
 #' static(m, test = FALSE)
 #' }
-static <- function(x, coef = FALSE, test = TRUE){
+static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
   
   stopifnot(inherits(x, "seas"))
   
   lc <- as.list(x$call)  
-  
-  # keep all arguments that do not interfer with input/output or the automatic
-  # options of seasonl
-  keep <- c("", "x", "xreg",
-            "estimate.exact", "estimate.maxiter",
-            
-            "force.lambda", "force.mode", "force.rho", "force.round", 
-            "force.start", "force.target", "force.type", "force.usefcst", 
-            "force.indforce",
-            
-            "forecast.exclude", "forecast.lognormal", "forecast.maxback",
-            "forecast.maxlead", "forecast.probability",
-            
-            "regression.chi2test", "regression.chi2testcv", 
-            "regression.variables", "regression.usertype",
-            
-            "seats.hpcycle", "seats.qmax", "seats.signifsc", "seats.statseas",
-            "seats.bias", "seats.centerir", "seats.epsiv", "seats.epsphi", 
-            "seats.epsphi", "seats.maxbias", "seats.maxit", "seats.noadmiss",
-            "seats.rmod", "seats.xl",
-            
-            "series.type",
-            
-            "transform.adjust",
-            
-            "x11", "x11.mode", "x11.trendma", "x11.sigmalim", "x11.appendfcst", 
-            "x11.appendbcst", "x11.final", "x11.type",
-            
-            "x11regression.variables", "x11regression.tdprior", 
-            "x11regression.usertype"
-  )
-  
-  lc <- lc[names(lc) %in% keep]
-  
+
   lc$regression.variables <- x$model$regression$variables
   lc$arima.model <- x$model$arima$model
-  
+
   # Turn off outomatic procedures:
-  # To assign NULL instead of removing the element, do this magic
+
+  # remove all arguments to the auto specs
+  lc <- lc[!grepl("^automdl", names(lc))]
+  lc <- lc[!grepl("^outlier", names(lc))]
+  lc <- lc[!grepl("^pickmdl", names(lc))]
+
+  # To assign NULL instead of removing the element, do this trick
   lc['regression.aictest'] <- NULL
   names(lc['regression.aictest']) <- "regression.aictest"
   
   lc['outlier'] <- NULL
   names(lc['outlier']) <- "outlier"
-  
+
   lc$transform.function = x$transform.function
-  
+
   if (coef){
     if (!is.null(x$model$regression$b)) {
       lc$regression.b = c(add_f(x$model$regression$b))
@@ -102,6 +78,11 @@ static <- function(x, coef = FALSE, test = TRUE){
     }
   }
   
+  if (verbose){
+    cat("Droped:", paste(names(as.list(x$call)[!(names(as.list(x$call)) %in% names(lc))]), collapse=", "), "\n")
+    cat("Kept:", paste(names(as.list(x$call)[(names(as.list(x$call)) %in% names(lc))]), collapse=", "), "\n")
+  }
+
   z <- as.call(lc)
 
   cat(deparse(z), sep = "\n")
@@ -111,7 +92,7 @@ static <- function(x, coef = FALSE, test = TRUE){
     x.static <- eval(z, envir = globalenv())
     test <- (all.equal(final(x.static), final(x), tolerance = 1e-05))
     if (inherits(test, "character")){
-      warning(paste("Final Series of static and provided model differ.", test))
+      stop(paste("Final Series of static and provided model differ.", test))
     }
   }
 
