@@ -119,30 +119,3 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   
   invisible(x)
 }
-
-# 
-# transform_function <- function(x){
-#   # subfunction to evaluate the tranformation, both automatically or manually 
-#   # choosen 
-#   # 
-#   # x  "seas" object
-#   #
-#   # returns: character string with the type of intial transformation
-#   # 
-#   # used by: summary.seas, static
-#   #
-#   if (!is.null(x$spc$transform$`function`)){
-#     if (x$spc$transform$`function` == "auto"){
-#       if (x$is.log){
-#         z <- "log"
-#       } else {
-#         z <- "none"
-#       }
-#     } else {
-#       z <- x$spc$transform$`function`
-#     }
-#   } else {
-#     z <- "none"
-#   }
-#   z
-# }
