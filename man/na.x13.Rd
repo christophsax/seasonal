@@ -19,5 +19,7 @@ as a value for the \code{na.action} argument in
 AirPassengersNA <- AirPassengers
 AirPassengersNA[20] <- NA
 na.x13(AirPassengersNA)
+
+seas(AirPassengersNA, na.action = na.x13)
 }
 

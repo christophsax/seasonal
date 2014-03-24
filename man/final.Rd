@@ -49,6 +49,7 @@ trend(m)
 AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
 final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
+final(seas(AirPassengersNA, na.action = na.x13))     # NA filled by x13
 # final(seas(AirPassengersNA, na.action = na.fail))    # fails
 }
 }

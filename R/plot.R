@@ -1,8 +1,6 @@
 #' Seasonal Adjustment Plots
 #' 
-#' Functions to graphically analyze a \code{"seas"} object. More graphs can be 
-#' plotted with standard R functions (see examples). For diagnostical 
-#' statistics, see \code{\link{qs}}.
+#' Functions to graphically analyze a \code{"seas"} object. 
 #' 
 #' \code{plot} calls the plot method for class \code{"seas"}. It plots the 
 #' adjusted and unadjusted series, as well as the outliers. Optionally draws the
@@ -13,14 +11,6 @@
 #' \code{monthplot} calls the monthplot method for class \code{"seas"}. It plot 
 #' the seasonal and SI component periodwise. Like the default method `monthplot`
 #' can be used for all frequencies.
-#' 
-#' \code{plot.slidingspans} calls the plot method for objects of class 
-#' \code{"slidingspans"}. It draws the seasonal component for the analyzed 
-#' spans.
-#' 
-#' \code{plot.revisions} calls the plot method for objects of class 
-#' \code{"revisons"}. It draws concurrent and the latest estimation of the 
-#' seasonal adjusted series.
 #' 
 #' @param x  an object of class \code{"seas"}, usually, a result of a call to 
 #'   \code{\link{seas}}.
@@ -66,15 +56,6 @@
 #' residplot(m, outliers = FALSE)  
 #' 
 #' monthplot(m)
-#' 
-#' # revisions and slidingspans (see ?plot.seas)
-#' rr <- revisions(m)
-#' plot(rr)
-#' plot(rr, series = "trendestimates")
-#' 
-#' ss <- slidingspans(m)
-#' plot(ss)
-#' plot(ss, series = "chngspans")
 #' 
 #' # use standard R functions to analyze "seas" models
 #' pacf(resid(m))
@@ -123,7 +104,8 @@ residplot <- function(x, outliers = TRUE, ...){
 #' @rdname plot.seas
 #' @export
 #' @method monthplot seas
-monthplot.seas <- function(x, choice = "seasonal", ...){
+monthplot.seas <- function(x, choice = c("seasonal", "irregular"), ...){
+  choice <- match.arg(choice)
   if (choice == "seasonal"){
     monthplot(x$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "seasonal component, SI ratio", ...)
     monthplot(siratio(x), col = "blue", type = "h", add = TRUE)
@@ -134,7 +116,6 @@ monthplot.seas <- function(x, choice = "seasonal", ...){
 }
 
 
-
 siratio <- function(x){
   if (x$transform.function == "log"){
     z <- x$data[, 'irregular'] * x$data[, 'seasonal']
@@ -143,53 +124,4 @@ siratio <- function(x){
   }
   na.omit(z)
 }
-
-
-#' @rdname plot.seas
-#' @method plot revisions
-#' @export
-plot.revisions <- function(x, series = c("saestimates", "chngestimates", 
-                                         "sarevisions", "sfestimates", 
-                                         "trendestimates"), ...){
-  series <- match.arg(series)
-  
-  class(x) <- "seas"
-  dta <- series(x, paste0("history.", series), reeval = FALSE)
-  
-  nc <- NCOL(dta)
-  ncol <- rainbow(nc)
-  ts.plot(dta, col = ncol, main = series)
-  
-  if (nc > 1){
-    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  }
-}
-
-
-
-#' @rdname plot.seas
-#' @method plot slidingspans
-#' @export
-plot.slidingspans <- function(x, series = c("sfspans", "saspans", "tdspans", 
-                              "chngspans", "ychngspans"), ...){
-  series <- match.arg(series)
-  
-  class(x) <- "seas"
-  dta <- series(x, paste0("slidingspans.", series), reeval = FALSE)
-  
-  # 0.40.0 behavior, do not show Max Diff
-  if (series == "sfspans"){
-    dta <- dta[, -dim(dta)[2]]
-  }
-  
-  nc <- NCOL(dta)
-  ncol <- rainbow(nc)
-  ts.plot(dta, col = ncol, main = series)
-  
-  if (nc > 1){
-    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  }
-}
-
-
 

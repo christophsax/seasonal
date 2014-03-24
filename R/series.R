@@ -1,4 +1,4 @@
-#' Universal Import of X-13ARIMA-SEATS Output
+#' Import X-13ARIMA-SEATS Output Tables
 #' 
 #' With the exception the composite spec, the \code{series} function imports all
 #' tables that can be saved in X-13ARIMA-SEATS.
@@ -11,12 +11,15 @@
 #' 
 #' @param x  an object of class \code{"seas"}.
 #' @param series  character vector, short or long names of an X-13ARIMA-SEATS 
-#'   table. If a long name is specified, it needs to be combined with the spec
-#'   name and separated by a dot (it is not unique, otherwise). More than one
+#'   table. If a long name is specified, it needs to be combined with the spec 
+#'   name and separated by a dot (it is not unique, otherwise). More than one 
 #'   series can be specified (see examples).
-#' @param reeval logical, if TRUE, the model is re-evaluated with the
-#'   corresponding specs enabled (also returning a message)
-#'
+#' @param reeval logical, if \code{TRUE}, the model is re-evaluated with the 
+#'   corresponding specs enabled.
+#' @param verbose logical, if \code{TRUE}, a message is returned if a spec is added
+#'   during reevaluation.
+#'   
+#'   
 #' @seealso \code{\link{seas}} for the main function.
 #'   
 #' @references Vignette with a more detailed description: 
@@ -25,6 +28,7 @@
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
@@ -43,7 +47,7 @@
 #' series(m, c("d7", "d8", "fct"))
 #' 
 #' m <- seas(AirPassengers, forecast.save = "fct")
-#' series(m, "fct")
+#' series(m, "fct") # no re-evaluation (much faster!)
 #' 
 #' # using long names
 #' series(m, "forecast.forecasts")
@@ -58,11 +62,6 @@
 #' series(m, "slidingspans.sfspans") 
 #' series(m, "slidingspans.tdspans") 
 #' 
-#' # regressioneffects
-#' series(object, "estimate.regressioneffects") 
-#' 
-#' 
-#' 
 #' ### Some X-13ARIMA-SEATS functions can be replicated in R:
 #' 
 #' # X-13ARIMA-SEATS spectrum
@@ -75,13 +74,12 @@
 #' plot(x13.pacf[,1:2])
 #' lines(x13.pacf[,3])
 #' lines(-x13.pacf[,3])
-#' 
 #' # R equivalent: pacf from stats
 #' pacf(AirPassengers, lag.max = 35)
 #' 
 #' 
 #' ### advanced examples
-#' # (for more, see the wiki.)
+#' # (for more examples, see the wiki.)
 #' 
 #' # trading day and easter adjustment w/o seasonal adjustment
 #' summary(m)
@@ -91,7 +89,7 @@
 #' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
 #' }
 #' 
-series <- function(x, series, reeval = TRUE){
+series <- function(x, series, reeval = TRUE, verbose = TRUE){
   stopifnot(inherits(x, "seas"))
   
   SPECS <- NULL 
@@ -143,7 +141,7 @@ series <- function(x, series, reeval = TRUE){
       j <- j + 1
     }
 
-    if (length(activated) > 0){
+    if (verbose & length(activated) > 0){
       message(paste("specs have been added to the model:", 
                     paste(unique(activated), collapse = ", ")))
     }

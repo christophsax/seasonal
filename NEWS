@@ -1,15 +1,17 @@
 0.42.0
 
 new features
-- 'series' function, which allows the import of almost all tables produced by X-13
+- 'series' function, which allows the import of all tables produced by X-13 (except composite spec)
 
 enhancements
-- 'slidingspans' and 'revisions' analyses include more components of a series.
-- optional NA handling by X-13 (including interpolation)
-- 'logfile' function, to extract the content of the '.log' file.
+- new na.action function: NA handling by X-13 (including interpolation)
+- 'out' function also reads '.log'  and '.err' files
 - improved help pages
-- except of the composite spec examples, all examples are shown in the wiki
+- all examples from the X-13 manual are now in the wiki (except composite spec)
 - 'static' replicates a wider set of calls
+
+deprecated
+- the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is now part of the new 'series' function. Old functions are deprecated.
 
 code improvements
 - code takes advantage of the series function, simplified import from X-13.

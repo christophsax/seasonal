@@ -1,8 +1,8 @@
 \name{series}
 \alias{series}
-\title{Universal Import of X-13ARIMA-SEATS Output}
+\title{Import X-13ARIMA-SEATS Output Tables}
 \usage{
-series(x, series, reeval = TRUE)
+series(x, series, reeval = TRUE, verbose = TRUE)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}.}
@@ -13,9 +13,11 @@ series(x, series, reeval = TRUE)
   a dot (it is not unique, otherwise). More than one series
   can be specified (see examples).}
 
-  \item{reeval}{logical, if TRUE, the model is re-evaluated
-  with the corresponding specs enabled (also returning a
-  message)}
+  \item{reeval}{logical, if \code{TRUE}, the model is
+  re-evaluated with the corresponding specs enabled.}
+
+  \item{verbose}{logical, if \code{TRUE}, a message is
+  returned if a spec is added during reevaluation.}
 }
 \description{
 With the exception the composite spec, the \code{series}
@@ -40,7 +42,7 @@ series(m, "fct")  # re-evaluate with the forcast activated
 series(m, c("d7", "d8", "fct"))
 
 m <- seas(AirPassengers, forecast.save = "fct")
-series(m, "fct")
+series(m, "fct") # no re-evaluation (much faster!)
 
 # using long names
 series(m, "forecast.forecasts")
@@ -55,11 +57,6 @@ series(m, c("history.sfestimates", "history.trendestimates"))
 series(m, "slidingspans.sfspans")
 series(m, "slidingspans.tdspans")
 
-# regressioneffects
-series(object, "estimate.regressioneffects")
-
-
-
 ### Some X-13ARIMA-SEATS functions can be replicated in R:
 
 # X-13ARIMA-SEATS spectrum
@@ -72,13 +69,12 @@ x13.pacf <- series(m, "identify.pacf")
 plot(x13.pacf[,1:2])
 lines(x13.pacf[,3])
 lines(-x13.pacf[,3])
-
 # R equivalent: pacf from stats
 pacf(AirPassengers, lag.max = 35)
 
 
 ### advanced examples
-# (for more, see the wiki.)
+# (for more examples, see the wiki.)
 
 # trading day and easter adjustment w/o seasonal adjustment
 summary(m)

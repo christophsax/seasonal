@@ -1,74 +1,38 @@
 \name{out}
-\alias{logfile}
 \alias{out}
-\alias{revisions}
-\alias{slidingspans}
-\title{Diagnostical Re-Evaluation}
+\title{Import X-13ARIMA-SEATS Text Output}
 \usage{
-out(x, line = 1, n = 100, search = NULL, ...)
-
-logfile(x, line = 1, n = 100, search = NULL)
-
-revisions(x, ...)
-
-slidingspans(x, ...)
+out(x, line = 1, n = 100, search = NULL, file = c("out", "log", "err"))
 }
 \arguments{
-  \item{x}{an object of class \code{"seas"} to
-  re-evaluate.}
+  \item{x}{an object of class \code{"seas"}.}
 
   \item{line}{starting line of the content.}
 
-  \item{n}{number of lines to show at once.}
+  \item{n}{number of lines to show on a page.}
 
-  \item{search}{chracter string. If specified, the content
-  is searched for the first occurence of the string (see
-  examples).}
+  \item{search}{regular expression chracter string. If
+  specified, the content is searched for the first
+  occurence (see examples).}
 
-  \item{...}{aditional spec-arguments options (see
-  details).}
+  \item{file}{\code{"out"} or \code{"log"}, which file to
+  show.}
 }
 \value{
-an object of class \code{"out"}, \code{"revisions"} or
-\code{"slidingspans"}, which is basically a \code{"seas"}
-object that contatins the \code{out} element from the
-X-13ARIMA-SEATS \code{.out} file.  \code{"revisions"} and
-\code{"slidingspans"} objects also contain additional spec
-specific time series time series that can be plotted with
-the \code{plot} method.
-
-If printed, the objects show the content of the \code{.out}
-file.
-
-There are \code{plot} methods for \code{"revisions"} and
-\code{"slidingspans"} that visualize the spec.
+an object of class \code{"out"}, essentially a character
+vector with attributes. The print method for \code{"out"}
+objects is adapted to the large size of the \code{.out}
+output. It allows for pagination and search (see examples).
 }
 \description{
-For diagnostical purposes, these functions re-evaluate an
-object of class \code{"seas"} and capture the full content
-or parts of the .out file from X-13ARIMA-SEATS.
+The \code{out} function shows the full content of the
+\code{.out}, the \code{.log} or the \code{.err} file form
+X-13ARIMA-SEATS.
 }
 \details{
-The \code{out} function shows the full content of the
-\code{.out} file form X-13ARIMA-SEATS. The \code{logfile}
-function does the same for the \code{.log} file.
-
-The \code{slidingspans} and \code{revisions} function call
-the 'slidingspans' and 'history' spec of X-13ARIMA-SEATS
-and show the respective parts of the \code{.out} file. Note
-that against the convention, the 'history' spec is called
-by the function \code{revision}, in order to avoid a naming
-collision with the function from the preloaded \code{utils}
-package. For a description of the 'slidingsspans' and
-'history' spec, consider the X-13ARIMA-SEATS manual.
-
-For how to enter spec-arguments options, see the details in
-\code{"\link{seas}"}. In the \code{out} function,
-\code{...} are useful to add additional outputs to the
-\code{.out} file. In the \code{slidingspans} and
-\code{revisions} function, \code{...} are used to add
-additional options to the 'slidingspans' and 'history'
-spec.
+To keep the size of \code{"seas"} objects small, "seas"
+does not save the content of the \code{.out} by default.
+Instead, the \code{out} function re-evaluates the model.
 }
 \examples{
 \dontrun{
@@ -78,22 +42,14 @@ m <- seas(AirPassengers)
 out(m)
 out(m, search = "regARIMA model residuals")
 
-slidingspans(m)
-revisions(m)
+m <- seas(AirPassengers, slidingspans = list())
+out(m, search = "Sliding spans analysis", n = 300)
 
-# passing options
-revisions(m, history.start = "1959.Aug")
-slidingspans(m, slidingspans.fixreg = "td")
+# showing the log file
+out(m, file = "log")
 
-# plot method for revisions and slidingspans (see ?plot.seas)
-rr <- revisions(m)
-plot(rr)
-plot(rr, series = "trendestimates")
-
-ss <- slidingspans(m)
-plot(ss)
-plot(ss, series = "chngspans")
-
+# showing the error file
+out(m, file = "err")
 }
 }
 \references{
@@ -109,8 +65,5 @@ Official X-13ARIMA-SEATS manual:
 }
 \seealso{
 \code{\link{seas}} for the main function of seasonal.
-
-\code{\link{plot.seas}}, for plot methods for
-\code{slidingspans} and \code{revisions}.
 }
 

@@ -315,8 +315,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   
   # read big output file...
   outtxt <-  readLines(paste0(iofile, ".out"), encoding = "UTF-8")
-
-  logfile <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
   
   # ...and warn if model choosen by seats is different
   if (any(grepl("Model used for SEATS decomposition is different", z$err))){
@@ -363,8 +361,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
     
   z$x <- x
-  z$logfile <- logfile
-  class(z$logfile) <- "out"
+  z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
+  class(z$log) <- "out"
   z$spc <- spc
   z$call <- match.call()
   class(z) <- "seas"
