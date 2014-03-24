@@ -48,6 +48,20 @@
 #' # using long names
 #' series(m, "forecast.forecasts")
 #' 
+#' # history spec
+#' series(m, "history.trendestimates") 
+#' series(m, "history.sfestimates") 
+#' series(m, "history.saestimates") 
+#' series(m, c("history.sfestimates", "history.trendestimates")) 
+#' 
+#' # slidingspans spec
+#' series(m, "slidingspans.sfspans") 
+#' series(m, "slidingspans.tdspans") 
+#' 
+#' # regressioneffects
+#' series(object, "estimate.regressioneffects") 
+#' 
+#' 
 #' 
 #' ### Some X-13ARIMA-SEATS functions can be replicated in R:
 #' 
@@ -106,9 +120,10 @@ series <- function(x, series, reeval = TRUE){
     } else {
       series.NA <- setdiff(series.short, names(x$series))
     }
-    
+        
     activated <- NULL
     reeval.dots <- list()
+    j <- 1  # flexible index to allow for an arbitrary number of requirements
     for (i in seq_along(series.NA)){
       series.NA.i <- series.NA[i]
       spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
@@ -116,11 +131,18 @@ series <- function(x, series, reeval = TRUE){
       if (!spec.i %in% names(x$spc)){
         activated <- c(activated, spec.i)
       }
-      
-      reeval.dots[[i]] <- series.NA.i
-      names(reeval.dots)[i] <- paste0(spec.i, '.save')
+      requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
+
+      if (length(requires.i) > 0){
+        requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
+        reeval.dots <- c(reeval.dots, requires.list)
+        j <- length(reeval.dots) + 1
+      }
+      reeval.dots[[j]] <- series.NA.i
+      names(reeval.dots)[j] <- paste0(spec.i, '.save')
+      j <- j + 1
     }
-    
+
     if (length(activated) > 0){
       message(paste("specs have been added to the model:", 
                     paste(unique(activated), collapse = ", ")))

@@ -45,6 +45,20 @@ series(m, "fct")
 # using long names
 series(m, "forecast.forecasts")
 
+# history spec
+series(m, "history.trendestimates")
+series(m, "history.sfestimates")
+series(m, "history.saestimates")
+series(m, c("history.sfestimates", "history.trendestimates"))
+
+# slidingspans spec
+series(m, "slidingspans.sfspans")
+series(m, "slidingspans.tdspans")
+
+# regressioneffects
+series(object, "estimate.regressioneffects")
+
+
 
 ### Some X-13ARIMA-SEATS functions can be replicated in R:
 

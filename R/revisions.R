@@ -1,6 +1,11 @@
 #' @rdname out
 #' @export
 revisions <- function(x, ...){
+  
+  .Deprecated("series", package=NULL, "Function is deprecated and will be removed soon. Use the more univeral series function. See examples in ?series.",
+              old = as.character(sys.call(sys.parent()))[1L])
+  
+  
   ldots <- list(...)
   
   reeval.dots <- list(

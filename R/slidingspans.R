@@ -3,6 +3,9 @@
 slidingspans <- function(x, ...){
   ldots <- list(...)
   
+  .Deprecated("series", package=NULL, "Function is deprecated and will be removed soon. Use the more univeral series function. See examples in ?series.",
+              old = as.character(sys.call(sys.parent()))[1L])
+  
   reeval.dots <- list(
     slidingspans.save = c("saspans", "sfspans", "tdspans", "chngspans", 
                           "ychngspans")
