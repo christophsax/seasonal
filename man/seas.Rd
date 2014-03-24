@@ -192,7 +192,10 @@ Official X-13ARIMA-SEATS manual:
 \code{\link{static}}, to return the static call that is
 needed to replicate an automatic model
 
-\code{\link{series}}, for universal X-13 output extraction.
+\code{\link{series}}, for universal X-13 table series
+import.
+
+\code{\link{out}}, for the import of X-13 text files
 
 \code{\link{inspect}}, to interactively inspect a seasonal
 adjustment model.
@@ -200,7 +203,5 @@ adjustment model.
 \code{\link{plot.seas}}, for diagnostical plots.
 
 \code{\link{qs}}, for diagnostical statistics.
-
-\code{\link{out}}, for diagnostical re-evaluation.
 }
 

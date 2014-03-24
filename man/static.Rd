@@ -27,7 +27,7 @@ A static call is a static replication of a call. Automatic
 procedures are substituted by the automatically chosen
 spec-argument options. The call can be copy/pasted to a
 script and used for further manipulations or future
-evaluation of the identical model.
+evaluation of the same model.
 }
 \details{
 By default, the static call is tested. It is executed and

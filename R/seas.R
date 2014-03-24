@@ -77,12 +77,12 @@
 #'   
 #' @seealso \code{\link{static}}, to return the static call that is needed to 
 #'   replicate an automatic model
-#' @seealso \code{\link{series}}, for universal X-13 output extraction.
+#' @seealso \code{\link{series}}, for universal X-13 table series import.
+#' @seealso \code{\link{out}}, for the import of X-13 text files
 #' @seealso \code{\link{inspect}}, to interactively inspect a seasonal 
 #'   adjustment model.
 #' @seealso \code{\link{plot.seas}}, for diagnostical plots.
 #' @seealso \code{\link{qs}}, for diagnostical statistics.
-#' @seealso \code{\link{out}}, for diagnostical re-evaluation.
 #'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
@@ -161,17 +161,17 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                  automdl = list(), na.action = na.omit,
                  out = FALSE, dir = NULL, ...){
 
-  
-  SPECS <- NULL 
-  data(specs, envir = environment())  # avoid side effects
-  SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
-
   # intial checks
   checkX13(fail = TRUE, full = FALSE)
   if (!inherits(x, "ts")){
     stop("'x' is not a time series.")
   }
 
+  # lookup table for output specification
+  SPECS <- NULL 
+  data(specs, envir = environment())  # avoid side effects
+  SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
+  
   # save series name
   series.name <- deparse(substitute(x))
   # remove quotes, they are not allowed in X-13as
@@ -322,20 +322,17 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
                   detect_seatsmdl(outtxt)))
   }
   
+  # read the log file
+  z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
+  class(z$log) <- "out"
+  
   # check whether freq detection in read_series has worked.
   stopifnot(frequency(z$data) == frequency(x))
 
   # read additional output files
-  z$regressioneffects <- read_series(paste0(iofile, ".ref"))
   z$model <- read_mdl(iofile)
   z$estimates <- read_est(iofile)
   z$lkstats <- read_lks(iofile)
-  
-  z$sfspans <- read_series(paste0(iofile, ".sfs"))
-  z$sfspans[z$sfspans==-999] <- NA
-  
-  z$sarevisions <- read_series(paste0(iofile, ".sar"))
-  z$sae <- read_series(paste0(iofile, ".sae"))
   
   # additional information from outtxt 
   # (this is part of the output, outtxt is not kept by default)
@@ -360,9 +357,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     class(z$out) <- "out"
   }
     
-  z$x <- x
-  z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
-  class(z$log) <- "out"
+  z$x <- x  # input series
   z$spc <- spc
   z$call <- match.call()
   class(z) <- "seas"
