@@ -77,7 +77,7 @@ inspect.seas <- function(x){
                   "seasonal component, SI ratio", 
                   "residuals of regARIMA", "residual partial autocorrelation", 
                   "sliding spans", 
-                  "revisions", 
+                  "history", 
                   label = "view"),
     is.static.call = checkbox(FALSE, "show static call")
   )
@@ -137,13 +137,17 @@ SubPlot <- function(view,
     pacf(resid(s), main = "residual partial autocorrelation", ylab = "")
   } else if (view == "sliding spans"){
     dta <- series(s, "slidingspans.sfspans", verbose = FALSE)
-    dta <- dta[, -dim(dta)[2]]
+    dta <- dta[, -dim(dta)[2]]  # remove last column
     nc <- NCOL(dta)
     ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "slidingspans: seasonal factors")
+    ts.plot(dta, col = ncol, main = "slidingspans: final series")
     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  } else if (view == "revisions"){
-    plot(revisions(s))
+  } else if (view == "history"){
+    dta <- series(s, "history.saestimates", verbose = FALSE)
+    nc <- NCOL(dta)
+    ncol <- rainbow(nc)
+    ts.plot(dta, col = ncol, main = "history: revisions analysis")
+    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
   } else {
     stop("something wrong.")
   }
