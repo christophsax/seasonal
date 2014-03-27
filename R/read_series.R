@@ -1,4 +1,4 @@
-read_data <- function(method = "seats", file){
+read_data <- function(method = "seats", file, frequency){
   # read and parse the main data series
   # 
   # method  "seats" or "x11", series are in different files, depending on mehtod
@@ -7,17 +7,17 @@ read_data <- function(method = "seats", file){
   # return "mts" object
 
   if (identical(method, "seats")){
-    seasonal        <- read_series(paste0(file, ".s10"))
-    seasonaladj     <- read_series(paste0(file, ".s11"))
-    trend           <- read_series(paste0(file, ".s12"))
-    irregular       <- read_series(paste0(file, ".s13"))
-    adjustfac       <- read_series(paste0(file, ".s16"))
+    seasonal        <- read_series(paste0(file, ".s10"), frequency = frequency)
+    seasonaladj     <- read_series(paste0(file, ".s11"), frequency = frequency)
+    trend           <- read_series(paste0(file, ".s12"), frequency = frequency)
+    irregular       <- read_series(paste0(file, ".s13"), frequency = frequency)
+    adjustfac       <- read_series(paste0(file, ".s16"), frequency = frequency)
   } else if (identical(method, "x11")){
-    seasonal        <- read_series(paste0(file, ".d10"))
-    seasonaladj     <- read_series(paste0(file, ".d11"))
-    trend           <- read_series(paste0(file, ".d12"))
-    irregular       <- read_series(paste0(file, ".d13"))
-    adjustfac       <- read_series(paste0(file, ".d16"))
+    seasonal        <- read_series(paste0(file, ".d10"), frequency = frequency)
+    seasonaladj     <- read_series(paste0(file, ".d11"), frequency = frequency)
+    trend           <- read_series(paste0(file, ".d12"), frequency = frequency)
+    irregular       <- read_series(paste0(file, ".d13"), frequency = frequency)
+    adjustfac       <- read_series(paste0(file, ".d16"), frequency = frequency)
   } else {
     stop("wrong method.")
   }
@@ -32,7 +32,7 @@ read_data <- function(method = "seats", file){
 }
 
 
-read_series <- function(file){
+read_series <- function(file, frequency){
   # Read data from a particular X13-ARIMA-SEATS file
   # 
   # file  full path including file ending
@@ -63,13 +63,13 @@ read_series <- function(file){
     year <- substr(time.raw, start = 1, stop = 4)
     per <- substr(time.raw, start = 5, stop = 6)
     
-    frequency <- length(unique(per))
-    if (length(per) / 12 < 1) { 
-      # this is an unlikely case. X-13 probably probably does not allow such a
-      # short series.
-      warning("Frequency determination is unclear. Assuming monthly data.")
-      frequency <- 12
-    }
+#     frequency <- length(unique(per))
+#     if (length(per) / 12 < 1) { 
+#       # this is an unlikely case. X-13 probably probably does not allow such a
+#       # short series.
+#       warning("Frequency determination is unclear. Assuming monthly data.")
+#       frequency <- 12
+#     }
     
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
     z <- ts(dta[, -1], start = time[1], frequency = frequency)

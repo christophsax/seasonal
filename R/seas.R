@@ -290,15 +290,16 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # add all series that are specified in SERIES_SUFFIX
   file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[2]]))
   is.series <- file.suffix %in% SERIES_SUFFIX
-  series.list <- lapply(file.path(wdir, flist[is.series]), read_series)
+  series.list <- lapply(file.path(wdir, flist[is.series]), read_series, 
+                        frequency = frequency(x))
   names(series.list) <- file.suffix[is.series]
   z$series <- series.list
     
   # data tables (names depend on method, thus a separate call is needed)
   if (!is.null(spc$seats)){
-    z$data <- read_data(method = "seats", file = iofile)
+    z$data <- read_data(method = "seats", file = iofile, frequency(x))
   } else if (!is.null(spc$x11)){
-    z$data <- read_data(method = "x11", file = iofile)
+    z$data <- read_data(method = "x11", file = iofile, frequency(x))
   } 
   
   # read errors/warnings
