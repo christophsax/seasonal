@@ -336,7 +336,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   stopifnot(frequency(z$data) == frequency(x))
 
   # read additional output files
-  z$model <- read_mdl(iofile)
+  z$model <- try(read_mdl(iofile), silent = TRUE) 
+  # fails for very complicated models, but is needed only for static()
+  if (inherits(m$model, "try-error")){
+    z$model <- NULL
+  }
   z$estimates <- read_est(iofile)
   z$lkstats <- read_lks(iofile)
   

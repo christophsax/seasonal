@@ -7,7 +7,8 @@ United States Census Bureau
 }
 \description{
 The data is used by several functions as a look-up table.
-Users should consider the tables in the official manual.
+Users should consider the table in \code{\link{series}} or
+in the official manual.
 }
 \references{
 Official X-13ARIMA-SEATS manual:

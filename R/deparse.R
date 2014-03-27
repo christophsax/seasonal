@@ -31,6 +31,7 @@ deparse_spclist <- function(x){
   # x   a "spclist" object
   #
   # returns the parsed text for writing to a .spc file
+  stopifnot(inherits(x, "spclist"))
 
   xl <- lapply(x, deparse_spc)
   paste(paste0(names(x), "{\n", xl, "\n}"), collapse = "\n\n")

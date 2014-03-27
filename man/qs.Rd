@@ -58,7 +58,7 @@ m2 <- seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)")
 spc(m2)           # arima overwrites the automdl spec
 fivebestmdl(m2)   # re-evaluation with automdl
 
-universal output extraction (see ?series)
+# universal output extraction (see ?series)
 series(m, "identify.pacf")
 
 # accessing the .out file (see ?out)

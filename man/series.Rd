@@ -193,7 +193,7 @@ xrc \cr x11regression \tab x11regression.xregressionmatrix
 \dontrun{
 
 m <- seas(AirPassengers)
-series(m, "fct")  # re-evaluate with the forcast activated
+series(m, "fct")  # re-evaluate with the forecast spec activated
 
 # more than one series
 series(m, c("d7", "d8", "fct"))

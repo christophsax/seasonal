@@ -1,17 +1,9 @@
-\name{plot.revisions}
+\name{plot.seas}
 \alias{monthplot.seas}
-\alias{plot.revisions}
 \alias{plot.seas}
-\alias{plot.slidingspans}
 \alias{residplot}
 \title{Seasonal Adjustment Plots}
 \usage{
-\method{plot}{revisions}(x, series = c("saestimates", "chngestimates",
-  "sarevisions", "sfestimates", "trendestimates"), ...)
-
-\method{plot}{slidingspans}(x, series = c("sfspans", "saspans", "tdspans",
-  "chngspans", "ychngspans"), ...)
-
 \method{plot}{seas}(x, outliers = TRUE, trend = FALSE,
   main = "unadjusted and seasonally adjusted series", ...)
 

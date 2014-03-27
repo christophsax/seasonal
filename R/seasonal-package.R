@@ -79,7 +79,7 @@ NULL
 #' List of Available X-13ARIMA-SEATS Outputs
 #' 
 #' The data is used by several functions as a look-up table. Users
-#' should consider the tables in the official manual.
+#' should consider the table in \code{\link{series}} or in the official manual.
 #' 
 #' @docype data
 #'   

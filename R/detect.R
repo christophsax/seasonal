@@ -54,22 +54,22 @@ detect_qs <- function(outtxt){
   #
   # returns character vector
   
-  first <- which(outtxt == "  QS statistic for seasonality:")
   
+  first <- which(outtxt == "  QS statistic for seasonality:")
   if (length(first) == 1){
     
-    txt <- outtxt[first:(first + 8)]
+    # lines to show (-1)
+    nl <- grep("Irregular Series \\(EV adj\\)", outtxt[first:(first + 10)])
+    
+    txt <- outtxt[(first + 1):(first + nl - 1)]
     # parse fixed width table
     descr <- substr(txt, start = 3, stop = 51)
     descr <- gsub("^\\s+|\\s+$", "", descr)   # trim lead. and trail spaces
     stat <- as.numeric(substr(txt, start = 52, stop = 60))
     pval <- as.numeric(substr(txt, start = 71, stop = 81))
     
-    df <- cbind(stat, pval)
-    rownames(df) <- descr
-    
-    z <- list()
-    z <- df[2:8,]
+    z <- cbind(stat, pval)
+    rownames(z) <- descr
     z <- z[!is.na(z[, "stat"]), ]
     
   } else {

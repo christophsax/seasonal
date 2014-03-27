@@ -101,16 +101,14 @@ print.revisions <- function(x, ...){
 
 
 
-#' @rdname plot.seas
+#' @rdname seasonal-deprecated
 #' @method plot revisions
 #' @export
-plot.revisions <- function(x, series = c("saestimates", "chngestimates", 
-                                         "sarevisions", "sfestimates", 
-                                         "trendestimates"), ...){
+plot.revisions <- function(x, ...){
   series <- match.arg(series)
   
   class(x) <- "seas"
-  dta <- series(x, paste0("history.", series), reeval = FALSE)
+  dta <- series(x, paste0("history.", "saestimates"), reeval = FALSE)
   
   nc <- NCOL(dta)
   ncol <- rainbow(nc)
@@ -121,11 +119,10 @@ plot.revisions <- function(x, series = c("saestimates", "chngestimates",
   }
 }
 
-#' @rdname plot.seas
+#' @rdname seasonal-deprecated
 #' @method plot slidingspans
 #' @export
-plot.slidingspans <- function(x, series = c("sfspans", "saspans", "tdspans", 
-                                            "chngspans", "ychngspans"), ...){
+plot.slidingspans <- function(x, ...){
   series <- match.arg(series)
   
   class(x) <- "seas"
@@ -138,7 +135,7 @@ plot.slidingspans <- function(x, series = c("sfspans", "saspans", "tdspans",
   
   nc <- NCOL(dta)
   ncol <- rainbow(nc)
-  ts.plot(dta, col = ncol, main = series)
+  ts.plot(dta, col = ncol, main = "sfspans")
   
   if (nc > 1){
     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)

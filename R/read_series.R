@@ -23,7 +23,7 @@ read_data <- function(method = "seats", file, frequency){
   }
 
   if (file.exists(paste0(file, ".saa"))){
-    final <- read_series(paste0(file, ".saa"))
+    final <- read_series(paste0(file, ".saa"), frequency = frequency)
   } else {
     final <- seasonaladj
   }

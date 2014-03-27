@@ -1,4 +1,6 @@
 \name{slidingspans}
+\alias{plot.revisions}
+\alias{plot.slidingspans}
 \alias{regressioneffects}
 \alias{revisions}
 \alias{slidingspans}
@@ -9,6 +11,10 @@ slidingspans(x, ...)
 regressioneffects(x)
 
 revisions(x, ...)
+
+\method{plot}{revisions}(x, ...)
+
+\method{plot}{slidingspans}(x, ...)
 }
 \arguments{
   \item{x}{object of class \code{"seas"}}
