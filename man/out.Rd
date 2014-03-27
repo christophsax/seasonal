@@ -41,6 +41,7 @@ m <- seas(AirPassengers)
 # exit from the viewer with [q]
 out(m)
 out(m, search = "regARIMA model residuals")
+out(m, search = "Normality Statistics for regARIMA")
 
 m <- seas(AirPassengers, slidingspans = list())
 out(m, search = "Sliding spans analysis", n = 300)
