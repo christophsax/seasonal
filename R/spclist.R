@@ -82,6 +82,13 @@ consist_spclist <-function(x){
   x <- mod_spclist(x, estimate.save = c("model", "estimates", "lkstats", 
                                         "residuals"))
   
+  
+  ### ensure arima.model is character
+  if (!is.null(x$arima$model)){
+    x$arima$model <- as.character.arima(x$arima$model)
+  }
+  
+  
   ### spec specific output modification
   
   if (!is.null(x$seats)){

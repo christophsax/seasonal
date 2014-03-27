@@ -107,6 +107,11 @@
 #' seas(AirPassengers, force.type = "denton")  # force equality of annual values
 #' seas(AirPassengers, x11 = list())  # use x11, overrides the 'seats' spec
 #' 
+#' # options can be entered as vectors
+#' seas(AirPassengers, regression.variables = c("td1coef", "easter[1]"))
+#' seas(AirPassengers, arima.model = c(0, 1, 1, 0, 1, 1))
+#' seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)")     # equivalent
+#' 
 #' # turn off the automatic procedures
 #' seas(AirPassengers, regression.variables = c("td1coef", "easter[1]", 
 #' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL, 

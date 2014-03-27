@@ -61,3 +61,35 @@ write_ts_dat <- function(x, file = "data.dat"){
 }
 
 
+as.character.arima <- function(x){
+  # converts a numeric arima model to a character string
+  # 
+  # x  numeric or character,  "ts" object
+  # 
+  # WriteDatavalue(austres, file = "data.dat")
+  
+  if (!class(x) %in% c("numeric", "character")){
+    stop("arima.model: must be numeric or character")
+  }
+  
+  if (is.numeric(x)){
+    if (length(x) == 6){
+      z <- paste0("(", 
+                  paste(x[1:3], collapse = " "), 
+                  ")(",
+                  paste(x[1:3], collapse = " "),
+                  ")"
+      )
+    } else if (length(x) == 3){
+      z <- paste0("(", 
+                  paste(x[1:3], collapse = " "), 
+                  ")"
+      )
+    } else {
+      stop("arima.model: only numeric vector of length 3 or 6 allowed, or a character string.")
+    }
+  } else {
+    z <- x
+  }
+  z
+}
