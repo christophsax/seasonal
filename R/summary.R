@@ -76,9 +76,19 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   }
   
 
-  cat("\nARIMA structure:", x$model$arima$model)
-  cat("   Number of obs.:", formatC(x$lkstats['nobs'], format = "d"))
-  cat("   Transform:", x$transform.function)
+  
+  cat("\n")
+  if (!is.null(x$spc$seats)){
+    cat("SEATS adj.")
+  }
+  if (!is.null(x$spc$x11)){
+    cat("X11 adj.")
+  }
+  
+  cat("  ARIMA:", x$model$arima$model)
+
+  cat("  Obs.:", formatC(x$lkstats['nobs'], format = "d"))
+  cat("  Transform:", x$transform.function)
 #   cat("\nAIC:", formatC(x$lkstats['aic'], digits = digits))
   cat("\nAICc:", formatC(x$lkstats['Aicc'], digits = digits))
   cat(", BIC:", formatC(x$lkstats['bic'], digits = digits))
@@ -91,7 +101,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                     cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
                     symbols = c("***", "**", "*", ".", " "))
   
-  cat("   QS seas. test (adj. series):", formatC(qsval[2], digits = digits)," ", qsstars[2], sep = "")
+  cat("  QS seas. test (adj. series):", formatC(qsval[2], digits = digits)," ", qsstars[2], sep = "")
   
   if (!is.null(x$resid)){
     # Box Ljung Test
@@ -110,7 +120,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                       corr = FALSE, na = FALSE, legend = FALSE,
                       cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
                       symbols = c("***", "**", "*", ".", " "))
-    cat("  Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
+    cat(" Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
   }
   cat("\n")
   if (length(x$err) > 5){
