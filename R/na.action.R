@@ -9,11 +9,13 @@
 #' 
 #' @export
 #' @examples
-#' AirPassengersNA <- AirPassengers
+#' \dontrun{
+#' #' AirPassengersNA <- AirPassengers
 #' AirPassengersNA[20] <- NA 
 #' na.x13(AirPassengersNA)
 #' 
 #' seas(AirPassengersNA, na.action = na.x13)
+#' }
 #' 
 na.x13 <- function(x){
   stopifnot(inherits(x, "ts"))

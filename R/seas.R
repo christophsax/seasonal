@@ -338,7 +338,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # read additional output files
   z$model <- try(read_mdl(iofile), silent = TRUE) 
   # fails for very complicated models, but is needed only for static()
-  if (inherits(m$model, "try-error")){
+  if (inherits(z$model, "try-error")){
     z$model <- NULL
   }
   z$estimates <- read_est(iofile)

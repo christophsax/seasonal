@@ -1,4 +1,4 @@
-0.43.0
+0.50.0  2014-03-27
 
 new features
 - 'series' function, which allows the import of all tables produced by X-13 (except composite spec)

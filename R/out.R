@@ -43,7 +43,7 @@
 #' out(m, search = "regARIMA model residuals")
 #' out(m, search = "Normality Statistics for regARIMA")
 #' 
-#' # on some platforms, this maybe more useful
+#' # on some platforms, this may be more useful
 #' edit(out(m)) 
 #' 
 #' m <- seas(AirPassengers, slidingspans = list()) 
