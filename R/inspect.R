@@ -140,13 +140,13 @@ SubPlot <- function(view,
     dta <- dta[, -dim(dta)[2]]  # remove last column
     nc <- NCOL(dta)
     ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "slidingspans: final series")
+    ts.plot(dta, col = ncol, main = "slidingspans: seasonal component")
     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
   } else if (view == "history"){
     dta <- series(s, "history.saestimates", verbose = FALSE)
     nc <- NCOL(dta)
     ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "history: revisions analysis")
+    ts.plot(dta, col = ncol, main = "history: adjusted series")
     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
   } else {
     stop("something wrong.")
