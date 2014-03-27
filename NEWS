@@ -1,4 +1,4 @@
-0.42.0
+0.43.0
 
 new features
 - 'series' function, which allows the import of all tables produced by X-13 (except composite spec)
@@ -9,9 +9,11 @@ enhancements
 - improved help pages
 - all examples from the X-13 manual are now in the wiki (except composite spec)
 - 'static' replicates a wider set of calls
+- summary shows decomposition method (X11, SEATS)
+- more flexible arima model specification (numeric vectors also allowed)
 
 deprecated
-- the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is now part of the new 'series' function. Old functions are deprecated.
+- the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is now part of the new 'series' function. The old functions are deprecated.
 
 code improvements
 - code takes advantage of the series function, simplified import from X-13.
