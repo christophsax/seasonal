@@ -1,7 +1,7 @@
 R interface to X-13ARIMA-SEATS
 ------------------------------
 
-*seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS, the newest seasonal adjustment software developed by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by the Bank of Spain). 
+*seasonal* is an easy-to-use and (almost) full-featured R-interface to X-13ARIMA-SEATS, the newest seasonal adjustment software developed by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by the Bank of Spain). 
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated procedures of *seasonal* allow you to quickly produce good seasonal adjustments of time series. Start with the [Installation](#installation) and [Getting started](#getting-started) section and skip the rest. 
 
@@ -116,16 +116,16 @@ There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one 
     m <- seas(AirPassengers)
     series(m, "forecast.forecasts")
     
-Because the `forecast.save = "fct"` argument has not been specified in the model call, `series` re-evaluates the call with the 'forecast' spec enabled. It is also possible to show more than one ouput table at the same time:
+Because the `forecast.save = "forecasts"` argument has not been specified in the model call, `series` re-evaluates the call with the 'forecast' spec enabled. It is also possible to show more than one ouput table at the same time:
 
     series(m, c("forecast.forecasts", "d1"))
    
-You can use either the unique short names of X-13 (such as `d1`), or the the long names (such as `forecasts`). Because the long table names are not unique, they need to be combined with the spec name (`forecast`).
+You can use either the unique short names of X-13 (such as `d1`), or the the long names (such as `forecasts`). Because the long table names are not unique, they need to be combined with the spec name (`forecast`). See `?series` for a complete list of options.
 
 Note that re-evaluation doubles the overall computation time. If you want to speed it up, you have to be explicit about the output in the model call:
 
-    m <- seas(AirPassengers, forecast.save = "fct")
-    series(m, "fct")
+    m <- seas(AirPassengers, forecast.save = "forecasts")
+    series(m, "forecast.forecasts")
 
 Some specs, like 'slidingspans' and 'history', are time consuming. Re-evaluation allows you to separate these specs from the basic model call:
 
@@ -159,7 +159,6 @@ Also, many standard R function can be used to analyze a `"seas"` model:
     spectrum(diff(resid(m)))
     plot(density(resid(m)))
     qqnorm(resid(m))
-
 
 ### Inspect tool
 
