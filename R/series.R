@@ -9,7 +9,7 @@
 #' you want to accelerate the procedure, you have to be explicit about the 
 #' output in the model call (see examples).
 #' 
-#' List with all importable tables from X-13ARIMA-SEATS:
+#' List of all importable tables from X-13ARIMA-SEATS:
 #' 
 #' \tabular{lll}{
 #' \bold{spec} \tab \bold{long name} \tab \bold{short name} \cr 
@@ -209,7 +209,9 @@
 #' @param verbose logical, if \code{TRUE}, a message is returned if a spec is added
 #'   during reevaluation.
 #'   
-#'   
+#' @return depending on the table, either an object of class \code{"ts"} or
+#'   \code{"data.frame"}.
+#'    
 #' @seealso \code{\link{seas}} for the main function.
 #'   
 #' @references Vignette with a more detailed description: 
@@ -218,7 +220,6 @@
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
-#'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}

@@ -3,7 +3,7 @@
 #' The \code{out} function shows the full content of the \code{.out}, the 
 #' \code{.log} or the \code{.err} file form X-13ARIMA-SEATS.
 #' 
-#' To keep the size of \code{"seas"} objects small, "seas" does not save 
+#' To keep the size of \code{"seas"} objects small, \code{seas} does not save 
 #' the content of the \code{.out} by default. Instead, the \code{out} 
 #' function re-evaluates the model.
 #' 
@@ -12,7 +12,7 @@
 #' @param n  number of lines to show on a page.
 #' @param search   regular expression chracter string. If specified, the content
 #'   is searched for the first occurence (see examples).
-#' @param file \code{"out"} or \code{"log"}, which file to show.
+#' @param file \code{"out"}, \code{"log"} or \code{"err"}, which text file to show.
 #'   
 #' @return an object of class \code{"out"}, essentially a character vector with 
 #'   attributes. The print method for \code{"out"} objects is adapted to the 

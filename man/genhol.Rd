@@ -35,7 +35,9 @@ defined variable in \code{\link{seas}}.
 A replacement for the genhol software by the U.S. Census
 Bureau, a utility that uses the same procedure as
 X-12-ARIMA to create regressors for the U. S. holidays of
-Easter, Labor Day, and Thanksgiving.
+Easter, Labor Day, and Thanksgiving. \bold{This is a
+replacement written in R, the U.S. Census Bureau software
+is not needed.}
 }
 \details{
 The resulting time series can be used as a user defined

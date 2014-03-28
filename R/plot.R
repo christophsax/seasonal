@@ -23,7 +23,7 @@
 #'   description.
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
-#' @return All plot functions returns a plot as their side effect.
+#' @return All plot functions return a plot as their side effect.
 #'   
 #' @seealso \code{\link{seas}}, for the main function.
 #' @seealso \code{\link{qs}}, for diagnostical statistics.

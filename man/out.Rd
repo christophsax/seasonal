@@ -15,8 +15,8 @@ out(x, line = 1, n = 100, search = NULL, file = c("out", "log", "err"))
   specified, the content is searched for the first
   occurence (see examples).}
 
-  \item{file}{\code{"out"} or \code{"log"}, which file to
-  show.}
+  \item{file}{\code{"out"}, \code{"log"} or \code{"err"},
+  which text file to show.}
 }
 \value{
 an object of class \code{"out"}, essentially a character

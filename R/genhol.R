@@ -1,8 +1,9 @@
 #' Generate Holiday Regression Variables
 #' 
-#' A replacement for the genhol software by the U.S. Census Bureau, a utility
+#' A replacement for the genhol software by the U.S. Census Bureau, a utility 
 #' that uses the same procedure as X-12-ARIMA to create regressors for the U. S.
-#' holidays of Easter, Labor Day, and Thanksgiving.
+#' holidays of Easter, Labor Day, and Thanksgiving. \bold{This is a replacement
+#' written in R, the U.S. Census Bureau software is not needed.}
 #' 
 #' The resulting time series can be used as a user defined variable in 
 #' \code{\link{seas}}. Usually, you want the holiday effect to be removed from 
@@ -10,7 +11,7 @@
 #' "holiday"}. (The default is to include user defined variables in the final 
 #' series.)
 #' 
-#' @param x  a vector of class \code{"\link{Date}"}, containing the occurences
+#' @param x  a vector of class \code{"\link{Date}"}, containing the occurences 
 #'   of the holiday. It can be generated with \code{\link{as.Date}}.
 #' @param start   integer, shifts the start point of the holiday. Use negative 
 #'   values if \code{start} is before the specified date.

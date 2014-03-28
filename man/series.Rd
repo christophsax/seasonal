@@ -19,6 +19,10 @@ series(x, series, reeval = TRUE, verbose = TRUE)
   \item{verbose}{logical, if \code{TRUE}, a message is
   returned if a spec is added during reevaluation.}
 }
+\value{
+depending on the table, either an object of class
+\code{"ts"} or \code{"data.frame"}.
+}
 \description{
 With the exception the composite spec, the \code{series}
 function imports all tables that can be saved in
@@ -32,7 +36,7 @@ re-evaluation doubles the overall computational time. If
 you want to accelerate the procedure, you have to be
 explicit about the output in the model call (see examples).
 
-List with all importable tables from X-13ARIMA-SEATS:
+List of all importable tables from X-13ARIMA-SEATS:
 
 \tabular{lll}{ \bold{spec} \tab \bold{long name} \tab
 \bold{short name} \cr check \tab check.acf \tab acf \cr
