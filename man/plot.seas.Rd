@@ -31,7 +31,7 @@ residplot(x, outliers = TRUE, ...)
   functions.}
 }
 \value{
-All plot functions returns a plot as their side effect.
+All plot functions return a plot as their side effect.
 }
 \description{
 Functions to graphically analyze a \code{"seas"} object.

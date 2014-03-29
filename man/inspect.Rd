@@ -1,14 +1,14 @@
 \name{inspect}
 \alias{inspect}
-\alias{inspect.seas}
 \title{Interactively Inspect a Seasonal Adjustment Model (RStudio only)}
 \usage{
-inspect(x)
-
-\method{inspect}{seas}(x)
+inspect(x, fun)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}}
+
+  \item{fun}{a function or a list of functions (see
+  details)}
 }
 \description{
 Interactively inspect a \code{"seas"} object.
@@ -31,6 +31,12 @@ option will double the time for recalculation, as the
 static function also tests the static call each time (this
 is a beta feature of seasonal, which allows intensive
 testing; it may be disabled in future versions).
+
+Inspect may be customized via the \code{fun} argument. One
+or several plot functions may be supplied. The plot
+functions should have a \code{"seas"} object as their only
+argument. Several functions must be wrapped in a list (see
+examples).
 }
 \examples{
 \dontrun{
@@ -43,6 +49,20 @@ inspect(m)
 m2 <- seas(AirPassengers, estimate.maxiter = 1000)
 inspect(m2)
 }
+
+
+# customizing inspect
+inspect(m, function(x) plot(trend(x)))
+
+myfun <- list()
+myfun[['Plot 1']] <- function(x){
+  plot(resid(x))
+}
+myfun[['Plot 2']] <- function(x){
+  plot(trend(x))
+}
+
+inspect(m, myfun)
 }
 \references{
 R Studio IDE: \url{http://www.rstudio.com/ide/}

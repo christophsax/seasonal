@@ -15,16 +15,22 @@ if (getRversion() >= "2.15.1") {
 #' series graphically. With each change, the adjustment process and the 
 #' visualizations are recalculated. Summary statics are shown in the R console.
 #' 
-#' With the \code{Show static call} option, a replicable static call is also
-#' shown in the console. Note that this option will double the time for
-#' recalculation, as the static function also tests the static call each time
-#' (this is a beta feature of seasonal, which allows intensive testing; it may
+#' With the \code{Show static call} option, a replicable static call is also 
+#' shown in the console. Note that this option will double the time for 
+#' recalculation, as the static function also tests the static call each time 
+#' (this is a beta feature of seasonal, which allows intensive testing; it may 
 #' be disabled in future versions).
 #' 
+#' Inspect may be customized via the \code{fun} argument. One or several plot 
+#' functions may be supplied. The plot functions should have a \code{"seas"} 
+#' object as their only argument. Several functions must be wrapped in a list
+#' (see examples).
+#' 
 #' @param x an object of class \code{"seas"}
-#' 
+#' @param fun a function or a list of functions (see details)
+#'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
-#' 
+#'   
 #' @references R Studio IDE: \url{http://www.rstudio.com/ide/}
 #'   
 #' @examples
@@ -40,13 +46,22 @@ if (getRversion() >= "2.15.1") {
 #' }
 #' 
 #' 
+#' # customizing inspect
+#' inspect(m, function(x) plot(trend(x)))
+#' 
+#' myfun <- list()
+#' myfun[['Plot 1']] <- function(x){
+#'   plot(resid(x))
+#' }
+#' myfun[['Plot 2']] <- function(x){
+#'   plot(trend(x))
+#' }
+#' 
+#' inspect(m, myfun)
+#' 
 #' @export
-inspect <- function(x) UseMethod("inspect")
-
-#' @rdname inspect
-#' @method inspect seas
-#' @export
-inspect.seas <- function(x){
+inspect <- function(x, fun){
+  require(manipulate)
   
   model <- NULL
   method <- NULL
@@ -57,41 +72,76 @@ inspect.seas <- function(x){
   is.static.call <- NULL
   logtrans <- NULL
   
-  require(manipulate)
-
+  vl <- list()
+  vl[['unadjusted and adjusted series']] <- plot
+  vl[['seasonal component, SI ratio']] <- monthplot
+  
+  vl[['residuals of regARIMA']] <- residplot
+  vl[['residual partial autocorrelation']] <- function(x){
+    pacf(resid(x), main = "residual partial autocorrelation", ylab = "")
+  }
+  vl[['sliding spans']] <- function(x){
+    dta <- series(x, "slidingspans.sfspans", verbose = FALSE)
+    dta <- dta[, -dim(dta)[2]]  # remove last column
+    nc <- NCOL(dta)
+    ncol <- rainbow(nc)
+    ts.plot(dta, col = ncol, main = "slidingspans: seasonal component")
+    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+  }
+  vl[['history']] <- function(x){
+    dta <- series(x, "history.saestimates", verbose = FALSE)
+    nc <- NCOL(dta)
+    ncol <- rainbow(nc)
+    ts.plot(dta, col = ncol, main = "history: adjusted series")
+    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+  }
+  
+  if (!is.null(fun)){
+    if (is.function(fun)){
+      vl[[deparse(substitute(fun))]] <- fun
+    } else if (is.list(fun)){
+      for (i in 1:length(fun)){
+        if (is.function(fun[[i]])){
+          if (is.null(names(fun)[i])){  # allways use a name
+            names(fun)[i] <- paste("User Plot", i)
+          } else if (is.na(names(fun)[i])){
+            names(fun)[i] <- paste("User Plot", i)
+          }
+          vl[[names(fun)[i]]] <- fun[[i]]
+        } else {
+          warning(paste(names(fun)[i], "is not a function, skipping it."))
+        }
+      }
+    } else {
+      stop("fun argument must be either a function or a list of functions.")
+    }
+  }
+  
   fb <- unique(c(x$model$arima$model, fivebestmdl(x)[,1]))
+  fb.list <- as.list(fb)
+  names(fb.list) <- fb
   
   if (x$transform.function == "log"){
     start.log <- TRUE
   } else {
     start.log <- FALSE
   }
-
-  controls <- list(
+  
+  control.list <- list(
     method = picker("SEATS", "X11", label = "adjustment method"),
-    model = picker(fb[1], fb[2], fb[3], fb[4], fb[5], fb[6], label = "model"),
+    model = picker(fb.list, label = "model"),
     calendar = checkbox(TRUE, "AIC-test: trading days, easter"),
     logtrans = checkbox(start.log, "log transformation"),
     outlier.critical = slider(2.5, 5, step = 0.1, initial = 4),
-    view = picker("unadjusted and adjusted series", 
-                  "seasonal component, SI ratio", 
-                  "residuals of regARIMA", "residual partial autocorrelation", 
-                  "sliding spans", 
-                  "history", 
-                  label = "view"),
+    view = picker(vl, label = "view"),
     is.static.call = checkbox(FALSE, "show static call")
   )
-  
-  # reduce model list if only 5 available
-  if (length(na.omit(fb) == 5)){
-    controls$model = picker(fb[1], fb[2], fb[3], fb[4], fb[5], label = "model")
-  }
   
   manipulate({
     lc <- as.list(x$call)
     lc$outlier.critical <- outlier.critical
     lc$arima.model <- model
-      
+    
     if (method == "X11"){
       lc$x11 = list()
     }
@@ -109,56 +159,16 @@ inspect.seas <- function(x){
       names(lc['regression.aictest']) <- "regression.aictest"
     }
     
-    call <- as.call(lc)
+    mod <- eval(as.call(lc))
+    view(mod)
+    print(summary(mod))
     
-    SubPlot(view,
-            call,
-            is.static.call
-            )
-  }, controls)
+    if (is.static.call){
+      cat("\nStatic Call:\n")
+      static(mod, test = TRUE)
+    }
+    
+  }, control.list)
   
 }
-
-
-SubPlot <- function(view,
-                    call,
-                    is.static.call
-                    ){
-
-  s <- eval(call)
-  
-  if (view == "unadjusted and adjusted series"){
-    plot(s)
-  } else if (view == "seasonal component, SI ratio"){
-    monthplot(s)
-  } else if (view == "residuals of regARIMA"){
-    residplot(s)
-  } else if (view == "residual partial autocorrelation"){
-    pacf(resid(s), main = "residual partial autocorrelation", ylab = "")
-  } else if (view == "sliding spans"){
-    dta <- series(s, "slidingspans.sfspans", verbose = FALSE)
-    dta <- dta[, -dim(dta)[2]]  # remove last column
-    nc <- NCOL(dta)
-    ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "slidingspans: seasonal component")
-    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  } else if (view == "history"){
-    dta <- series(s, "history.saestimates", verbose = FALSE)
-    nc <- NCOL(dta)
-    ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "history: adjusted series")
-    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  } else {
-    stop("something wrong.")
-  }
-  
-  print(summary(s))
-  
-  if (is.static.call){
-    cat("\nStatic Call:\n")
-    static(s, test = TRUE)
-  }
-
-}
-
 

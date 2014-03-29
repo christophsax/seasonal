@@ -30,9 +30,10 @@ The \code{out} function shows the full content of the
 X-13ARIMA-SEATS.
 }
 \details{
-To keep the size of \code{"seas"} objects small, "seas"
-does not save the content of the \code{.out} by default.
-Instead, the \code{out} function re-evaluates the model.
+To keep the size of \code{"seas"} objects small,
+\code{seas} does not save the content of the \code{.out} by
+default. Instead, the \code{out} function re-evaluates the
+model.
 }
 \examples{
 \dontrun{
