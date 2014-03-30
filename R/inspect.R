@@ -60,7 +60,7 @@ if (getRversion() >= "2.15.1") {
 #' inspect(m, myfun)
 #' 
 #' @export
-inspect <- function(x, fun){
+inspect <- function(x, fun = NULL){
   require(manipulate)
   
   model <- NULL
