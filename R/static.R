@@ -90,9 +90,9 @@ static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
   if (test){
     # testing the static call
     x.static <- eval(z, envir = globalenv())
-    test <- (all.equal(final(x.static), final(x), tolerance = 1e-05))
+    test <- (all.equal(log(final(x.static)), log(final(x)), tolerance = 1e-05))
     if (inherits(test, "character")){
-      stop(paste("Final Series of static and provided model differ.", test))
+      message(paste("Static series is different.", test))
     }
   }
 
