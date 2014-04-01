@@ -2,7 +2,7 @@
 \alias{outlier}
 \title{Outlier Time series}
 \usage{
-outlier(x)
+outlier(x, full = FALSE)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}.}

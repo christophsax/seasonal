@@ -84,8 +84,6 @@ static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
   }
 
   z <- as.call(lc)
-
-  cat(deparse(z), sep = "\n")
   
   if (test){
     # testing the static call
@@ -96,7 +94,7 @@ static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
     }
   }
 
-  invisible(z)
+  z
 }
 
 
