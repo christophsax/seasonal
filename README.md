@@ -42,8 +42,8 @@ There are other ways to set an environmental variable permanently in R, see `?St
 `seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. The `final` function returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. 
 
     m <- seas(AirPassengers)
-    final(x)
-    plot(x)
+    final(m)
+    plot(m)
      
 The first argument of `seas` has to be a time series of class `"ts"`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure (this is what X-12ARIMA does), use the following option (see the the [Input](#input) section for more details about the syntax):
 
