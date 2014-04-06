@@ -47,7 +47,11 @@ There are other ways to set an environmental variable permanently in R, see `?St
 The first argument of `seas` has to be a time series of class `"ts"`. By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure (this is what X-12ARIMA does), use the following option (see the the [Input](#input) section for more details about the syntax):
 
     seas(AirPassengers, x11 = list())
-     
+
+The `summary` method allows you to display a summary of the model:
+
+    summary(m)
+
 Besides performing seasonal adjustment with SEATS, a default call to `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
 
   - Transformation selection (log / no log)
