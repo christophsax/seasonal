@@ -21,10 +21,10 @@ if (getRversion() >= "2.15.1") {
 #' (this is a beta feature of seasonal, which allows intensive testing; it may 
 #' be disabled in future versions).
 #' 
-#' Inspect may be customized via the \code{fun} argument. One or several plot 
-#' functions may be supplied. The plot functions should have a \code{"seas"} 
-#' object as their only argument. Several functions must be wrapped in a list
-#' (see examples).
+#' The views in \code{inspect} may be customized via the \code{fun} argument.
+#' One or several plot functions may be supplied. The plot functions should have
+#' a \code{"seas"} object as their only argument. Several functions must be
+#' wrapped in a list (see examples).
 #' 
 #' @param x an object of class \code{"seas"}
 #' @param fun a function or a list of functions (see details)
