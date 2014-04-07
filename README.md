@@ -52,7 +52,7 @@ By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 a
 
     seas(AirPassengers, x11 = list())
 
-Besides performing seasonal adjustment with SEATS, a default call to `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
+A default call to `seas` invokes the following automatic procedures of X-13ARIMA-SEATS:
 
   - Transformation selection (log / no log)
   - Detection of trading day and Easter effects
