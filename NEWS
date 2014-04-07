@@ -1,3 +1,11 @@
+0.52.0  2014-??-??
+
+new features
+- views of 'inspect' are now customizable
+- 'identify' method for point and click outlier selection
+- demo(seas) for a demonstration of basic functionality
+
+
 0.50.0  2014-03-27
 
 new features
