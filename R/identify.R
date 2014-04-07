@@ -20,7 +20,7 @@ identify.seas <- function(x, type = c("ao", "tc", "ls")){
   
   repeat{
     print(summary(x))
-    plot(x, main = "click to select or unselect outliers")
+    plot(x, main = "click several times to select type or unselect outlier")
     ol.ts <- outlier(x)
     sc <- static(x, test = FALSE)
     cat("\n")
