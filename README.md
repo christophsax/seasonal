@@ -14,7 +14,7 @@ To install the stable version directly from CRAN, type to the R console:
 
     install.packages("seasonal")
 
-*seasonal* does not include the binary executables of X-13ARIMA-SEATS. They need to be installed separately from [here][census_win] (Windows, filename `x13asall.zip`) or [here][census_linux]  (RedHat, with g77 installed), filename `x13asall.tar.gz`). A guide to compile it for Ubuntu can be found [here][ubuntu]. My own compilations for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com). 
+*seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can be optained precompiled from [here][census_win] (Windows, filename `x13asall.zip`) or [here][census_linux]  (Linux, with g77, filename `x13asall.tar.gz`). A guide to compile it for Ubuntu can be found [here][ubuntu]. My own compilations for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com). 
 
 Download the file, unzip it and copy the folder to the desired location in your file system. Next, you need to tell *seasonal* where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
 
