@@ -37,11 +37,13 @@ There are other ways to set an environmental variable permanently in R, see `?St
 
 ### Getting started
 
-`seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works well in most circumstances. It returns an object of class `"seas"` that contains all necessary information on the adjustment process, as well as the series. 
+`seas` ist the core function of the *seasonal* package. By default, `seas` calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that works well in most circumstances:
 
     m <- seas(AirPassengers)
      
-The first argument of `seas` has to be a time series of class `"ts"`. It retruns an object of class `seas`. There are several functions and methods for `seas` objects: The `final` function returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. The `summary` method allows you to display an overview of the model:
+The first argument of `seas` has to be a time series of class `"ts"`. The function returns an object of class `"seas"` that contains all necessary information on the adjustment. 
+
+There are several functions and methods for `"seas"` objects: The `final` function returns the adjusted series, the `plot` method shows a plot with the unadjusted and the adjusted series. The `summary` method allows you to display an overview of the model:
 
     final(m)
     plot(m)
