@@ -104,7 +104,7 @@ translates to R in the following way:
     
 `seas` takes care of the 'series' spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the 'x11' spec is added as an input (like above), the mutually exclusive and default 'seats' spec is automatically disabled. With `arima.model`, an additional spec-argument is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the 'automdl' spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and *seasonal* is to study the comprehensive list of examples in the [wiki][examples]. 
 
-There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, a set of priority rule is followed, where the lower priority is overwritten by the higher priority:
+There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included in seats, specs overwritten according the following priority rules:
 
 - Model selection
     1. `arima`
@@ -114,6 +114,8 @@ There are several mutually exclusive specs in X-13ARIMA-SEATS. If more than one 
 - Adjustment procedure
     1. `x11`
     2. `seats` (default)
+
+For example, if `x11` is manually specified, the default `seats` spec is disabled. Also, if `arima` is specified, no `automdl` search will be performed.
 
 
 ### Output
@@ -167,7 +169,7 @@ Also, many standard R function can be used to analyze a `"seas"` model:
     plot(density(resid(m)))
     qqnorm(resid(m))
     
-The `identify` method can be used to select or unselect outliers by point and click:
+The `identify` method can be used to select or unselect outliers by point and click. Click several times to change the type of outlier.
 
     identify(m)
 
