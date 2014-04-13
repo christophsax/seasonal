@@ -187,7 +187,7 @@ With the 'Show static call' option, a replicable static call is also shown in th
 
 *seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs and is not connected to the development of X-13ARIMA-SEATS ([licence][licence]).
 
-This is a new package, and it may still contain bugs. Please report them on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
+Please report bugs and suggestions on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
 [manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
 
