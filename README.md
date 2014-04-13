@@ -115,8 +115,6 @@ There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than one mut
     1. `x11`
     2. `seats` (default)
 
-For example, if `x11` is manually specified, the default `seats` spec is disabled. Also, if `arima` is specified, no `automdl` search will be performed.
-
 
 ### Output
 
