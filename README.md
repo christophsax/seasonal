@@ -104,7 +104,7 @@ translates to R in the following way:
     
 `seas` takes care of the 'series' spec, and no input beside the time series has to be provided. As `seas` uses the SEATS procedure by default, the use of X11 has to be specified manually. When the 'x11' spec is added as an input (like above), the mutually exclusive and default 'seats' spec is automatically disabled. With `arima.model`, an additional spec-argument is added to the input of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the 'automdl' spec, the latter is automatically disabled. The best way to learn about the relationship between the syntax of X-13ARIMA-SEATS and *seasonal* is to study the comprehensive list of examples in the [wiki][examples]. 
 
-There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included in seats, specs overwritten according the following priority rules:
+There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than one mutually exclusive specs is included, specs overwritten according the following priority:
 
 - Model selection
     1. `arima`
