@@ -1,6 +1,6 @@
 #' Diagnostical Statistics
 #' 
-#' Functions to access some specific diagnostical statics in a \code{"seas"} object.  
+#' Functions to access some specific diagnostical statistics in a \code{"seas"} object.  
 #' For universal import of X-13ARIMA-SEATS tables, use the \code{\link{series}} function. For 
 #' accessing the \code{.out} file of X-13ARIMA-SEATS, use the \code{\link{out}} 
 #' function. For diagnostical plots, see \code{\link{plot.seas}}.
