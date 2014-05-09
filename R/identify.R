@@ -1,10 +1,11 @@
-#' Identify Outliers (Experimental)
+#' Manually Identify Outliers (Experimental)
 #' 
-#' Select or unselect outliers by clicking. To quit and return the call, press
-#' ESC. Clicking several times loops throug the list of outlier types. The
-#' default list can be modified by the user.
+#' Select or deselect outliers by point and click. To quit and return the call, press
+#' ESC. Click several times to loop through different outlier types.
 #' 
-#' @param x   an object of class \code{"seas"}.
+#' @param x      an object of class \code{"seas"}.
+#' @param type   character vector, types of outlier to loop through.
+#' @param ...    unused, for compatibility with the generic function.
 #'   
 #' @return an object of class \code{"seas"}, containing the static call of the
 #'   selected model.
@@ -15,12 +16,12 @@
 #'  m <- seas(AirPassengers)
 #'  identify(m)
 #' }
-identify.seas <- function(x, type = c("ao", "tc", "ls")){
+identify.seas <- function(x, type = c("ao", "tc", "ls"), ...){
   f <- frequency(final(x))
   
   repeat{
     print(summary(x))
-    plot(x, main = "click several times to select type or unselect outlier")
+    plot(x, main = "click several times to loop through different outlier types")
     ol.ts <- outlier(x)
     sc <- static(x, test = FALSE)
     cat("\n")

@@ -6,6 +6,10 @@ outlier(x, full = FALSE)
 }
 \arguments{
   \item{x}{an object of class \code{"seas"}.}
+
+  \item{full}{logical, should the full label of the outlier
+  be shown? If \code{FALSE}, only the type of the outlier
+  is shown.}
 }
 \value{
 character string time series with outliers.

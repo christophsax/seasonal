@@ -10,7 +10,7 @@
 #' 
 #' If \code{coef = TRUE}, the coefficients are fixed as well.
 #' 
-#' @param x an object of class \code{seas}
+#' @param x an object of class \code{seas}.
 #' @param coef  logical, if \code{TRUE}, the coefficients are treated as fixed, 
 #'   instead of beeing estimated.
 #' @param test logical. By default the static call is executed and compared to 

@@ -13,6 +13,8 @@ procedures of \emph{seasonal} allow you to quickly produce good seasonal
 adjustments of time series. Start with the
 \hyperref[installation]{Installation} and
 \hyperref[getting-started]{Getting started} section and skip the rest.
+Alternatively, \texttt{demo(seas)} gives an overview of the package
+functionality.
 
 If you are familiar with X-13ARIMA-SEATS, you may benefit from the
 flexible input and output structure of \emph{seasonal}. The package
@@ -22,14 +24,9 @@ exception is the `composite' spec, which is not supported. Read the
 \hyperref[input]{Input} and \hyperref[output]{Output} sections and have
 a look at the
 \href{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}{wiki},
-where the examples from the original X-13ARIMA-SEATS manual are
+where the examples from the official X-13ARIMA-SEATS
+\href{http://www.census.gov/ts/x13as/docX13AS.pdf}{manual} are
 reproduced in R.
-
-For more details on X-13ARIMA-SEATS, as well as for explanations on the
-X-13ARIMA-SEATS syntax, see the
-\href{http://www.census.gov/ts/x13as/docX13AS.pdf}{manual} or the
-\href{http://www.census.gov/ts/x13as/pc/qrefX13ASpc.pdf}{quick
-reference}.
 
 \hyperdef{}{installation}{\subsubsection{Installation}\label{installation}}
 
@@ -39,14 +36,16 @@ To install the stable version directly from CRAN, type to the R console:
 install.packages("seasonal")
 \end{verbatim}
 
-\emph{seasonal} does not includes the binary executables of
-X-13ARIMA-SEATS. They need to be installed separately from
+\emph{seasonal} does not include the binary executables of
+X-13ARIMA-SEATS. They can be obtained precompiled from
 \href{http://www.census.gov/srd/www/x13as/x13down_pc.html}{here}
-(Windows, filename \texttt{x13asall.zip}) or
+(Windows: \texttt{x13asall.zip}) or
 \href{http://www.census.gov/srd/www/x13as/x13down_unix.html}{here}
-(Linux, filename \texttt{x13asall.tar.gz}). My own compilation for Mac
-OS-X can be obtained \href{mailto:christoph.sax@gmail.com}{upon
-request}.
+(Linux, with g77: \texttt{x13asall.tar.gz}). A guide to manual
+compilation for Ubuntu can be found
+\href{http://askubuntu.com/questions/444354/how-do-i-install-x13-arima-seats-for-rstudio-from-source}{here}.
+My own compilation for Mac OS-X can be obtained
+\href{mailto:christoph.sax@gmail.com}{upon request}.
 
 Download the file, unzip it and copy the folder to the desired location
 in your file system. Next, you need to tell \emph{seasonal} where to
@@ -98,36 +97,41 @@ see \texttt{?Startup}.
 \hyperdef{}{getting-started}{\subsubsection{Getting
 started}\label{getting-started}}
 
-\texttt{seas} ist the core function of the \emph{seasonal} package. By
+\texttt{seas} is the core function of the \emph{seasonal} package. By
 default, \texttt{seas} calls the automatic procedures of X-13ARIMA-SEATS
-to perform a seasonal adjustment that works well in most circumstances.
-It returns an object of class \texttt{"seas"} that contains all
-necessary information on the adjustment process, as well as the series.
-The \texttt{final} function returns the adjusted series, the
-\texttt{plot} method shows a plot with the unadjusted and the adjusted
-series.
+to perform a seasonal adjustment that works well in most circumstances:
 
 \begin{verbatim}
 m <- seas(AirPassengers)
-final(x)
-plot(x)
  
 \end{verbatim}
 
 The first argument of \texttt{seas} has to be a time series of class
-\texttt{"ts"}. By default, \texttt{seas} calls the SEATS adjustment
-procedure. If you prefer the X11 adjustment procedure (this is what
-X-12ARIMA does), use the following option (see the the
-\hyperref[input]{Input} section for more details about the syntax):
+\texttt{"ts"}. The function returns an object of class \texttt{"seas"}
+that contains all necessary information on the adjustment.
+
+There are several functions and methods for \texttt{"seas"} objects: The
+\texttt{final} function returns the adjusted series, the \texttt{plot}
+method shows a plot with the unadjusted and the adjusted series. The
+\texttt{summary} method allows you to display an overview of the model:
+
+\begin{verbatim}
+final(m)
+plot(m)
+summary(m)
+\end{verbatim}
+
+By default, \texttt{seas} calls the SEATS adjustment procedure. If you
+prefer the X11 adjustment procedure, use the following option (see the
+\hyperref[input]{Input} section for details on how to use arbitrary
+options with X-13):
 
 \begin{verbatim}
 seas(AirPassengers, x11 = list())
- 
 \end{verbatim}
 
-Besides performing seasonal adjustment with SEATS, a default call to
-\texttt{seas} invokes the following automatic procedures of
-X-13ARIMA-SEATS:
+A default call to \texttt{seas} also invokes the following automatic
+procedures of X-13ARIMA-SEATS:
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -145,13 +149,16 @@ Alternatively, all inputs may be entered manually, as in the following
 example:
 
 \begin{verbatim}
-seas(x = AirPassengers, regression.variables = c("td1coef", "easter[1]",
-"ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
-outlier = NULL, transform.function = "log")
+seas(x = AirPassengers, 
+     regression.variables = c("td1coef", "easter[1]", "ao1951.May"), 
+     arima.model = "(0 1 1)(0 1 1)", 
+     regression.aictest = NULL,
+     outlier = NULL, 
+     transform.function = "log")
 \end{verbatim}
 
-The \texttt{static} command reveals the static call from above that is
-needed to replicate the automatic seasonal adjustment procedure:
+The \texttt{static} command returns the manual call of a model. The call
+above above can be easily generated from the automatic model:
 
 \begin{verbatim}
 static(m)
@@ -172,12 +179,10 @@ In \emph{seasonal}, it is possible to use almost the complete syntax of
 X-13ARIMA-SEAT. This is done via the \texttt{...} argument in the
 \texttt{seas} function. The X-13ARIMA-SEATS syntax uses \emph{specs} and
 \emph{arguments}, with each spec optionally containing some arguments.
-For details, see the official
-\href{http://www.census.gov/ts/x13as/docX13AS.pdf}{manual}. These
-spec-argument combinations can be added to \texttt{seas} by separating
-the spec and the argument by a dot (\texttt{.}). For example, in order
-to set the `variables' argument of the `regression' spec equal to
-\texttt{td} and \texttt{ao1999.jan}, the input to \texttt{seas} looks
+These spec-argument combinations can be added to \texttt{seas} by
+separating the spec and the argument by a dot (\texttt{.}). For example,
+in order to set the `variables' argument of the `regression' spec equal
+to \texttt{td} and \texttt{ao1999.jan}, the input to \texttt{seas} looks
 like this:
 
 \begin{verbatim}
@@ -223,10 +228,9 @@ learn about the relationship between the syntax of X-13ARIMA-SEATS and
 \emph{seasonal} is to study the comprehensive list of examples in the
 \href{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}{wiki}.
 
-There are several mutually exclusive specs in X-13ARIMA-SEATS. If more
-than one mutually exclusive specs is included, a set of priority rule is
-followed, where the lower priority is overwritten by the higher
-priority:
+There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than
+one mutually exclusive spec is included in \texttt{seas}, specs are
+overwritten according the following priority rules:
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -258,10 +262,11 @@ priority:
 
 \hyperdef{}{output}{\subsubsection{Output}\label{output}}
 
-\emph{seasonal} has a very flexible mechanism to read data from
+\emph{seasonal} has a flexible mechanism to read data from
 X-13ARIMA-SEATS. With the \texttt{series} function, it is possible to
 import almost all output that can be generated by X-13ARIMA-SEATS. For
-example, the following command shows the forcasts of the ARIMA model:
+example, the following command returns the forecasts of the ARIMA model
+as a \texttt{"ts"} time series:
 
 \begin{verbatim}
 m <- seas(AirPassengers)
@@ -270,8 +275,8 @@ series(m, "forecast.forecasts")
 
 Because the \texttt{forecast.save = "forecasts"} argument has not been
 specified in the model call, \texttt{series} re-evaluates the call with
-the `forecast' spec enabled. It is also possible to show more than one
-ouput table at the same time:
+the `forecast' spec enabled. It is also possible to return more than one
+output table at the same time:
 
 \begin{verbatim}
 series(m, c("forecast.forecasts", "d1"))
@@ -344,10 +349,18 @@ plot(density(resid(m)))
 qqnorm(resid(m))
 \end{verbatim}
 
+The \texttt{identify} method can be used to select or deselect outliers
+by point and click. Click several times to loop through different
+outlier types.
+
+\begin{verbatim}
+identify(m)
+\end{verbatim}
+
 \subsubsection{Inspect tool}\label{inspect-tool}
 
-The \texttt{inspect} function is a powerful graphical tool for choosing
-a seasonal adjustment model. It uses the \texttt{manipulate} package and
+The \texttt{inspect} function is a graphical tool for choosing a
+seasonal adjustment model. It uses the \texttt{manipulate} package and
 can only be used with the (free)
 \href{http://www.rstudio.com/ide/}{RStudio IDE}. The goal of
 \texttt{inspect} is to summarize all relevant options, plots and
@@ -361,21 +374,23 @@ inspect(m)
 The \texttt{inspect} function opens an interactive window that allows
 for the manipulation of a number of arguments. It offers several views
 to analyze the series graphically. With each change, the adjustment
-process and the visualizations are recalculated. Summary statics are
-shown in the R console.
+process and the visualizations are recalculated. Summary statistics are
+shown in the R console. The views in \texttt{inspect} are customizable,
+see the examples in \texttt{?inspect}.
 
 With the `Show static call' option, a replicable static call is also
 shown in the console. Note that this option will double the time for
-recalculation, as the static function also tests the static call each
-time.
+recalculation, as the static function also performs a test of the static
+call.
 
 \subsubsection{License}\label{license}
 
 \emph{seasonal} is free and open source, licensed under GPL-3. It has
 been developed for the use at the Swiss State Secretariat of Economic
-Affairs and is not connected to the development of X-13ARIMA-SEATS,
-which is in the Public Domain.
+Affairs. Its development is not connected to the development of
+X-13ARIMA-SEATS
+(\href{https://www.census.gov/srd/www/disclaimer.html}{licence}).
 
-This is a new package, and it may still contain bugs. Please report them
-on \href{https://github.com/christophsax/seasonal}{Github} or send me an
+Please report bugs and suggestions on
+\href{https://github.com/christophsax/seasonal}{Github} or send me an
 \href{mailto:christoph.sax@gmail.com}{e-mail}. Thank you!

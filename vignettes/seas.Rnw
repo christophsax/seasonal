@@ -5,16 +5,11 @@
 \usepackage{graphics}
 \usepackage{color}
 \usepackage{amsmath}
-\usepackage[small]{titlesec}
 \usepackage[utf8]{inputenc}
-\usepackage[bf]{caption}
-\usepackage{booktabs}
 \usepackage{fullpage}
 \usepackage[colorlinks = true]{hyperref}
-\usepackage{longtable}
-\usepackage{mathpazo}
 
-\renewcommand{\captionfont}{\small}%
+
 
 \newcommand{\note}[1]{}
 \renewcommand{\subsection}{\note}

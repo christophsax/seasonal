@@ -5,7 +5,7 @@
 static(x, coef = FALSE, test = TRUE, verbose = FALSE)
 }
 \arguments{
-  \item{x}{an object of class \code{seas}}
+  \item{x}{an object of class \code{seas}.}
 
   \item{coef}{logical, if \code{TRUE}, the coefficients are
   treated as fixed, instead of beeing estimated.}
