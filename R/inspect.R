@@ -13,7 +13,7 @@ if (getRversion() >= "2.15.1") {
 #' The \code{inspect} function opens an interactive window that allows for the 
 #' manipulation of a number of arguments. It offers several views to analyze the
 #' series graphically. With each change, the adjustment process and the 
-#' visualizations are recalculated. Summary statics are shown in the R console.
+#' visualizations are recalculated. Summary statistics are shown in the R console.
 #' 
 #' With the \code{Show static call} option, a replicable static call is also 
 #' shown in the console. Note that this option will double the time for 
