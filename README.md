@@ -24,7 +24,7 @@ Exchange `YOUR_X13_DIRECTORY` with the path to your installation of X-13ARIMA-SE
 
     checkX13()
 
-If you want to set the environmental variable permanently, you may do so by adding it tho the `Renviron.site` file, which is located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal the home directory). `Renviron.site` does not exist by default; if not, you have to create a file named `Renviron.site` with your favorite text editor (on Windows, be careful with the 'show extensions for known file types' option, the extension `.site` may be hidden). Add the following line to the file:
+If you want to set the environmental variable permanently, you may do so by adding it to the `Renviron.site` file, which is located in the `etc` subdirectory of your R home directory (use `R.home()` in R to reveal the home directory). `Renviron.site` does not exist by default; if not, you have to create a file named `Renviron.site` with your favorite text editor (on Windows, be careful with the 'show extensions for known file types' option, the extension `.site` may be hidden). Add the following line to the file:
 
     X13_PATH = YOUR_PATH_TO_X13
 
@@ -69,7 +69,7 @@ Alternatively, all inputs may be entered manually, as in the following example:
          outlier = NULL, 
          transform.function = "log")
 
-The `static` command returns the manual call of a model. The call above above can be easily generated from the automatic model:
+The `static` command returns the manual call of a model. The call above can be easily generated from the automatic model:
 
     static(m)
     static(m, coef = TRUE)  # also fixes the coefficients
@@ -81,7 +81,7 @@ If you are using RStudio, the `inspect` command offers a way to analyze and modi
 
 ### Input
 
-In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-SEAT. This is done via the `...` argument in the `seas` function. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec optionally containing some arguments. These spec-argument combinations can be added to `seas` by separating the spec and the argument by a dot (`.`). For example, in order to set the 'variables' argument of the 'regression' spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
+In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-SEATS. This is done via the `...` argument in the `seas` function. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec optionally containing some arguments. These spec-argument combinations can be added to `seas` by separating the spec and the argument by a dot (`.`). For example, in order to set the 'variables' argument of the 'regression' spec equal to `td` and `ao1999.jan`, the input to `seas` looks like this:
 
     m <- seas(AirPassengers, regression.variables = c("td", "ao1955.jan"))
    
@@ -185,7 +185,7 @@ With the 'Show static call' option, a replicable static call is also shown in th
 
 ### License
 
-*seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs. Its development is not connected to the development of X-13ARIMA-SEATS ([licence][licence]).
+*seasonal* is free and open source, licensed under GPL-3. It has been developed for the use at the Swiss State Secretariat of Economic Affairs. Its development is not connected to the development of X-13ARIMA-SEATS ([license][license]).
 
 Please report bugs and suggestions on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
@@ -193,7 +193,7 @@ Please report bugs and suggestions on [Github][github] or send me an [e-mail](ma
 
 [census]: http://www.census.gov/srd/www/x13as/ "United States Census Bureau"
 
-[licence]: https://www.census.gov/srd/www/disclaimer.html "License Information and Disclaimer"
+[license]: https://www.census.gov/srd/www/disclaimer.html "License Information and Disclaimer"
 
 [census_win]: http://www.census.gov/srd/www/x13as/x13down_pc.html "Combined X-13ARIMA-SEATS archives"
 
