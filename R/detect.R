@@ -86,8 +86,11 @@ detect_seatsmdl <- function(outtxt){
   # outtxt  character vector, content of .out output file
   #
   # returns character vector
-  
   first <- which(outtxt == "  MODEL CHANGED TO :")
+  if (length(first) == 0){
+    first <- which(outtxt == " ARIMA MODEL SELECTED BY TRAMO: ")
+  }
+  
   
   if (length(first) == 1){
     z <- outtxt[first + 1]
@@ -97,6 +100,7 @@ detect_seatsmdl <- function(outtxt){
   } else {
     z <- NULL
   }
+  
   z
 }
 
