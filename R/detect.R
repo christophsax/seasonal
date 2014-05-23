@@ -91,11 +91,10 @@ detect_seatsmdl <- function(outtxt){
     first <- which(outtxt == " ARIMA MODEL SELECTED BY TRAMO: ")
   }
   
-  
   if (length(first) == 1){
     z <- outtxt[first + 1]
+    z <- gsub(",", " ", z)          # remove , 
     z <- gsub("\\s+", " ", z)      # subst several spaces by one space
-    z <- gsub(",", "", z)          # remove , 
     z <- gsub("^\\s|\\s$", "", z)  # trim lead. and trail spaces
   } else {
     z <- NULL
