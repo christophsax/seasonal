@@ -122,7 +122,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                       symbols = c("***", "**", "*", ".", " "))
     cat(" Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
   }
-  cat("\n")
+
   if (length(x$err) > 5){
     cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")
   } 
