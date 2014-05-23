@@ -28,7 +28,8 @@
 #'   together with \code{xreg}.
 #' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"} 
 #'   (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
-#'   an alternative model is used (a warning is given).
+#'   an alternative model is used (a message is returned). If \code{noadmiss =
+#'   "no"}, , no approximation is done.
 #' @param transform.function   spec \code{transform} with argument 
 #'   \code{function = "auto"} (default). Automatic log transformation detection.
 #'   Set equal to \code{"none"}, \code{"log"} or any value that is allowed by 
@@ -42,7 +43,7 @@
 #'   model search with the automdl spec. Set equal to \code{NULL} to turn off.
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
-#'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values
+#'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values 
 #'   are substituted by -99999.
 #' @param out   logical, should the X-13ARIMA-SEATS standard output be saved in 
 #'   the \code{"seas"} object? (this increases object size substantially, it is 
@@ -90,6 +91,7 @@
 #'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
@@ -324,7 +326,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   
   # ...and warn if model choosen by seats is different
   if (any(grepl("Model used for SEATS decomposition is different", z$err))){
-    warning(paste("Model used for SEATS decomposition is different:\n", 
+    message(paste("Model used in SEATS is different:", 
                   detect_seatsmdl(outtxt)))
   }
   
