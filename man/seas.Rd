@@ -24,7 +24,8 @@ seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
   \item{seats.noadmiss}{spec 'seats' with argument
   \code{noadmiss = "yes"} (default). Seasonal adjustment by
   SEATS, if SEATS decomposition is invalid, an alternative
-  model is used (a warning is given).}
+  model is used (a message is returned). If \code{noadmiss
+  = "no"}, , no approximation is done.}
 
   \item{transform.function}{spec \code{transform} with
   argument \code{function = "auto"} (default). Automatic
