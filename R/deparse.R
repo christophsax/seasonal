@@ -78,7 +78,7 @@ as.character.arima <- function(x){
       z <- paste0("(", 
                   paste(x[1:3], collapse = " "), 
                   ")(",
-                  paste(x[1:3], collapse = " "),
+                  paste(x[4:6], collapse = " "),
                   ")"
       )
     } else if (length(x) == 3){
