@@ -1,3 +1,12 @@
+0.61.0  2014-??-??
+
+new features
+- 'inspect2', 'inspect' function that uses shiny. 
+
+bug fixes
+- incomplete SEATS model change warning fixed, switched from warning to message
+- numeric arima.model specfication fixed
+
 0.60.0  2014-05-09
 
 new features
