@@ -62,7 +62,10 @@
 #' }
 #' @export
 #' @import shiny
-inspect2 <- function(x, fun = NULL){  
+inspect2 <- function(x, fun = NULL, 
+                     launch.browser = if (Sys.getenv("RSTUDIO") == "1") rstudio::viewer else getOption("shiny.launch.browser", interactive())
+){  
+  
   require(shiny)
   
   vl <- list()
@@ -135,7 +138,7 @@ inspect2 <- function(x, fun = NULL){
   runApp(list(
     ui = shinyUI(fluidPage(
       # Application title
-      titlePanel("Adjusting the Adjustment"),
+      titlePanel("seasonal: X13-ARIMA-SEATS interface"),
       
       # Sidebar with a slider input for number of bins
       sidebarLayout(
@@ -148,7 +151,7 @@ inspect2 <- function(x, fun = NULL){
           selectInput("aictest", "AIC-test for:",
                       ca.list, selected = ca.list, multiple = TRUE),
           sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          actionButton("stopButton", "Close and return call to R", icon = icon("arrow-circle-down"))
+          actionButton("stopButton", "Import to R", icon = icon("download"))
         ),
         
         main.panel
@@ -185,8 +188,7 @@ inspect2 <- function(x, fun = NULL){
       output$someText <- renderPrint({
         mod <- mod()
         summary(mod)
-      })
-      
+      }) 
       
       output$distPlot <- renderPlot({
         mod <- mod()
@@ -194,31 +196,11 @@ inspect2 <- function(x, fun = NULL){
         view(mod)
       })
       
-      
-      # 
-      
       for (i in 1:length(vl)){
         expr <- paste0("output$vl", i, " <- renderPlot(vl[[",i ,  "]](mod()))")
         eval(parse(text = expr))
       }
-
-      
-      
-      
-#       ul <- lapply(userplots, function(fun){
-#         renderPlot({
-#           fun(mod())
-#         })
-#       }
-#       )
-#       
-#       
-#       names(ul) <- paste0("plot", names(ul))
-#       browser()
-#       output <- c(output, ul)
-#       cat(names(output))
-      
     }
-  ))
+  ), launch.browser = launch.browser)
   
 }
