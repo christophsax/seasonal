@@ -26,7 +26,7 @@ NULL
 #' 
 #' Monthly consumer price index of Switzerland. Base year is 1993.
 #' 
-#' @docype data
+#' @docType data
 #' 
 #' @format Each time series is an object of class \code{"ts"}.
 #' 
@@ -42,7 +42,7 @@ NULL
 
 #' Dates of Easter and Chinese New Year
 #' 
-#' @docype data
+#' @docType data
 #' 
 #' @format Objects of class \code{"Date"}.
 #' 
@@ -63,7 +63,7 @@ NULL
 #' 
 #' In 100 mio. U.S. Dollar.
 #' 
-#' @docype data
+#' @docType data
 #' 
 #' @format Each time series is an object of class \code{"ts"}.
 #' 
@@ -81,7 +81,7 @@ NULL
 #' The data is used by several functions as a look-up table. Users
 #' should consider the table in \code{\link{series}} or in the official manual.
 #' 
-#' @docype data
+#' @docType data
 #'   
 #' @format An object of class \code{"data.frame"}.
 #'   
