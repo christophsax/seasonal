@@ -309,7 +309,6 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     } else {
       series.NA <- setdiff(series.short, names(x$series))
     }
-        
     activated <- NULL
     reeval.dots <- list()
     j <- 1  # flexible index to allow for an arbitrary number of requirements
@@ -318,15 +317,19 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
       spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
       if (length(spec.i) > 1) stop("not unique!!!!!!!!!!")
       if (!spec.i %in% names(x$spc)){
-        activated <- c(activated, spec.i)
+        if (spec.i %in% c("x11", "seats")){
+          stop(spec.i, " is not activated.")
+        } else {
+          activated <- c(activated, spec.i)
+        }
       }
       requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
-
       if (length(requires.i) > 0){
         requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
         reeval.dots <- c(reeval.dots, requires.list)
         j <- length(reeval.dots) + 1
       }
+      
       reeval.dots[[j]] <- series.NA.i
       names(reeval.dots)[j] <- paste0(spec.i, '.save')
       j <- j + 1
@@ -342,7 +345,9 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     }
   }
 
-  do.call(cbind, x$series[series.short])
+  z <- do.call(cbind, x$series[series.short])
+#   attr(z, "added") <- unique(activated)
+  z
 }
 
 

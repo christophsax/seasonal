@@ -1,15 +1,15 @@
 #' Interactively Inspect a Seasonal Adjustment Model (New Shiny Version)
 #' 
 #' Interactively inspect a \code{"seas"} object. The goal of 
-#' \code{inspect2} is to summarize all relevant options, plots and statistics 
+#' \code{inspect} is to summarize all relevant options, plots and statistics 
 #' that should be usually considered.
 #' 
-#' The \code{inspect2} function opens an interactive window that allows for the 
+#' The \code{inspect} function opens an interactive window that allows for the 
 #' manipulation of a number of arguments. It offers several views to analyze the
 #' series graphically. With each change, the adjustment process and the 
 #' visualizations are recalculated. 
 #' 
-#' The views in \code{inspect2} may be customized via the \code{fun} argument.
+#' The views in \code{inspect} may be customized via the \code{fun} argument.
 #' One or several plot functions may be supplied. The plot functions should have
 #' a \code{"seas"} object as their only argument. Several functions must be
 #' wrapped in a list (see examples).
@@ -24,16 +24,16 @@
 #' 
 #' m <- seas(AirPassengers)
 #' 
-#' inspect2(m)
+#' inspect(m)
 #' 
 #' 
-#' ### customizing inspect2
+#' ### customizing inspect
 #' 
 #' # a single function
 #' fc <- function(m){
 #'   ts.plot(series(m, "fct", verbose = FALSE))
 #' }
-#' inspect2(m, fc)
+#' inspect(m, fc)
 #' 
 #' # more than one function collected in a list
 #' myfun <- list()
@@ -43,7 +43,7 @@
 #' myfun[['Spectum R']] <- function(m){
 #'   spectrum(diff(log(AirPassengers)), method = "ar")
 #' }
-#' inspect2(m, myfun)
+#' inspect(m, myfun)
 #' 
 #' # and a bonus example
 #' spaghetti <- function(m, back = 10){
@@ -57,14 +57,18 @@
 #' ts.plot(window(z, start = time(ser)[(length(ser) - back- 15)]), 
 #'         col = rainbow(back + 1))
 #' }
-#' inspect2(m, spaghetti)
+#' inspect(m, spaghetti)
 #' 
 #' }
 #' @export
 #' @import shiny
-inspect2 <- function(x, fun = NULL, 
+inspect <- function(x, fun = NULL, 
                      launch.browser = if (Sys.getenv("RSTUDIO") == "1") rstudio::viewer else getOption("shiny.launch.browser", interactive())
 ){  
+  
+  # --- Initialize -------------------------------------------------------------
+  
+  data(specs)
   
   require(shiny)
   
@@ -72,25 +76,25 @@ inspect2 <- function(x, fun = NULL,
   vl[['Series']] <- plot
   vl[['SI']] <- monthplot
   
-  vl[['Residuals']] <- residplot
-  vl[['PACF']] <- function(x){
-    pacf(resid(x), main = "residual partial autocorrelation", ylab = "")
-  }
-  vl[['Sliding']] <- function(x){
-    dta <- series(x, "slidingspans.sfspans", verbose = FALSE)
-    dta <- dta[, -dim(dta)[2]]  # remove last column
-    nc <- NCOL(dta)
-    ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "slidingspans: seasonal component")
-    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  }
-  vl[['History']] <- function(x){
-    dta <- series(x, "history.saestimates", verbose = FALSE)
-    nc <- NCOL(dta)
-    ncol <- rainbow(nc)
-    ts.plot(dta, col = ncol, main = "history: adjusted series")
-    legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-  }
+#   vl[['Residuals']] <- residplot
+#   vl[['PACF']] <- function(x){
+#     pacf(resid(x), main = "residual partial autocorrelation", ylab = "")
+#   }
+#   vl[['Sliding']] <- function(x){
+#     dta <- series(x, "slidingspans.sfspans", verbose = FALSE)
+#     dta <- dta[, -dim(dta)[2]]  # remove last column
+#     nc <- NCOL(dta)
+#     ncol <- rainbow(nc)
+#     ts.plot(dta, col = ncol, main = "slidingspans: seasonal component")
+#     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+#   }
+#   vl[['History']] <- function(x){
+#     dta <- series(x, "history.saestimates", verbose = FALSE)
+#     nc <- NCOL(dta)
+#     ncol <- rainbow(nc)
+#     ts.plot(dta, col = ncol, main = "history: adjusted series")
+#     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+#   }
   
   if (!is.null(fun)){
     if (is.function(fun)){
@@ -123,11 +127,13 @@ inspect2 <- function(x, fun = NULL,
     tab.expr <- paste0(tab.expr, 'tabPanel("', names(vl)[i], '", plotOutput("vl', i, '")),\n')
   }
   
-  tab.expr <- paste0(tab.expr, 'type = "pills"))')
+  tab.expr <- paste0(tab.expr, 'tabPanel("More", selectInput("userview", label = NULL, choices=  SPECS$long[SPECS$is.series])
+,plotOutput("morePlot")), type = "pills"))')
   main.panel <- eval(parse(text = tab.expr))
   
+  elements <- as.list(eval(static(x))$call)[-c(1:2)]
   
-  
+  elements <- paste(names(elements), "=", deparse(unlist(elements)))
   
   fb <- unique(c(x$model$arima$model, fivebestmdl(x)[,1]))
   fb.list <- as.list(fb)
@@ -136,6 +142,9 @@ inspect2 <- function(x, fun = NULL,
   ca.list <- list("trading days" = "td", "easter" = "easter")
   
   runApp(list(
+    
+    # --- UI -------------------------------------------------------------------
+    
     ui = shinyUI(fluidPage(
       # Application title
       titlePanel("seasonal: X13-ARIMA-SEATS interface"),
@@ -151,14 +160,19 @@ inspect2 <- function(x, fun = NULL,
           selectInput("aictest", "AIC-test for:",
                       ca.list, selected = ca.list, multiple = TRUE),
           sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          actionButton("stopButton", "Import to R", icon = icon("download"))
+          actionButton("stopButton", "Import to R", icon = icon("download")),
+          selectInput("elements", "Elements:", elements, multiple = TRUE)
         ),
         
         main.panel
       )
     )
     ),
-    server = function(input, output) {
+    
+    
+    # --- Server ---------------------------------------------------------------
+    
+    server = function(input, output, session) {
       
       observe({
         if (input$stopButton > 0){
@@ -182,7 +196,19 @@ inspect2 <- function(x, fun = NULL,
           lc$regression.aictest <- input$aictest
         }
         
-        eval(as.call(lc))
+        z <- eval(as.call(lc))
+        
+        if (!is.null(z$spc$seats)){
+          updateRadioButtons(session, "method",
+                             selected = "seats")
+           }
+        if (!is.null(z$spc$x11)){
+          updateRadioButtons(session, "method",
+                             selected = "x11")
+        }
+        
+        
+        z
       })
       
       output$someText <- renderPrint({
@@ -190,16 +216,44 @@ inspect2 <- function(x, fun = NULL,
         summary(mod)
       }) 
       
-      output$distPlot <- renderPlot({
+#       output$distPlot <- renderPlot({
+#         mod <- mod()
+#         view <- plot
+#         view(mod)
+#       })
+#       
+      output$morePlot <- renderPlot({
         mod <- mod()
-        view <- plot
-        view(mod)
+        dta <- series(mod, input$userview, verbose = FALSE)
+        if (is.null(dta)) stop("no output generated.")
+        
+        if (inherits(dta, "ts")){
+          nc <- NCOL(dta)
+          ncol <- rainbow(nc)
+          ts.plot(dta, col = ncol)
+          if (nc > 1){
+            legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
+          }
+        } else if (input$userview %in% c("check.acf", "check.acfsquared", "check.pacf", "identify.acf", "identify.pacf")){
+          plot(dta[,1:2], type = "l")
+          lines(dta[,3], col = "red")
+          lines(-dta[,3], col = "red")
+        } else if (grepl("spectrum", input$userview)){
+          plot(dta[,-1], t = "l")
+        } else {
+          stop("data not displayable.")
+        }
+
       })
+
       
       for (i in 1:length(vl)){
         expr <- paste0("output$vl", i, " <- renderPlot(vl[[",i ,  "]](mod()))")
         eval(parse(text = expr))
       }
+      
+      
+      
     }
   ), launch.browser = launch.browser)
   

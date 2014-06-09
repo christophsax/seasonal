@@ -14,6 +14,7 @@ Description: seasonal is an easy-to-use and (almost) full-featured R-interface
     function that uses the manipulate package of RStudio (available at
     www.rstudio.com).
 Enhances: manipulate
-Depends: shiny (>= 0.9.1.9015)
+Depends:
+    shiny (>= 0.9.1.9015)
 License: GPL-3
 BugReports: https://github.com/christophsax/seasonal
