@@ -126,22 +126,26 @@ inspect2 <- function(x, fun = NULL,
     
     # --- UI -------------------------------------------------------------------
     
-    ui = shinyUI(fluidPage(
+    
+    ui = (fluidPage(
+      
+      
       # Application title
       titlePanel("seasonal: X13-ARIMA-SEATS interface"),
       
       # Sidebar with a slider input for number of bins
       sidebarLayout(
         sidebarPanel(
+          # , inline = TRUE
           radioButtons("method", "Adjustment method:",
                        c("SEATS" = "seats",
-                         "X-11" = "x11"), inline = TRUE),
+                         "X-11" = "x11")),
           selectInput("model", "ARIMA Model:",
                       fb.list, selected = x$model$arima$model),
           selectInput("aictest", "AIC-test for:",
                       ca.list, selected = ca.list, multiple = TRUE),
           sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          actionButton("stopButton", "Import to R", icon = icon("download")),
+          actionButton("stopButton", "Import to R", icon = icon("download"))
         ),
         
         main.panel

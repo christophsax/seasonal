@@ -15,6 +15,6 @@ Description: seasonal is an easy-to-use and (almost) full-featured R-interface
     www.rstudio.com).
 Enhances: manipulate
 Imports:
-    shiny (>= 0.9.1.9015)
+    shiny (>= 0.9.1)
 License: GPL-3
 BugReports: https://github.com/christophsax/seasonal
