@@ -1,39 +1,43 @@
-#' Interactively Inspect a Seasonal Adjustment Model (New Shiny Version)
+#' Interactively Inspect a Seasonal Adjustment Model (Experimental Shiny
+#' Version)
 #' 
-#' Interactively inspect a \code{"seas"} object. The goal of 
-#' \code{inspect} is to summarize all relevant options, plots and statistics 
-#' that should be usually considered.
+#' Interactively inspect a \code{"seas"} object. The goal of \code{inspect} is
+#' to summarize all relevant options, plots and statistics that should be
+#' usually considered.
+#' 
+#' \bold{This version is based on shiny 0.9.1.9015. As shiny is still under
+#' heavy development, this function may change considerably in the future.}
 #' 
 #' The \code{inspect} function opens an interactive window that allows for the 
 #' manipulation of a number of arguments. It offers several views to analyze the
 #' series graphically. With each change, the adjustment process and the 
-#' visualizations are recalculated. 
+#' visualizations are recalculated.
 #' 
-#' The views in \code{inspect} may be customized via the \code{fun} argument.
+#' The views in \code{inspect} may be customized via the \code{fun} argument. 
 #' One or several plot functions may be supplied. The plot functions should have
-#' a \code{"seas"} object as their only argument. Several functions must be
+#' a \code{"seas"} object as their only argument. Several functions must be 
 #' wrapped in a list (see examples).
 #' 
 #' @param x an object of class \code{"seas"}
 #' @param fun a function or a list of functions (see details)
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
-#'  
+#'   
 #' @examples
 #' \dontrun{
 #' 
 #' m <- seas(AirPassengers)
 #' 
-#' inspect(m)
+#' inspect2(m)
 #' 
 #' 
-#' ### customizing inspect
+#' ### customizing inspect2
 #' 
 #' # a single function
 #' fc <- function(m){
 #'   ts.plot(series(m, "fct", verbose = FALSE))
 #' }
-#' inspect(m, fc)
+#' inspect2(m, fc)
 #' 
 #' # more than one function collected in a list
 #' myfun <- list()
@@ -43,7 +47,7 @@
 #' myfun[['Spectum R']] <- function(m){
 #'   spectrum(diff(log(AirPassengers)), method = "ar")
 #' }
-#' inspect(m, myfun)
+#' inspect2(m, myfun)
 #' 
 #' # and a bonus example
 #' spaghetti <- function(m, back = 10){
@@ -57,44 +61,24 @@
 #' ts.plot(window(z, start = time(ser)[(length(ser) - back- 15)]), 
 #'         col = rainbow(back + 1))
 #' }
-#' inspect(m, spaghetti)
+#' inspect2(m, spaghetti)
 #' 
 #' }
 #' @export
 #' @import shiny
-inspect <- function(x, fun = NULL, 
+inspect2 <- function(x, fun = NULL, 
                      launch.browser = if (Sys.getenv("RSTUDIO") == "1") rstudio::viewer else getOption("shiny.launch.browser", interactive())
 ){  
   
   # --- Initialize -------------------------------------------------------------
   
   data(specs)
-  
-  require(shiny)
+#   
+#   require(shiny)
   
   vl <- list()
   vl[['Series']] <- plot
   vl[['SI']] <- monthplot
-  
-#   vl[['Residuals']] <- residplot
-#   vl[['PACF']] <- function(x){
-#     pacf(resid(x), main = "residual partial autocorrelation", ylab = "")
-#   }
-#   vl[['Sliding']] <- function(x){
-#     dta <- series(x, "slidingspans.sfspans", verbose = FALSE)
-#     dta <- dta[, -dim(dta)[2]]  # remove last column
-#     nc <- NCOL(dta)
-#     ncol <- rainbow(nc)
-#     ts.plot(dta, col = ncol, main = "slidingspans: seasonal component")
-#     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-#   }
-#   vl[['History']] <- function(x){
-#     dta <- series(x, "history.saestimates", verbose = FALSE)
-#     nc <- NCOL(dta)
-#     ncol <- rainbow(nc)
-#     ts.plot(dta, col = ncol, main = "history: adjusted series")
-#     legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-#   }
   
   if (!is.null(fun)){
     if (is.function(fun)){
@@ -116,9 +100,6 @@ inspect <- function(x, fun = NULL,
       stop("fun argument must be either a function or a list of functions.")
     }
   }
-  
-  
-  #             tabPanel("Plot", plotOutput("distPlot")), 
   
   tab.expr <- 'mainPanel(tabsetPanel(
             tabPanel("Summary", verbatimTextOutput("someText")),'
@@ -161,7 +142,6 @@ inspect <- function(x, fun = NULL,
                       ca.list, selected = ca.list, multiple = TRUE),
           sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
           actionButton("stopButton", "Import to R", icon = icon("download")),
-          selectInput("elements", "Elements:", elements, multiple = TRUE)
         ),
         
         main.panel
