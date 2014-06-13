@@ -76,6 +76,8 @@ if (getRversion() >= "2.15.1") {
 #' }
 #' @export
 inspect <- function(x, fun = NULL){
+  
+
   require(manipulate)
   
   model <- NULL
@@ -185,5 +187,7 @@ inspect <- function(x, fun = NULL){
     
   }, control.list)
   
+  # occasionally advertise inspect2
+  message("Try out the new, shiny and experimental inspect2() function!")
 }
 
