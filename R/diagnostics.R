@@ -62,7 +62,7 @@
 #' }
 #' @export
 qs <- function(x){
-  z0 <- m$udg[grepl("^qs", names(m$udg))]
+  z0 <- x$udg[grepl("^qs", names(x$udg))]
   z <- read.table(text = z0, colClasses = "numeric")
   rownames(z) <- names(z0)
   colnames(z) <- c("qs", "p-val")
