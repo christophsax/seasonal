@@ -35,7 +35,7 @@ print.spclist <- function(x, ...){
 #' @export
 #' @method coef seas
 coef.seas <- function(object, ...){
-  object$estimates$coefficients
+  object$est$coefficients
 }
 
 

@@ -37,7 +37,7 @@ summary.seas <- function(object, ...){
   # coefficents matrix
   if (!is.null(coef(object))){
     est  <- coef(object)
-    se   <- object$estimates$se
+    se   <- object$est$se
     tval <- est/se
     pval <- 2 * pnorm(-abs(tval))
     
@@ -50,6 +50,7 @@ summary.seas <- function(object, ...){
   
   z$resid <- residuals(object)
   z$qs <- qs(object)
+  z$transform.function <- transformfunction(object)
   
   class(z) <- "summary.seas"
   z
@@ -75,8 +76,6 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                  na.print = "NA")
   }
   
-
-  
   cat("\n")
   if (!is.null(x$spc$seats)){
     cat("SEATS adj.")
@@ -87,21 +86,18 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   
   cat("  ARIMA:", x$model$arima$model)
 
-  cat("  Obs.:", formatC(x$lkstats['nobs'], format = "d"))
+  cat("  Obs.:", formatC(x$lks['nobs'], format = "d"))
   cat("  Transform:", x$transform.function)
-#   cat("\nAIC:", formatC(x$lkstats['aic'], digits = digits))
-  cat("\nAICc:", formatC(x$lkstats['Aicc'], digits = digits))
-  cat(", BIC:", formatC(x$lkstats['bic'], digits = digits))
+  cat("\nAICc:", formatC(x$lks['Aicc'], digits = digits))
+  cat(", BIC:", formatC(x$lks['bic'], digits = digits))
 
   # QS Test
-  qsval <- c(x$qs[c('Original Series', 'Seasonally Adjusted Series'),][,1])
-  qspv <- c(x$qs[c('Original Series', 'Seasonally Adjusted Series'),][,2])
-  qsstars <- symnum(qspv, 
+  qsv <- qs(x)[c('qssadj'), ]
+  qsstars <- symnum(as.numeric(qsv['p-val']), 
                     corr = FALSE, na = FALSE, legend = FALSE,
                     cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
                     symbols = c("***", "**", "*", ".", " "))
-  
-  cat("  QS seas. test (adj. series):", formatC(qsval[2], digits = digits)," ", qsstars[2], sep = "")
+  cat("  QS seas. test (adj. series):", formatC(as.numeric(qsv['qs']), digits = digits)," ", qsstars, sep = "")
   
   if (!is.null(x$resid)){
     # Box Ljung Test
@@ -113,7 +109,6 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
     cat("\nBox-Ljung (no autocorr.):", 
         formatC(bltest$statistic, digits = digits), blstars)
     
-    
     # Normality
     swtest <- shapiro.test(x$resid)
     swstars <- symnum(swtest$p.value, 
@@ -122,10 +117,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                       symbols = c("***", "**", "*", ".", " "))
     cat(" Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
   }
-
-  if (length(x$err) > 5){
-    cat("\n\nX13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")
-  } 
-  
+  cat("\n")
+  print(x$err)
   invisible(x)
 }

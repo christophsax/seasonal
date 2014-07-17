@@ -70,6 +70,7 @@ inspect2 <- function(x, fun = NULL,
                      launch.browser = if (Sys.getenv("RSTUDIO") == "1") rstudio::viewer else getOption("shiny.launch.browser", interactive())
 ){  
   
+  require(shiny)
   # --- Initialize -------------------------------------------------------------
   
   data(specs)
@@ -145,7 +146,8 @@ inspect2 <- function(x, fun = NULL,
           selectInput("aictest", "AIC-test for:",
                       ca.list, selected = ca.list, multiple = TRUE),
           sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          actionButton("stopButton", "Import to R", icon = icon("download"))
+          checkboxInput("outBox", "Update X-13 Output"),
+          actionButton("stopButton", "Close and import Call to R", icon = icon("download"))
         ),
         
         main.panel
@@ -157,6 +159,13 @@ inspect2 <- function(x, fun = NULL,
     # --- Server ---------------------------------------------------------------
     
     server = function(input, output, session) {
+      observe({
+        if (input$outBox){
+          if (getOption("htmlmode") == 1){
+            out(mod())
+          }
+        }
+      })
       
       observe({
         if (input$stopButton > 0){

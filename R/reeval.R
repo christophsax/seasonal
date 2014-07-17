@@ -4,7 +4,7 @@ reeval <- function(x, ldots, out = FALSE){
   if (out){
     lc$out <- TRUE
   }
-  z <- eval(as.call(lc), envir = globalenv())
+    z <- eval(as.call(lc), envir = globalenv())
   z
 }
 

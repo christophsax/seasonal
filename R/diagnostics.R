@@ -62,7 +62,11 @@
 #' }
 #' @export
 qs <- function(x){
-  x$qs
+  z0 <- m$udg[grepl("^qs", names(m$udg))]
+  z <- read.table(text = z0, colClasses = "numeric")
+  rownames(z) <- names(z0)
+  colnames(z) <- c("qs", "p-val")
+  z
 }
 
 
@@ -77,10 +81,17 @@ spc <- function(x){
 #' @export
 fivebestmdl <- function(x){
   if (!is.null(x$fivebestmdl)){
-    txt <- x$fivebestmdl[3:7]
-    arima <- substr(txt, start = 19, stop = 32)
-    bic <- as.numeric(substr(txt, start = 51, stop = 56))
-    z <- data.frame(arima, bic, stringsAsFactors = FALSE)
+    if (getOption("htmlmode") == 1){
+      txt <- x$fivebestmdl[4:8]
+      arima <- substr(txt, start = 19, stop = 32)
+      bic <- as.numeric(substr(txt, start = 99, stop = 105))
+      z <- data.frame(arima, bic, stringsAsFactors = FALSE)
+    } else {
+      txt <- x$fivebestmdl[3:7]
+      arima <- substr(txt, start = 19, stop = 32)
+      bic <- as.numeric(substr(txt, start = 51, stop = 56))
+      z <- data.frame(arima, bic, stringsAsFactors = FALSE)
+    }
   } else if (is.null(x$reeval)) {
     # if no fivebestmdl, try reevaluating with automdl
     lc <- as.list(x$call)
@@ -99,11 +110,14 @@ fivebestmdl <- function(x){
 
 
 
+
+
+
 #' @rdname qs
 #' @export
 arimamodel <- function(x){
   stopifnot(inherits(x, "seas"))
-  str <- x$model$arima$model
+  str <- x$mdl$arima$model
   str <- gsub("[ \\(\\)]", "", str)
   z <- c(substr(str, 1, 1),
          substr(str, 2, 2),
@@ -115,4 +129,25 @@ arimamodel <- function(x){
   as.numeric(z)
 }
 
+
+
+#' @rdname qs
+#' @export
+transformfunction <- function(x){
+  stopifnot(inherits(x, "seas"))
+  if (is.null(x$spc$transform$`function`)){
+    stop("no transform function, investigate!")
+  }
+  
+  if (x$spc$transform$`function` == "auto"){
+    if (grepl("Log", x$udg['aictrans'])){
+      z <- "log"
+    } else {
+      z <- "none"
+    }
+  } else {
+    z <- x$spc$transform$`function`
+  }
+  z
+}
 

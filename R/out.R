@@ -38,10 +38,14 @@
 #' \dontrun{
 #' m <- seas(AirPassengers) 
 #' 
+#' out(m, automdl.print = "autochoicemdl")
+#' 
 #' # exit from the viewer with [q]
 #' out(m)  
 #' out(m, search = "regARIMA model residuals")
 #' out(m, search = "Normality Statistics for regARIMA")
+#' 
+#' 
 #' 
 #' # on some platforms, this may be more useful
 #' edit(out(m)) 
@@ -55,8 +59,16 @@
 #' # showing the error file
 #' out(m, file = "err")
 #' }
-#' 
-out <- function(x, line = 1, n = 100, search = NULL, file = c("out", "log", "err")){
+out <- function(x, browser = getOption("browser"), htmlmode = getOption("htmlmode"), ...){
+  if (is.null(htmlmode)){
+    return(outTxt(out))
+  }
+  m <- reeval(x, ldots = list(...), out = TRUE)
+  browseURL(file.path(m$wdir, "iofile.html"))
+}
+
+
+outTxt <- function(x, line = 1, n = 100, search = NULL, file = c("out", "log", "err")){
   file <- match.arg(file)
   if (file == "out"){
     if (is.null(x$out)){
