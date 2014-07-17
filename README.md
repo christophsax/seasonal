@@ -1,7 +1,7 @@
 R interface to X-13ARIMA-SEATS
 ------------------------------
 
-*seasonal* is an easy-to-use and (almost) full-featured R-interface to X-13ARIMA-SEATS, the newest seasonal adjustment software developed by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by the Bank of Spain). 
+*seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS, the newest seasonal adjustment software developed by the [United States Census Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by the Bank of Spain). 
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated procedures of *seasonal* allow you to quickly produce good seasonal adjustments of time series. Start with the [Installation](#installation) and [Getting started](#getting-started) section and skip the rest. Alternatively, `demo(seas)` gives an overview of the package functionality.
 
@@ -10,13 +10,18 @@ If you are familiar with X-13ARIMA-SEATS, you may benefit from the flexible inpu
 
 ### Installation
 
-To install the stable version directly from CRAN, type to the R console:
+To install the latest development version **with support for the HTML version of X-13** and **a new shiny-based graphical user interface** directly from GiHub, type to the R console:
+
+    install.packages("devtools")
+    devtools::install_github('tstools', 'christophsax')
+
+The stable version (0.6) is available from CRAN:
 
     install.packages("seasonal")
 
-*seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can be obtained precompiled from [here][census_win] (Windows: `x13asall.zip`) or [here][census_linux]  (Linux, with g77: `x13asall.tar.gz`). A guide to manual compilation for Ubuntu can be found [here][ubuntu]. My own compilation for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com). 
+*seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can be obtained precompiled from [here][census_win] (Windows: `x13ashtmlall.zip`). A guide on how to build it from source for Ubuntu or Mac OS-X can be found [here][ubuntu]. My own compilation for Mac OS-X can be obtained [upon request](mailto:christoph.sax@gmail.com). 
 
-Download the file, unzip it and copy the folder to the desired location in your file system. Next, you need to tell *seasonal* where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
+Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on a Unix system) to the desired location in your file system. Next, you need to tell *seasonal* where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
 
     Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")
  
@@ -74,7 +79,7 @@ The `static` command returns the manual call of a model. The call above can be e
     static(m)
     static(m, coef = TRUE)  # also fixes the coefficients
     
-If you are using RStudio, the `inspect` command offers a way to analyze and modify a seasonal adjustment procedure (see the section below for details):
+If you have *shiny* installed, the `inspect` command offers a way to analyze and modify a seasonal adjustment procedure (see the section below for details):
 
     inspect(m)
 
@@ -140,11 +145,9 @@ Some specs, like 'slidingspans' and 'history', are time consuming. Re-evaluation
     series(m, "history.saestimates")
     series(m, "slidingspans.sfspans")
     
-The `out` function shows the full content of the `.out` text file from X-13ARIMA-SEATS in a console viewer. It can also be searched:
+If you are using the HTML version of X-13, the `out` function shows the content of the main output in the browser:
 
     out(m)
-    out(m, search = "regARIMA model residuals")
-
 
 ### Graphs
 
@@ -173,15 +176,15 @@ The `identify` method can be used to select or deselect outliers by point and cl
 
 ### Inspect tool
 
-The `inspect` function is a graphical tool for choosing a seasonal adjustment model. It uses the `manipulate` package and can only be used with the (free) [RStudio IDE][rstudio]. The goal of `inspect` is to summarize all relevant options, plots and statistics that should be usually considered. `inspect` uses a `"seas"` object as its only argument:
+The `inspect` function is a graphical tool for choosing a seasonal adjustment model. Since seasonal 0.62, it uses the *shiny* package and can now used without RStudio. To install the latest version of shiny, type:
+
+    install.packages("shiny")
+
+The goal of `inspect` is to summarize all relevant options, plots and statistics that should be usually considered. `inspect` uses a `"seas"` object as its only argument:
 
     inspect(m)
 
-The `inspect` function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statistics are shown in the R console. The views in `inspect` are customizable, see the examples in `?inspect`.
-
-With the 'Show static call' option, a replicable static call is also shown in the console. Note that this option will double the time for recalculation, as the static function also performs a test of the static call. 
-
-
+The `inspect` function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statistics are shown in the first tab. The last tab offers access to all series that can be produced with X-13. The views in `inspect` are also customizable, see the examples in `?inspect`.
 
 ### License
 
