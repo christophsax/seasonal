@@ -394,9 +394,7 @@ run_x13 <- function(file, out){
   # required by seas
   
   env.path <- Sys.getenv("X13_PATH")
-  
-  cat(getOption("htmlmode"))
-  
+    
   # -n no tables
   # -s store additional output (.udg file)
   flags <- if (out) {"-s"} else {"-n -s"}

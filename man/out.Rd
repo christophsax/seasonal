@@ -3,7 +3,8 @@
 \alias{out}
 \title{Import X-13ARIMA-SEATS Text Output}
 \usage{
-out(x, line = 1, n = 100, search = NULL, file = c("out", "log", "err"))
+out(x, browser = getOption("browser"), htmlmode = getOption("htmlmode"),
+  ...)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}.}
@@ -36,10 +37,14 @@ function re-evaluates the model.
 \dontrun{
 m <- seas(AirPassengers)
 
+out(m, automdl.print = "autochoicemdl")
+
 # exit from the viewer with [q]
 out(m)
 out(m, search = "regARIMA model residuals")
 out(m, search = "Normality Statistics for regARIMA")
+
+
 
 # on some platforms, this may be more useful
 edit(out(m))

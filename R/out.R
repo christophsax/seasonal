@@ -60,8 +60,8 @@
 #' out(m, file = "err")
 #' }
 out <- function(x, browser = getOption("browser"), htmlmode = getOption("htmlmode"), ...){
-  if (is.null(htmlmode)){
-    return(outTxt(out))
+  if (htmlmode == 0){
+    return(outTxt(x))
   }
   m <- reeval(x, ldots = list(...), out = TRUE)
   browseURL(file.path(m$wdir, "iofile.html"))

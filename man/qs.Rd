@@ -4,6 +4,7 @@
 \alias{fivebestmdl}
 \alias{qs}
 \alias{spc}
+\alias{transformfunction}
 \title{Diagnostical Statistics}
 \usage{
 qs(x)
@@ -13,6 +14,8 @@ spc(x)
 fivebestmdl(x)
 
 arimamodel(x)
+
+transformfunction(x)
 }
 \arguments{
 \item{x}{object of class \code{"seas"}}

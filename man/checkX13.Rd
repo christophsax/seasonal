@@ -3,7 +3,7 @@
 \alias{checkX13}
 \title{Check the installation of X-13ARIMA-SEATS}
 \usage{
-checkX13(fail = FALSE, full = TRUE)
+checkX13(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE)
 }
 \arguments{
 \item{fail}{logical, whether an error should interrupt the process. If
