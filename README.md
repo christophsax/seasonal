@@ -176,7 +176,7 @@ The `identify` method can be used to select or deselect outliers by point and cl
 
 ### Inspect tool
 
-The `inspect` function is a graphical tool for choosing a seasonal adjustment model. Since seasonal 0.62, it uses the *Shiny* package and can now used without RStudio. To install the latest version of Shiny, type:
+The `inspect` function is a graphical tool for choosing a seasonal adjustment model. Since seasonal 0.62, it uses *Shiny* and can now be used without RStudio. To install the latest version of Shiny, type:
 
     install.packages("shiny")
 
