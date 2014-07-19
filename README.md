@@ -13,7 +13,7 @@ If you are familiar with X-13ARIMA-SEATS, you may benefit from the flexible inpu
 To install the latest development version with support for the **HTML version of X-13** and a new **Shiny-based graphical user interface** directly from Github, type to the R console:
 
     install.packages("devtools")
-    devtools::install_github('tstools', 'christophsax')
+    devtools::install_github('seasonal', 'christophsax')
 
 The stable version (0.6) is available from CRAN:
 
