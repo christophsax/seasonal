@@ -83,12 +83,19 @@ fivebestmdl <- function(x){
   if (!is.null(x$fivebestmdl)){
     if (getOption("htmlmode") == 1){
       txt <- x$fivebestmdl[4:8]
-      arima <- substr(txt, start = 19, stop = 32)
-      bic <- as.numeric(substr(txt, start = 99, stop = 105))
+
+      arima.st <- regexpr("Model \\#  \\d : ", txt) + 13
+      arima.en <- regexpr(" \\(<abbr", txt) - 1
+      arima <- substr(txt, start = arima.st, stop = arima.en)
+      
+      bic.st <- regexpr("</abbr> = ", txt) + 10
+      bic.en <- regexpr("\\) <br> ", txt) - 1
+      bic <- as.numeric(substr(txt, start = bic.st, stop = bic.en))
       z <- data.frame(arima, bic, stringsAsFactors = FALSE)
     } else {
       txt <- x$fivebestmdl[3:7]
       arima <- substr(txt, start = 19, stop = 32)
+      arima <- gsub(" *$", "", arima) 
       bic <- as.numeric(substr(txt, start = 51, stop = 56))
       z <- data.frame(arima, bic, stringsAsFactors = FALSE)
     }
