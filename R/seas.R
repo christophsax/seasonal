@@ -288,6 +288,16 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   ### Import from X13
   z <- list()  # output object
   
+  # check wether there is output at all.
+  outfile <- if (getOption("htmlmode") == 1){
+    paste(iofile, ".html", sep = "")
+  } else {
+    paste(iofile, ".out", sep = "")
+  }
+  if (!file.exists(outfile)){
+    stop("no output has been produced.")
+  }
+  
   # add all series that have been produced and are specified in SERIES_SUFFIX
   file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[2]]))
   is.series <- file.suffix %in% SERIES_SUFFIX
@@ -347,11 +357,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   # read .out file (will be returned only if out = TRUE)
-  if (getOption("htmlmode") == 1){
-    outtxt <-  readLines(paste0(iofile, ".html"), encoding = "UTF-8")
-  } else {
-    outtxt <-  readLines(paste0(iofile, ".out"), encoding = "UTF-8")
-  }
+  outtxt <-  readLines(outfile, encoding = "UTF-8")
 
   # always keep fivebestmdl
   z$fivebestmdl <- detect_fivebestmdl(outtxt)  
