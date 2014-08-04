@@ -315,7 +315,7 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     for (i in seq_along(series.NA)){
       series.NA.i <- series.NA[i]
       spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
-      if (length(spec.i) > 1) stop("not unique!!!!!!!!!!")
+      if (length(spec.i) > 1) stop("not unique.")
       if (!spec.i %in% names(x$spc)){
         if (spec.i %in% c("x11", "seats")){
           stop(spec.i, " is not activated.")

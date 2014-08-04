@@ -1,19 +1,18 @@
-#' Interactively Inspect a Seasonal Adjustment Model (Experimental Shiny
-#' Version)
+#' Interactively Inspect a Seasonal Adjustment Model
 #' 
-#' Interactively inspect a \code{"seas"} object. The goal of \code{inspect} is
-#' to summarize all relevant options, plots and statistics that should be
+#' Interactively inspect a \code{"seas"} object. The goal of \code{inspect} is 
+#' to summarize all relevant options, plots and statistics that should be 
 #' usually considered.
-#' 
-#' \bold{This version is based on shiny 0.9.1.9015. As shiny is still under
-#' heavy development, this function may change considerably in the future.}
 #' 
 #' The \code{inspect} function opens an interactive window that allows for the 
 #' manipulation of a number of arguments. It offers several views to analyze the
 #' series graphically. With each change, the adjustment process and the 
 #' visualizations are recalculated.
 #' 
-#' The views in \code{inspect} may be customized via the \code{fun} argument. 
+#' Summary statistics are shown in the first tab. The last tab offers access to
+#' all series that can be produced with X-13.
+#' 
+#' The views in \code{inspect} may be customized via the \code{fun} argument.
 #' One or several plot functions may be supplied. The plot functions should have
 #' a \code{"seas"} object as their only argument. Several functions must be 
 #' wrapped in a list (see examples).
@@ -70,17 +69,18 @@ inspect <- function(x, fun = NULL,
                      launch.browser = if (Sys.getenv("RSTUDIO") == "1") rstudio::viewer else getOption("shiny.launch.browser", interactive())
 ){  
   
+  icl <- match.call()
+  # --- global -----------------------------------------------------------------
   require(shiny)
-  # --- Initialize -------------------------------------------------------------
   
-  data(specs)
-#   
-#   require(shiny)
+  SPECS <- NULL 
+  data(specs, envir = environment())  # avoid side effects
+  SPECS <- SPECS[-c(296:317),]  # dont show x11regression
   
+  # construct a list with plots
   vl <- list()
-  vl[['Series']] <- plot
-  vl[['SI']] <- monthplot
-  
+  vl[['Main Plot']] <- plot
+  vl[['SI Component']] <- monthplot
   if (!is.null(fun)){
     if (is.function(fun)){
       vl[[deparse(substitute(fun))]] <- fun
@@ -102,71 +102,56 @@ inspect <- function(x, fun = NULL,
     }
   }
   
+  # use 'computation on the language' to construct the main panel
   tab.expr <- 'mainPanel(tabsetPanel(
-            tabPanel("Summary", verbatimTextOutput("someText")),'
-  
+            tabPanel("Summary", verbatimTextOutput("modelSummary")),'
   for (i in 1:length(vl)){
     tab.expr <- paste0(tab.expr, 'tabPanel("', names(vl)[i], '", plotOutput("vl', i, '")),\n')
   }
-  
-  tab.expr <- paste0(tab.expr, 'tabPanel("More", selectInput("userview", label = NULL, choices=  SPECS$long[SPECS$is.series])
-,plotOutput("morePlot")), type = "pills"))')
+  tab.expr <- paste0(tab.expr, 'tabPanel("All Series", selectInput("userview", label = NULL, choices=  SPECS$long[SPECS$is.series])
+, textOutput("moreText"), plotOutput("morePlot"), helpText("To reproduce the data in R, type:"), verbatimTextOutput("moreRepro")), type = "pills"))')
   main.panel <- eval(parse(text = tab.expr))
   
-  elements <- as.list(eval(static(x))$call)[-c(1:2)]
-  
-  elements <- paste(names(elements), "=", deparse(unlist(elements)))
-  
-  fb <- unique(c(x$model$arima$model, fivebestmdl(x)[,1]))
-  fb.list <- as.list(fb)
-  names(fb.list) <- fb
+  # list with arima models
+  am <- unique(c(x$model$arima$model, fivebestmdl(x)[,1]))
+  arima.models <- as.list(am)
+  names(arima.models) <- am
 
-  ca.list <- list("trading days" = "td", "easter" = "easter")
-  
+  # list with aic tests
+  aic.tests <- list("trading days" = "td", "easter" = "easter")
+
   runApp(list(
-    
     # --- UI -------------------------------------------------------------------
-    
-    
-    ui = (fluidPage(
-      
-      
-      # Application title
+    ui = fluidPage(
       titlePanel("seasonal: X13-ARIMA-SEATS interface"),
-      
-      # Sidebar with a slider input for number of bins
       sidebarLayout(
         sidebarPanel(
-          # , inline = TRUE
           radioButtons("method", "Adjustment method:",
                        c("SEATS" = "seats",
                          "X-11" = "x11")),
           selectInput("model", "ARIMA Model:",
-                      fb.list, selected = x$model$arima$model),
+                      arima.models, selected = x$model$arima$model),
           selectInput("aictest", "AIC-test for:",
-                      ca.list, selected = ca.list, multiple = TRUE),
+                      aic.tests, selected = aic.tests, multiple = TRUE),
           sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          checkboxInput("outBox", "Update X-13 Output"),
+          if (getOption("htmlmode") == 1) {checkboxInput("outBox", "Update X-13 Output")} else {NULL},
           actionButton("stopButton", "Close and import Call to R", icon = icon("download"))
         ),
-        
         main.panel
       )
-    )
     ),
     
-    
     # --- Server ---------------------------------------------------------------
-    
     server = function(input, output, session) {
-      observe({
-        if (input$outBox){
-          if (getOption("htmlmode") == 1){
+    
+      if (getOption("htmlmode") == 1){
+        observe({
+          if (input$outBox){
             out(mod())
           }
-        }
-      })
-      
+        })
+      }
+
       observe({
         if (input$stopButton > 0){
           stopApp(returnValue = static(mod()))
@@ -177,20 +162,16 @@ inspect <- function(x, fun = NULL,
         lc <- as.list(x$call)
         lc$outlier.critical <- input$outlier.critical    
         lc$arima.model <- input$model
-        
         if (input$method == "x11"){
           lc$x11 = list()
         }
-        
         if (is.null(input$aictest)){
           lc['regression.aictest'] <- input$aictest
           names(lc['regression.aictest']) <- "regression.aictest"
         } else {
           lc$regression.aictest <- input$aictest
         }
-        
         z <- eval(as.call(lc))
-        
         if (!is.null(z$spc$seats)){
           updateRadioButtons(session, "method",
                              selected = "seats")
@@ -199,27 +180,42 @@ inspect <- function(x, fun = NULL,
           updateRadioButtons(session, "method",
                              selected = "x11")
         }
-        
-        
         z
       })
       
-      output$someText <- renderPrint({
-        mod <- mod()
-        summary(mod)
+      output$modelSummary <- renderPrint({
+        summary(mod())
       }) 
       
-#       output$distPlot <- renderPlot({
-#         mod <- mod()
-#         view <- plot
-#         view(mod)
-#       })
-#       
-      output$morePlot <- renderPlot({
+      SeriesRun <- reactive({
         mod <- mod()
-        dta <- series(mod, input$userview, verbose = FALSE)
-        if (is.null(dta)) stop("no output generated.")
-        
+        z <- list()
+        z$dta <- try(series(mod, input$userview, verbose = FALSE),  silent = TRUE)
+        if (inherits(z$dta, "try-error")){
+          z$msg <- z$dta 
+          z$dta <- NULL
+          return(z)
+        }
+        if (is.null(z$dta)) {
+          z$msg <- "No output has been generated by X13-ARIMA-SEATS."
+        } else if (!inherits(z$dta, "ts") & 
+                     !(input$userview %in% c("check.acf", "check.acfsquared", 
+                                           "check.pacf", "identify.acf", 
+                                           "identify.pacf"))
+                   ) {
+          z$msg <- "Data is not a time series or another displayable data type."
+        } else {
+          z$msg <- NULL
+        }
+        z
+      })
+      
+      output$moreText <- renderText({
+        SeriesRun()$msg
+      })
+      
+      output$morePlot <- renderPlot({
+        dta <- SeriesRun()$dta
         if (inherits(dta, "ts")){
           nc <- NCOL(dta)
           ncol <- rainbow(nc)
@@ -231,23 +227,19 @@ inspect <- function(x, fun = NULL,
           plot(dta[,1:2], type = "l")
           lines(dta[,3], col = "red")
           lines(-dta[,3], col = "red")
-        } else if (grepl("spectrum", input$userview)){
-          plot(dta[,-1], t = "l")
-        } else {
-          stop("data not displayable.")
         }
-
       })
-
       
+      output$moreRepro <- renderText({
+        paste('series(', as.character(icl$x), ', "', input$userview, '")', sep = "")
+      })
+      
+      # server structure for user defined plots
       for (i in 1:length(vl)){
         expr <- paste0("output$vl", i, " <- renderPlot(vl[[",i ,  "]](mod()))")
         eval(parse(text = expr))
       }
-      
-      
-      
     }
+    
   ), launch.browser = launch.browser)
-  
 }
