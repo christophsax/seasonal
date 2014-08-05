@@ -8,23 +8,25 @@ new features
   the HTML output of X-13.
 
 enhancements
-- improved parsing of X-13 messages
 - empty specs can be specified as empty strings. This is more intuitive than the 
-  previously used (but still functional) empty lists and is also used in the 
-  documentation.
+  previously employed empty lists (which are still working). Empty 
+  strings are also used as defaults and in the documentation.
+- improved parsing of X-13 messages.
 - documentation improvements.
 
 under the hood
-- use of flags when calling X-13. This makes some early g77 compilations for 
+- flags are used when calling X-13. This makes some early g77 compilations for 
   OS-X unusable.
 - use of the .udg file to extract summary statistics.
 - support for HTML and non-HTML versions of X-13.
 
 bug fixes
-- incomplete SEATS model change warning
-- numerical specification of arima.model led to wrong seasonal part
-- 'series' now drops an error if the series is not consistent with the 
-  adjustment method, rather than changing the method (e.g. x11.trend and seats)
+- numerical specification of arima.model led to wrong seasonal part.
+- restrict start year > 999, to avoid some millenium bugs.
+- 'series' drops an error if the requested series is not compatible with the 
+  adjustment method, rather than adjusting the method. E.g., if x11.trend is 
+  requested from a seats model, an error will be returned, rather than switching 
+  the adjustment to x11. The old behavior was confusing.
 
 0.60.0  2014-05-09
 
