@@ -1,23 +1,24 @@
-#' Import X-13ARIMA-SEATS Text Output
+#' Display X-13ARIMA-SEATS Output
 #' 
-#' The \code{out} function shows the full content of the \code{.out}, the 
-#' \code{.log} or the \code{.err} file form X-13ARIMA-SEATS.
+#' The \code{out} function shows the full content of the X-13ARIMA-SEATS output.
+#' If you are using the HTML version of X-13 (recommended), the output is 
+#' displayed in the browser. If you are using the non-HTML version, the output 
+#' is shown in the console.
 #' 
 #' To keep the size of \code{"seas"} objects small, \code{seas} does not save 
-#' the content of the \code{.out} by default. Instead, the \code{out} 
-#' function re-evaluates the model.
+#' the output by default. Instead, \code{out} re-evaluates the model.
 #' 
 #' @param x an object of class \code{"seas"}.
-#' @param line  starting line of the content.
-#' @param n  number of lines to show on a page.
+#' @param browser browser to be used, passed on to 
+#'   \code{\link{browseURL}} (ignored in the non-HTML version).
+#' @param line  starting line of the content (ignored in the HTML version).
+#' @param n  number of lines to show on a page (ignored in the HTML version).
 #' @param search   regular expression chracter string. If specified, the content
-#'   is searched for the first occurence (see examples).
-#' @param file \code{"out"}, \code{"log"} or \code{"err"}, which text file to show.
+#'   is searched for the first occurence (ignored in the HTML version).
+#' @param ... additional spec-arguments options sent to X-13ARIMA-SEATS during 
+#'   re-evaluation. See \code{\link{seas}}.
 #'   
-#' @return an object of class \code{"out"}, essentially a character vector with 
-#'   attributes. The print method for \code{"out"} objects is adapted to the 
-#'   large size of the \code{.out} output. It allows for pagination and search
-#'   (see examples).
+#' @return displays the output as a side effect.
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #'   
@@ -28,6 +29,7 @@
 #'   manual: 
 #'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 #'   
+#'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #'   
@@ -37,80 +39,30 @@
 #' 
 #' \dontrun{
 #' m <- seas(AirPassengers) 
-#' 
+#' out(m) 
 #' out(m, automdl.print = "autochoicemdl")
 #' 
-#' # exit from the viewer with [q]
-#' out(m)  
+#' arguments ignored in the HTML version
 #' out(m, search = "regARIMA model residuals")
 #' out(m, search = "Normality Statistics for regARIMA")
-#' 
-#' 
-#' 
-#' # on some platforms, this may be more useful
-#' edit(out(m)) 
-#' 
-#' m <- seas(AirPassengers, slidingspans = "") 
-#' out(m, search = "Sliding spans analysis", n = 300)
-#' 
-#' # showing the log file
-#' out(m, file = "log")
-#' 
-#' # showing the error file
-#' out(m, file = "err")
 #' }
-out <- function(x, browser = getOption("browser"), htmlmode = getOption("htmlmode"), ...){
-  if (htmlmode == 0){
-    return(outTxt(x))
+out <- function(x, browser = getOption("browser"), line = 1, n = 100, 
+                search = NULL, ...){
+  if (getOption("htmlmode") == 0){
+    return(outTxt(x, line = line, n = n, search = search, ldots = list(...)))
   }
   m <- reeval(x, ldots = list(...), out = TRUE)
-  browseURL(file.path(m$wdir, "iofile.html"))
+  browseURL(url = file.path(m$wdir, "iofile.html"), browser = browser)
 }
 
 
-outTxt <- function(x, line = 1, n = 100, search = NULL, file = c("out", "log", "err")){
-  file <- match.arg(file)
-  if (file == "out"){
-    if (is.null(x$out)){
-      z <- reeval(x, ldots = list(), out = TRUE)$out
-    } else {
-      z <- x$out
-    }
-  } else if (file == "log"){
-    z <- x$log
+outTxt <- function(m, line, n, search, ldots){
+  if (is.null(m$out)){
+    x <- reeval(m, ldots = ldots, out = TRUE)$out
   } else {
-    z <- x$err
+    x <- m$out
   }
-  # attributes for the print method
-  attr(z, "line") <- line
-  attr(z, "n") <- n
-  attr(z, "search") <- search
-  class(z) <- c("out", "character")
-  z
-}
 
-
-#' @export
-#' @method print out
-print.out <- function(x, ...){
-  if (!is.null(attr(x, "line"))){
-    line <- attr(x, "line")
-  } else {
-    line <- 1
-  }
-  if (!is.null(attr(x, "n"))){
-    n <- attr(x, "n")
-  } else {
-    n <- 100
-  }
-  if (!is.null(attr(x, "search"))){
-    search <- attr(x, "search")
-  } else {
-    search <- NULL
-  }
-    
-
-  
   if (length(x) < n){
     n <- length(x)
   }

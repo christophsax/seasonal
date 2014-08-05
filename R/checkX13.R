@@ -6,9 +6,11 @@
 #' 
 #' @param fail  logical, whether an error should interrupt the process. If 
 #'   \code{FALSE}, a message is returned.
-#' @param full  logical, whether a full test should be performed. Runs
+#' @param fullcheck  logical, whether a full test should be performed. Runs
 #'   \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the
 #'   working of the binaries. Returns a message.
+#' @param htmlcheck  logical, whether the presence of the the HTML version of 
+#'   X-13 should be checked.
 #' @examples
 #' \dontrun{
 #' old.path <- Sys.getenv("X13_PATH")
