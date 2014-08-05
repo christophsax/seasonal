@@ -306,7 +306,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     paste(iofile, ".out", sep = "")
   }
   if (!file.exists(outfile)){
-    stop("no output has been produced.")
+    stop("no output has been generated")
   }
   
   # add all series that have been produced and are specified in SERIES_SUFFIX
@@ -331,7 +331,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     errtxt <- readLines(paste0(iofile, ".err"))
   }
   z$err <- detect_error(errtxt)
-  
+
   if (length(z$err$err) > 0){
     cat("Error while reading the following .spc file:\n\n")
     print(spc)

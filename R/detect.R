@@ -15,9 +15,12 @@ detect_error <- function(err){
   if (getOption("htmlmode") == 1){
     ParseInfo <- function(line, x){
       i <- 1
+      
       while (!grepl("</p>", x[line + i])) {i <- i + 1}
+      
       z <- paste(x[line:(line + i - 1)], collapse = "")
-      z <- gsub("<p>.*; ", "", z)  # remove trailing tag
+      z <- gsub("<p>.*</strong>", "", z) # remove trailing tag 
+      z <- gsub("&nbsp;", "", z)  
       z <- gsub("\\s+", " ", z)    # remove multiple space
       z <- gsub("^\\s", "", z)     # remove trailing space
       z
