@@ -1,17 +1,30 @@
-0.62.0  2014-??-??
+0.62.4  2014-??-??
 
 new features
-- 'inspect' is now based on Shiny and usable outside of RStudio. It also offers 
-  access to all series that can be produced by X-13.
-- support for the HTML version of X-13, 'out' displays the output and a table of 
-  contents in a browser.
+- support for the HTML version of X-13. The 'out' function displays the output 
+  of X-13 in the browser.
+- The 'inspect' function is based on Shiny and can be used without RStudio. It 
+  offers access to all series that can be produced by X-13, as well as access to 
+  the HTML output of X-13.
 
 enhancements
 - improved parsing of X-13 messages
+- empty specs can be specified as empty strings. This is more intuitive than the 
+  previously used (but still functional) empty lists and is also used in the 
+  documentation.
+- documentation improvements.
+
+under the hood
+- use of flags when calling X-13. This makes some early g77 compilations for 
+  OS-X unusable.
+- use of the .udg file to extract summary statistics.
+- support for HTML and non-HTML versions of X-13.
 
 bug fixes
-- incomplete SEATS model change warning fixed
-- numeric arima.model specfication fixed
+- incomplete SEATS model change warning
+- numerical specification of arima.model led to wrong seasonal part
+- 'series' now drops an error if the series is not consistent with the 
+  adjustment method, rather than changing the method (e.g. x11.trend and seats)
 
 0.60.0  2014-05-09
 
