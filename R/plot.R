@@ -104,6 +104,7 @@ residplot <- function(x, outliers = TRUE, ...){
 
 #' @rdname plot.seas
 #' @export
+#' @import stats
 #' @method monthplot seas
 monthplot.seas <- function(x, choice = c("seasonal", "irregular"), ...){
   choice <- match.arg(choice)

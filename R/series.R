@@ -318,7 +318,7 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
       if (length(spec.i) > 1) stop("not unique.")
       if (!spec.i %in% names(x$spc)){
         if (spec.i %in% c("x11", "seats")){
-          stop(spec.i, " is not activated.")
+          stop(spec.i, " is not activated. You should change the adjustment method.")
         } else {
           activated <- c(activated, spec.i)
         }

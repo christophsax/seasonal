@@ -1,4 +1,3 @@
-#' @import stats
 #' @method print seas
 #' @export
 print.seas <- function(x, ...){

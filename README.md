@@ -176,7 +176,7 @@ The `identify` method can be used to select or deselect outliers by point and cl
 
 ### Inspect tool
 
-The `inspect` function is a graphical tool for choosing a seasonal adjustment model. Since seasonal 0.62, it uses *Shiny* and can now be used without RStudio. To install the latest version of Shiny, type:
+The `inspect` function is a graphical tool for choosing a seasonal adjustment model. Since seasonal 0.62, it uses *[Shiny][shiny]* and can now be used without RStudio. To install the latest version of Shiny, type:
 
     install.packages("shiny")
 
@@ -204,8 +204,8 @@ Please report bugs and suggestions on [Github][github] or send me an [e-mail](ma
 
 [examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
-[rstudio]: http://www.rstudio.com/ide/
-
 [github]: https://github.com/christophsax/seasonal
+
+[shiny]: http://shiny.rstudio.com
 
 [ubuntu]: http://askubuntu.com/questions/444354/how-do-i-install-x13-arima-seats-for-rstudio-from-source

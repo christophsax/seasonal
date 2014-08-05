@@ -18,6 +18,8 @@
 #' wrapped in a list (see examples).
 #' 
 #' @param x an object of class \code{"seas"}
+#' @param launch.browser how to open the app. Argument passed on to 
+#'   \code{\link[shiny]{runApp}}.
 #' @param fun a function or a list of functions (see details)
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
@@ -64,14 +66,14 @@
 #' 
 #' }
 #' @export
-#' @import shiny
-inspect <- function(x, fun = NULL, 
-                     launch.browser = if (Sys.getenv("RSTUDIO") == "1") rstudio::viewer else getOption("shiny.launch.browser", interactive())
-){  
+inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.browser", interactive())){  
+  
+  if (!suppressWarnings(require(shiny))){
+    stop("the inspect function depends on the 'shiny' package. It can be installed from CRAN: \n\n  install.packages('shiny')\n ")
+  }
   
   icl <- match.call()
   # --- global -----------------------------------------------------------------
-  require(shiny)
   
   SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects

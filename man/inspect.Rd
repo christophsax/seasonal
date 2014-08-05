@@ -3,11 +3,14 @@
 \alias{inspect}
 \title{Interactively Inspect a Seasonal Adjustment Model}
 \usage{
-inspect(x, fun = NULL, launch.browser = if (Sys.getenv("RSTUDIO") == "1")
-  rstudio::viewer else getOption("shiny.launch.browser", interactive()))
+inspect(x, fun = NULL, launch.browser = getOption("shiny.launch.browser",
+  interactive()))
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}}
+
+\item{launch.browser}{how to open the app. Argument passed on to
+\code{\link[shiny]{runApp}}.}
 
 \item{fun}{a function or a list of functions (see details)}
 }

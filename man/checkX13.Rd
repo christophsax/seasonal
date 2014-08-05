@@ -9,9 +9,12 @@ checkX13(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE)
 \item{fail}{logical, whether an error should interrupt the process. If
 \code{FALSE}, a message is returned.}
 
-\item{full}{logical, whether a full test should be performed. Runs
+\item{fullcheck}{logical, whether a full test should be performed. Runs
 \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the
 working of the binaries. Returns a message.}
+
+\item{htmlcheck}{logical, whether the presence of the the HTML version of
+X-13 should be checked.}
 }
 \description{
 Check the installation of the binary executables of X-13ARIMA-SEATS. For
