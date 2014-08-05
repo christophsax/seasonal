@@ -183,6 +183,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     stop("'x' is not a time series.")
   }
   
+  if (start(x)[1] <= 1000){
+    stop("start year of 'x' must be > 999.")
+  }
+  
   # lookup table for output specification
   SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects
@@ -209,7 +213,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # user defined variables
   xreg.file <- file.path(wdir, "xreg.dta")  
   xtrans.file <- file.path(wdir, "xtrans.dta")       
-  
+
   ### write data
   write_ts_dat(x.na, file = datafile)
   
@@ -378,9 +382,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     message(paste("Model used in SEATS is different:", z$udg['seatsmdl'], "n\ FOR TESTING PURPOSES: OLD DETECT SEATS:",
                   detect_seatsmdl(outtxt)))
   }
-  
+
   # check if freq detection in read_series has worked
-  stopifnot(frequency(z$data) == as.numeric(z$udg['freq']))
+  if (frequency(z$data) != as.numeric(z$udg['freq'])){
+    stop("Frequency of imported data (", frequency(z$data), ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), ").")
+  }
 
   ### final additions to output
   if (!is.null(attr(x.na, "na.action"))){
