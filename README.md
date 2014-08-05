@@ -56,7 +56,7 @@ There are several functions and methods for `"seas"` objects: The `final` functi
 
 By default, `seas` calls the SEATS adjustment procedure. If you prefer the X11 adjustment procedure, use the following option (see the [Input](#input) section for details on how to use arbitrary options with X-13):
 
-    seas(AirPassengers, x11 = list())
+    seas(AirPassengers, x11 = "")
 
 A default call to `seas` also invokes the following automatic procedures of X-13ARIMA-SEATS:
 
@@ -90,7 +90,7 @@ In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-SEA
 
     m <- seas(AirPassengers, regression.variables = c("td", "ao1955.jan"))
    
-Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty `list()`. Several defaults of `seas` are empty lists, such as the default `seats = list()`. See the help page (`?seas`) for more details on the defaults.
+Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty string (or, alternatively, to an empty list). Several defaults of `seas` are empty strings, such as the default `seats = ""`. See the help page (`?seas`) for more details on the defaults. Note the difference between `""` (meaning the spec is enabled but has no arguments) and `NULL` (meaning the spec is disabled).
 
 It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way. For instance, example 1 in section 7.1 from the [manual][manual],
 
@@ -103,7 +103,7 @@ It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way. F
 translates to R in the following way:
 
     seas(AirPassengers,
-         x11 = list(),
+         x11 = ""),
          arima.model = "(0 1 1)"
     )
     

@@ -5,7 +5,7 @@
 \usage{
 seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
   transform.function = "auto", regression.aictest = c("td", "easter"),
-  outlier = list(), automdl = list(), na.action = na.omit, out = FALSE,
+  outlier = "", automdl = "", na.action = na.omit, out = FALSE,
   dir = NULL, ...)
 }
 \arguments{
@@ -22,22 +22,22 @@ together with \code{xreg}.}
 \item{seats.noadmiss}{spec 'seats' with argument \code{noadmiss = "yes"}
 (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
 an alternative model is used (a message is returned). If \code{noadmiss =
-"no"}, , no approximation is done.}
+"no"}, no approximation is done.}
 
 \item{transform.function}{spec \code{transform} with argument
 \code{function = "auto"} (default). Automatic log transformation detection.
 Set equal to \code{"none"}, \code{"log"} or any value that is allowed by
-X-13 to turn off.}
+X-13 to turn it off.}
 
 \item{regression.aictest}{spec \code{regression} with argument
 \code{aictest = c("td", "easter")} (default). AIC test for trading days and
-Easter effects. Set equal to \code{NULL} to turn off.}
+Easter effects. Set equal to \code{NULL} to turn it off.}
 
 \item{outlier}{spec \code{outlier} without arguments (default). Automatic
-oulier detection. Set equal to \code{NULL} to turn off.}
+oulier detection. Set equal to \code{NULL} to turn it off.}
 
 \item{automdl}{spec \code{automdl} without arguments (default). Automatic
-model search with the automdl spec. Set equal to \code{NULL} to turn off.}
+model search with the automdl spec. Set equal to \code{NULL} to turn it off.}
 
 \item{na.action}{a function which indicates what should happen when the data
 contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
@@ -79,20 +79,22 @@ returns an object of class \code{"seas"}, essentially a list with the
   series. \code{summary} gives an overview of the regARIMA model.
 }
 \description{
-Core function of the seasonal package. By default, \code{seas} calls the
+Core function of the seasonal package. With the default options, \code{seas} calls the
 automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
 works well in most circumstances. Via the \code{...} argument, it is possible
 to invoke almost all options that are available in X-13ARIMA-SEATS (see
-details). The default options are specified as explicit arguments and are
+details). The default options of \code{seas} are listed as explicit arguments and are
 discussed in the arguments section.
 }
 \details{
-It is possible to use the (almost) complete syntax of X-13ARIMA-SEAT via the
+It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
 \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
 \emph{arguments}, and each spec optionally contains some arguments. In
 \code{seas}, an additional spec-argument can be added by separating spec and
-argument by a dot (\code{.}) (see examples). Similarily, the
-\code{\link{series}} function can be used to read (almost) every output from
+argument by a dot (\code{.}) (see examples).
+
+Similarily, the
+\code{\link{series}} function can be used to read almost all series from
 X-13ARIMA-SEATS.
 
 For a more extensive description, consider the vignette or the wiki page,
@@ -109,7 +111,7 @@ summary(m)
 # for more examples)
 seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
 seas(AirPassengers, force.type = "denton")  # force equality of annual values
-seas(AirPassengers, x11 = list())  # use x11, overrides the 'seats' spec
+seas(AirPassengers, x11 = "")  # use x11, overrides the 'seats' spec
 
 # options can be entered as vectors
 seas(AirPassengers, regression.variables = c("td1coef", "easter[1]"))

@@ -9,6 +9,7 @@ mod_spclist <- function(x, ...){
   # required by seas
   stopifnot(inherits(x, "spclist"))
   
+  
   mod.list <- list(...)
   
   for (i in seq_along(mod.list)){
@@ -27,7 +28,15 @@ mod_spclist <- function(x, ...){
     }
     
     if (length(split.names.i[[1]]) == 1){
-      x[[spc.name]] <- content.i
+      if (length(content.i) == 1){
+          if (content.i == ""){
+            x[[spc.name]] <- list()
+          } else {
+            x[[spc.name]] <- content.i
+          }
+      } else {
+        x[[spc.name]] <- content.i
+      }
     } else if (length(split.names.i[[1]]) == 2){
       spc.arg <- split.names.i[[1]][2]
       if (is.null(x[[spc.name]][[spc.arg]])){
@@ -39,7 +48,7 @@ mod_spclist <- function(x, ...){
         x[[spc.name]][[spc.arg]] <- unique(c(x[[spc.name]][[spc.arg]], content.i))
       }
     } else {
-      stop("X-13ARIMA-SEATA options should contain a spec and an optional argument after the dot.")
+      stop("X-13ARIMA-SEATS options should contain a spec and an optional argument after the dot.")
     }
   }
   x

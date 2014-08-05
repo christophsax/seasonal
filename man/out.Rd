@@ -49,7 +49,7 @@ out(m, search = "Normality Statistics for regARIMA")
 # on some platforms, this may be more useful
 edit(out(m))
 
-m <- seas(AirPassengers, slidingspans = list())
+m <- seas(AirPassengers, slidingspans = "")
 out(m, search = "Sliding spans analysis", n = 300)
 
 # showing the log file

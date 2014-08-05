@@ -53,7 +53,7 @@
 #' m1 <- seas(x = AirPassengers,
 #' regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
 #' arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
-#' outlier = NULL, transform.function = "log", x11 = list())
+#' outlier = NULL, transform.function = "log", x11 = "")
 #' summary(m1)
 #' 
 #' # user defined variable
@@ -65,7 +65,7 @@
 #'            regression.variables = c("td1coef", "ao1951.May"),
 #'            xreg = ea1, regression.usertype = "holiday",
 #'            arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
-#'            outlier = NULL, transform.function = "log", x11 = list())
+#'            outlier = NULL, transform.function = "log", x11 = ""))
 #' summary(m2)
 #' 
 #' all.equal(final(m2), final(m1), tolerance = 1e-06)
@@ -79,7 +79,7 @@
 #'            regression.variables = c("td1coef", "ao1951.May"), 
 #'            xreg = ea2, regression.usertype = "holiday",
 #'            arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL, 
-#'            outlier = NULL, transform.function = "log", x11 = list())
+#'            outlier = NULL, transform.function = "log", x11 = "")
 #' summary(m3)
 #' 
 #' 
@@ -91,14 +91,14 @@
 #' # de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year
 #' cny.ts <- genhol(cny, start = 0, end = 6, center = "calendar")
 #' 
-#' m1 <- seas(x = imp, xreg = cny.ts, regression.usertype = "holiday", x11 = list(), 
+#' m1 <- seas(x = imp, xreg = cny.ts, regression.usertype = "holiday", x11 = "", 
 #'            regression.variables = c("td1coef", "ls1985.Jan", "ls2008.Nov"), 
 #'            arima.model = "(0 1 2)(0 1 1)", regression.aictest = NULL, 
 #'            outlier = NULL, transform.function = "log")
 #' summary(m1)
 #' 
 #' # compare to identical no-CNY model:
-#' m2 <- seas(x = imp, x11 = list(), 
+#' m2 <- seas(x = imp, x11 = "", 
 #'            regression.variables = c("td1coef", "ls1985.Jan", "ls2008.Nov"), 
 #'            arima.model = "(0 1 2)(0 1 1)", regression.aictest = NULL, 
 #'            outlier = NULL, transform.function = "log")
