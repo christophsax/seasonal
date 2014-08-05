@@ -58,25 +58,32 @@
 #'   details).
 #'   
 #' @return returns an object of class \code{"seas"}, essentially a list with the
-#'   following elements: \item{err}{warning messages from X-13ARIMA-SEATS} 
+#'   following elements: 
+
 #'   \item{series}{a list containing the output tables of X-13. To be accessed 
-#'   by the \code{series} function.} \item{data}{seasonally adjusted data, the 
+#'   by the \code{series} function.} 
+#'   \item{data}{seasonally adjusted data, the 
 #'   raw data, the trend component, the irregular component and the seasonal 
-#'   component (deprecated).} \item{model}{list with the model specification, 
+#'   component (deprecated).} 
+#'   \item{err}{warning messages from X-13ARIMA-SEATS} 
+#'   \item{udg}{content of the \code{.udg} output file} 
+#'   \item{est}{content of the \code{.est} output file} 
+#'   \item{lks}{content of the \code{.lks} output file} 
+#'   \item{model}{list with the model specification, 
 #'   similar to \code{"spc"}. It typically contains \code{"regression"}, which 
 #'   contains the regressors and parameter estimates, and \code{"arima"}, which 
 #'   contains the ARIMA specification and the parameter estimates.} 
-#'   \item{estimates}{detailed information on the estimation} 
-#'   \item{lkstats}{summary statistics} \item{transform.function}{character 
-#'   string, applied transformation} \item{fivebestmdl}{five best models 
-#'   according to BIC criterion} \item{qs}{QS statistics} \item{x}{input series}
-#'   \item{spc}{object of class \code{"spclist"}, a list containing everything 
-#'   that is send to X-13ARIMA-SEATS. Each spec is on the first level, each 
-#'   argument is on the second level.} \item{call}{function call}
+#'   \item{fivebestmdl}{Best Five ARIMA Models (unparsed)} 
+#'   \item{x}{input series}
+#'   \item{spc}{object of class \code{"spclist"}, a list containing the content of the \code{.spc} file that is
+#'   used by X-13ARIMA-SEATS. Each spec is on the first level, each 
+#'   argument is on the second level.} 
+#'   \item{call}{function call}
+#'   \item{wdir}{temporary directory in which X-13ARIMA-SEATS has been run}
 #'   
 #'   The \code{final} function returns the final adjusted series, the 
 #'   \code{plot} method shows a plot with the unadjusted and the adjusted 
-#'   series. \code{summary} gives an overview of the regARIMA model.
+#'   series. \code{summary} gives an overview of the regARIMA model. 
 #'   
 #' @seealso \code{\link{static}}, to return the static call that is needed to 
 #'   replicate an automatic model
@@ -341,9 +348,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   z$udg <- read_udg(iofile)
   
   # read .log file
-  if (getOption("htmlmode") == 1){
-    z$log <-  readLines(paste0(iofile, "_log.html"), encoding = "UTF-8")
-  } else {
+  if (getOption("htmlmode") != 1){
     z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
   }
   

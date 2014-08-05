@@ -33,9 +33,11 @@ transformfunction(x)
   activated, the function tries to re-evaluate the model with
   the \code{automdl} spec activated.
 
-\code{arimamodel} retrurs the structure of a the ARIMA model, a
+\code{arimamodel} returns the structure of a the ARIMA model, a
   numerical vector of the form \code{(p d q)(P D Q)}, containing the
   non-seasonal and seasonal part of the ARIMA model.
+
+\code{transformfunction} returns the transform function that has been applied.
 }
 \description{
 Functions to access some specific diagnostical statistics in a \code{"seas"} object.
@@ -52,6 +54,7 @@ qs(m)
 spc(m)
 fivebestmdl(m)
 arimamodel(m)
+transformfunction(m)
 
 # if no automdl spec is present, the model is re-evaluated
 m2 <- seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)")

@@ -19,9 +19,11 @@
 #'   activated, the function tries to re-evaluate the model with 
 #'   the \code{automdl} spec activated.
 #'   
-#' @return \code{arimamodel} retrurs the structure of a the ARIMA model, a 
+#' @return \code{arimamodel} returns the structure of a the ARIMA model, a 
 #'   numerical vector of the form \code{(p d q)(P D Q)}, containing the 
 #'   non-seasonal and seasonal part of the ARIMA model.
+#'   
+#' @return \code{transformfunction} returns the transform function that has been applied.
 #'   
 #' @seealso \code{\link{seas}} for the main function.
 #' @seealso \code{\link{series}}, for universal X-13 output extraction.
@@ -47,6 +49,7 @@
 #' spc(m)
 #' fivebestmdl(m)
 #' arimamodel(m)
+#' transformfunction(m)
 #' 
 #' # if no automdl spec is present, the model is re-evaluated
 #' m2 <- seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)")
