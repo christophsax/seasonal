@@ -122,6 +122,9 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
   # list with aic tests
   aic.tests <- list("trading days" = "td", "easter" = "easter")
 
+  # adj of input model
+  adj.method <- if (!is.null(x$spc$seats)) {"seats"} else {"x11"}
+  
   runApp(list(
     # --- UI -------------------------------------------------------------------
     ui = fluidPage(
@@ -129,8 +132,8 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
       sidebarLayout(
         sidebarPanel(
           radioButtons("method", "Adjustment method:",
-                       c("SEATS" = "seats",
-                         "X-11" = "x11")),
+                       choices = c("SEATS" = "seats", "X-11" = "x11"), 
+                       selected = if (!is.null(x$spc$seats)) {"seats"} else {"x11"}),
           selectInput("model", "ARIMA Model:",
                       arima.models, selected = x$model$arima$model),
           selectInput("aictest", "AIC-test for:",
@@ -165,7 +168,9 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
         lc$outlier.critical <- input$outlier.critical    
         lc$arima.model <- input$model
         if (input$method == "x11"){
-          lc$x11 = list()
+          lc$x11 = ""
+        } else {
+          lc$x11 = NULL
         }
         if (is.null(input$aictest)){
           lc['regression.aictest'] <- input$aictest
