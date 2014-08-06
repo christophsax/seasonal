@@ -192,7 +192,7 @@ The `inspect` function opens an interactive window that allows for the manipulat
 
 Please report bugs and suggestions on [Github][github] or send me an [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
-[manual]: http://www.census.gov/ts/x13as/docX13AS.pdf "Reference Manual"
+[manual]: http://www.census.gov/ts/x13as/docX13ASHTML.pdf "Reference Manual"
 
 [census]: http://www.census.gov/srd/www/x13as/ "United States Census Bureau"
 
@@ -204,8 +204,8 @@ Please report bugs and suggestions on [Github][github] or send me an [e-mail](ma
 
 [examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
 
-[github]: https://github.com/christophsax/seasonal
+[github]: https://github.com/christophsax/seasonal "Development on Github"
 
 [shiny]: http://shiny.rstudio.com
 
-[ubuntu]: http://askubuntu.com/questions/444354/how-do-i-install-x13-arima-seats-for-rstudio-from-source
+[ubuntu]: http://askubuntu.com/questions/444354/how-do-i-install-x13-arima-seats-for-rstudio-from-source "Unix Installation Notes"
