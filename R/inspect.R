@@ -134,7 +134,10 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
         sidebarPanel(
           radioButtons("method", "Adjustment method:",
                        choices = c("SEATS" = "seats", "X-11" = "x11"), 
-                       selected = if (!is.null(x$spc$seats)) {"seats"} else {"x11"}),
+                       selected = if (!is.null(x$spc$seats)) {"seats"} else {"x11"}, 
+                       inline = TRUE),
+          checkboxInput("transform", "Log-Transformation",
+                        value = (transformfunction(x) == "log")),
           selectInput("model", "ARIMA Model:",
                       arima.models, selected = x$model$arima$model),
           selectInput("aictest", "AIC-test for:",
@@ -166,6 +169,7 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
       
       mod <- reactive({
         lc <- as.list(x$call)
+        lc$transform.function <- if (input$transform) {"log"} else {"none"}
         lc$outlier.critical <- input$outlier.critical    
         lc$arima.model <- input$model
         if (input$method == "x11"){
