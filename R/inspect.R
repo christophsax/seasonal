@@ -73,6 +73,7 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
   }
   
   icl <- match.call()
+
   # --- global -----------------------------------------------------------------
   
   SPECS <- NULL 
@@ -240,7 +241,7 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
       })
       
       output$moreRepro <- renderText({
-        paste('series(', as.character(icl$x), ', "', input$userview, '")', sep = "")
+        paste('series(', deparse(icl$x), ', "', input$userview, '")', sep = "")
       })
       
       # server structure for user defined plots
