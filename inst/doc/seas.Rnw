@@ -1,0 +1,36 @@
+\documentclass[a4paper, 10pt]{article}
+%\VignetteIndexEntry{Introduction to seasonal: R interface to X-13ARIMA-SEATS}
+
+\usepackage{natbib}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage[colorlinks = true]{hyperref}
+
+
+
+\newcommand{\note}[1]{}
+\renewcommand{\subsection}{\note}
+\renewcommand{\subsubsection}{\section}%
+\renewcommand{\paragraph}{\subsubsection}
+
+\begin{document}
+
+
+
+\title{\textbf{seasonal}: R interface to X-13ARIMA-SEATS}
+
+\author{Christoph Sax\footnote{State Secretariat of Economic Affairs, Switzerland}
+}
+
+\date{\today}
+\maketitle
+
+\section{Introduction}
+
+\input{README.tex}
+
+
+\end{document}
