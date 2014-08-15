@@ -25,7 +25,7 @@
 checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   ### check path
   no.path.message <- "No path to the binary executable of X-13 specified.
-  \nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")\n"
+  \nFor installation details, consider Section 2 of the package vignette:\n  https://github.com/christophsax/seasonal\n"
   env.path <- Sys.getenv("X13_PATH")
   if (env.path == ""){
     if (fail){
