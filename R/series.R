@@ -346,7 +346,6 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
   }
 
   z <- do.call(cbind, x$series[series.short])
-#   attr(z, "added") <- unique(activated)
   z
 }
 
