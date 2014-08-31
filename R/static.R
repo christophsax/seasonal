@@ -43,7 +43,9 @@
 #' }
 static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
   
-  stopifnot(inherits(x, "seas"))
+  if (!inherits(x, "seas")){
+    stop("first argument must be of class 'seas'")
+  }
   
   lc <- as.list(x$call)  
 

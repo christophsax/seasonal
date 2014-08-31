@@ -72,6 +72,10 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
     stop("the inspect function depends on the 'shiny' package. It can be installed from CRAN: \n\n  install.packages('shiny')\n ")
   }
   
+  if (!inherits(x, "seas")){
+    stop("first argument must be of class 'seas'")
+  }
+  
   icl <- match.call()
 
   # --- global -----------------------------------------------------------------
