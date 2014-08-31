@@ -9,9 +9,7 @@ read_mdl <- function(file){
   
   # collapse char vector to single char element
   txt = paste(readLines(paste0(file, ".mdl")), collapse = " ")
-  
-
-  
+    
   # positions of curly braces
   op <- gregexpr("\\{", txt)[[1]]
   cl <- gregexpr("\\}", txt)[[1]]
@@ -29,11 +27,9 @@ read_mdl <- function(file){
     name.i <- substr(txt, start = start.name, stop = (op[i] - 1))
     names(z0)[i] <- gsub(" ","", name.i)   # remove whitespace
   }
-
   
   # parse each element
   z <- lapply(z0, parse_spec)  
-  
   class(z) <- c("spclist", "list")
   
   z
@@ -106,6 +102,9 @@ tidyup_arg <- function(x){
   try.numeric <- suppressWarnings(as.numeric(z))
   if (!any(is.na(try.numeric))){
     z <- as.numeric(z)
+    if (identical(z, numeric(0))){ # don't return 'numeric(0)'
+      z <- NULL
+    }
   }
   
   z
