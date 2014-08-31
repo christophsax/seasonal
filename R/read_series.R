@@ -27,8 +27,11 @@ read_data <- function(method = "seats", file, frequency){
   } else {
     final <- seasonaladj
   }
-
-  cbind(final, seasonal, seasonaladj, trend, irregular, adjustfac)
+  
+  # remove NULL elements, because cbind cannot handle them
+  ll <- list(final = final, seasonal = seasonal, seasonaladj = seasonaladj, trend = trend, irregular = irregular, adjustfac = adjustfac)
+  lll <- ll[!unlist(lapply(ll, is.null))]
+  do.call(cbind, lll)
 }
 
 
