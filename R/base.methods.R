@@ -15,10 +15,10 @@ print.seas <- function(x, ...){
   # convert to class "lm" and use the corresponding method
   attr(x, "class") <- "lm"
   print(x, ...)
-  
-  if (length(x$err) > 5){
-    cat("X13-ARIMA-SEATS messages:", x$err[-c(1:5)], sep = "\n")
-  } 
+  if (is.null(x$err)){
+    cat("\n")
+    print(x$err)
+  }
 }
 
 
