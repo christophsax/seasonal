@@ -98,12 +98,12 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   if (htmlcheck){
     if ((getOption("htmlmode") == 0)){
       if (.Platform$OS.type == "windows"){
-        packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more accessible output via the out() function. \nFor best user experience, download the HTML version from:",
+        packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more\naccessible output via the out() function. For best user experience, \ndownload the HTML version from:",
                               "\n\n  http://www.census.gov/srd/www/x13as/x13down_pc.html\n\n",
                               "and copy x13ashtml.exe to:\n\n",
                               "  ", env.path)
       } else {
-        packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more accessible output via the out() function. \nFor best user experience, copy your compilation of x13ashtml to:\n\n",
+        packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more \naccessible output via the out() function. For best user experience, \ncopy the binary executables of x13ashtml to:\n\n",
                               "  ", env.path)
       }
     }
