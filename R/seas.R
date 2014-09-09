@@ -180,7 +180,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
   if (!inherits(x, "ts")){
-    stop("'x' is not a time series.")
+    stop("first argument is not a time series.")
   }
   
   if (start(x)[1] <= 1000){
@@ -230,8 +230,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # add the default options
   spc$transform$`function` <- transform.function
   spc$regression$aictest <- regression.aictest
-#   spc$outlier <- outlier
-#   spc$automdl <- automdl
   spc$seats$noadmiss <- seats.noadmiss
   
   spc <- mod_spclist(spc, outlier = outlier, automdl = automdl)
@@ -379,8 +377,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   # check if model choosen by seats is identical
   if (any(grepl("Model used for SEATS decomposition is different", z$err))){
-    message(paste("Model used in SEATS is different:", z$udg['seatsmdl'], "n\ FOR TESTING PURPOSES: OLD DETECT SEATS:",
-                  detect_seatsmdl(outtxt)))
+    message(paste("Model used in SEATS is different:", z$udg['seatsmdl']))
   }
 
   # check if freq detection in read_series has worked
