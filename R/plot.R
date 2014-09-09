@@ -119,10 +119,30 @@ monthplot.seas <- function(x, choice = c("seasonal", "irregular"), ...){
 
 
 siratio <- function(x){
-  if (transformfunction(x) == "log"){
-    z <- x$data[, 'irregular'] * x$data[, 'seasonal']
+  stopifnot(inherits(x, "seas"))
+  
+  tf <- transformfunction(x)
+  
+  # if irregular or seasonal are not returned, set them to 0 or 1
+  # (depending on transformfunction())
+  if ('irregular' %in% colnames(x$data)){
+    irregular <- x$data[, 'irregular']
   } else {
-    z <- x$data[, 'irregular'] + x$data[, 'seasonal']
+    irregular <- x$data[, 'final']
+    irregular[] <- if (tf == "log") {1} else {0}
+    
+  }
+  if ('seasonal' %in% colnames(x$data)){
+    seasonal <- x$data[, 'seasonal']
+  } else {
+    seasonal <- x$data[, 'final']
+    seasonal[] <- if (tf == "log") {1} else {0}
+  }
+  
+  if (tf == "log"){
+    z <- irregular * seasonal
+  } else {
+    z <- irregular + seasonal
   }
   na.omit(z)
 }
