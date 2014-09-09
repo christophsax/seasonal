@@ -1,16 +1,12 @@
-# subfunctions that search the .out file for some information
+# subfunctions that search output files for some information
 # used by: seas
 
-
-
-
 detect_error <- function(err){
-  # parse automatic log detection from .out txt
+  # error parsing from .err or .err.html character vector
   #
-  # outtxt  character vector, content of .out output file
+  # err  character vector, content of output file
   #
-  # returns character string, "log" or "none"
-  
+  # returns an object of class x13messages which can be printed
   
   if (getOption("htmlmode") == 1){
     ParseInfo <- function(line, x){
@@ -42,15 +38,14 @@ detect_error <- function(err){
     }
   }
   
-    z <- list()
-    class(z) <- "x13messages"
-    z$error <- sapply(grep("ERROR:", err), ParseInfo, x = err)
-    z$warning <- sapply(grep("WARNING:", err), ParseInfo, x = err)
-    z$note <- sapply(grep("note:", err), ParseInfo, x = err)
-
+  z <- list()
+  class(z) <- "x13messages"
+  z$error <- sapply(grep("ERROR:", err), ParseInfo, x = err)
+  z$warning <- sapply(grep("WARNING:", err), ParseInfo, x = err)
+  z$note <- sapply(grep("note:", err), ParseInfo, x = err)
+  
   z
 }
-
 
 
 print.x13messages <- function(x){
@@ -62,22 +57,21 @@ print.x13messages <- function(x){
     cat("Errors:\n")
     cat((paste(strwrap(paste("-", x$error), width = 70, exdent = 2), 
                collapse = "\n")))
+    cat("\n")
   }
   if (length(x$warning) > 0){
     cat("Warnings:\n")
     cat((paste(strwrap(paste("-", x$warning), width = 70, exdent = 2), 
                collapse = "\n")))
+    cat("\n")
   }
   if (length(x$note) > 0){
     cat("Notes:\n")
     cat((paste(strwrap(paste("-", x$note), width = 70, exdent = 2), 
                collapse = "\n")))
+    cat("\n")
   }
 }
-
-
-
-
 
 
 detect_auto <- function(outtxt){
@@ -118,7 +112,7 @@ detect_fivebestmdl <- function(outtxt){
   # outtxt  character vector, content of .out output file
   #
   # returns character vector
-
+  
   if (getOption("htmlmode") == 1){
     first <- which(outtxt == "<p>Best Five ARIMA Models</p>")
   } else {
@@ -142,7 +136,6 @@ detect_qs <- function(outtxt){
   #
   # returns character vector
   
-#   browser()
   if (getOption("htmlmode") == 1){
     first <- which(outtxt == "<caption><strong>QS statistic for seasonality (Full series)</strong></caption>")
     # lines to show (-1)
@@ -158,7 +151,6 @@ detect_qs <- function(outtxt){
   } else {
     first <- which(outtxt == "  QS statistic for seasonality:")
   }
-#   browser()
   if (length(first) == 1){
     # lines to show (-1)
     nl <- grep("Irregular Series \\(EV adj\\)", outtxt[first:(first + 10)])
@@ -176,36 +168,6 @@ detect_qs <- function(outtxt){
   } else {
     z <- NULL
   }
-  z
-}
-
-
-
-detect_seatsmdl <- function(outtxt){
-  # parse seatsmdl from .out txt
-  #
-  # outtxt  character vector, content of .out output file
-  #
-  # returns character vector
-  
-  if (getOption("htmlmode") == 1){
-    return(NULL)
-  } else {
-    first <- which(outtxt == "  MODEL CHANGED TO :")
-    if (length(first) == 0){
-      first <- which(outtxt == " ARIMA MODEL SELECTED BY TRAMO: ")
-    }
-  }
-  
-  if (length(first) == 1){
-    z <- outtxt[first + 1]
-    z <- gsub(",", " ", z)          # remove , 
-    z <- gsub("\\s+", " ", z)      # subst several spaces by one space
-    z <- gsub("^\\s|\\s$", "", z)  # trim lead. and trail spaces
-  } else {
-    z <- NULL
-  }
-  
   z
 }
 
