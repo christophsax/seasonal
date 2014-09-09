@@ -1,4 +1,4 @@
-0.62.4  2014-??-??
+0.62.6  2014-??-??
 
 new features
 - support for the HTML version of X-13. The 'out' function displays the output 
@@ -23,10 +23,12 @@ under the hood
 bug fixes
 - numerical specification of arima.model led to wrong seasonal part.
 - restrict start year > 999, to avoid some millenium bugs.
+- si-ratio was wrongly extracted if no trend was estimated
 - 'series' drops an error if the requested series is not compatible with the 
   adjustment method, rather than adjusting the method. E.g., if x11.trend is 
   requested from a seats model, an error will be returned, rather than switching 
   the adjustment to x11. The old behavior was confusing.
+
 
 0.60.0  2014-05-09
 
