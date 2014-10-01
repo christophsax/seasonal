@@ -6,6 +6,9 @@ read_est <- function(file){
   # return a list with coefficients, standard errors and some statistics
   
   est <-  readLines(paste0(file, ".est"))
+  if (length(est) == 0){
+    return(NULL)
+  }
   
   # lines on which a section (or subsection) starts
   dollars <- grep("\\$", est)
@@ -54,7 +57,7 @@ read_est <- function(file){
     arima.coef <- NULL
     arima.se <- NULL
   }
-  
+
   # variance / modelspan section
   variance.start <- grep("\\$variance", est)
   modelspan.start <- grep("\\$modelspan", est)
