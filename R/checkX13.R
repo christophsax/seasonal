@@ -37,14 +37,21 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     }
   }
   
-  ### check existence of binaries  
+  ### check existence of binaries 
   # platform dependent binaries
-  if (.Platform$OS.type == "windows"){
+  if (.Platform$OS.type == "windows"){    
     x13.bin <- file.path(env.path, "x13as.exe")
     x13.bin.html <- file.path(env.path, "x13ashtml.exe")
   } else {
     x13.bin <- file.path(env.path, "x13as")
-    x13.bin.html <- file.path(env.path, "x13ashtml")
+    # ignore case on unix to avoid problems with different binary names
+    fl <- list.files(env.path)
+    fn <- fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)]
+    if (length(fn) > 0){
+      x13.bin.html <- file.path(env.path, fn)
+    } else {
+      x13.bin.html <- file.path(env.path, "x13ashtml")
+    }
   }
   no.file.message <- paste("Binary executable file", x13.bin, "or", x13.bin.html, "not found.\nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")\n")
   

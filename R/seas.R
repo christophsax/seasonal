@@ -425,7 +425,9 @@ run_x13 <- function(file, out){
     shell(paste(x13.bin, file, flags), intern = TRUE)
   } else {
     if (getOption("htmlmode") == 1){
-      x13.bin <- file.path(env.path, "x13ashtml")
+      # ignore case on unix to avoid problems with different binary names
+      fl <- list.files(env.path)
+      x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
     } else {
       x13.bin <- file.path(env.path, "x13as")
     }
