@@ -10,12 +10,7 @@ If you are familiar with X-13ARIMA-SEATS, you may benefit from the flexible inpu
 
 ### Installation
 
-To install the latest development version with support for the **HTML version of X-13** and a new **Shiny-based graphical user interface** directly from Github, type to the R console:
-
-    install.packages("devtools")
-    devtools::install_github('seasonal', 'christophsax')
-
-The stable version (0.6) is available from CRAN:
+The latest version (0.70) with support for the HTML version of X-13 and a new Shiny-based graphical user interface is available from CRAN:
 
     install.packages("seasonal")
 
@@ -33,7 +28,7 @@ If you want to set the environmental variable permanently, you may do so by addi
 
     X13_PATH = YOUR_PATH_TO_X13
 
-Alternatively, use the system terminal (on Windows, it's called command prompt; also, the `cd` command requires `\` instead of `/`):
+Alternatively, use the system terminal (or command prompt):
 
     cd YOUR_R_HOME_DIRECTORY/etc
     echo X13_PATH = YOUR_PATH_TO_X13 >> Renviron.site
@@ -90,7 +85,7 @@ In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-SEA
 
     m <- seas(AirPassengers, regression.variables = c("td", "ao1955.jan"))
    
-Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty string (or, alternatively, to an empty list). Several defaults of `seas` are empty strings, such as the default `seats = ""`. See the help page (`?seas`) for more details on the defaults. Note the difference between `""` (meaning the spec is enabled but has no arguments) and `NULL` (meaning the spec is disabled).
+Note that R vectors may be used as an input. If a spec is added without any arguments, the spec should be set equal to an empty string (or, alternatively, to an empty list, as in previous versions). Several defaults of `seas` are empty strings, such as the default `seats = ""`. See the help page (`?seas`) for more details on the defaults. Note the difference between `""` (meaning the spec is enabled but has no arguments) and `NULL` (meaning the spec is disabled).
 
 It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way. For instance, example 1 in section 7.1 from the [manual][manual],
 
