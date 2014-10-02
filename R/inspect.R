@@ -67,8 +67,8 @@
 #' }
 #' @export
 inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.browser", interactive())){  
-  
-  if (!suppressWarnings(require(shiny))){
+      
+  if (!requireNamespace("shiny", quietly = TRUE)){
     stop("the inspect function depends on the 'shiny' package. It can be installed from CRAN: \n\n  install.packages('shiny')\n ")
   }
   
@@ -82,7 +82,7 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
   
   SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects
-  SPECS <- SPECS[-c(296:317),]  # dont show x11regression
+  SPECS <- SPECS[-c(296:317),]        # dont show x11regression
   
   # construct a list with plots
   vl <- list()
@@ -110,13 +110,13 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
   }
   
   # use 'computation on the language' to construct the main panel
-  tab.expr <- 'mainPanel(tabsetPanel(
-            tabPanel("Summary", verbatimTextOutput("modelSummary")),'
+  tab.expr <- 'shiny::mainPanel(shiny::tabsetPanel(
+            shiny::tabPanel("Summary", shiny::verbatimTextOutput("modelSummary")),'
   for (i in 1:length(vl)){
-    tab.expr <- paste0(tab.expr, 'tabPanel("', names(vl)[i], '", plotOutput("vl', i, '")),\n')
+    tab.expr <- paste0(tab.expr, 'shiny::tabPanel("', names(vl)[i], '", shiny::plotOutput("vl', i, '")),\n')
   }
-  tab.expr <- paste0(tab.expr, 'tabPanel("All Series", selectInput("userview", label = NULL, choices=  SPECS$long[SPECS$is.series])
-, textOutput("moreText", tags$em), plotOutput("morePlot"), helpText("To reproduce the data in R, type:"), verbatimTextOutput("moreRepro")), type = "pills"))')
+  tab.expr <- paste0(tab.expr, 'shiny::tabPanel("All Series", shiny::selectInput("userview", label = NULL, choices=  SPECS$long[SPECS$is.series])
+, shiny::textOutput("moreText"), shiny::plotOutput("morePlot"), shiny::helpText("To reproduce the data in R, type:"), shiny::verbatimTextOutput("moreRepro")), type = "pills"))')
   main.panel <- eval(parse(text = tab.expr))
   
   # list with arima models
@@ -130,25 +130,25 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
   # adj of input model
   adj.method <- if (!is.null(x$spc$seats)) {"seats"} else {"x11"}
   
-  runApp(list(
+  shiny::runApp(list(
     # --- UI -------------------------------------------------------------------
-    ui = fluidPage(
-      titlePanel("seasonal: X13-ARIMA-SEATS interface"),
-      sidebarLayout(
-        sidebarPanel(
-          radioButtons("method", "Adjustment method:",
+    ui = shiny::fluidPage(
+      shiny::titlePanel("seasonal: X13-ARIMA-SEATS interface"),
+      shiny::sidebarLayout(
+        shiny::sidebarPanel(
+          shiny::radioButtons("method", "Adjustment method:",
                        choices = c("SEATS" = "seats", "X-11" = "x11"), 
                        selected = if (!is.null(x$spc$seats)) {"seats"} else {"x11"}, 
                        inline = TRUE),
-          checkboxInput("transform", "Log-Transformation",
+          shiny::checkboxInput("transform", "Log-Transformation",
                         value = (transformfunction(x) == "log")),
-          selectInput("model", "ARIMA Model:",
+          shiny::selectInput("model", "ARIMA Model:",
                       arima.models, selected = x$model$arima$model),
-          selectInput("aictest", "AIC-test for:",
+          shiny::selectInput("aictest", "AIC-test for:",
                       aic.tests, selected = aic.tests, multiple = TRUE),
-          sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          if (getOption("htmlmode") == 1) {checkboxInput("outBox", "Update X-13 Output")} else {NULL},
-          actionButton("stopButton", "Close and import Call to R", icon = icon("download"))
+          shiny::sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
+          if (getOption("htmlmode") == 1) {shiny::checkboxInput("outBox", "Update X-13 Output")} else {NULL},
+          shiny::actionButton("stopButton", "Close and import Call to R", icon = shiny::icon("download"))
         ),
         main.panel
       )
@@ -158,20 +158,20 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
     server = function(input, output, session) {
     
       if (getOption("htmlmode") == 1){
-        observe({
+        shiny::observe({
           if (input$outBox){
             out(mod())
           }
         })
       }
 
-      observe({
+      shiny::observe({
         if (input$stopButton > 0){
-          stopApp(returnValue = static(mod()))
+          shiny::stopApp(returnValue = static(mod()))
         }
       })
       
-      mod <- reactive({
+      mod <- shiny::reactive({
         lc <- as.list(x$call)
         lc$transform.function <- if (input$transform) {"log"} else {"none"}
         lc$outlier.critical <- input$outlier.critical    
@@ -189,21 +189,21 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
         }
         z <- eval(as.call(lc))
         if (!is.null(z$spc$seats)){
-          updateRadioButtons(session, "method",
+          shiny::updateRadioButtons(session, "method",
                              selected = "seats")
            }
         if (!is.null(z$spc$x11)){
-          updateRadioButtons(session, "method",
+          shiny::updateRadioButtons(session, "method",
                              selected = "x11")
         }
         z
       })
       
-      output$modelSummary <- renderPrint({
+      output$modelSummary <- shiny::renderPrint({
         summary(mod())
       }) 
       
-      SeriesRun <- reactive({
+      SeriesRun <- shiny::reactive({
         mod <- mod()
         z <- list()
         z$dta <- try(series(mod, input$userview, verbose = FALSE),  silent = TRUE)
@@ -228,11 +228,11 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
         z
       })
       
-      output$moreText <- renderText({
+      output$moreText <- shiny::renderText({
         SeriesRun()$msg
       })
       
-      output$morePlot <- renderPlot({
+      output$morePlot <- shiny::renderPlot({
         dta <- SeriesRun()$dta
         if (inherits(dta, "ts")){
           nc <- NCOL(dta)
@@ -241,20 +241,22 @@ inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.brow
           if (nc > 1){
             legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
           }
-        } else if (input$userview %in% c("check.acf", "check.acfsquared", "check.pacf", "identify.acf", "identify.pacf")){
+        } else if (input$userview %in% c("check.acf", "check.acfsquared", 
+                                         "check.pacf", "identify.acf", 
+                                         "identify.pacf")){
           plot(dta[,1:2], type = "l")
           lines(dta[,3], col = "red")
           lines(-dta[,3], col = "red")
         }
       })
       
-      output$moreRepro <- renderText({
+      output$moreRepro <- shiny::renderText({
         paste('series(', deparse(icl$x), ', "', input$userview, '")', sep = "")
       })
       
       # server structure for user defined plots
       for (i in 1:length(vl)){
-        expr <- paste0("output$vl", i, " <- renderPlot(vl[[",i ,  "]](mod()))")
+        expr <- paste0("output$vl", i, " <- shiny::renderPlot(vl[[",i ,  "]](mod()))")
         eval(parse(text = expr))
       }
     }
