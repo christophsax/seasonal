@@ -14,7 +14,7 @@ The latest version (0.70) with support for the HTML version of X-13 and a new Sh
 
     install.packages("seasonal")
 
-*seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can be obtained precompiled from [here][census_win] (Windows: `x13ashtmlall.zip`). Here are guides on how to build it from source for [Ubuntu][ubuntu] or [Mac OS-X][os-x]. 
+*seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can be obtained precompiled from [here][census_win] (Windows: `x13ashtmlall.zip`). There are guides for building it from source for [Ubuntu][ubuntu] or [Mac OS-X][os-x]. 
 
 Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on a Unix system) to the desired location in your file system. Next, you need to tell *seasonal* where to find the binary executables of X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This may be done during your active session in R:
 
