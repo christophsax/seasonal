@@ -4,3 +4,6 @@
 *-Ex.R
 .Rproj.user
 seasonal.Rproj
+*.sublime-project
+*.sublime-workspace
+build.R
