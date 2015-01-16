@@ -1,3 +1,9 @@
+0.71  2015-??-??
+
+bug fixes
+- error messages form X-13 are included in the R error
+
+
 0.70.1  2014-10-02
 
 new features

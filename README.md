@@ -10,7 +10,12 @@ If you are familiar with X-13ARIMA-SEATS, you may benefit from the flexible inpu
 
 ### Installation
 
-The latest version (0.70) with support for the HTML version of X-13 and a new Shiny-based graphical user interface is available from CRAN:
+To install the latest development version directly from Github, type to the R console:
+
+    install.packages("devtools")
+    devtools::install_github('seasonal', 'christophsax')
+
+The stable version (0.7) is available from CRAN:
 
     install.packages("seasonal")
 
