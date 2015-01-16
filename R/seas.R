@@ -336,9 +336,13 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   if (length(z$err$error) > 0){
     if (is.null(z$data)){
-      stop(paste0("No series has been generated.\n\nX-13 error message:\n", z$err$error))
+      stop(paste0("No series has been generated.\n\nX-13 error message(s):\n", 
+        paste(strwrap(paste("-", z$err$error), width = 70, exdent = 2), collapse = "\n")
+        ))
     } else {
-      warning("Series has been generated, but X-13 returned an error message:", z$err$error)
+      warning(paste0("Series has been generated, but X-13 returned an error message(s):\n", 
+        paste(strwrap(paste("-", z$err$error), width = 70, exdent = 2), collapse = "\n")
+        ))
     }
   }
   
