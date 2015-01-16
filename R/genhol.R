@@ -35,7 +35,7 @@
 #' 
 #' \dontrun{
 #' 
-#' data(holiday)  # dates of Chinese New Year and Easter
+#' data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
 #' 
 #' ### use of genhol
 #' 
@@ -65,15 +65,15 @@
 #'            regression.variables = c("td1coef", "ao1951.May"),
 #'            xreg = ea1, regression.usertype = "holiday",
 #'            arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
-#'            outlier = NULL, transform.function = "log", x11 = ""))
+#'            outlier = NULL, transform.function = "log", x11 = "")
 #' summary(m2)
 #' 
 #' all.equal(final(m2), final(m1), tolerance = 1e-06)
 #' 
 #' 
 #' # with genhol, its possible to do sligtly better, by adjusting the length
-#' # of easter
-#' 
+#' # of easter from Friday to Monday:
+#'
 #' ea2 <- genhol(easter, start = -2, end = +1, center = "calendar")
 #' m3 <- seas(x = AirPassengers, 
 #'            regression.variables = c("td1coef", "ao1951.May"), 
@@ -97,7 +97,7 @@
 #'            outlier = NULL, transform.function = "log")
 #' summary(m1)
 #' 
-#' # compare to identical no-CNY model:
+#' # compare to identical no-CNY model
 #' m2 <- seas(x = imp, x11 = "", 
 #'            regression.variables = c("td1coef", "ls1985.Jan", "ls2008.Nov"), 
 #'            arima.model = "(0 1 2)(0 1 1)", regression.aictest = NULL, 
@@ -106,7 +106,7 @@
 #' 
 #' ts.plot(final(m1), final(m2), col = c("red", "black"))
 #' 
-#' # Modeling complex holiday effects in Chinese imports
+#' # modeling complex holiday effects in Chinese imports
 #' # - positive pre-CNY effect
 #' # - negative post-CNY effect≈ß
 #' pre_cny <- genhol(cny, start = -6, end = -1, frequency = 12, center = "calendar")
@@ -119,7 +119,7 @@
 #' 
 #' ### Indian Diwali (thanks to Pinaki Mukherjee)
 #' 
-#' # Adjusting Indian industrial production
+#' # adjusting Indian industrial production
 #' m4 <- seas(iip, 
 #' x11 = "",
 #' xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
@@ -127,7 +127,8 @@
 #' ) 
 #' summary(m4)
 #' 
-#' # Without specification of 'regression.usertype', Diwali effects are added back to the final series
+#' # without specification of 'regression.usertype', Diwali effects are added 
+#' # back to the final series
 #' m5 <- seas(iip, 
 #' x11 = "",
 #' xreg = genhol(diwali, start = 0, end = 0, center = "calendar")
@@ -135,8 +136,8 @@
 #' 
 #' ts.plot(final(m4), final(m5), col = c("red", "black"))
 #' 
-#' # the Diwali factor in Indian industrial production
-#' series(m4, "regression.holiday")
+#' # plot the Diwali factor in Indian industrial production
+#' plot(series(m4, "regression.holiday"))
 #' 
 #' }
 genhol <- function(x, start = 0, end = 0, frequency = 12, center = "none"){
