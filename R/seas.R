@@ -187,6 +187,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     stop("start year of 'x' must be > 999.")
   }
   
+
+
   # lookup table for output specification
   SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects
@@ -249,10 +251,14 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     # user names either from input (single "ts"), or from colnames ("mts)
     if (is.null(dim(xreg))){
       user <- deparse(substitute(xreg))
+      # if xreg is a function, usernames should not be taken from the call
+      if (grepl("[\\(\\)]", user)){
+        user <- "user"
+      }
     } else {
-      user <- colnames(xreg)
+      user <- gsub("[\\(\\)]", "", colnames(xreg))
     }
-    
+
     if (!is.null(spc$regression)){
       spc$regression$user <- user
       spc$regression$file <- paste0("\"", xreg.file, "\"")
@@ -263,7 +269,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
       spc$x11regression$format <- "\"datevalue\""
     }
   }
-  
+
   if (!is.null(xtrans)){
     if (frequency(xtrans) != frequency(x)){
       stop('xtrans and x must be of the same frequency.')
@@ -272,8 +278,12 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     # user names either from input (single "ts"), or from colnames ("mts)
     if (is.null(dim(xtrans))){
       name <- deparse(substitute(xtrans))
+      # if xtrans is a function, usernames should not be taken from the call
+      if (grepl("[\\(\\)]", name)){
+        name <- "user"
+      }
     } else {
-      name <- colnames(xtrans)
+      name <- gsub("[\\(\\)]", "", colnames(xtrans))
     }
     spc$transform$name = name
     spc$transform$file <- paste0("\"", xtrans.file, "\"")
