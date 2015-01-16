@@ -28,10 +28,6 @@ read_data <- function(method = "seats", file, frequency){
     final <- seasonaladj
   }
   
-  if (is.null(final)){
-    stop("No final series generated.")
-  }
-  
   # remove NULL elements, because cbind cannot handle them
   ll <- list(final = final, seasonal = seasonal, seasonaladj = seasonaladj, trend = trend, irregular = irregular, adjustfac = adjustfac)
   lll <- ll[!unlist(lapply(ll, is.null))]

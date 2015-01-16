@@ -334,15 +334,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
   z$err <- detect_error(errtxt)
 
-  if (length(z$err$err) > 0){
-    cat("Error while reading the following .spc file:\n\n")
-    print(spc)
-    cat("\n\n\n")
-    print(z$err)
+  if (length(z$err$error) > 0){
     if (is.null(z$data)){
-      stop("no series has been generated")
+      stop(paste0("No series has been generated.\n\nX-13 error message:\n", z$err$error))
     } else {
-      warning("series has been generated")
+      warning("Series has been generated, but X-13 returned an error message:", z$err$error)
     }
   }
   
