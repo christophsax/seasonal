@@ -7,3 +7,5 @@ seasonal.Rproj
 *.sublime-project
 *.sublime-workspace
 build.R
+
+.Rapp.history
