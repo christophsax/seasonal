@@ -85,8 +85,8 @@
 #' 
 #' ### Chinese New Year
 #' 
-#' data(cntrade)  # exports and imports of China
-#' data(holiday)  # dates of Chinese New Year and Easter
+#' data(seasonal) 
+#' data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
 #' 
 #' # de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year
 #' cny.ts <- genhol(cny, start = 0, end = 6, center = "calendar")
@@ -105,8 +105,40 @@
 #' summary(m2)
 #' 
 #' ts.plot(final(m1), final(m2), col = c("red", "black"))
-#' }
 #' 
+#' # Modeling complex holiday effects in Chinese imports
+#' # - positive pre-CNY effect
+#' # - negative post-CNY effect≈ß
+#' pre_cny <- genhol(cny, start = -6, end = -1, frequency = 12, center = "calendar")
+#' post_cny <- genhol(cny, start = 0, end = 6, frequency = 12, center = "calendar")
+#' m3 <- seas(x = imp, x11 = "",
+#'            xreg = cbind(pre_cny, post_cny), regression.usertype = "holiday", 
+#'            x11 = list())
+#' summary(m3) 
+#' 
+#' 
+#' ### Indian Diwali (thanks to Pinaki Mukherjee)
+#' 
+#' # Adjusting Indian industrial production
+#' m4 <- seas(iip, 
+#' x11 = "",
+#' xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
+#' regression.usertype = "holiday"
+#' ) 
+#' summary(m4)
+#' 
+#' # Without specification of 'regression.usertype', Diwali effects are added back to the final series
+#' m5 <- seas(iip, 
+#' x11 = "",
+#' xreg = genhol(diwali, start = 0, end = 0, center = "calendar")
+#' ) 
+#' 
+#' ts.plot(final(m4), final(m5), col = c("red", "black"))
+#' 
+#' # the Diwali factor in Indian industrial production
+#' series(m4, "regression.holiday")
+#' 
+#' }
 genhol <- function(x, start = 0, end = 0, frequency = 12, center = "none"){
   if (!inherits(x, "Date")){
     stop("x must be of class 'Date'. Use 'as.Date' to convert.")

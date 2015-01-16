@@ -222,7 +222,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   ### construct spclist (spclist fully describes the .spc file)
   spc <- list()
   class(spc) <- c("spclist", "list")
-  
+
   # add data series
   spc$series$title <- paste0("\"", series.name, "\"")
   spc$series$file <- paste0("\"", datafile, "\"")
@@ -241,7 +241,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   
   # remove double entries, adjust outputs
   spc <- consist_spclist(spc)
-  
+
   ### user defined regressors
   if (!is.null(xreg)){
     if (frequency(xreg) != frequency(x)){
@@ -290,6 +290,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     spc$transform$format <- "\"datevalue\""
   }
   
+
+
   ### write spc
   spctxt <- deparse_spclist(spc)
   writeLines(spctxt, con = paste0(iofile, ".spc"))
@@ -307,7 +309,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     file.copy(file.path(wdir, flist), dir, overwrite = TRUE)
     message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
   }
-  
+
   ### Import from X13
   z <- list()  # output object
   
@@ -320,7 +322,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   if (!file.exists(outfile)){
     stop("no output has been generated")
   }
-  
+
   # add all series that have been produced and are specified in SERIES_SUFFIX
   file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[2]]))
   is.series <- file.suffix %in% SERIES_SUFFIX
@@ -335,13 +337,15 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   } else if (!is.null(spc$x11)){
     z$data <- read_data(method = "x11", file = iofile, frequency(x))
   } 
-  
+
   # read errors/warnings
   if (getOption("htmlmode") == 1){
     errtxt <- readLines(paste0(iofile, "_err.html"))
   } else {
     errtxt <- readLines(paste0(iofile, ".err"))
   }
+
+
   z$err <- detect_error(errtxt)
 
   if (length(z$err$error) > 0){
@@ -358,7 +362,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   
   # read .udg file
   z$udg <- read_udg(iofile)
-  
   # read .log file
   if (getOption("htmlmode") != 1){
     z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")

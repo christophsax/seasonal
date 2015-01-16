@@ -9,16 +9,20 @@ detect_error <- function(err){
   # returns an object of class x13messages which can be printed
   
   if (getOption("htmlmode") == 1){
-    ParseInfo <- function(line, x){
-      i <- 1
-      while (!grepl("</p>", x[line + 1])) {i <- i + 1}
-      
-      z <- paste(x[line:(line + i)], collapse = "")
-      z <- gsub("<p>.*</strong>", "", z) # remove trailing tag 
-      z <- gsub("</p>", "", z)     # remove closing tag 
+    ParseInfo <- function(openl, x){
+      # find next closing tag
+      clt <- grep("</p>", x)
+      closel <- clt[clt >= openl][1]
+
+      # extract info between tags
+      z <- paste(x[openl:closel], collapse = "")
+
+      # clean info
+      z <- gsub("<p>.*</strong>", "", z) # remove trailing tag
+      z <- gsub("</p>", "", z)           # remove closing tag 
       z <- gsub("&nbsp;", "", z)  
-      z <- gsub("\\s+", " ", z)    # remove multiple space
-      z <- gsub("^\\s", "", z)     # remove trailing space
+      z <- gsub("\\s+", " ", z)          # remove multiple space
+      z <- gsub("^\\s", "", z)           # remove trailing space
       z
     }
   } else {
@@ -33,7 +37,7 @@ detect_error <- function(err){
         line2 <- length(x)
       }
       z <- paste(x[line:line2], collapse = "")
-      z <- gsub("^.*: ", "", z)  # remove trailing tag
+      z <- gsub("^.*: ", "", z)    # remove trailing tag
       z <- gsub("^\\s", "", z)     # remove trailing space
     }
   }
