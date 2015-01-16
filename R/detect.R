@@ -11,11 +11,11 @@ detect_error <- function(err){
   if (getOption("htmlmode") == 1){
     ParseInfo <- function(line, x){
       i <- 1
+      while (!grepl("</p>", x[line + 1])) {i <- i + 1}
       
-      while (!grepl("</p>", x[line + i])) {i <- i + 1}
-      
-      z <- paste(x[line:(line + i - 1)], collapse = "")
+      z <- paste(x[line:(line + i)], collapse = "")
       z <- gsub("<p>.*</strong>", "", z) # remove trailing tag 
+      z <- gsub("</p>", "", z)     # remove closing tag 
       z <- gsub("&nbsp;", "", z)  
       z <- gsub("\\s+", " ", z)    # remove multiple space
       z <- gsub("^\\s", "", z)     # remove trailing space
@@ -37,13 +37,12 @@ detect_error <- function(err){
       z <- gsub("^\\s", "", z)     # remove trailing space
     }
   }
-  
+
   z <- list()
   class(z) <- "x13messages"
   z$error <- sapply(grep("ERROR:", err), ParseInfo, x = err)
   z$warning <- sapply(grep("WARNING:", err), ParseInfo, x = err)
   z$note <- sapply(grep("note:", err), ParseInfo, x = err)
-  
   z
 }
 
