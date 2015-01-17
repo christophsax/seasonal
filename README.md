@@ -16,10 +16,10 @@ started](#getting-started) section and skip the rest. Alternatively,
 If you are familiar with X-13ARIMA-SEATS, you may benefit from the flexible
 input and output structure of *seasonal*. The package allows you to use (almost)
 all commands of X-13ARIMA-SEATS, and it can import (almost) all output generated
-by X-13ARIMA-SEATS. The only exception is the 'composite' spec, which is not
-supported. Read the [Input](#input) and [Output](#output) sections and have a
-look at the [wiki][examples], where the examples from the official X-13ARIMA-
-SEATS [manual][manual] are reproduced in R.
+by X-13ARIMA-SEATS. The only exception is the 'composite' spec, which is easy to
+replicate in basic R. Read the [Input](#input) and [Output](#output) sections
+and have a look at the [wiki][examples], where the examples from the official
+X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
 
 ### Installation
@@ -259,8 +259,7 @@ click. Click several times to loop through different outlier types.
 ### Inspect tool
 
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
-model. Since seasonal 0.62, it uses *[Shiny][shiny]* and can now be used without
-RStudio. To install the latest version of Shiny, type:
+model, using *[Shiny][shiny]*. To install the latest version of Shiny, type:
 
     install.packages("shiny")
 
@@ -281,7 +280,7 @@ views in `inspect` are also customizable, see the examples in `?inspect`.
 ### Chinese New Year, Indian Diwali and other Customized Holidays
 
 seasonal includes `genhol`, a function that makes it easy to model user-defined
-holiday regression effects. `genhol` is a R-replacement for the equally named
+holiday regression effects. `genhol` is an R replacement for the equally named
 function by the Census Office; no additional installation is required. The
 function uses an object of class `"Date"` as its first argument,  which
 specifies the occurrence of the holiday.
@@ -304,15 +303,14 @@ adjustments, see the examples in `?genhol`.
 
 ### Use in Production
 
-While seasonal offers a quick way to adjust a time series in R, it is equally
+While *seasonal* offers a quick way to adjust a time series in R, it is equally
 suited for production use. There are two kind of seasonal adjustments in
 production use:
 
 1. a periodic application of an adjustment model to a time series
 2. an automated adjustment to a large number of time series
 
-This section deals with these two questions. It shows how both tasks can be
-accomplished with basic R.
+This section shows how both tasks can be accomplished with *seasonal* and basic R.
 
 
 #### Storing Calls and Batch-Processing with `lapply` and `eval`
@@ -352,7 +350,7 @@ Of course, you also can extract any other series, e.g.:
 
 X-13 can also be applied to a large number of series, using automated adjustment
 methods. This can be accomplished with a loop or an apply function. It is useful
-to wrap the call to seasonal in a `try` statement; that way, an error will
+to wrap the call to `seas` in a `try` statement; that way, an error will
 not break the execution.
 
     # data is collected in a multiple time series object (class "mts")
