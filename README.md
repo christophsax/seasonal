@@ -226,8 +226,8 @@ While seasonal offers a quick way to adjust a time series in R, it is equally
 suited for production use. There are two kind of seasonal adjustments in
 production use:
 
-    a) a periodic application of an adjustment model to a time series
-    b) an automated adjustment to a large number of time series
+1. a periodic application of an adjustment model to a time series
+2. an automated adjustment to a large number of time series
 
 This section deals with these two questions. It shows how both tasks can be
 accomplished with basic R.
