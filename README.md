@@ -197,7 +197,7 @@ The last tab offers access to all series that can be produced with X-13. The
 views in `inspect` are also customizable, see the examples in `?inspect`.
 
 
-### Chinese New Year, Indian Diwali, and other Customized Holidays
+### Chinese New Year, Indian Diwali (dev only), and other Customized Holidays
 
 seasonal includes `genhol`, a function that makes it easy to model user- defined
 holiday regression effects. `genhol` is a R-replacement of the equally named
@@ -216,7 +216,7 @@ In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
     regression.usertype = "holiday"
     )
 
-For more examples, including Indian Diwali and complex pre- and post-holiday
+For more examples, including Chinese New Year and complex pre- and post-holiday
 adjustments, see the examples in `?genhol`.
 
 
