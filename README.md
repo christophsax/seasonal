@@ -278,9 +278,9 @@ The last tab offers access to all series that can be produced with X-13. The
 views in `inspect` are also customizable, see the examples in `?inspect`.
 
 
-### Chinese New Year, Indian Diwali (dev only), and other Customized Holidays
+### Chinese New Year, Indian Diwali and other Customized Holidays
 
-seasonal includes `genhol`, a function that makes it easy to model user- defined
+seasonal includes `genhol`, a function that makes it easy to model user-defined
 holiday regression effects. `genhol` is a R-replacement for the equally named
 function by the Census Office; no additional installation is required. The
 function uses an object of class `"Date"` as its first argument,  which
@@ -288,6 +288,7 @@ specifies the occurrence of the holiday.
 
 In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
 
+    # development version only
     data(seasonal) # Indian industrial production: iip
     data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
 
