@@ -24,7 +24,7 @@ X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
 ### Installation
 
-#### Getting Seasonal
+#### Getting seasonal
 
 To install the **latest development version** directly from Github, type to the
 R console:
@@ -282,7 +282,7 @@ The last tab offers access to all series that can be produced with X-13. The
 views in `inspect` are also customizable, see the examples in `?inspect`.
 
 
-### Chinese New Year, Indian Diwali and other Customized Holidays
+### Chinese New Year, Indian Diwali and other customized holidays
 
 seasonal includes `genhol`, a function that makes it easy to model user-defined
 holiday regression effects. `genhol` is an R replacement for the equally named
@@ -306,7 +306,7 @@ For more examples, including Chinese New Year and complex pre- and post-holiday
 adjustments, see the examples in `?genhol`.
 
 
-### Use in Production
+### Production use
 
 While *seasonal* offers a quick way to adjust a time series in R, it is equally
 suited for production use. There are two kind of seasonal adjustments in
@@ -318,7 +318,7 @@ production use:
 This section shows how both tasks can be accomplished with *seasonal* and basic R.
 
 
-#### Storing Calls and Batch-Processing with `lapply` and `eval`
+#### Storing calls and batch processing with `lapply` and `eval`
 
 `seas` calls are R objects of the standard class `"call"`. Like any R object,
 calls can be stored in a list. In order to extract the call of a `"seas"`
