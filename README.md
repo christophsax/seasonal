@@ -174,17 +174,122 @@ The `identify` method can be used to select or deselect outliers by point and cl
 
     identify(m)
 
+
 ### Inspect tool
 
-The `inspect` function is a graphical tool for choosing a seasonal adjustment model. Since seasonal 0.62, it uses *[Shiny][shiny]* and can now be used without RStudio. To install the latest version of Shiny, type:
+The `inspect` function is a graphical tool for choosing a seasonal adjustment
+model. Since seasonal 0.62, it uses *[Shiny][shiny]* and can now be used without
+RStudio. To install the latest version of Shiny, type:
 
     install.packages("shiny")
 
-The goal of `inspect` is to summarize all relevant options, plots and statistics that should be usually considered. `inspect` uses a `"seas"` object as its only argument:
+The goal of `inspect` is to summarize all relevant options, plots and statistics
+that should be usually considered. `inspect` uses a `"seas"` object as its only
+argument:
 
     inspect(m)
 
-The `inspect` function opens an interactive window that allows for the manipulation of a number of arguments. It offers several views to analyze the series graphically. With each change, the adjustment process and the visualizations are recalculated. Summary statistics are shown in the first tab. The last tab offers access to all series that can be produced with X-13. The views in `inspect` are also customizable, see the examples in `?inspect`.
+The `inspect` function opens an interactive window that allows for the
+manipulation of a number of arguments. It offers several views to analyze the
+series graphically. With each change, the adjustment process and the
+visualizations are recalculated. Summary statistics are shown in the first tab.
+The last tab offers access to all series that can be produced with X-13. The
+views in `inspect` are also customizable, see the examples in `?inspect`.
+
+
+### Chinese New Year, Indian Diwali, and other Customized Holidays
+
+seasonal includes `genhol`, a function that makes it easy to model user- defined
+holiday regression effects. `genhol` is a R-replacement of the equally named
+function by the Census Office and no additional installation is required. The
+function uses an object of class `"Date"` as its first argument,  which
+specifies the occurrence of the holiday.
+
+In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
+
+    data(seasonal) # Indian industrial production: iip
+    data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
+
+    seas(iip, 
+    x11 = "",
+    xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
+    regression.usertype = "holiday"
+    )
+
+For more examples, including Indian Diwali and complex pre- and post-holiday
+adjustments, see the examples in `?genhol`.
+
+
+### Use in Production
+
+While seasonal offers a quick way to adjust a time series in R, it is equally
+suited for production use. There are two kind of seasonal adjustments in
+production use:
+
+  a) a periodic application of an adjustment model to a time series
+  b) an automated adjustment to a large number of time series
+
+This section deals with these two questions. It shows how both tasks can be
+accomplished with basic R.
+
+
+#### Storing Calls and Batch-Processing with `lapply` and `eval`
+
+`seas` calls are R objects of the standard class `"call"`. Like any R object,
+calls can be stored in a list. In order to extract the call of a model, you can
+access the `$class` element or extract the static call with `static()`. For
+example,
+
+    # two different models for two different time series
+    m1 <- seas(fdeaths, x11 = "")
+    m2 <- seas(mdeaths, x11 = "")
+
+    l <- list()
+    l$c1 <- static(m1)
+    l$c2 <- static(m2)
+
+
+The list `l` can be stored and re-evaluated if new data becomes available:
+
+    ll <- lapply(l, eval)
+
+
+which returns a list containing the re-evaluated `seas` objects. If you want to
+extract the final series, use:
+
+    do.call(cbind, lapply(ll, final))
+
+
+Of course, you also can extract any other series, e.g.:
+
+    # seasonal component of an X11 adjustment, see ?series
+    do.call(cbind, lapply(ll, series, "d10"))
+
+
+#### Automated adjustment of multiple series
+
+X-13 can also be applied to a large number of series, using automated adjustment
+methods. This can be accomplished with a loop or an apply function. It is useful
+to wrap the call to seasonal in a `try` statement. That way, an error will
+not break the execution.
+
+    # data is collected in a multiple time series object (class "mts")
+    dta <- cbind(fdeaths, mdeaths)
+
+    # loop over the 2nd dimension
+    ll <- list()
+    for (i in 1:NCOL(mts)){
+      ll[[i]] <- try(seas(dta[,i], x11 = ""))
+    }
+    names(ll) <- colnames(dta)
+
+    # list the failing models
+    is.err <- sapply(ll, class) == "try-error"
+    ll[is.err]
+
+    # return the final series of the successful evaluations
+    do.call(cbind, lapply(ll[!is.err], final))
+
 
 ### License
 
