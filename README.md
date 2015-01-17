@@ -54,29 +54,26 @@ always check your installation with:
 
     checkX13()
 
-If you want to set the environmental variable permanently, you may do so by
-adding it to the `Renviron.site` file, which is located in the `etc`
-subdirectory of your R home directory (use `R.home()` in R to reveal the home
-directory). `Renviron.site` does not exist by default; if not, you have to
-create a file named `Renviron.site` with your favorite text editor (be careful
-if your system hides the extensions). Add the following line to the file
-(without quotes!):
+If it works, you may want to set the environmental variable permanently, by
+adding the `Sys.setenv` line to one of your `.Rprofile` file. The easiest would
+be to use the one located in your home directory, which can be written directly
+from R:
 
-    X13_PATH = YOUR_PATH_TO_X13
+    write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', file="~/.Rprofile", append = TRUE)
 
-Alternatively, use the system terminal (or command prompt):
+If the file does not exist (by default), it will be created. Make sure that you
+get the quotes right: Double quotes around your directory, single quotes around
+the whole `Sys.setenv` line, such that R understands your string. Check first
+that the call works correctly; once it is written you may have to edit
+`.Rprofile` manually. (Or add a second, overwriting line to it.). There are
+other ways to set an environmental variable permanently in R, see `?Startup`.
 
-    cd YOUR_R_HOME_DIRECTORY/etc
-    echo X13_PATH = YOUR_PATH_TO_X13 >> Renviron.site
-
-There are other ways to set an environmental variable permanently in R, see
-`?Startup`.
 
 ### Getting started
 
-`seas is the core function of the *seasonal* package. By default, seas calls the
-`automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
-`works well in most circumstances:
+seas is the core function of the *seasonal* package. By default, seas calls the
+automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
+works well in most circumstances:
 
     m <- seas(AirPassengers)
      
