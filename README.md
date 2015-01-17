@@ -200,8 +200,8 @@ views in `inspect` are also customizable, see the examples in `?inspect`.
 ### Chinese New Year, Indian Diwali (dev only), and other Customized Holidays
 
 seasonal includes `genhol`, a function that makes it easy to model user- defined
-holiday regression effects. `genhol` is a R-replacement of the equally named
-function by the Census Office and no additional installation is required. The
+holiday regression effects. `genhol` is a R-replacement for the equally named
+function by the Census Office; no additional installation is required. The
 function uses an object of class `"Date"` as its first argument,  which
 specifies the occurrence of the holiday.
 
@@ -226,8 +226,8 @@ While seasonal offers a quick way to adjust a time series in R, it is equally
 suited for production use. There are two kind of seasonal adjustments in
 production use:
 
-  a) a periodic application of an adjustment model to a time series
-  b) an automated adjustment to a large number of time series
+    a) a periodic application of an adjustment model to a time series
+    b) an automated adjustment to a large number of time series
 
 This section deals with these two questions. It shows how both tasks can be
 accomplished with basic R.
