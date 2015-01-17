@@ -45,10 +45,13 @@ There are guides for building it from source for [Ubuntu][ubuntu] or [Mac
 OS-X][os-x].
 
 Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on a Unix
-system) to the desired location in your file system. Next, you need to tell
-*seasonal* where to find the binary executables of X-13ARIMA-SEATS, by setting
-the specific environmental variable `X13_PATH`. This may be done during your
-active session in R:
+system) to the desired location in your file system. 
+
+#### Telling R where to find X-13
+
+Next, you need to tell *seasonal* where to find the binary executables of 
+X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This
+may be done during your active session in R:
 
     Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")
  
