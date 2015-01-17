@@ -281,7 +281,7 @@ views in `inspect` are also customizable, see the examples in `?inspect`.
 
 seasonal includes `genhol`, a function that makes it easy to model user-defined
 holiday regression effects. `genhol` is an R replacement for the equally named
-function by the Census Office; no additional installation is required. The
+software by the Census Office; no additional installation is required. The
 function uses an object of class `"Date"` as its first argument,  which
 specifies the occurrence of the holiday.
 
