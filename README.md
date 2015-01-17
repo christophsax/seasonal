@@ -45,7 +45,7 @@ There are guides for building it from source for [Ubuntu][ubuntu] or [Mac
 OS-X][os-x].
 
 Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on a Unix
-system) to the desired location in your file system. 
+system) to any desired location on your file system. 
 
 #### Telling R where to find X-13
 
