@@ -28,20 +28,27 @@ NULL
 #' 
 #' @docType data
 #' 
-#' @format Each time series is an object of class \code{"ts"}.
+#' @format Time series of class \code{"ts"}.
 #' 
-#' @source Swiss Federal Statistical Office 
+#' @source Federal Statistical Office, Switzerland 
 #' \url{http://www.bfs.admin.ch/bfs/portal/de/index/themen/05/02/blank/key/basis_aktuell.html} 
 #' (cc-d-05.02.12)
 #' 
 #' @name cpi
 #' @keywords datasets
+#' @examples
+#' 
+#' data(sesaonal)
+#' cpi
 NULL
 
 
 
-#' Dates of Easter and Chinese New Year
+#' Dates of Chinese New Year, Indian Diwali and Easter
 #' 
+#' Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in 
+#' \code{\link{genhol}}.
+#'
 #' @docType data
 #' 
 #' @format Objects of class \code{"Date"}.
@@ -50,10 +57,46 @@ NULL
 #' \url{http://www.census.gov/srd/www/genhol/genhol_downloads.html} 
 #' 
 #' \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php} 
+#'
+#' \url{http://india.gov.in/calendar}, with help from Pinaki Mukherjee
 #' 
 #' @name easter
 #' @aliases cny
+#' @aliases diwali
 #' @keywords datasets
+#' @examples
+#' 
+#' data(holiday)
+#' cny
+#' diwali
+#' easter
+NULL
+
+
+#' Industrial Production of India
+#' 
+#' Industrial Production of India (IIP). 
+#' 
+#' Index value. IIP is used for measuring the performance overall industrial 
+#' sector of the Indian economy. IIP is compiled by using data from 16 source 
+#' agencies.
+#' 
+#' @docType data
+#' 
+#' @format Time series of class \code{"ts"}.
+#' 
+#' @source Central Statistics Office of the Ministry of Statistics and Programme 
+#' Implementation 
+#' \url{http://mospi.nic.in/Mospi_New/upload/iip/table3_04_05.xls}, with help 
+#' from Pinaki Mukherjee
+#' 
+#' @name exp
+#' @aliases imp
+#' @keywords datasets
+#' @examples
+#' 
+#' data(sesaonal)
+#' iip
 NULL
 
 
@@ -72,8 +115,12 @@ NULL
 #' @name exp
 #' @aliases imp
 #' @keywords datasets
+#' @examples
+#' 
+#' data(sesaonal)
+#' imp
+#' exp
 NULL
-
 
 
 #' List of Available X-13ARIMA-SEATS Outputs
@@ -83,7 +130,7 @@ NULL
 #' 
 #' @docType data
 #'   
-#' @format An object of class \code{"data.frame"}.
+#' @format An object of class \code{"data.frame"}
 #'   
 #' @source United States Census Bureau
 #'   

@@ -3,15 +3,24 @@
 \name{easter}
 \alias{cny}
 \alias{easter}
-\title{Dates of Easter and Chinese New Year}
+\title{Dates of Chinese New Year, Indian Diwali and Easter}
 \format{Objects of class \code{"Date"}.}
 \source{
 \url{http://www.census.gov/srd/www/genhol/genhol_downloads.html}
 
 \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
+
+\url{http://india.gov.in/calendar}, with help from Pinaki Mukherjee
 }
 \description{
-Dates of Easter and Chinese New Year
+Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in
+\code{\link{genhol}}.
+}
+\examples{
+data(holiday)
+cny
+diwali
+easter
 }
 \keyword{datasets}
 

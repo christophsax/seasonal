@@ -1,7 +1,19 @@
-0.71  2015-??-??
+0.71.4  2015-??-??
+
+enhancements
+- improved parsing and intergration of X-13 error messages
+- checkX13 performs more tests and returns an error report.
+
+under the hood
+- automated tests for all calls in the wiki
+
+documentation
+- new sections on user defined holidays and the use of seasonal in production
+- new example on Indian Diwali in ?genhol
+- dates of Indian Diwali and Indian industrial production
 
 bug fixes
-- error messages form X-13 are included in the R error
+- genhol() can be used inside a seas() call
 
 
 0.70.1  2014-10-02
@@ -62,7 +74,7 @@ deprecated
 - the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is now part of the new 'series' function. The old functions are deprecated.
 
 code improvements
-- code takes advantage of the series function, simplified import from X-13.
+- code takes advantage of the series function, simplified import from X-13
 
 
 0.40.0  2014-02-12

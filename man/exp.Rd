@@ -3,16 +3,34 @@
 \name{exp}
 \alias{exp}
 \alias{imp}
-\title{Exports and Imports of China}
-\format{Each time series is an object of class \code{"ts"}.}
+\title{Industrial Production of India}
+\format{Time series of class \code{"ts"}.}
 \source{
+Central Statistics Office of the Ministry of Statistics and Programme
+Implementation
+\url{http://mospi.nic.in/Mospi_New/upload/iip/table3_04_05.xls}, with help
+from Pinaki Mukherjee
+
 China Customs
 }
 \description{
+Industrial Production of India (IIP).
+
 Monthly exports and imports of China (July 1983 to December 2013).
 }
 \details{
+Index value. IIP is used for measuring the performance overall industrial
+sector of the Indian economy. IIP is compiled by using data from 16 source
+agencies.
+
 In 100 mio. U.S. Dollar.
+}
+\examples{
+data(sesaonal)
+iip
+data(sesaonal)
+imp
+exp
 }
 \keyword{datasets}
 

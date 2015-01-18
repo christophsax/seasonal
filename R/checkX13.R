@@ -112,7 +112,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     if (file.exists(file.path(wdir, "Testairline.out")) | file.exists(file.path(wdir, "Testairline.html"))){
       message("  - command line test run successful")
       if (file.exists(file.path(wdir, "Testairline.html"))){
-        message("  - command line test produced HTML output.")
+        message("  - command line test produced HTML output")
       }
     } else {
       message("\nERROR: X-13 command line test run failed. To debug, try running the binary file directly in the terminal. Try using it with Testairline.spc which is part of the program package by the Census Office.")
