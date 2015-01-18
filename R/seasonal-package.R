@@ -38,7 +38,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' 
-#' data(sesaonal)
+#' data(seasonal)
 #' cpi
 NULL
 
@@ -61,8 +61,7 @@ NULL
 #' \url{http://india.gov.in/calendar}, with help from Pinaki Mukherjee
 #' 
 #' @name easter
-#' @aliases cny
-#' @aliases diwali
+#' @aliases cny diwali
 #' @keywords datasets
 #' @examples
 #' 
@@ -90,12 +89,11 @@ NULL
 #' \url{http://mospi.nic.in/Mospi_New/upload/iip/table3_04_05.xls}, with help 
 #' from Pinaki Mukherjee
 #' 
-#' @name exp
-#' @aliases imp
+#' @name iip
 #' @keywords datasets
 #' @examples
 #' 
-#' data(sesaonal)
+#' data(seasonal)
 #' iip
 NULL
 
@@ -117,7 +115,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' 
-#' data(sesaonal)
+#' data(seasonal)
 #' imp
 #' exp
 NULL

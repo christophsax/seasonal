@@ -108,7 +108,7 @@
 #' 
 #' # modeling complex holiday effects in Chinese imports
 #' # - positive pre-CNY effect
-#' # - negative post-CNY effect≈ß
+#' # - negative post-CNY effect
 #' pre_cny <- genhol(cny, start = -6, end = -1, frequency = 12, center = "calendar")
 #' post_cny <- genhol(cny, start = 0, end = 6, frequency = 12, center = "calendar")
 #' m3 <- seas(x = imp, x11 = "",

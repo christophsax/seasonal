@@ -26,9 +26,9 @@ detect_error <- function(err){
       z
     }
   } else {
-    ParseInfo <- function(line, x){
+    ParseInfo <- function(openl, x){
       line2 <- NULL
-      for (l in line:length(x)){
+      for (l in openl:length(x)){
         if (x[l] == "  "){
           line2 <- l - 1
         }
@@ -36,7 +36,7 @@ detect_error <- function(err){
       if (is.null(line2)){
         line2 <- length(x)
       }
-      z <- paste(x[line:line2], collapse = "")
+      z <- paste(x[openl:line2], collapse = "")
       z <- gsub("^.*: ", "", z)    # remove trailing tag
       z <- gsub("^\\s", "", z)     # remove trailing space
     }

@@ -53,7 +53,7 @@ seas(AirPassengers, force.type = "denton")
 ts.plot(series(m, "forecast.forecasts"))
 
 # use genhol to generate user defined holiday variables:
-data(cntrade)  # exports and imports of China
+data(seasonal)  # exports and imports of China
 data(holiday)  # dates of Chinese New Year and Easter
 cny.ts <- genhol(cny, start = 0, end = 6, center = "calendar")
 

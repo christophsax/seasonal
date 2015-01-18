@@ -293,9 +293,9 @@ specifies the occurrence of the holiday.
 In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
 
     # development version only
-    data(seasonal) # Indian industrial production: iip
+    data(seasonal) # Indian industrial production: iip
     data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
-
+    
     seas(iip, 
     x11 = "",
     xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 

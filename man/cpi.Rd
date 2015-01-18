@@ -13,7 +13,7 @@ Federal Statistical Office, Switzerland
 Monthly consumer price index of Switzerland. Base year is 1993.
 }
 \examples{
-data(sesaonal)
+data(seasonal)
 cpi
 }
 \keyword{datasets}
