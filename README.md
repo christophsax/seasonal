@@ -63,11 +63,12 @@ always check your installation with:
     checkX13()
 
 If it works, you may want to set the environmental variable permanently, by
-adding the `Sys.setenv` line to one of your `.Rprofile` files. The easiest would
-be to use the one located in your home directory, which can be written directly
-from R:
+adding the `Sys.setenv` line to one of your `.Rprofile` files. The easiest is to
+use the one located in your home directory, which can be written directly from
+R:
 
-    write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', file="~/.Rprofile", append = TRUE)
+    write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', 
+          file = "~/.Rprofile", append = TRUE)
 
 If the file does not exist (by default), it will be created. Make sure that you
 get the quotes right: double quotes around your directory, single quotes around
