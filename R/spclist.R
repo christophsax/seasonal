@@ -11,7 +11,7 @@ mod_spclist <- function(x, ...){
   
   
   mod.list <- list(...)
-  
+  # browser()
   for (i in seq_along(mod.list)){
     content.i <- mod.list[[i]]
     names.i <- names(mod.list)[i]
@@ -39,6 +39,9 @@ mod_spclist <- function(x, ...){
       }
     } else if (length(split.names.i[[1]]) == 2){
       spc.arg <- split.names.i[[1]][2]
+      if (!is.list(x[[spc.name]])){
+        stop("X-13ARIMA-SEATS options should contain a spec and an optional argument after the dot.")
+      }
       if (is.null(x[[spc.name]][[spc.arg]])){
         x[[spc.name]][[spc.arg]] <- list()
       }
@@ -67,7 +70,7 @@ consist_spclist <-function(x){
   # required by seas
   
   stopifnot(inherits(x, "spclist"))
-  
+
   ### avoid mutually exclusive alternatives
   
   # priority: 1. arima, 2. pickmdl, 3. automdl (default)
@@ -97,7 +100,7 @@ consist_spclist <-function(x){
   x <- mod_spclist(x, transform.print = "aictransform")
   
 
-  
+
   ### ensure arima.model is character
   if (!is.null(x$arima$model)){
     x$arima$model <- as.character.arima(x$arima$model)
@@ -111,6 +114,7 @@ consist_spclist <-function(x){
   } 
   
   if (!is.null(x$x11)){
+
     x <- mod_spclist(x, x11.save = c("d10", "d11", "d12", "d13", "d16", "e18"))
   } 
   

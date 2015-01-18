@@ -187,8 +187,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     stop("start year of 'x' must be > 999.")
   }
   
-
-
   # lookup table for output specification
   SPECS <- NULL 
   data(specs, envir = environment())  # avoid side effects
