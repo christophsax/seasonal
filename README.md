@@ -318,7 +318,7 @@ production use:
 This section shows how both tasks can be accomplished with *seasonal* and basic R.
 
 
-#### Storing calls and batch processing with `lapply` and `eval`
+#### Storing calls and batch processing
 
 `seas` calls are R objects of the standard class `"call"`. Like any R object,
 calls can be stored in a list. In order to extract the call of a `"seas"`
@@ -330,8 +330,8 @@ object, you can access the `$class` element or extract the static call with
     m2 <- seas(mdeaths, x11 = "")
 
     l <- list()
-    l$c1 <- static(m1)
-    l$c2 <- static(m2)
+    l$c1 <- static(m1)  # static call (with automated procedures substituted)
+    l$c2 <- m2$class    # original call
 
 
 The list can be stored and re-evaluated if new data becomes available:
@@ -358,21 +358,21 @@ methods. This can be accomplished with a loop or an apply function. It is useful
 to wrap the call to `seas` in a `try` statement; that way, an error will
 not break the execution.
 
-    # data is collected in a multiple time series object (class "mts")
+    # collect data in a multiple time series object (class "mts")
     dta <- cbind(fdeaths, mdeaths)
 
-    # loop over the 2nd dimension
+    # loop over 2nd dimension of dta
     ll <- list()
-    for (i in 1:NCOL(mts)){
+    for (i in 1:NCOL(dta)){
       ll[[i]] <- try(seas(dta[,i], x11 = ""))
     }
     names(ll) <- colnames(dta)
 
-    # list the failing models
+    # list failing models
     is.err <- sapply(ll, class) == "try-error"
     ll[is.err]
 
-    # return the final series of the successful evaluations
+    # return final series of successful evaluations
     do.call(cbind, lapply(ll[!is.err], final))
 
 
