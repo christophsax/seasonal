@@ -37,6 +37,18 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     }
   }
   
+  ### check validity of path
+  if (!file.exists(env.path)){
+    invalid.path.message <- paste0("Path '", env.path, "' specified but does not exists.")
+    if (fail){
+      message(invalid.path.message)
+      stop("Process terminated")
+    } else {
+      packageStartupMessage(invalid.path.message)
+      return(invisible(NULL))
+    }
+  }
+  
   ### check existence of binaries 
   # platform dependent binaries
   if (.Platform$OS.type == "windows"){    
@@ -74,32 +86,61 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   
   ### full working test
   if (fullcheck){
-    # temporary working dir and filenames
+    has.failed <- FALSE
+    message("X-13 installation test:")
+
+    message("  - X13_PATH correctly specified")
+    message("  - binary executable file found")
+
+    if (getOption("htmlmode") == 1){
+    # ignore case on unix to avoid problems with different binary names
+      fl <- list.files(env.path)
+      x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
+    } else {
+      x13.bin <- file.path(env.path, "x13as")
+    }
+
+    # X-13 command line test run
     wdir <- file.path(tempdir(), "x13")
     if (!file.exists(wdir)){
       dir.create(wdir)
     }
     file.remove(list.files(wdir, full.names = TRUE))
-    
     testfile <- file.path(path.package("seasonal"), "tests", "Testairline.spc")
     file.copy(testfile, wdir)
     run_x13(file.path(wdir, "Testairline"), out = TRUE)
     if (file.exists(file.path(wdir, "Testairline.out")) | file.exists(file.path(wdir, "Testairline.html"))){
-      message("Congratulations! 'seasonal' should work fine!
-              - the X13_PATH is correctly specified
-              - the binary executable file has been found
-              - a test run has been successful")
+      message("  - command line test run successful")
       if (file.exists(file.path(wdir, "Testairline.html"))){
-        message("              - HTML output is produced.")
+        message("  - command line test produced HTML output.")
       }
     } else {
-      message("There is something wrong with your X-13ARIMA-SEATS binaries:
-              - the X13_PATH is correctly specified
-              - the binary executable file has been found
-              - however, a test run has failed")
+      message("\nERROR: X-13 command line test run failed. To debug, try running the binary file directly in the terminal. Try using it with Testairline.spc which is part of the program package by the Census Office.")
+      if (.Platform$OS.type != "windows"){  
+        message("Perhaps it is not executable; you can make it executable with 'chmod +x ", x13.bin, "', using the terminal.")
+      }  
+      has.failed <- TRUE
+    }
+
+    # seasonal test run
+    m <- try(seas(AirPassengers), silent = TRUE)
+    if (inherits(m, "seas")){
+      message("  - seasonal test run successful")
+    } else {
+      message("\nERROR: seasonal test run failed.")
+    }
+
+    if (has.failed){
+      message("\nError details:")
+      message("  - X13_PATH:         ", Sys.getenv("X13_PATH"))
+      message("  - Full binary path: ", x13.bin)
+      message("  - Platform:         ", R.version$platform)
+      message("  - R-Version:        ", R.version$version.string)
+      message("  - seasonal-Version: ", as.character(packageVersion("seasonal")), "\n")
+    } else {
+      message("Congratulations! 'seasonal' should work fine!")
     }
   }
-  
   
   ### check HTML mode
   if (htmlcheck){

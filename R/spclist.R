@@ -40,7 +40,7 @@ mod_spclist <- function(x, ...){
     } else if (length(split.names.i[[1]]) == 2){
       spc.arg <- split.names.i[[1]][2]
       if (!is.list(x[[spc.name]])){
-        stop("X-13ARIMA-SEATS options should contain a spec and an optional argument after the dot.")
+        stop("Specification of ", spc.name, " without a dot is not allowed in this context.")
       }
       if (is.null(x[[spc.name]][[spc.arg]])){
         x[[spc.name]][[spc.arg]] <- list()
