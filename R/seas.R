@@ -475,7 +475,7 @@ run_x13 <- function(file, out){
     } else {
       x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
     }
-    shell(paste(x13.bin, file, flags), intern = TRUE)
+    msg <- shell(paste(x13.bin, file, flags), intern = TRUE)
   } else {
     if (getOption("htmlmode") == 1){
       # ignore case on unix to avoid problems with different binary names
@@ -484,7 +484,16 @@ run_x13 <- function(file, out){
     } else {
       x13.bin <- file.path(env.path, "x13as")
     }
-    system(paste(x13.bin, file, flags), intern = TRUE, ignore.stderr = TRUE)
+    msg <- system(paste(x13.bin, file, flags), intern = TRUE, ignore.stderr = TRUE)
+
   }
+
+  # error message on non-zero failing
+  if (!is.null(attr(msg, "status"))){
+    if (attr(msg, "status") > 0){
+      stop("X-13 has returned a non-zero exist status, meaning that the current spec file cannot be processed. Errors like this are probably due to a problem in the fortran compilation. In the current compilation for Window (Version 1.1, Build 9), they occasionally occur with the history and slidingspan spec enabled, in conjunction with SEATS. Try using X-11 or avoiding these specs. Also, the x11regression spec is known to cause occasional problems.")
+    }
+  }
+
 }
 
