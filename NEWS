@@ -3,6 +3,7 @@
 enhancements
 - improved parsing and intergration of X-13 error messages
 - checkX13 performs more tests and returns an error report.
+- spec-arguments can also be entered as a named list (experimental)
 
 under the hood
 - automated tests for all calls in the wiki

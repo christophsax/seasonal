@@ -6,7 +6,7 @@
 seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
   transform.function = "auto", regression.aictest = c("td", "easter"),
   outlier = "", automdl = "", na.action = na.omit, out = FALSE,
-  dir = NULL, ...)
+  dir = NULL, ..., list = NULL)
 }
 \arguments{
 \item{x}{object of class \code{"ts"}: time series to seasonaly adjust.}
@@ -54,7 +54,11 @@ the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 debugging.}
 
 \item{...}{additional spec-arguments options sent to X-13ARIMA-SEATS (see
-  details).}
+details).}
+
+\item{list}{a named list with additional spec-arguments options. This is an
+  alternative to the \code{...} argument. It is useful for programming.
+  (experimental)}
 }
 \value{
 returns an object of class \code{"seas"}, essentially a list with the
@@ -97,7 +101,8 @@ It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
 \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
 \emph{arguments}, and each spec optionally contains some arguments. In
 \code{seas}, an additional spec-argument can be added by separating spec and
-argument by a dot (\code{.}) (see examples).
+argument by a dot (\code{.}) (see examples). Alternatvily, 'spec.argument'
+combinations can be supplied as a named list, which is useful for programming.
 
 Similarily, the
 \code{\link{series}} function can be used to read almost all series from
@@ -118,6 +123,11 @@ summary(m)
 seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
 seas(AirPassengers, force.type = "denton")  # force equality of annual values
 seas(AirPassengers, x11 = "")  # use x11, overrides the 'seats' spec
+
+# 'spec.argument' combinations can also be supplied as a named list
+# (useful for programming)
+seas(AirPassengers, list = list(regression.aictest = c("td")))
+seas(list = list(x = AirPassengers, force.type = "denton"))
 
 # options can be entered as vectors
 seas(AirPassengers, regression.variables = c("td1coef", "easter[1]"))

@@ -11,7 +11,8 @@
 #' \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and 
 #' \emph{arguments}, and each spec optionally contains some arguments. In 
 #' \code{seas}, an additional spec-argument can be added by separating spec and 
-#' argument by a dot (\code{.}) (see examples). 
+#' argument by a dot (\code{.}) (see examples). Alternatvily, spec-argument 
+#' combinations can be supplied as a named list, which is useful for programming.
 #' 
 #' Similarily, the 
 #' \code{\link{series}} function can be used to read almost all series from 
@@ -56,10 +57,12 @@
 #'   debugging.
 #' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see 
 #'   details).
-#'   
+#' @param list  a named list with additional spec-arguments options. This is an
+#'   alternative to the \code{...} argument. It is useful for programming.
+#'   (experimental)
+#'
 #' @return returns an object of class \code{"seas"}, essentially a list with the
 #'   following elements: 
-
 #'   \item{series}{a list containing the output tables of X-13. To be accessed 
 #'   by the \code{series} function.} 
 #'   \item{data}{seasonally adjusted data, the 
@@ -117,7 +120,12 @@
 #' seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
 #' seas(AirPassengers, force.type = "denton")  # force equality of annual values
 #' seas(AirPassengers, x11 = "")  # use x11, overrides the 'seats' spec
-#' 
+#'
+#' # 'spec.argument' combinations can also be supplied as a named list
+#' # (useful for programming)
+#' seas(AirPassengers, list = list(regression.aictest = c("td")))
+#' seas(list = list(x = AirPassengers, force.type = "denton"))
+#'
 #' # options can be entered as vectors
 #' seas(AirPassengers, regression.variables = c("td1coef", "easter[1]"))
 #' seas(AirPassengers, arima.model = c(0, 1, 1, 0, 1, 1))
@@ -175,17 +183,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
          seats.noadmiss = "yes", transform.function = "auto", 
          regression.aictest = c("td", "easter"), outlier = "", 
          automdl = "", na.action = na.omit,
-         out = FALSE, dir = NULL, ...){
+         out = FALSE, dir = NULL, ..., list = NULL){
   
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
-  if (!inherits(x, "ts")){
-    stop("first argument is not a time series.")
-  }
-  
-  if (start(x)[1] <= 1000){
-    stop("start year of 'x' must be > 999.")
-  }
   
   # lookup table for output specification
   SPECS <- NULL 
@@ -194,9 +195,49 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   
   # save series name
   series.name <- deparse(substitute(x))
-  # remove quotes, they are not allowed in X-13as
+
+  # remove quotes in series.name, they are not allowed in X-13as
   series.name <- gsub('[\'\\"]', '', series.name)
+
+  # using the list argument instead of '...''
+  if (is.null(list)){
+    list <- list(...)
+  } else {
+    if (!inherits(list, "list")){
+      stop("the 'list' argument mus be of class 'list'")
+    }
+    if (length(names(list)) != length(list)){
+      stop("all spec.argument combinations in 'list' must be named")
+    }
+    # overwrite defaults if specified in the list
+    dl <- names(list)[names(list) %in% names(formals(seas))]
+    for (dli in dl){
+      assign(dli, list[[dli]])
+    }
+    if ("list" %in% dl){
+      stop("no 'list' argument inside the 'list' argument allowed")
+    }
+    if (length(list(...) > 0)){
+      warning("if 'list' is specified, spec.argument combinations delivered to '...' are ignored.")
+    }
+    if ("x" %in% dl){
+      series.name <- "ser"
+    }
+    # remove defaults from list
+    list <- list[!(names(list) %in% dl)]   
+  }
   
+
+  # check series
+  if (!inherits(x, "ts")){
+    stop("'x' argument is not a time series.")
+  }
+  
+  if (start(x)[1] <= 1000){
+    stop("start year of 'x' must be > 999.")
+  }
+
+
   # na action
   x.na <- na.action(x)
   
@@ -232,10 +273,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   spc$regression$aictest <- regression.aictest
   spc$seats$noadmiss <- seats.noadmiss
   
-  spc <- mod_spclist(spc, outlier = outlier, automdl = automdl)
+  spc <- mod_spclist(spc, list = list(outlier = outlier, automdl = automdl))
   
   # add user defined options
-  spc <- mod_spclist(spc, ...)
+  spc <- mod_spclist(spc, list = list)
   
   # remove double entries, adjust outputs
   spc <- consist_spclist(spc)
