@@ -432,6 +432,9 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   # check if freq detection in read_series has worked
   if (frequency(z$data) != as.numeric(z$udg['freq'])){
+    if (is.null(z$data)){
+      stop("X-13 has run but produced no data")
+    }
     stop("Frequency of imported data (", frequency(z$data), ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), ").")
   }
 
