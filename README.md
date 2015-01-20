@@ -153,8 +153,11 @@ strings, such as the default `seats = ""`. See the help page (`?seas`) for more
 details on the defaults. Note the difference between `""` (meaning the spec is
 enabled but has no arguments) and `NULL` (meaning the spec is disabled).
 
-It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way. 
-For instance, example 1 in section 7.1 from the [manual][manual],
+It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way.
+The best way to learn about the relationship between the syntax of 
+X-13ARIMA-SEATS and *seasonal* is to study the **comprehensive list of examples in
+the [wiki][examples]**.  For instance, example 1 in section 7.1 from the
+[manual][manual],
 
     series { title  =  "Quarterly Grape Harvest" start = 1950.1
            period =  4
@@ -175,9 +178,7 @@ has to be specified manually. When the 'x11' spec is added as an input (like
 above), the mutually exclusive and default 'seats' spec is automatically
 disabled. With `arima.model`, an additional spec-argument is added to the input
 of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the 'automdl'
-spec, the latter is automatically disabled. The best way to learn about the
-relationship between the syntax of X-13ARIMA-SEATS and *seasonal* is to study
-the comprehensive list of examples in the [wiki][examples].
+spec, the latter is automatically disabled.
 
 There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than one
 mutually exclusive spec is included in `seas`, specs are overwritten according
