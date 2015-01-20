@@ -155,8 +155,8 @@ enabled but has no arguments) and `NULL` (meaning the spec is disabled).
 
 It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way.
 The best way to learn about the relationship between the syntax of 
-X-13ARIMA-SEATS and *seasonal* is to study the **comprehensive list of examples in
-the [wiki][examples]**.  For instance, example 1 in section 7.1 from the
+X-13ARIMA-SEATS and *seasonal* is to study the [comprehensive list of examples in
+the wiki][examples].  For instance, example 1 in section 7.1 from the
 [manual][manual],
 
     series { title  =  "Quarterly Grape Harvest" start = 1950.1
