@@ -377,6 +377,11 @@ not break the execution.
     do.call(cbind, lapply(ll[!is.err], final))
 
 
+Or, if you are up to write things in a single line:
+
+    do.call(cbind, lapply(data.frame(fdeaths, mdeaths), function(e) try(final(seas(e)))))
+
+
 ### License
 
 *seasonal* is free and open source, licensed under GPL-3. It has been developed 
