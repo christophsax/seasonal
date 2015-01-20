@@ -359,15 +359,11 @@ methods. This can be accomplished with a loop or an apply function. It is useful
 to wrap the call to `seas` in a `try` statement; that way, an error will
 not break the execution.
 
-    # collect data in a multiple time series object (class "mts")
-    dta <- cbind(fdeaths, mdeaths)
+    # collect data 
+    dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
 
-    # loop over 2nd dimension of dta
-    ll <- list()
-    for (i in 1:NCOL(dta)){
-      ll[[i]] <- try(seas(dta[,i], x11 = ""))
-    }
-    names(ll) <- colnames(dta)
+    # loop over dta
+    ll <- lapply(dta, function(e) try(seas(e, x11 = "")))
 
     # list failing models
     is.err <- sapply(ll, class) == "try-error"
@@ -375,11 +371,6 @@ not break the execution.
 
     # return final series of successful evaluations
     do.call(cbind, lapply(ll[!is.err], final))
-
-
-Or, if you are up to write things in a single line:
-
-    do.call(cbind, lapply(data.frame(fdeaths, mdeaths), function(e) try(final(seas(e)))))
 
 
 ### License
