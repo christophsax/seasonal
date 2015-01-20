@@ -193,6 +193,12 @@ the following priority rules:
     1. `x11`
     2. `seats` (default)
 
+As an alternative to the `...` argument, spec-arguments can  also be supplied as
+a named list (experimental feature, inspired by base R `save`). This is useful
+for programming:
+
+    seas(list = list(x = AirPassengers, x11 = ""))
+
 
 ### Output
 
@@ -305,7 +311,7 @@ In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
     )
 
 For more examples, including Chinese New Year and complex pre- and post-holiday
-adjustments, see the examples in `?genhol`.
+adjustments, see `?genhol`.
 
 
 ### Production use
