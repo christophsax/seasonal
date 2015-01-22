@@ -330,7 +330,7 @@ This section shows how both tasks can be accomplished with *seasonal* and basic 
 
 `seas` calls are R objects of the standard class `"call"`. Like any R object,
 calls can be stored in a list. In order to extract the call of a `"seas"`
-object, you can access the `$class` element or extract the static call with
+object, you can access the `$call` element or extract the static call with
 `static()`. For example,
 
     # two different models for two different time series
@@ -339,7 +339,7 @@ object, you can access the `$class` element or extract the static call with
 
     l <- list()
     l$c1 <- static(m1)  # static call (with automated procedures substituted)
-    l$c2 <- m2$class    # original call
+    l$c2 <- m2$call     # original call
 
 
 The list can be stored and re-evaluated if new data becomes available:
