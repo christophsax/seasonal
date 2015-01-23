@@ -317,8 +317,8 @@ adjustments, see `?genhol`.
 ### Production use
 
 While *seasonal* offers a quick way to adjust a time series in R, it is equally
-suited for production use. There are two kind of seasonal adjustments in
-production use:
+suited for the recurring processing of potentially large numbers of time series.
+There are two kind of seasonal adjustments in production use:
 
 1. a periodic application of an adjustment model to a time series
 2. an automated adjustment to a large number of time series
@@ -363,8 +363,10 @@ Of course, you also can extract any other series, e.g.:
 
 X-13 can also be applied to a large number of series, using automated adjustment
 methods. This can be accomplished with a loop or an apply function. It is useful
-to wrap the call to `seas` in a `try` statement; that way, an error will
-not break the execution.
+to wrap the call to `seas` in a `try` statement; that way, an error will not
+break the execution. You need to develop an error handling strategy for these
+cases: You can either drop them, use them without adjustment or switch to a
+different automated routine.
 
     # collect data 
     dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
