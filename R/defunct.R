@@ -1,20 +1,20 @@
 
-#' Deprecated Functions
+#' Defunct Functions
 #' 
-#' Functions are deprecated and will be defunct soon. Use the more univeral series function.
+#' Functions are defunct. Use the more univeral series function.
 #' @param x object of class \code{"seas"}
 #' @param ...  further arguments
-#' @rdname seasonal-deprecated
+#' @rdname seasonal-defunct
 #' @seealso \code{\link{series}}, for universal X-13 output extraction.
 #' @examples
 #' \dontrun{
-#' # history spec (replaces the deprecated 'revisions' function)
+#' # history spec (replaces the defunct 'revisions' function)
 #' series(m, "history.trendestimates") 
 #' series(m, "history.sfestimates") 
 #' series(m, "history.saestimates") 
 #' series(m, c("history.sfestimates", "history.trendestimates")) 
 #' 
-#' # slidingspans spec (replaces the deprecated 'slidingspans' function)
+#' # slidingspans spec (replaces the defunct 'slidingspans' function)
 #' series(m, "slidingspans.sfspans") 
 #' series(m, "slidingspans.tdspans") 
 #' 
@@ -25,8 +25,7 @@
 slidingspans <- function(x, ...){
   ldots <- list(...)
   
-  .Deprecated("series", package=NULL, "Function is deprecated and will be defunct soon. Use the more univeral series function. See examples in ?series.",
-              old = as.character(sys.call(sys.parent()))[1L])
+  .Defunct("series", package=NULL, "Function is defunct. Use the more univeral series function. See examples in ?series.")
   
   reeval.dots <- list(
     slidingspans.save = c("saspans", "sfspans", "tdspans", "chngspans", 
@@ -55,21 +54,19 @@ print.slidingspans <- function(x, ...){
   print(x$slidingspans)
 }
 
-#' @rdname seasonal-deprecated
+#' @rdname seasonal-defunct
 #' @export
 regressioneffects <- function(x){
-  .Deprecated("series", package=NULL, "Function is deprecated and will be defunct soon. Use the more univeral series function. See examples in ?series.",
-              old = as.character(sys.call(sys.parent()))[1L])
+  .Defunct("series", package=NULL, "Function is defunct. Use the more univeral series function. See examples in ?series.")
 
   series(x, "estimate.regressioneffects") 
 }
 
-#' @rdname seasonal-deprecated
+#' @rdname seasonal-defunct
 #' @export
 revisions <- function(x, ...){
   
-  .Deprecated("series", package=NULL, "Function is deprecated and will be removed soon. Use the more univeral series function. See examples in ?series.",
-              old = as.character(sys.call(sys.parent()))[1L])
+  .Defunct("series", package=NULL, "Function is removed. Use the more univeral series function. See examples in ?series.")
 
   ldots <- list(...)
   
@@ -101,7 +98,7 @@ print.revisions <- function(x, ...){
 
 
 
-#' @rdname seasonal-deprecated
+#' @rdname seasonal-defunct
 #' @method plot revisions
 #' @export
 plot.revisions <- function(x, ...){
@@ -119,7 +116,7 @@ plot.revisions <- function(x, ...){
   }
 }
 
-#' @rdname seasonal-deprecated
+#' @rdname seasonal-defunct
 #' @method plot slidingspans
 #' @export
 plot.slidingspans <- function(x, ...){

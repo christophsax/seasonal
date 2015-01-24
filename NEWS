@@ -1,4 +1,4 @@
-0.71.5  2015-??-??
+0.71.8  2015-??-??
 
 enhancements
 - improved parsing and intergration of X-13 error messages
@@ -17,6 +17,8 @@ documentation
 bug fixes
 - genhol() can be used inside a seas() call
 
+defunct
+- slidingspans, revisions, regressioneffects changed from deprecated to defunct
 
 0.70.1  2014-10-02
 
