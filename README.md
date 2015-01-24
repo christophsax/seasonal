@@ -73,7 +73,7 @@ R:
 If the file does not exist (by default), it will be created. Make sure that you
 get the quotes right: double quotes around your directory, single quotes around
 the whole `Sys.setenv` line, such that R understands your string. Check first
-that the call works correctly; once it is written you may have to edit
+that the the `Sys.setenv` line works correctly; once it is written you may have to edit
 `.Rprofile` manually. (Or add a second, overwriting line to it.) For
 other ways to set an environmental variable permanently in R, see `?Startup`.
 

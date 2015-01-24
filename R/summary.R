@@ -1,7 +1,30 @@
 #' Summary of a X13-ARIMA-SEATS seasonal adjustment
 #' 
-#' \code{summary} method for class "seas".
-#' 
+#' Like the corresponding mehtod for \code{"lm"} objects, the method for
+#' \code{"seas"} objects returns the estimated coefficients, its standard errors,
+#' z-statistics and corresponding (two-sided) p-values. Coefficients are returned
+#' both for the exogenous regressors and the coefficients of the ARIMA model.
+#'
+#' The lower part of the output shows additional information on the estimation:
+#' \describe{
+#' \item{Adjustment}{use of SEATS or X11}
+#' \item{ARIMA}{structure of the seasonal ARIMA model}
+#' \item{Obs.}{number of observations}
+#' \item{Transform}{prior transformation}
+#' \item{AICc, BIC}{value of the information criterion (lower is better)}
+#' \item{QS}{test for seasonality in the final series; null hypothesis: no
+#' seasonality in final; signif. codes are shown if the null hypothesis is
+#' rejected. QS statistics for more series (e.g., the original series) can be
+#' extracted with \code{\link{qs}}.}
+#' \item{Box-Ljung}{test for residual autocorrelation; null hypothesis: no
+#' autocorrelation in residuals; signif. codes are shown if the null hypothesis
+#' is rejected. The test statistic is the result of 
+#' \code{Box.test(resid(m), lag = 24, type = "Ljung")}}
+#' \item{Shapiro}{test for normality of the residuals; null hypothesis: normal
+#' distribution of the residuals; signif. codes are shown if the null
+#' hypothesis is rejected. The test statistic is the result of 
+#' \code{shapiro.test(resid(m))}}
+#' }
 #' @param object      an object of class \code{"seas"}, usually, a result of a 
 #'                    call to \code{\link{seas}}.
 #' @param x           an object of class \code{"summary.seas"}, usually, a result 
@@ -25,8 +48,8 @@
 #'   
 #' @examples
 #' \dontrun{
-#' x <- seas(AirPassengers)
-#' summary(x)  
+#' m <- seas(AirPassengers)
+#' summary(m)  
 #' }
 #' @method summary seas
 #' @export
@@ -97,7 +120,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                     corr = FALSE, na = FALSE, legend = FALSE,
                     cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1), 
                     symbols = c("***", "**", "*", ".", " "))
-  cat("  QS seas. test (adj. series):", formatC(as.numeric(qsv['qs']), digits = digits)," ", qsstars, sep = "")
+  cat("  QS (no seasonality in final):", formatC(as.numeric(qsv['qs']), digits = digits)," ", qsstars, sep = "")
   
   if (!is.null(x$resid)){
     # Box Ljung Test

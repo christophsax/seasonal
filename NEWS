@@ -9,9 +9,10 @@ under the hood
 - automated tests for all calls in the wiki
 
 documentation
-- new sections on user defined holidays and the use of seasonal in production
+- new vignette sections on user defined holidays and production use
 - new example on Indian Diwali in ?genhol
 - dates of Indian Diwali and Indian industrial production
+- more detailed documentation for ?summary.seas explaining output details
 
 bug fixes
 - genhol() can be used inside a seas() call
