@@ -1,6 +1,3 @@
-\subsection{R interface to
-X-13ARIMA-SEATS}\label{r-interface-to-x-13arima-seats}
-
 \emph{seasonal} is an easy-to-use and full-featured R-interface to
 X-13ARIMA-SEATS, the newest seasonal adjustment software developed by
 the \href{http://www.census.gov/srd/www/x13as/}{United States Census
@@ -28,9 +25,9 @@ where the examples from the official X-13ARIMA-SEATS
 \href{http://www.census.gov/ts/x13as/docX13ASHTML.pdf}{manual} are
 reproduced in R.
 
-\hyperdef{}{installation}{\subsubsection{Installation}\label{installation}}
+\hyperdef{}{installation}{\section{Installation}\label{installation}}
 
-\paragraph{Getting seasonal}\label{getting-seasonal}
+\subsection{Getting seasonal}\label{getting-seasonal}
 
 To install the \textbf{latest development version} directly from Github,
 type to the R console:
@@ -46,7 +43,7 @@ The stable version (0.7) is available from CRAN:
 install.packages("seasonal")
 \end{verbatim}
 
-\paragraph{Getting X-13}\label{getting-x-13}
+\subsection{Getting X-13}\label{getting-x-13}
 
 \emph{seasonal} does not include the binary executables of
 X-13ARIMA-SEATS. They can be obtained precompiled from
@@ -62,7 +59,7 @@ Download the file, unzip it and copy \texttt{x13ashtml.exe} (or
 \texttt{x13ashtml}, on a Unix system) to any desired location on your
 file system.
 
-\paragraph{Telling R where to find
+\subsection{Telling R where to find
 X-13}\label{telling-r-where-to-find-x-13}
 
 Next, you need to tell \emph{seasonal} where to find the binary
@@ -87,22 +84,24 @@ checkX13()
 
 If it works, you may want to set the environmental variable permanently,
 by adding the \texttt{Sys.setenv} line to one of your \texttt{.Rprofile}
-files. The easiest would be to use the one located in your home
-directory, which can be written directly from R:
+files. The easiest is to use the one located in your home directory,
+which can be written directly from R:
 
 \begin{verbatim}
-write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', file="~/.Rprofile", append = TRUE)
+write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', 
+      file = "~/.Rprofile", append = TRUE)
 \end{verbatim}
 
 If the file does not exist (by default), it will be created. Make sure
 that you get the quotes right: double quotes around your directory,
 single quotes around the whole \texttt{Sys.setenv} line, such that R
-understands your string. Check first that the call works correctly; once
-it is written you may have to edit \texttt{.Rprofile} manually. (Or add
-a second, overwriting line to it.) For other ways to set an
-environmental variable permanently in R, see \texttt{?Startup}.
+understands your string. Check first that the the \texttt{Sys.setenv}
+line works correctly; once it is written you may have to edit
+\texttt{.Rprofile} manually. (Or add a second, overwriting line to it.)
+For other ways to set an environmental variable permanently in R, see
+\texttt{?Startup}.
 
-\hyperdef{}{getting-started}{\subsubsection{Getting
+\hyperdef{}{getting-started}{\section{Getting
 started}\label{getting-started}}
 
 seas is the core function of the \emph{seasonal} package. By default,
@@ -181,7 +180,7 @@ section below for details):
 inspect(m)
 \end{verbatim}
 
-\hyperdef{}{input}{\subsubsection{Input}\label{input}}
+\hyperdef{}{input}{\section{Input}\label{input}}
 
 In \emph{seasonal}, it is possible to use almost the complete syntax of
 X-13ARIMA- SEATS. This is done via the \texttt{...} argument in the
@@ -207,8 +206,11 @@ spec is enabled but has no arguments) and \texttt{NULL} (meaning the
 spec is disabled).
 
 It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in
-this way. For instance, example 1 in section 7.1 from the
-\href{http://www.census.gov/ts/x13as/docX13ASHTML.pdf}{manual},
+this way. The best way to learn about the relationship between the
+syntax of X-13ARIMA-SEATS and \emph{seasonal} is to study the
+\href{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}{comprehensive
+list of examples in the wiki}. For instance, example 1 in section 7.1
+from the \href{http://www.census.gov/ts/x13as/docX13ASHTML.pdf}{manual},
 
 \begin{verbatim}
 series { title  =  "Quarterly Grape Harvest" start = 1950.1
@@ -234,10 +236,7 @@ the `x11' spec is added as an input (like above), the mutually exclusive
 and default `seats' spec is automatically disabled. With
 \texttt{arima.model}, an additional spec-argument is added to the input
 of X-13ARIMA-SEATS. As the spec cannot be used in the same call as the
-`automdl' spec, the latter is automatically disabled. The best way to
-learn about the relationship between the syntax of X-13ARIMA-SEATS and
-\emph{seasonal} is to study the comprehensive list of examples in the
-\href{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}{wiki}.
+`automdl' spec, the latter is automatically disabled.
 
 There are some mutually exclusive specs in X-13ARIMA-SEATS. If more than
 one mutually exclusive spec is included in \texttt{seas}, specs are
@@ -271,7 +270,15 @@ overwritten according the following priority rules:
   \end{enumerate}
 \end{itemize}
 
-\hyperdef{}{output}{\subsubsection{Output}\label{output}}
+As an alternative to the \texttt{...} argument, spec-arguments can also
+be supplied as a named list (experimental feature, inspired by base R
+\texttt{save}). This is useful for programming:
+
+\begin{verbatim}
+seas(list = list(x = AirPassengers, x11 = ""))
+\end{verbatim}
+
+\hyperdef{}{output}{\section{Output}\label{output}}
 
 \emph{seasonal} has a flexible mechanism to read data from
 X-13ARIMA-SEATS. With the \texttt{series} function, it is possible to
@@ -325,7 +332,7 @@ shows the content of the main output in the browser:
 out(m)
 \end{verbatim}
 
-\subsubsection{Graphs}\label{graphs}
+\section{Graphs}\label{graphs}
 
 There are several graphical tools to analyze a \texttt{seas} model. The
 main plot function draws the seasonally adjusted and unadjusted series,
@@ -366,7 +373,7 @@ outlier types.
 identify(m)
 \end{verbatim}
 
-\subsubsection{Inspect tool}\label{inspect-tool}
+\section{Inspect tool}\label{inspect-tool}
 
 The \texttt{inspect} function is a graphical tool for choosing a
 seasonal adjustment model, using
@@ -393,7 +400,7 @@ shown in the first tab. The last tab offers access to all series that
 can be produced with X-13. The views in \texttt{inspect} are also
 customizable, see the examples in \texttt{?inspect}.
 
-\subsubsection{Chinese New Year, Indian Diwali and other customized
+\section{Chinese New Year, Indian Diwali and other customized
 holidays}\label{chinese-new-year-indian-diwali-and-other-customized-holidays}
 
 seasonal includes \texttt{genhol}, a function that makes it easy to
@@ -403,14 +410,30 @@ additional installation is required. The function uses an object of
 class \texttt{"Date"} as its first argument, which specifies the
 occurrence of the holiday.
 
-For more examples, including Chinese New Year and complex pre- and
-post-holiday adjustments, see the examples in \texttt{?genhol}.
+In order to adjust Indian industrial production for Diwali effects, use,
+e.g.,:
 
-\subsubsection{Production use}\label{production-use}
+\begin{verbatim}
+# development version only
+data(seasonal) # Indian industrial production: iip
+data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
+
+seas(iip, 
+x11 = "",
+xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
+regression.usertype = "holiday"
+)
+\end{verbatim}
+
+For more examples, including Chinese New Year and complex pre- and
+post-holiday adjustments, see \texttt{?genhol}.
+
+\section{Production use}\label{production-use}
 
 While \emph{seasonal} offers a quick way to adjust a time series in R,
-it is equally suited for production use. There are two kind of seasonal
-adjustments in production use:
+it is equally suited for the recurring processing of potentially large
+numbers of time series. There are two kind of seasonal adjustments in
+production use:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -424,14 +447,13 @@ adjustments in production use:
 This section shows how both tasks can be accomplished with
 \emph{seasonal} and basic R.
 
-\paragraph{Storing calls and batch
+\subsection{Storing calls and batch
 processing}\label{storing-calls-and-batch-processing}
 
 \texttt{seas} calls are R objects of the standard class \texttt{"call"}.
 Like any R object, calls can be stored in a list. In order to extract
-the call of a \texttt{"seas"} object, you can access the
-\texttt{\$class} element or extract the static call with
-\texttt{static()}. For example,
+the call of a \texttt{"seas"} object, you can access the \texttt{\$call}
+element or extract the static call with \texttt{static()}. For example,
 
 \begin{verbatim}
 # two different models for two different time series
@@ -440,7 +462,7 @@ m2 <- seas(mdeaths, x11 = "")
 
 l <- list()
 l$c1 <- static(m1)  # static call (with automated procedures substituted)
-l$c2 <- m2$class    # original call
+l$c2 <- m2$call     # original call
 \end{verbatim}
 
 The list can be stored and re-evaluated if new data becomes available:
@@ -463,24 +485,23 @@ Of course, you also can extract any other series, e.g.:
 do.call(cbind, lapply(ll, series, "d10"))
 \end{verbatim}
 
-\paragraph{Automated adjustment of multiple
+\subsection{Automated adjustment of multiple
 series}\label{automated-adjustment-of-multiple-series}
 
 X-13 can also be applied to a large number of series, using automated
 adjustment methods. This can be accomplished with a loop or an apply
 function. It is useful to wrap the call to \texttt{seas} in a
 \texttt{try} statement; that way, an error will not break the execution.
+You need to develop an error handling strategy for these cases: You can
+either drop them, use them without adjustment or switch to a different
+automated routine.
 
 \begin{verbatim}
-# collect data in a multiple time series object (class "mts")
-dta <- cbind(fdeaths, mdeaths)
+# collect data 
+dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
 
-# loop over 2nd dimension of dta
-ll <- list()
-for (i in 1:NCOL(dta)){
-  ll[[i]] <- try(seas(dta[,i], x11 = ""))
-}
-names(ll) <- colnames(dta)
+# loop over dta
+ll <- lapply(dta, function(e) try(seas(e, x11 = "")))
 
 # list failing models
 is.err <- sapply(ll, class) == "try-error"
@@ -490,7 +511,7 @@ ll[is.err]
 do.call(cbind, lapply(ll[!is.err], final))
 \end{verbatim}
 
-\subsubsection{License}\label{license}
+\section{License}\label{license}
 
 \emph{seasonal} is free and open source, licensed under GPL-3. It has
 been developed for the use at the Swiss State Secretariat of Economic

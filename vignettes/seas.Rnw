@@ -11,10 +11,6 @@
 
 
 
-\newcommand{\note}[1]{}
-\renewcommand{\subsection}{\note}
-\renewcommand{\subsubsection}{\section}%
-\renewcommand{\paragraph}{\subsubsection}
 
 \begin{document}
 
