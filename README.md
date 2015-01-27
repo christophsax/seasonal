@@ -1,5 +1,5 @@
 R interface to X-13ARIMA-SEATS
-==============================
+------------------------------
 
 *seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS,
 the newest seasonal adjustment software developed by the [United States Census
@@ -22,9 +22,9 @@ and have a look at the [wiki][examples], where the examples from the official
 X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
 
-## Installation
+### Installation
 
-### Getting seasonal
+#### Getting seasonal
 
 To install the **latest development version** directly from Github, type to the
 R console:
@@ -37,7 +37,7 @@ The stable version (0.7) is available from CRAN:
     install.packages("seasonal")
 
 
-### Getting X-13
+#### Getting X-13
 
 *seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can
 be obtained precompiled from [here][census_win] (Windows: `x13ashtmlall.zip`).
@@ -47,7 +47,7 @@ OS-X][os-x].
 Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on a Unix
 system) to any desired location on your file system. 
 
-### Telling R where to find X-13
+#### Telling R where to find X-13
 
 Next, you need to tell *seasonal* where to find the binary executables of 
 X-13ARIMA-SEATS, by setting the specific environmental variable `X13_PATH`. This
@@ -78,7 +78,7 @@ that the the `Sys.setenv` line works correctly; once it is written you may have 
 other ways to set an environmental variable permanently in R, see `?Startup`.
 
 
-## Getting started
+### Getting started
 
 seas is the core function of the *seasonal* package. By default, seas calls the
 automatic procedures of X-13ARIMA-SEATS to perform a seasonal adjustment that
@@ -134,7 +134,7 @@ modify a seasonal adjustment procedure (see the section below for details):
     inspect(m)
 
 
-## Input
+### Input
 
 In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-
 SEATS. This is done via the `...` argument in the `seas` function. The X
@@ -200,7 +200,7 @@ for programming:
     seas(list = list(x = AirPassengers, x11 = ""))
 
 
-## Output
+### Output
 
 *seasonal* has a flexible mechanism to read data from X-13ARIMA-SEATS. With the
 `series` function, it is possible to import almost all output that can be
@@ -239,7 +239,7 @@ of the main output in the browser:
 
     out(m)
 
-## Graphs
+### Graphs
 
 There are several graphical tools to analyze a `seas` model. The main plot
 function draws the seasonally adjusted and unadjusted series, as well as the
@@ -269,7 +269,7 @@ click. Click several times to loop through different outlier types.
     identify(m)
 
 
-## Inspect tool
+### Inspect tool
 
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
 model, using *[Shiny][shiny]*. To install the latest version of Shiny, type:
@@ -290,7 +290,7 @@ The last tab offers access to all series that can be produced with X-13. The
 views in `inspect` are also customizable, see the examples in `?inspect`.
 
 
-## Chinese New Year, Indian Diwali and other customized holidays
+### Chinese New Year, Indian Diwali and other customized holidays
 
 seasonal includes `genhol`, a function that makes it easy to model user-defined
 holiday regression effects. `genhol` is an R replacement for the equally named
@@ -314,7 +314,7 @@ For more examples, including Chinese New Year and complex pre- and post-holiday
 adjustments, see `?genhol`.
 
 
-## Production use
+### Production use
 
 While *seasonal* offers a quick way to adjust a time series in R, it is equally
 suited for the recurring processing of potentially large numbers of time series.
@@ -326,7 +326,7 @@ There are two kind of seasonal adjustments in production use:
 This section shows how both tasks can be accomplished with *seasonal* and basic R.
 
 
-### Storing calls and batch processing
+#### Storing calls and batch processing
 
 `seas` calls are R objects of the standard class `"call"`. Like any R object,
 calls can be stored in a list. In order to extract the call of a `"seas"`
@@ -359,7 +359,7 @@ Of course, you also can extract any other series, e.g.:
     do.call(cbind, lapply(ll, series, "d10"))
 
 
-### Automated adjustment of multiple series
+#### Automated adjustment of multiple series
 
 X-13 can also be applied to a large number of series, using automated adjustment
 methods. This can be accomplished with a loop or an apply function. It is useful
@@ -382,7 +382,7 @@ different automated routine.
     do.call(cbind, lapply(ll[!is.err], final))
 
 
-## License
+### License
 
 *seasonal* is free and open source, licensed under GPL-3. It has been developed 
 for the use at the Swiss State Secretariat of Economic Affairs and is not
