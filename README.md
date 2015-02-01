@@ -26,6 +26,12 @@ X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
 #### Getting seasonal
 
+To install the **latest development version** directly from Github, type to the
+R console:
+
+    install.packages("devtools")
+    devtools::install_github('christophsax/seasonal')
+
 The stable version is available from CRAN:
 
     install.packages("seasonal")
