@@ -29,15 +29,7 @@ reproduced in R.
 
 \subsection{Getting seasonal}\label{getting-seasonal}
 
-To install the \textbf{latest development version} directly from Github,
-type to the R console:
-
-\begin{verbatim}
-install.packages("devtools")
-devtools::install_github('christophsax/seasonal')
-\end{verbatim}
-
-The stable version (0.7) is available from CRAN:
+The stable version is available from CRAN:
 
 \begin{verbatim}
 install.packages("seasonal")
@@ -509,6 +501,34 @@ ll[is.err]
 
 # return final series of successful evaluations
 do.call(cbind, lapply(ll[!is.err], final))
+\end{verbatim}
+
+If you have several cores and want to speed things up, the process is
+well suited for parallelization (thanks, Matthias Bannert):
+
+\begin{verbatim}
+# a list with 100 time series
+largedta <- rep(list(AirPassengers), 100)
+
+library(parallel)  # R-core team, part of R 
+
+# set up cluster
+cl <- makeCluster(detectCores())
+
+# load 'seasonal' for each node
+clusterEvalQ(cl, library(seasonal))
+
+# export data to each node
+clusterExport(cl, varlist = "largedta")
+
+# run in parallel (2.2s on a 8-core Macbook)
+parLapply(cl, largedta, function(e) try(seas(e, x11 = "")))
+
+# compare to standard lapply (9.6s)
+lapply(largedta, function(e) try(seas(e, x11 = "")))
+
+# finally, stop the cluster
+stopCluster(cl)
 \end{verbatim}
 
 \section{License}\label{license}
