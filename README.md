@@ -383,7 +383,7 @@ different automated routine.
 
 
 If you have several cores and want to speed things up, the process is well
-suited for parallelization (thanks, Matthias Bannert!):
+suited for parallelization (thanks, Matthias Bannert):
 
     # a list with 100 time series
     largedta <- rep(list(AirPassengers), 100)
