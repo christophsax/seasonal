@@ -382,6 +382,33 @@ different automated routine.
     do.call(cbind, lapply(ll[!is.err], final))
 
 
+If you have several cores and want to speed things up, the process is well
+suited for parallelization (thanks, Matthias Bannert!):
+
+    # a list with 100 time series
+    largedta <- rep(list(AirPassengers), 100)
+
+    library(parallel)  # R-core team, part of R 
+
+    # set up cluster
+    cl <- makeCluster(detectCores())
+
+    # load 'seasonal' for each node
+    clusterEvalQ(cl, library(seasonal))
+
+    # export data to each node
+    clusterExport(cl, varlist = "largedta")
+
+    # run in parallel (2.2s on a 8-core Macbook)
+    parLapply(cl, largedta, function(e) try(seas(e, x11 = "")))
+
+    # compare to standard lapply (9.6s)
+    lapply(largedta, function(e) try(seas(e, x11 = "")))
+
+    # finally, stop the cluster
+    stopCluster(cl)
+
+
 ### License
 
 *seasonal* is free and open source, licensed under GPL-3. It has been developed 
