@@ -20,4 +20,5 @@ Depends:
 Suggests:
     shiny (>= 0.10)
 License: GPL-3
+URL: http://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal
