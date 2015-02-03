@@ -18,8 +18,10 @@
 outlier <- function(x, full = FALSE){
   stopifnot(inherits(x, "seas"))
 
+  # outlier detection: regressors with a . but no /
   ol <- x$model$regression$variables[grepl("\\.", x$model$regression$variables)]
-  
+  ol <- ol[!grepl("\\/", ol)]
+
   z <- final(x)
   z[1:length(z)] <- NA
   
@@ -44,7 +46,7 @@ outlier <- function(x, full = FALSE){
   }
   
   stopifnot(length(ol.time.R) == length(ol))
-  
+
   for (i in 1:length(ol.time.R)){
     if (!full){
       window(z, start = as.numeric(ol.time.R[[i]]), 
