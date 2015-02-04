@@ -127,7 +127,7 @@ fivebestmdl <- function(x){
 #' @export
 arimamodel <- function(x){
   stopifnot(inherits(x, "seas"))
-  str <- x$mdl$arima$model
+  str <- x$model$arima$model
   str <- gsub("[ \\(\\)]", "", str)
   z <- c(substr(str, 1, 1),
          substr(str, 2, 2),
