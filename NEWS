@@ -1,4 +1,4 @@
-0.71.8  2015-??-??
+0.72.1  2015-??-??
 
 enhancements
 - improved parsing and intergration of X-13 error messages
@@ -16,6 +16,7 @@ documentation
 
 bug fixes
 - genhol() can be used inside a seas() call
+- arimamodel() shows model as expected
 
 defunct
 - slidingspans, revisions, regressioneffects changed from deprecated to defunct
