@@ -30,8 +30,8 @@ The stable version is available from CRAN:
 
     install.packages("seasonal")
 
-To install the latest development version directly from Github, type to the        
-R console:     
+To install the latest development version directly from Github, type to the R
+console:
        
     install.packages("devtools")       
     devtools::install_github('christophsax/seasonal')      
