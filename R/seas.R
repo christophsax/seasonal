@@ -488,6 +488,14 @@ run_x13 <- function(file, out){
 
   }
 
+  # error message if output contains the ERROR
+  if (inherits(msg, "character")){
+    le <- grep("ERROR", msg)
+    if (length(le) > 0){
+      stop("X-13 has returned an Error, with the following message(s):\n\n", paste(msg[le], collapse = "\n"))
+    }
+  }
+
   # error message on non-zero failing
   if (!is.null(attr(msg, "status"))){
     if (attr(msg, "status") > 0){

@@ -1,3 +1,7 @@
+0.81.0  
+bug fixes
+- input longer than 133 char is broken into multiple lines to avoid X-13 error
+
 0.80.0  2015-02-05
 
 enhancements

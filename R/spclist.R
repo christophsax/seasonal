@@ -104,7 +104,7 @@ consist_spclist <-function(x){
     x$arima$model <- as.character.arima(x$arima$model)
   }
   
-  
+
   ### spec specific output modification
   
   if (!is.null(x$seats)){
