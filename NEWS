@@ -1,6 +1,7 @@
-0.81.0  
+0.81.1  
 bug fixes
 - input longer than 133 char is broken into multiple lines to avoid X-13 error
+- names of ARMA coefficients contain lag rather than period
 
 0.80.0  2015-02-05
 

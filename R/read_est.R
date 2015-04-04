@@ -44,7 +44,8 @@ read_est <- function(file){
                           header = TRUE, stringsAsFactors = FALSE)[-1,]
 
     arima.names <- paste(z$arima$operator, z$arima$factor, 
-                                z$arima$period, sep = "-")
+                                z$arima$lag, sep = "-")
+
     arima.coef <- as.numeric(z$arima$estimate)
     if (is.null(z$arima$standard.error)){
       arima.se <- rep(0, length(arima.coef))
