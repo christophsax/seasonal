@@ -289,15 +289,14 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     write_ts_dat(na.action(xreg), file = xreg.file)
     # user names either from input (single "ts"), or from colnames ("mts)
     if (is.null(dim(xreg))){
-      user <- deparse(substitute(xreg))
-      # if xreg is a function, usernames should not be taken from the call
-      if (grepl("[\\(\\)]", user)){
+      if (inherits(substitute(xreg), "name")){
+        user <- deparse(substitute(xreg))
+      } else {
         user <- "user"
       }
     } else {
       user <- gsub("[\\(\\)]", "", colnames(xreg))
     }
-
     if (!is.null(spc$regression)){
       spc$regression$user <- user
       spc$regression$file <- paste0("\"", xreg.file, "\"")
@@ -316,9 +315,9 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     write_ts_dat(na.action(xtrans), file = xtrans.file)
     # user names either from input (single "ts"), or from colnames ("mts)
     if (is.null(dim(xtrans))){
-      name <- deparse(substitute(xtrans))
-      # if xtrans is a function, usernames should not be taken from the call
-      if (grepl("[\\(\\)]", name)){
+      if (inherits(substitute(xtrans), "name")){
+        name <- deparse(substitute(xtrans))
+      } else {
         name <- "user"
       }
     } else {
