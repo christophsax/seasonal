@@ -9,8 +9,8 @@
 #' \code{residplot} plots the residuals and the outliers.
 #' 
 #' \code{monthplot} calls the monthplot method for class \code{"seas"}. It plot 
-#' the seasonal and SI component periodwise. Like the default method `monthplot`
-#' can be used for all frequencies.
+#' the seasonal and SI component periodwise. Despite its name, \code{monthplot}
+#' can be used for series of all frequencies.
 #' 
 #' @param x  an object of class \code{"seas"}, usually, a result of a call to 
 #'   \code{\link{seas}}.
