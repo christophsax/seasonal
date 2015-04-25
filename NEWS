@@ -1,4 +1,11 @@
-0.81.1  
+0.81.3  
+enhancements
+- fully redesigned inspect() to include the functionality of 
+  www.seasonal.website
+
+under the hood
+- temporary files are cleaned up after execution
+
 bug fixes
 - input longer than 133 char is broken into multiple lines to avoid X-13 error
 - names of ARMA coefficients contain lag rather than period
