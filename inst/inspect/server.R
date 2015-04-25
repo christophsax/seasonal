@@ -40,13 +40,13 @@ observe({
       rTerminalError$error <- NULL
     }
 
-    rFOpts$method <- GetFOpts(z)$method
-    rFOpts$transform <- GetFOpts(z)$transform
-    rFOpts$arima <- GetFOpts(z)$arima
-    rFOpts$outlier <- GetFOpts(z)$outlier
-    rFOpts$easter <- GetFOpts(z)$easter
-    rFOpts$td <- GetFOpts(z)$td
-
+    gfo <- GetFOpts(z)
+    rFOpts$method <- gfo$method
+    rFOpts$transform <- gfo$transform
+    rFOpts$arima <- gfo$arima
+    rFOpts$outlier <- gfo$outlier
+    rFOpts$easter <- gfo$easter
+    rFOpts$td <- gfo$td
     rModel$m <- z
     gTerminalCall <<- cstr
     rTerminalUpd$upd <- isolate(rTerminalUpd$upd) + 1

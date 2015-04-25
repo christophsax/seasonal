@@ -85,10 +85,27 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
     stop("first argument must be of class 'seas'")
   }
   
-  inter.session.file <- paste0(gsub("[a-zA-Z0-9]+$", "", tempdir()), "intersession.RData")
   init.model <- x
-  save(init.model, fun, file = inter.session.file)
+
+  # names in xreg and xtrans that will be exported to inspect app
+  FindNamesInCallsOrNames <- function(x){
+    z <- character()
+    if (is.call(x)){
+      z <- c(z, unlist(lapply(as.list(x)[sapply(x, is.call)], FindNamesInCallsOrNames)))
+      z <- c(z, unlist(lapply(as.list(x)[sapply(x, is.name)], as.character)))
+    } else if (is.name(x)){
+      z <- as.character(x)
+    } 
+    z
+  }
+  exnames <- c(FindNamesInCallsOrNames(x$call$xreg), FindNamesInCallsOrNames(x$call$xtrans))
+  exnames[!sapply(exnames, function(x) is.function(get(x)))]
+
+  # save in a 'inter-session' tempfile
+  inter.session.file <- paste0(gsub("[a-zA-Z0-9]+$", "", tempdir()), "intersession.RData")
+  save(list = c("init.model", "fun", exnames), file = inter.session.file)
+
   z <- shiny::runApp(system.file("inspect", package="seasonal"), quiet = quiet, ...)
-  file.remove(inter.session.file)
+  file.remove(inter.session.file) # clean up the mess
   return(z)
 }

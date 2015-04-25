@@ -82,30 +82,9 @@ format_seascall <- function(x){
 }
 
 
-
+# no limits on local machines
 IsCallSave <- function(cl){
-  fun.allowed <- c("window", "genhol", "ts", "seas", "c", "list", "-", "+", "*", "/")
-
-
-  # does the call have subcalls, if not, it is save
-  is.scl <- sapply(cl, class) == "call"
-  if (all(!(is.scl))){
-    return(TRUE)
-  }
-  # if it has subcalls, they must be further analyzed
-  scl <- cl[is.scl]
-  scl.names <- unlist(lapply(scl, function(e) as.character(e[[1]])))
-  if (!all(scl.names %in% fun.allowed)){
-    not.allowed <- scl.names[!scl.names %in% fun.allowed]
-    return(FALSE)
-  } else {
-    rr <- unlist(lapply(scl, IsCallSave))
-    if (all(rr)){
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }
-  }
+  TRUE
 }
 
 
@@ -239,7 +218,9 @@ GetFOpts <- function(x){
   }
 
   if (z$easter == "none" & isTRUE(x$spc$regression$usertype == "holiday")){
-    if (isTRUE(try(as.character(x$call$xreg[[1]]) == "genhol"))){
+    if (inherits(x$call$xreg, "name")){
+      z$easter <- "user"
+    } else if (isTRUE(try(as.character(x$call$xreg[[1]]) == "genhol"))){
       if (x$call$xreg$start == 0 & x$call$xreg$end == 0 & x$call$xreg$center == "calendar"){
         if (x$call$xreg[[2]] == "cny"){
           z$easter <- "cny"
@@ -251,8 +232,10 @@ GetFOpts <- function(x){
       } else {
         z$easter <- "user"
       }
+    } else if (!is.null(x$call$xreg)) {
+      z$easter <- "user"
     }
-  }
+  } 
 
   g <- grepl("td", x$spc$regression$variables, fixed = TRUE)
 
@@ -296,7 +279,6 @@ AddFOpts <- function(x, FOpts){
 
   # but not for genhol or window
   is.cl[is.cl] <- !sapply(lc[is.cl], function(e) as.character(e[[1]])) %in% c("window", "genhol")
-  # browser()
 
   if (length(is.cl) > 0){
     lc[is.cl] <- lapply(lc[is.cl], function(e){as.character(e)[-1]})
@@ -425,7 +407,6 @@ load(file = file.path(system.file("inspect", package="seasonal"), "specs.rdata")
 
 inter.session.file <- paste0(gsub("[a-zA-Z0-9]+$", "", tempdir()), "intersession.RData")
 
-
 load(file = inter.session.file)
 init.icstr <- format_seascall(init.model$call)
 
@@ -523,5 +504,7 @@ lFOpts.user <- lFOpts
 for (i in 2:length(lFOpts)){
    lFOpts.user[[i]]$MANUAL$User <- "user"
 }
+
+print("ls")
 
 
