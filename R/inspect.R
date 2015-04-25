@@ -74,7 +74,11 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
   }
 
   if (!requireNamespace("shiny", quietly = TRUE)){
-    stop("the inspect function depends on the 'shiny' package. It can be installed from CRAN: \n\n  install.packages('shiny')\n ")
+    stop("the inspect function depends on the 'shiny' package. To install it from CRAN, type: \n\n  install.packages('shiny')\n ")
+  }
+
+  if (packageVersion("shiny") < "0.11.1" && check.version){
+    stop("You need to have at least shiny version 0.11.1 installed to run inspect smoothly. To ignore this test, use the 'check.version = FALSE' argument. To update shiny from CRAN, type:  \n\n  install.packages('shiny')\n")
   }
 
   if (!inherits(x, "seas")){
