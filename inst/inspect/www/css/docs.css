@@ -1,0 +1,91 @@
+
+
+body {
+  background-color: #eee;
+  font-size: 12px;
+}
+
+
+.panel {
+  margin-top: 15px;
+  margin-bottom: 0px;
+  border: 0px;
+}
+
+.panel-default {
+  margin-top: 15px;
+  margin-bottom: 0px;
+  border: 0px;
+}
+
+.panel-footer {
+  font-size: small;
+}
+
+label {
+  font-size: 90%;
+  padding-top: 4px;
+}
+
+.form-group {
+  margin-bottom: -10px;
+}
+
+.btn-panel {
+  float:right; margin-top: -27px;
+
+}
+
+.btn:focus {
+  border-width: 1px;
+}
+
+
+
+div .dygraphs{
+  width: 25px;
+  color: #303030;
+}
+
+.dygraph-legend{
+  font-weight: 100;
+  color: #303030;
+}
+
+.dygraph-axis-label {
+  color: #303030;
+  font-size: 80%;
+}
+
+
+pre {
+border: none;
+border-color: #aaa;
+color: #555;
+border-radius: 0px;
+  background-color: #F4F4F4;
+/*background-color: #f5fafd;*/
+padding: 20px;
+font-size: 130px;
+font-family: 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+overflow: hidden;
+}
+
+#iTerminal {
+  font-size: 10px;
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  border-radius: 2px;
+  box-shadow: none;
+  color: #333;
+}
+
+
+.r-graph {
+  width:100%; height:321px; 
+}
+
+.r-dygraph {
+  padding-top: 5px; margin-left: -17px; margin-bottom: 10px;
+}
+
+

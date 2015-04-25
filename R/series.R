@@ -235,7 +235,7 @@
 #' series(m, "fct")  # re-evaluate with the forecast spec activated 
 #' 
 #' # more than one series
-#' series(m, c("d7", "d8", "fct"))
+#' series(m, c("rsd", "fct"))
 #' 
 #' m <- seas(AirPassengers, forecast.save = "fct")
 #' series(m, "fct") # no re-evaluation (much faster!)
@@ -267,19 +267,7 @@
 #' lines(-x13.pacf[,3])
 #' # R equivalent: pacf from stats
 #' pacf(AirPassengers, lag.max = 35)
-#' 
-#' 
-#' ### advanced examples
-#' # (for more examples, see the wiki.)
-#' 
-#' # trading day and easter adjustment w/o seasonal adjustment
-#' summary(m)
-#' re <- series(m, "estimate.regressioneffects")
-#' ce <- re[, 'Trading.Day'] + re[, 'Holiday'] 
-#' # be aware of the log transformation
-#' AirPassengersWoTd <- exp(log(AirPassengers) - ce)
 #' }
-#' 
 series <- function(x, series, reeval = TRUE, verbose = TRUE){
   stopifnot(inherits(x, "seas"))
   

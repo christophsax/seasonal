@@ -17,10 +17,11 @@
 #' a \code{"seas"} object as their only argument. Several functions must be 
 #' wrapped in a list (see examples).
 #' 
-#' @param x an object of class \code{"seas"}
-#' @param launch.browser how to open the app. Argument passed on to 
-#'   \code{\link[shiny]{runApp}}.
+#' @param x an object of class \code{"seas"} or \code{"ts"}. 
 #' @param fun a function or a list of functions (see details)
+#' @param ... further arguments, passed on to 
+#'   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument from 
+#'   version 0.8 can be still used that way)
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #'   
@@ -66,200 +67,28 @@
 #' 
 #' }
 #' @export
-inspect <- function(x, fun = NULL, launch.browser = getOption("shiny.launch.browser", interactive())){  
-      
+inspect <- function(x, fun = NULL, check.version = TRUE, ...){ 
+
+  if(getRversion() < "3.2.0" && check.version) { 
+    stop("You need to have at least R version 3.2.0 installed to run inspect smoothly. To ignore this test, use the 'check.version = FALSE' argument.")
+  }
+
   if (!requireNamespace("shiny", quietly = TRUE)){
     stop("the inspect function depends on the 'shiny' package. It can be installed from CRAN: \n\n  install.packages('shiny')\n ")
   }
+
+  if (inherits(x, "ts")){
+    x <- seas(x)
+  }
   
   if (!inherits(x, "seas")){
-    stop("first argument must be of class 'seas'")
+    stop("first argument must be of class 'seas' or 'ts'")
   }
   
-  icl <- match.call()
+  inter.session.file <- paste0(gsub("[a-zA-Z0-9]+$", "", tempdir()), "intersession.RData")
+  init.model <- x
+  save(init.model, fun, file = inter.session.file)
 
-  # --- global -----------------------------------------------------------------
-  
-  SPECS <- NULL 
-  data(specs, envir = environment())  # avoid side effects
-  SPECS <- SPECS[-c(296:317),]        # dont show x11regression
-  
-  # construct a list with plots
-  vl <- list()
-  vl[['Main Plot']] <- plot
-  vl[['SI Component']] <- monthplot
-  if (!is.null(fun)){
-    if (is.function(fun)){
-      vl[[deparse(substitute(fun))]] <- fun
-    } else if (is.list(fun)){
-      for (i in 1:length(fun)){
-        if (is.function(fun[[i]])){
-          if (is.null(names(fun)[i])){  # allways use a name
-            names(fun)[i] <- paste("User Plot", i)
-          } else if (is.na(names(fun)[i])){
-            names(fun)[i] <- paste("User Plot", i)
-          }
-          vl[[names(fun)[i]]] <- fun[[i]]
-        } else {
-          warning(paste(names(fun)[i], "is not a function, skipping it."))
-        }
-      }
-    } else {
-      stop("fun argument must be either a function or a list of functions.")
-    }
-  }
-  
-  # use 'computation on the language' to construct the main panel
-  tab.expr <- 'shiny::mainPanel(shiny::tabsetPanel(
-            shiny::tabPanel("Summary", shiny::verbatimTextOutput("modelSummary")),'
-  for (i in 1:length(vl)){
-    tab.expr <- paste0(tab.expr, 'shiny::tabPanel("', names(vl)[i], '", shiny::plotOutput("vl', i, '")),\n')
-  }
-  tab.expr <- paste0(tab.expr, 'shiny::tabPanel("All Series", shiny::selectInput("userview", label = NULL, choices=  SPECS$long[SPECS$is.series])
-, shiny::textOutput("moreText"), shiny::plotOutput("morePlot"), shiny::helpText("To reproduce the data in R, type:"), shiny::verbatimTextOutput("moreRepro")), type = "pills"))')
-  main.panel <- eval(parse(text = tab.expr))
-  
-  # list with arima models
-  am <- unique(c(x$model$arima$model, fivebestmdl(x)[,1]))
-  arima.models <- as.list(am)
-  names(arima.models) <- am
+  shiny::runApp(system.file("inspect", package="seasonal"), ...)
 
-  # list with aic tests
-  aic.tests <- list("trading days" = "td", "easter" = "easter")
-
-  # adj of input model
-  adj.method <- if (!is.null(x$spc$seats)) {"seats"} else {"x11"}
-  
-  shiny::runApp(list(
-    # --- UI -------------------------------------------------------------------
-    ui = shiny::fluidPage(
-      shiny::titlePanel("seasonal: X13-ARIMA-SEATS interface"),
-      shiny::sidebarLayout(
-        shiny::sidebarPanel(
-          shiny::radioButtons("method", "Adjustment method:",
-                       choices = c("SEATS" = "seats", "X-11" = "x11"), 
-                       selected = if (!is.null(x$spc$seats)) {"seats"} else {"x11"}, 
-                       inline = TRUE),
-          shiny::checkboxInput("transform", "Log-Transformation",
-                        value = (transformfunction(x) == "log")),
-          shiny::selectInput("model", "ARIMA Model:",
-                      arima.models, selected = x$model$arima$model),
-          shiny::selectInput("aictest", "AIC-test for:",
-                      aic.tests, selected = aic.tests, multiple = TRUE),
-          shiny::sliderInput("outlier.critical", "Critical outlier value", 2.5, 5, value = 4),
-          if (getOption("htmlmode") == 1) {shiny::checkboxInput("outBox", "Update X-13 Output")} else {NULL},
-          shiny::actionButton("stopButton", "Close and import Call to R", icon = shiny::icon("download"))
-        ),
-        main.panel
-      )
-    ),
-    
-    # --- Server ---------------------------------------------------------------
-    server = function(input, output, session) {
-    
-      if (getOption("htmlmode") == 1){
-        shiny::observe({
-          if (input$outBox){
-            out(mod())
-          }
-        })
-      }
-
-      shiny::observe({
-        if (input$stopButton > 0){
-          shiny::stopApp(returnValue = static(mod()))
-        }
-      })
-      
-      mod <- shiny::reactive({
-        lc <- as.list(x$call)
-        lc$transform.function <- if (input$transform) {"log"} else {"none"}
-        lc$outlier.critical <- input$outlier.critical    
-        lc$arima.model <- input$model
-        if (input$method == "x11"){
-          lc$x11 = ""
-        } else {
-          lc$x11 = NULL
-        }
-        if (is.null(input$aictest)){
-          lc['regression.aictest'] <- input$aictest
-          names(lc['regression.aictest']) <- "regression.aictest"
-        } else {
-          lc$regression.aictest <- input$aictest
-        }
-        z <- eval(as.call(lc))
-        if (!is.null(z$spc$seats)){
-          shiny::updateRadioButtons(session, "method",
-                             selected = "seats")
-           }
-        if (!is.null(z$spc$x11)){
-          shiny::updateRadioButtons(session, "method",
-                             selected = "x11")
-        }
-        z
-      })
-      
-      output$modelSummary <- shiny::renderPrint({
-        summary(mod())
-      }) 
-      
-      SeriesRun <- shiny::reactive({
-        mod <- mod()
-        z <- list()
-        z$dta <- try(series(mod, input$userview, verbose = FALSE),  silent = TRUE)
-        if (inherits(z$dta, "try-error")){
-          z$msg <- gsub("^.*:", "", z$dta)
-          z$msg <- gsub("\n", "", z$msg)
-          z$msg <- gsub("^\\s+|\\s+$", "", z$msg)
-          z$dta <- NULL
-          return(z)
-        }
-        if (is.null(z$dta)) {
-          z$msg <- "no output has been generated by X13-ARIMA-SEATS."
-        } else if (!inherits(z$dta, "ts") & 
-                     !(input$userview %in% c("check.acf", "check.acfsquared", 
-                                           "check.pacf", "identify.acf", 
-                                           "identify.pacf"))
-                   ) {
-          z$msg <- "data is not a time series or another displayable data type."
-        } else {
-          z$msg <- NULL
-        }
-        z
-      })
-      
-      output$moreText <- shiny::renderText({
-        SeriesRun()$msg
-      })
-      
-      output$morePlot <- shiny::renderPlot({
-        dta <- SeriesRun()$dta
-        if (inherits(dta, "ts")){
-          nc <- NCOL(dta)
-          ncol <- rainbow(nc)
-          ts.plot(dta, col = ncol)
-          if (nc > 1){
-            legend("topleft", colnames(dta), lty = 1, col = ncol, bty = "n", horiz = TRUE)
-          }
-        } else if (input$userview %in% c("check.acf", "check.acfsquared", 
-                                         "check.pacf", "identify.acf", 
-                                         "identify.pacf")){
-          plot(dta[,1:2], type = "l")
-          lines(dta[,3], col = "red")
-          lines(-dta[,3], col = "red")
-        }
-      })
-      
-      output$moreRepro <- shiny::renderText({
-        paste('series(', deparse(icl$x), ', "', input$userview, '")', sep = "")
-      })
-      
-      # server structure for user defined plots
-      for (i in 1:length(vl)){
-        expr <- paste0("output$vl", i, " <- shiny::renderPlot(vl[[",i ,  "]](mod()))")
-        eval(parse(text = expr))
-      }
-    }
-    
-  ), launch.browser = launch.browser)
 }

@@ -64,16 +64,38 @@
 #' qqnorm(resid(m))
 #' }
 plot.seas <- function(x, outliers = TRUE, trend = FALSE, 
-                      main = "unadjusted and seasonally adjusted series", ...){
+                      main = "Original and Adjusted Series", 
+                      transform = c("none", "PC", "PCY"), ...){
 
-  ts.plot(cbind(original(x), final(x)), 
+  transform <- match.arg(transform)
+
+  orignalx <- original(x)
+  finalx <- final(x)
+
+  if (transform == "PC"){
+    orignalx <- (lag(orignalx, -1) - orignalx) / lag(orignalx, -1)
+    finalx <- (lag(finalx, -1) - finalx) / lag(finalx, -1)
+    main <- paste(main, "(PC)")
+  }
+  if (transform == "PCY"){
+    fr <- frequency(orignalx)
+    orignalx <- (lag(orignalx, -fr) - orignalx) / lag(orignalx, -fr)
+    finalx <- (lag(finalx, -fr) - finalx) / lag(finalx, -fr)
+    main <- paste(main, "(PCY)")
+  }
+
+
+  ts.plot(cbind(orignalx, finalx),
           col = c("black", "red"), 
           lwd = c(1, 2),
           main = main, ...
   )
   
   if (identical(trend, TRUE)){
-    lines(x$data[, 'trend'], col = "blue", lty = "dashed")
+    trendx <- x$data[, 'trend']
+    if (transform == "PC") trendx <- (lag(trendx, -1) - trendx) / lag(trendx, -1)
+    if (transform == "PCY") trendx <- (lag(trendx, -fr) - trendx) / lag(trendx, -fr)
+    lines(trendx, col = "blue", lty = "dashed")
   }
   
   if (identical(outliers, TRUE)){
@@ -109,11 +131,11 @@ residplot <- function(x, outliers = TRUE, ...){
 monthplot.seas <- function(x, choice = c("seasonal", "irregular"), ...){
   choice <- match.arg(choice)
   if (choice == "seasonal"){
-    monthplot(x$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "seasonal component, SI ratio", ...)
+    monthplot(x$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "Seasonal Component, SI Ratio", ...)
     monthplot(siratio(x), col = "blue", type = "h", add = TRUE)
   }
   if (choice == "irregular"){
-    monthplot(x$data[,'irregular'], ylab = "", main = "irregular component")
+    monthplot(x$data[,'irregular'], ylab = "", main = "Irregular Component")
   }
 }
 
