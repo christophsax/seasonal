@@ -4,10 +4,10 @@
 \alias{inspect}
 \title{Interactively Inspect a Seasonal Adjustment Model}
 \usage{
-inspect(x, fun = NULL, check.version = TRUE, ...)
+inspect(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...)
 }
 \arguments{
-\item{x}{an object of class \code{"seas"} or \code{"ts"}.}
+\item{x}{an object of class \code{"seas"}.}
 
 \item{fun}{a function or a list of functions (see details)}
 

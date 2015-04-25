@@ -450,6 +450,12 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   z$spc <- spc
   z$call <- match.call()
   z$wdir <- wdir
+
+  # clean up
+  if (!out){
+      file.remove(list.files(wdir, full.names = TRUE))
+  }
+
   class(z) <- "seas"
   z
 }

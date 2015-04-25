@@ -428,9 +428,6 @@ inter.session.file <- paste0(gsub("[a-zA-Z0-9]+$", "", tempdir()), "intersession
 
 load(file = inter.session.file)
 init.icstr <- format_seascall(init.model$call)
-print(init.icstr)
-
-
 
 
 

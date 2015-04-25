@@ -17,7 +17,7 @@
 #' a \code{"seas"} object as their only argument. Several functions must be 
 #' wrapped in a list (see examples).
 #' 
-#' @param x an object of class \code{"seas"} or \code{"ts"}. 
+#' @param x an object of class \code{"seas"}. 
 #' @param fun a function or a list of functions (see details)
 #' @param ... further arguments, passed on to 
 #'   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument from 
@@ -67,7 +67,7 @@
 #' 
 #' }
 #' @export
-inspect <- function(x, fun = NULL, check.version = TRUE, ...){ 
+inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){ 
 
   if(getRversion() < "3.2.0" && check.version) { 
     stop("You need to have at least R version 3.2.0 installed to run inspect smoothly. To ignore this test, use the 'check.version = FALSE' argument.")
@@ -77,18 +77,14 @@ inspect <- function(x, fun = NULL, check.version = TRUE, ...){
     stop("the inspect function depends on the 'shiny' package. It can be installed from CRAN: \n\n  install.packages('shiny')\n ")
   }
 
-  if (inherits(x, "ts")){
-    x <- seas(x)
-  }
-  
   if (!inherits(x, "seas")){
-    stop("first argument must be of class 'seas' or 'ts'")
+    stop("first argument must be of class 'seas'")
   }
   
   inter.session.file <- paste0(gsub("[a-zA-Z0-9]+$", "", tempdir()), "intersession.RData")
   init.model <- x
   save(init.model, fun, file = inter.session.file)
-
-  shiny::runApp(system.file("inspect", package="seasonal"), ...)
-
+  z <- shiny::runApp(system.file("inspect", package="seasonal"), quiet = quiet, ...)
+  file.remove(inter.session.file)
+  return(z)
 }

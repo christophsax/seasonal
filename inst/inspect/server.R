@@ -190,16 +190,30 @@ output$oTerminal <- renderUI({
 
 
 #  display error message and revert button, updated by rCall$error
-observe({
-  if(!is.null(rTerminalError$error)){
-    session$sendCustomMessage(type="alertMsg", message = list(title = "Error while trying to run R-call", body = rTerminalError$error, alerttype = "danger", time = 8500))
-  }
-})
+# observe({
+#   if(!is.null(rTerminalError$error)){
+# HTML('<div class="alert alert-danger alert-dismissible fade in" role="alert">
+#       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+#       <h4>Oh snap! You got an error!</h4>
+#       <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+#       <p>
+#         <button id="iRevert" type="button" class="btn action-button btn-danger btn-labeled btn-active-default btn-panel" style = "margin-right: 4px;">Revert</button>
+#       </p>
+#     </div>')
+#   }
+# })
 
 
 output$oRevert <- renderUI({
   if(!is.null(rTerminalError$error)){
-     pp <- HTML('<button id="iRevert" type="button" class="btn action-button btn-danger btn-labeled btn-active-default btn-panel" style = "margin-right: 4px;">Revert</button>')
+     pp <- HTML(paste0('<div class="alert alert-danger alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4>Error</h4>
+      <p>', rTerminalError$error, '</p>
+      <p>
+        <button id="iRevert" type="button" class="btn action-button btn-danger" style = "margin-right: 4px;">Revert</button>
+      </p>
+    </div>'))
     return(pp)
     # return("hey")
   } else {
@@ -302,25 +316,18 @@ output$oMainPlot <- renderPlot({
   if (iSeries == "main") return(plot(rModel$m))
   if (iSeries == "mainpc") return(plot(rModel$m, transform = "PC"))
   if (iSeries == "monthplot") return(monthplot(rModel$m))
+
   if (iSeries %in% c("irregular", "seasonal", "trend")){
     iSeries <- paste0(tolower(input$iMethod), ".", iSeries)
-    noView <- TRUE 
-  } else {
-    noView <- FALSE
-  }
+  } 
+
   if (iSeries %in% names(lUserView)){
     return(lUserView[[iSeries]](rModel$m))
-  } else {
-    s <- series(rModel$m, iSeries, reeval = FALSE)
-    if (!inherits(s, "ts")){
-        # workaround: if method changes from x11 to seats, a waring appears
-        # otherwise. Downside is that we don't have a warning if some series
-        # is missing, but rather a blank screen.
-        if (!isTRUE(noView)){
-           session$sendCustomMessage(type="alertMsg", message = list(title = "View not available", body = "This view is not available for the current model specification.", alerttype = "warning", time = 2000))
-        }
-        return(NULL)
-    }
+  } 
+
+  s <- series(rModel$m, iSeries, reeval = FALSE)
+  validate(need(inherits(s, "ts"), "This view is not available for the model. Change view or model."))
+  if (inherits(s, "ts")){
     return(ts.plot(s, ylab = ""))
   }
 
