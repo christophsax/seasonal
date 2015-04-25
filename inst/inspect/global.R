@@ -505,6 +505,5 @@ for (i in 2:length(lFOpts)){
    lFOpts.user[[i]]$MANUAL$User <- "user"
 }
 
-print("ls")
 
 
