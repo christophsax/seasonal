@@ -157,19 +157,18 @@ observe({
 
 # terminal update
 observe({ 
-    if (input$iEvalCall > 0){
-      # assignment will trigger reevaluation
-      rModelCall$cstr <- isolate(input$iTerminal)
+  if (input$iEvalCall > 0){
+    # assignment will trigger reevaluation
+    rModelCall$cstr <- isolate(input$iTerminal)
 
-    }
+  }
  })
 
 
-# terminal update
 observe({ 
-    if (input$iOutput > 0){
-      out(init.model)
-    }
+  if (input$iOutput > 0){
+    out(init.model)
+  }
  })
 
 
@@ -190,20 +189,6 @@ output$oTerminal <- renderUI({
 
 
 #  display error message and revert button, updated by rCall$error
-# observe({
-#   if(!is.null(rTerminalError$error)){
-# HTML('<div class="alert alert-danger alert-dismissible fade in" role="alert">
-#       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-#       <h4>Oh snap! You got an error!</h4>
-#       <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
-#       <p>
-#         <button id="iRevert" type="button" class="btn action-button btn-danger btn-labeled btn-active-default btn-panel" style = "margin-right: 4px;">Revert</button>
-#       </p>
-#     </div>')
-#   }
-# })
-
-
 output$oRevert <- renderUI({
   if(!is.null(rTerminalError$error)){
      pp <- HTML(paste0('<div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -215,7 +200,6 @@ output$oRevert <- renderUI({
       </p>
     </div>'))
     return(pp)
-    # return("hey")
   } else {
     return(NULL)
   }

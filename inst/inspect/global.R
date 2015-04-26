@@ -273,16 +273,16 @@ AddFOpts <- function(x, FOpts){
   if (is.null(FOpts$easter)) FOpts$easter <- "user"
   if (is.null(FOpts$td)) FOpts$td <- "user"
 
-  # convert 'call' objects in ccharacter vectors
-  # dont know why this is needed, but it seems to convert some lists into character vectors
-  is.cl <- lapply(lc, class) == "call"
+  # # convert 'call' objects in ccharacter vectors
+  # # dont know why this is needed, but it seems to convert some lists into character vectors
+  # is.cl <- lapply(lc, class) == "call"
 
-  # but not for genhol or window
-  is.cl[is.cl] <- !sapply(lc[is.cl], function(e) as.character(e[[1]])) %in% c("window", "genhol")
+  # # but not for genhol or window
+  # is.cl[is.cl] <- !sapply(lc[is.cl], function(e) as.character(e[[1]])) %in% c("window", "genhol")
 
-  if (length(is.cl) > 0){
-    lc[is.cl] <- lapply(lc[is.cl], function(e){as.character(e)[-1]})
-  }
+  # if (length(is.cl) > 0){
+  #   lc[is.cl] <- lapply(lc[is.cl], function(e){as.character(e)[-1]})
+  # }
 
   if (FOpts$method == "X11"){
     lc$x11 <- ""

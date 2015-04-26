@@ -28,7 +28,7 @@ label {
 }
 
 .form-group {
-  margin-bottom: -10px;
+  margin-bottom: -5px;
 }
 
 .btn-panel {
@@ -40,7 +40,9 @@ label {
   border-width: 1px;
 }
 
-
+.selectize-input {
+  font-size: 5px
+}
 
 div .dygraphs{
   width: 25px;
