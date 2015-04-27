@@ -67,9 +67,9 @@
 #' @export
 inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){ 
 
-  if(getRversion() < "3.2.0" && check.version) { 
-    stop("You need to have at least R version 3.2.0 installed to run inspect smoothly. To ignore this test, use the 'check.version = FALSE' argument.")
-  }
+  # if(getRversion() < "3.2.0" && check.version) { 
+  #   stop("You need to have at least R version 3.2.0 installed to run inspect smoothly. To ignore this test, use the 'check.version = FALSE' argument.")
+  # }
 
   if (!requireNamespace("shiny", quietly = TRUE)){
     stop("the inspect function depends on the 'shiny' package. To install it from CRAN, type: \n\n  install.packages('shiny')\n ")
