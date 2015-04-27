@@ -265,7 +265,7 @@ AddFOpts <- function(x, FOpts){
 
   # x$call
   # lc <- as.list(x$call)
-
+# browser()
   if (is.null(FOpts$method)) FOpts$method <- "user"
   if (is.null(FOpts$transform)) FOpts$transform <- "user"
   if (is.null(FOpts$arima)) FOpts$arima <- "user"
@@ -283,6 +283,10 @@ AddFOpts <- function(x, FOpts){
   # if (length(is.cl) > 0){
   #   lc[is.cl] <- lapply(lc[is.cl], function(e){as.character(e)[-1]})
   # }
+
+
+
+
 
   if (FOpts$method == "X11"){
     lc$x11 <- ""
@@ -324,13 +328,20 @@ AddFOpts <- function(x, FOpts){
     lc$regression.usertype = NULL
   }
 
+
+  # calls to not work well with union, so covert them to character before
+  C2C <- function(x){
+    eval(parse(text = deparse(x)))
+  }
+
+
   if (FOpts$easter %in% c("easter[1]", "easter[8]", "easter[15]", "none")){
     g <- grepl("easter[", lc$regression.variables, fixed = TRUE)
     if (sum(g) > 0){
       lc$regression.variables <- lc$regression.variables[!g]
     }
     if (FOpts$easter != "none"){
-      lc$regression.variables <- union(lc$regression.variables, FOpts$easter)
+      lc$regression.variables <- union(C2C(lc$regression.variables), FOpts$easter)
     }
 
     if ("regression.aictest" %in% names(lc)){ # non default, specified
@@ -352,7 +363,7 @@ AddFOpts <- function(x, FOpts){
       # set default settings
       lc$regression.aictest <- NULL
     } else if ("regression.aictest" %in% names(lc)){ # non default, specified
-      lc$regression.aictest <- union(lc$regression.aictest, "easter")
+      lc$regression.aictest <- union(C2C(lc$regression.aictest), "easter")
     }
   }
 
@@ -362,7 +373,7 @@ AddFOpts <- function(x, FOpts){
       lc$regression.variables <- lc$regression.variables[!g]
     }
     if (FOpts$td != "none"){
-      lc$regression.variables <- union(lc$regression.variables, FOpts$td)
+      lc$regression.variables <- union(C2C(lc$regression.variables), FOpts$td)
     }
 
     if ("regression.aictest" %in% names(lc)){ # non default, specified
@@ -384,7 +395,7 @@ AddFOpts <- function(x, FOpts){
       # set default settings
       lc$regression.aictest <- NULL
     } else if ("regression.aictest" %in% names(lc)){ # non default, specified
-      lc$regression.aictest <- union(lc$regression.aictest, "td")
+      lc$regression.aictest <- union(C2C(lc$regression.aictest), "td")
     }
   }
 
@@ -402,6 +413,7 @@ AddFOpts <- function(x, FOpts){
 
 library(seasonal)
 data(holiday)
+
 
 load(file = file.path(system.file("inspect", package="seasonal"), "specs.rdata"))
 

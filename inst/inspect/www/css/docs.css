@@ -2,7 +2,7 @@
 
 body {
   background-color: #eee;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 
@@ -65,16 +65,15 @@ border: none;
 border-color: #aaa;
 color: #555;
 border-radius: 0px;
-  background-color: #F4F4F4;
-/*background-color: #f5fafd;*/
+background-color: #F4F4F4;
 padding: 20px;
-font-size: 130px;
-font-family: 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+font-size: 12px;
+font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
 overflow: hidden;
 }
 
 #iTerminal {
-  font-size: 10px;
+  font-size: 12px;
   font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
   border-radius: 2px;
   box-shadow: none;

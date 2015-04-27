@@ -295,11 +295,19 @@ observe({
 
 output$oMainPlot <- renderPlot({
   rPlotUpd$upd  # trigger on demand
+
+  par(mar = c(3, 3, 1.7, 1.7) -1)
+
+
   iSeries <- isolate(input$iSeries)
   if (is.null(iSeries)) {iSeries <- gLastView}
-  if (iSeries == "main") return(plot(rModel$m))
-  if (iSeries == "mainpc") return(plot(rModel$m, transform = "PC"))
-  if (iSeries == "monthplot") return(monthplot(rModel$m))
+  if (iSeries == "main") return(plot(rModel$m, main = ""))
+  if (iSeries == "mainpc") return(plot(rModel$m, main = "", transform = "PC"))
+  if (iSeries == "monthplot"){
+    # instead of the seas method, to hide the main title
+    monthplot(rModel$m$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "")
+    return(monthplot(seasonal:::siratio(rModel$m), col = "blue", type = "h", add = TRUE))
+  }
 
   if (iSeries %in% c("irregular", "seasonal", "trend")){
     iSeries <- paste0(tolower(input$iMethod), ".", iSeries)

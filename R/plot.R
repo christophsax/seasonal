@@ -75,13 +75,17 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
   if (transform == "PC"){
     orignalx <- (lag(orignalx, -1) - orignalx) / lag(orignalx, -1)
     finalx <- (lag(finalx, -1) - finalx) / lag(finalx, -1)
-    main <- paste(main, "(PC)")
+    if (main != ""){
+      main <- paste(main, "(PC)")
+    }
   }
   if (transform == "PCY"){
     fr <- frequency(orignalx)
     orignalx <- (lag(orignalx, -fr) - orignalx) / lag(orignalx, -fr)
     finalx <- (lag(finalx, -fr) - finalx) / lag(finalx, -fr)
-    main <- paste(main, "(PCY)")
+    if (main != ""){
+      main <- paste(main, "(PCY)")
+    }
   }
 
 
@@ -109,9 +113,9 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
 
 #' @rdname plot.seas
 #' @export
-residplot <- function(x, outliers = TRUE, ...){
+residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", ...){
   ts.plot(resid(x), ylab = "value",
-          main = "residuals of regARIMA", ...
+          main = main, ...
   )
   
   if (identical(outliers, TRUE)){
