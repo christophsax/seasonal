@@ -25,6 +25,7 @@ body {
 label {
   font-size: 90%;
   padding-top: 4px;
+  font-weight: normal;
 }
 
 .form-group {
@@ -38,10 +39,6 @@ label {
 
 .btn:focus {
   border-width: 1px;
-}
-
-.selectize-input {
-  font-size: 5px
 }
 
 div .dygraphs{

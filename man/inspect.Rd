@@ -45,10 +45,8 @@ inspect(m)
 ### customizing inspect
 
 # a single function
-fc <- function(m){
-  ts.plot(series(m, "fct", verbose = FALSE))
-}
-inspect(m, fc)
+# a new item 'User Plot' can be chosen in the 'View' menu
+inspect(m, fun = function(x) hist(resid(x)))
 
 # more than one function collected in a list
 myfun <- list()

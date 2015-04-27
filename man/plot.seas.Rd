@@ -10,7 +10,7 @@
   main = "Original and Adjusted Series", transform = c("none", "PC", "PCY"),
   ...)
 
-residplot(x, outliers = TRUE, ...)
+residplot(x, outliers = TRUE, main = "residuals of regARIMA", ...)
 
 \method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), ...)
 }
