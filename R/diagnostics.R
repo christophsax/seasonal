@@ -65,8 +65,8 @@
 #' }
 #' @export
 qs <- function(x){
-  z0 <- x$udg[grepl("^qs", names(x$udg))]
-  z0 <- z0[names(z0) != "qslog"]  # wrong match in X-13 Build 19
+  qs.var <- c("qsori", "qsorievadj", "qsrsd", "qssadj", "qssadjevadj", "qsirr",  "qsirrevadj", "qssori", "qssorievadj", "qssrsd", "qsssadj", "qsssadjevadj",  "qssirr", "qssirrevadj")
+  z0 <- x$udg[names(x$udg) %in% qs.var]
   z <- read.table(text = z0, colClasses = "numeric")
   rownames(z) <- names(z0)
   colnames(z) <- c("qs", "p-val")
