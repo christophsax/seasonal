@@ -134,8 +134,7 @@ details):
     inspect(m)
 
 
-![graphical tool for choosing a seasonal adjustment
-model](./vignettes/images/inspect.png)
+![graphical tool for choosing a seasonal adjustment model](https://github.com/christophsax/seasonal/vignettes/images/inspect.png)
 
 
 ### Input
