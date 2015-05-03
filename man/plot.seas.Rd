@@ -24,11 +24,10 @@ residplot(x, outliers = TRUE, main = "residuals of regARIMA", ...)
 
 \item{main}{character string, title of the graph.}
 
+\item{transform}{character string, optionally transform the data to period to period  \code{"PC"} or year to year\code{"PCY"} percentage change rates.}
+
 \item{choice}{character string, \code{"seasonal"} (default) or
 \code{"irregular"}.}
-
-\item{series}{X-13 name of the series to plot, see the manual for a
-description.}
 
 \item{\dots}{further arguments passed to the plotting functions.}
 }

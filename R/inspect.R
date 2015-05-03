@@ -4,27 +4,40 @@
 #' to summarize all relevant options, plots and statistics that should be 
 #' usually considered.
 #' 
-#' The \code{inspect} function opens an interactive window that allows for the 
-#' manipulation of a number of arguments. It offers several views to analyze the
-#' series graphically. With each change, the adjustment process and the 
-#' visualizations are recalculated.
+#' Frequently used options can be modified using the drop down selectors in the
+#' upper left window. Each change will result in a re-estimation of the seasonal
+#' adjustment model. The R-call, the output and the summary are updated
+#' accordingly.
+#'
+#' Alternatively, the R-Call can be modified manually in the lower left window.
+#' Press 'Run Call' to re-estimate the model and to adjust the option selectors,
+#' the output, and the summary. With the 'Close and Import' button, inspect is 
+#' closed and the call is imported to R.
+#'
+#' The views in the upper right window can be selected from the drop down menu.
+#'
+#' The lower right panel shows the summary, as descibed in the help page of
+#' \code{\link{summary.seas}}. The 'Full X-13 output' button opens the complete 
+#' output of X-13 in a separate tab or window.
 #' 
-#' Summary statistics are shown in the first tab. The last tab offers access to
-#' all series that can be produced with X-13.
-#' 
-#' The views in \code{inspect} may be customized via the \code{fun} argument.
+#' The views in \code{inspect} can be customized via the \code{fun} argument.
 #' One or several plot functions may be supplied. The plot functions should have
 #' a \code{"seas"} object as their only argument. Several functions must be 
 #' wrapped in a list (see examples).
 #' 
 #' @param x an object of class \code{"seas"}. 
 #' @param fun a function or a list of functions (see details)
+#' @param check.version logical, should the version of shiny be checked
+#' @param quiet logical, if \code{TRUE} (default), error messages from calls in 
+#'   inspect are not shown in the console
 #' @param ... further arguments, passed on to 
-#'   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument from 
+#'   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of 
 #'   version 0.8 can be still used that way)
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
-#'   
+#'
+#' @references  Online Web Interface for Seasonal Adjustment with X-13
+#'   \url{http://www.seasonal.website}
 #' @examples
 #' \dontrun{
 #' 
@@ -45,7 +58,7 @@
 #'   plot(series(m, "spectrum.specorig", verbose = FALSE)[,-1], t = "l")
 #' }
 #' myfun[['Spectum R']] <- function(m){
-#'   spectrum(diff(log(AirPassengers)), method = "ar")
+#'   spectrum(diff(log(AirPassengers)), method = "ar", main = "")
 #' }
 #' inspect(m, myfun)
 #' 
@@ -65,11 +78,7 @@
 #' 
 #' }
 #' @export
-inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){ 
-
-  # if(getRversion() < "3.2.0" && check.version) { 
-  #   stop("You need to have at least R version 3.2.0 installed to run inspect smoothly. To ignore this test, use the 'check.version = FALSE' argument.")
-  # }
+inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){ 
 
   if (!requireNamespace("shiny", quietly = TRUE)){
     stop("the inspect function depends on the 'shiny' package. To install it from CRAN, type: \n\n  install.packages('shiny')\n ")
@@ -82,43 +91,35 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
   if (!inherits(x, "seas")){
     stop("first argument must be of class 'seas'")
   }
+
+  cat("Press ESC to get back to the console")
   
   init.model <- x
-
-  # # names in xreg and xtrans that will be exported to inspect app
-  # FindNamesInCallsOrNames <- function(x){
-  #   z <- character()
-  #   if (is.call(x)){
-  #     z <- c(z, unlist(lapply(as.list(x)[sapply(x, is.call)], FindNamesInCallsOrNames)))
-  #     z <- c(z, unlist(lapply(as.list(x)[sapply(x, is.name)], as.character)))
-  #   } else if (is.name(x)){
-  #     z <- as.character(x)
-  #   } 
-  #   z
-  # }
-  # exnames <- c(FindNamesInCallsOrNames(x$call$xreg), FindNamesInCallsOrNames(x$call$xtrans))
-  # exnames[!sapply(exnames, function(x) is.function(get(x)))]
-
   init.icstr <- format_seascall(init.model$call)
-
 
   # --- List with views --------------------------------------------------------
 
-  data(inspectdata)
+  # should be loaded for use with genhol
+  data(holiday, envir = environment())  # avoid side effects
 
+  # lookup table for output specification
+  INSPDATA <- NULL 
+  data(inspectdata, envir = environment())  # avoid side effects
+  
   lSeries <- list()
   lSeries$MAIN <- c("Original and Adjusted Series" = "main", 
                     "Original and Adjusted Series (%)" = "mainpc", 
                     "SI-ratio" = "monthplot")
 
-  SPECS2 <- SPECS[SPECS$seats, ]
-  SPECS2$long <- gsub("seats.", "", SPECS2$long)
-  SPECS2$spec <- gsub("seats", "seats/x11", SPECS2$spec)
 
-  sp <- unique(SPECS2$spec)
+  INSPDATA2 <- INSPDATA[INSPDATA$seats, ]
+  INSPDATA2$long <- gsub("seats.", "", INSPDATA2$long)
+  INSPDATA2$spec <- gsub("seats", "seats/x11", INSPDATA2$spec)
+
+  sp <- unique(INSPDATA2$spec)
   for (spi in sp){
-    argi <- SPECS2[SPECS2$spec == spi, ]$long
-    names(argi) <- SPECS2[SPECS2$spec == spi, ]$descr
+    argi <- INSPDATA2[INSPDATA2$spec == spi, ]$long
+    names(argi) <- INSPDATA2[INSPDATA2$spec == spi, ]$descr
     lSeries[[toupper(spi)]] <- argi
   }
 
@@ -149,7 +150,6 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
   if (length(lUserView) > 0){
     lSeries$USER <- structure(names(lUserView), names = names(lUserView))
   }
-
 
   # --- List with options ------------------------------------------------------
 
@@ -193,35 +193,38 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
   }
 
   shiny::runApp(list(
-    ui = shiny::bootstrapPage(shiny::includeCSS(file.path(system.file("inspect", package="seasonal"), "www/css/docs.css")),
-      shiny::includeHTML(file.path(system.file("inspect", package="seasonal"), "www/index.html"))),
+    ui = shiny::bootstrapPage(
+      shiny::includeCSS(file.path(system.file("inspect", package="seasonal"), 
+                                  "www/css/docs.css")),
+      shiny::includeHTML(file.path(system.file("inspect", package="seasonal"), 
+                                   "www/index.html"))
+      ),
     server = function(input, output) {
 
       # --- reactive model estimation ------------------------------------------
-      require(shiny)
-      data(holiday)
 
       # reactive values
-      rUploadUpd <- reactiveValues(upd = 0)  
-      rTerminalUpd <- reactiveValues(upd = 0)  
-      rPlotUpd <- reactiveValues(upd = 0)  
-      rTerminalError <- reactiveValues(upd = 0)   
-      rModel <- reactiveValues() 
+      rUploadUpd <- shiny::reactiveValues(upd = 0)  
+      rTerminalUpd <- shiny::reactiveValues(upd = 0)  
+      rPlotUpd <- shiny::reactiveValues(upd = 0)  
+      rTerminalError <- shiny::reactiveValues(upd = 0)   
+      rModel <- shiny::reactiveValues() 
       rFOpts <- list()
 
       gLastView <- "main"
-      gFiveBestMdl <- structure(list(arima = c("(0 1 0)(0 1 1)", "(1 1 1)(0 1 1)", "(0 1 1)(0 1 1)", "(1 1 0)(0 1 1)", "(0 1 2)(0 1 1)"), bic = c(-4.007, -3.986, -3.979, -3.977, -3.97)), .Names = c("arima", "bic"), row.names = c(NA, -5L), class = "data.frame")
+      gFiveBestMdl <- fivebestmdl(init.model)
 
 
-      rSelectUpd <- reactiveValues(upd = 0)  
+      rSelectUpd <- shiny::reactiveValues(upd = 0)  
 
       # --- initialisazion -----------------------------------------------------
-      rModelCall  <- reactiveValues(cstr = init.icstr)
+
+      rModelCall  <- shiny::reactiveValues(cstr = init.icstr)
       gTerminalCall <- init.icstr
 
 
       # model evaluation, updated by rModelCall$cstr or rUploadUpd$upd
-      observe({
+      shiny::observe({
         cstr <- rModelCall$cstr
         z <- EvalOrFail(cstr)
         if (inherits(z, "try-error")){
@@ -229,7 +232,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
 
         } else {
 
-          if (!is.null(isolate(rTerminalError$error))){
+          if (!is.null(shiny::isolate(rTerminalError$error))){
             rTerminalError$error <- NULL
           }
 
@@ -242,19 +245,18 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
           rFOpts$td <- gfo$td
           rModel$m <- z
           gTerminalCall <<- cstr
-          rTerminalUpd$upd <- isolate(rTerminalUpd$upd) + 1
+          rTerminalUpd$upd <- shiny::isolate(rTerminalUpd$upd) + 1
         }
       })
 
 
       # --- auto input elements ------------------------------------------------------
 
-
-
-      output$oFOpts <- renderUI({
+      output$oFOpts <- shiny::renderUI({
         fopts <- GetFOpts(rModel$m)
 
-        # update if new fivebestmdl are available, otheœrwise, use last fivebestmdl
+        # update if new fivebestmdl are available, otheœrwise, use last
+        # fivebestmdl
         if (is.null(rModel$m$spc$automdl$print)){
           fbm <- gFiveBestMdl
         } else {
@@ -277,55 +279,23 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
         lFOpts2$arima$MANUAL <- c(ll, lFOpts2$arima$MANUAL)
 
         list(
-          selectInput("iMethod", "Adjustment Method", choices = lFOpts2$method, selected = fopts$method, width = '100%'),
-          selectInput("iTransform", "Prior-Transformation", choices = lFOpts2$transform, selected = fopts$transform, width = '100%'),
-          selectInput("iArima", "Arima Model", choices = lFOpts2$arima, selected = fopts$arima, width = '100%'),
-          selectInput("iOutlier", "Outlier", choices = lFOpts2$outlier, selected = fopts$outlier, width = '100%'),
-          selectInput("iEaster", "Holiday", choices = lFOpts2$easter, selected = fopts$easter, width = '100%'),
-          selectInput("iTd", "Trading Days", choices = lFOpts2$td, selected = fopts$td, width = '100%')
-          )
-      })
-
-
-
-
-      output$oFOpts <- renderUI({
-        fopts <- GetFOpts(rModel$m)
-
-        # update if new fivebestmdl are available, otheœrwise, use last fivebestmdl
-        if (is.null(rModel$m$spc$automdl$print)){
-          fbm <- gFiveBestMdl
-        } else {
-          fbm <- fivebestmdl(rModel$m)
-          gFiveBestMdl <<- fbm
-        }
-
-        if (!fopts$arima %in% c("auto", fbm$arima)){
-          fopts$arima <- "user"
-        }
-
-        lFOpts2 <- lFOpts
-
-        is.user <- sapply(fopts, identical, "user")
-        lFOpts2[is.user] <- lFOpts.user[is.user]
-
-        ll <- as.list(fbm$arima)
-        names(ll) <- ll
-
-        lFOpts2$arima$MANUAL <- c(ll, lFOpts2$arima$MANUAL)
-
-        list(
-          selectInput("iMethod", "Adjustment Method", choices = lFOpts2$method, selected = fopts$method, width = '100%'),
-          selectInput("iTransform", "Pre-Transformation", choices = lFOpts2$transform, selected = fopts$transform, width = '100%'),
-          selectInput("iArima", "Arima Model", choices = lFOpts2$arima, selected = fopts$arima, width = '100%'),
-          selectInput("iOutlier", "Outlier", choices = lFOpts2$outlier, selected = fopts$outlier, width = '100%'),
-          selectInput("iEaster", "Holiday", choices = lFOpts2$easter, selected = fopts$easter, width = '100%'),
-          selectInput("iTd", "Trading Days", choices = lFOpts2$td, selected = fopts$td, width = '100%')
+          shiny::selectInput("iMethod", "Adjustment Method", 
+            choices = lFOpts2$method, selected = fopts$method, width = '100%'),
+          shiny::selectInput("iTransform", "Pre-Transformation", 
+            choices = lFOpts2$transform, selected = fopts$transform, width = '100%'),
+          shiny::selectInput("iArima", "Arima Model", 
+            choices = lFOpts2$arima, selected = fopts$arima, width = '100%'),
+          shiny::selectInput("iOutlier", "Outlier", 
+            choices = lFOpts2$outlier, selected = fopts$outlier, width = '100%'),
+          shiny::selectInput("iEaster", "Holiday", 
+            choices = lFOpts2$easter, selected = fopts$easter, width = '100%'),
+          shiny::selectInput("iTd", "Trading Days", 
+            choices = lFOpts2$td, selected = fopts$td, width = '100%')
           )
       })
 
       # auto update
-      observe({ 
+      shiny::observe({ 
         rFOpts$method <- (input$iMethod)
         rFOpts$transform <- (input$iTransform)
         rFOpts$arima <- (input$iArima)
@@ -333,13 +303,13 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
         rFOpts$easter <- (input$iEaster)
         rFOpts$td <- (input$iTd)
 
-        if (is.null(isolate(rModel$m))){
+        if (is.null(shiny::isolate(rModel$m))){
           m <- x
         } else {
-          m <- isolate(rModel$m)
+          m <- shiny::isolate(rModel$m)
         }
 
-        cl <- AddFOpts(m, isolate(rFOpts))
+        cl <- AddFOpts(m, shiny::isolate(rFOpts))
         cstr <- format_seascall(cl)
 
         gTerminalCall <<- cstr
@@ -349,36 +319,34 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
        })
 
       # terminal update
-      observe({ 
+      shiny::observe({ 
         if (input$iEvalCall > 0){
           # assignment will trigger reevaluation
-          rModelCall$cstr <- isolate(input$iTerminal)
+          rModelCall$cstr <- shiny::isolate(input$iTerminal)
 
         }
        })
 
-      observe({ 
+      shiny::observe({ 
         if (input$iOutput > 0){
-          out(isolate(rModel$m))
+          out(shiny::isolate(rModel$m))
         }
        })
 
-      # --- manual input elements ----------------------------------------------------
+      # --- manual input elements ----------------------------------------------
 
       # display terminal, updated by rTerminalCall$cstr
-      output$oTerminal <- renderUI({
+      output$oTerminal <- shiny::renderUI({
         rTerminalUpd$upd
         cstr <- gTerminalCall
-        # hell: chrome
-        # sublime: monokai
-        tags$textarea(id="iTerminal", class="form-control", rows=10, cols=60, cstr)
-        # aceEditor("iTerminal", mode = "r", theme = "chrome", value = cstr, height = "160px")
+        shiny::tags$textarea(id="iTerminal", class="form-control", rows=10, 
+                             cols=60, cstr)
       })
 
       #  display error message and revert button, updated by rCall$error
-      output$oRevert <- renderUI({
+      output$oRevert <- shiny::renderUI({
         if(!is.null(rTerminalError$error)){
-           pp <- HTML(paste0('<div class="alert alert-danger alert-dismissible fade in" role="alert">
+           pp <- shiny::HTML(paste0('<div class="alert alert-danger alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4>Error</h4>
             <p>', rTerminalError$error, '</p>
@@ -394,21 +362,21 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
 
 
       # revert rTerminalCall$cstr, updated by input$iRevert
-      observe({ 
+      shiny::observe({ 
         if (!is.null(input$iRevert)){
           if (input$iRevert > 0){
             # increasing the reactive variable will update the Terminal
-            rTerminalUpd$upd <- isolate(rTerminalUpd$upd) + 1  
+            rTerminalUpd$upd <- shiny::isolate(rTerminalUpd$upd) + 1  
             rTerminalError$error <- NULL
           }
         }
        })
 
 
-      # --- output: view -----------------------------------------------------------
+      # --- output: view -------------------------------------------------------
 
       # view selector
-      output$oSeries <- renderUI({
+      output$oSeries <- shiny::renderUI({
         if (is.null(input$iMethod)){
           cc <- lSeries
         } else if (input$iMethod == "X11"){
@@ -419,23 +387,23 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
         }
         view <- gsub("x11.", "", gLastView, fixed = TRUE)
         view <- gsub("seats.", "", view, fixed = TRUE)
-        selectInput("iSeries", NULL, choices = cc, selected = view)
+        shiny::selectInput("iSeries", NULL, choices = cc, selected = view)
       })
 
       # update call if required by view
-      observe({ 
+      shiny::observe({ 
         iSeries <- input$iSeries
         if (!is.null(iSeries)){
 
           # no call updates for user defined view functions
           if (iSeries %in% names(lUserView)) {
-            rPlotUpd$upd <- isolate(rPlotUpd$upd) + 1
+            rPlotUpd$upd <- shiny::isolate(rPlotUpd$upd) + 1
             gLastView <<- iSeries
             return(NULL)
           }
 
-          # remove existing save specs
-          m <- isolate(rModel$m)
+          # remove existing save INSPDATA
+          m <- shiny::isolate(rModel$m)
           lcl <- as.list(m$call)
 
 
@@ -464,36 +432,36 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
             }
           }
 
-          cl <- as.call(lcl[!(names(lcl) %in% paste0(SPECS$spec, ".save"))])
+          cl <- as.call(lcl[!(names(lcl) %in% paste0(INSPDATA$spec, ".save"))])
 
           if (!iSeries %in% c("main", "mainpc", "monthplot")){ 
             if (iSeries %in% c("irregular", "seasonal", "trend")){
               iSeries <- paste0(tolower(input$iMethod), ".", iSeries)
             }
-            cstr <- format_seascall(AddSeriesToCall(cl, iSeries))
+            cstr <- format_seascall(AddSeriesToCall(cl, iSeries, INSPDATA))
             rModelCall$cstr <- cstr
-          } # else {
-          #   rPlotUpd$upd <- isolate(rPlotUpd$upd) + 1
-          # }
-          rPlotUpd$upd <- isolate(rPlotUpd$upd) + 1
+          } 
+          rPlotUpd$upd <- shiny::isolate(rPlotUpd$upd) + 1
         }
       })
 
 
-      output$oMainPlot <- renderPlot({
+      output$oMainPlot <- shiny::renderPlot({
         rPlotUpd$upd  # trigger on demand
 
         par(mar = c(3, 3, 1.7, 1.7) -1)
 
-
-        iSeries <- isolate(input$iSeries)
+        iSeries <- shiny::isolate(input$iSeries)
         if (is.null(iSeries)) {iSeries <- gLastView}
         if (iSeries == "main") return(plot(rModel$m, main = ""))
-        if (iSeries == "mainpc") return(plot(rModel$m, main = "", transform = "PC"))
+        if (iSeries == "mainpc") return(plot(rModel$m, main = "", 
+                                        transform = "PC"))
         if (iSeries == "monthplot"){
           # instead of the seas method, to hide the main title
-          monthplot(rModel$m$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "")
-          return(monthplot(seasonal:::siratio(rModel$m), col = "blue", type = "h", add = TRUE))
+          monthplot(rModel$m$data[,'seasonal'], ylab = "", lwd = 2, col = "red", 
+                    main = "")
+          return(monthplot(siratio(rModel$m), col = "blue", type = "h", 
+                 add = TRUE))
         }
 
         if (iSeries %in% c("irregular", "seasonal", "trend")){
@@ -505,24 +473,25 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet=TRUE, ...){
         } 
 
         s <- series(rModel$m, iSeries, reeval = FALSE)
-        validate(need(inherits(s, "ts"), "This view is not available for the model. Change view or model."))
+        shiny::validate(shiny::need(inherits(s, "ts"), 
+          "This view is not available for the model. Change view or model."))
         if (inherits(s, "ts")){
           return(ts.plot(s, ylab = ""))
         }
 
       })
 
-      # --- output: other ------------------------------------------------------------
+      # --- output: other ------------------------------------------------------
 
-      output$oSummary <- renderPrint({
+      output$oSummary <- shiny::renderPrint({
           PrintSummarySeas(summary(rModel$m))
       })
 
-      # --- close and import ------------------------------------------------------------
+      # --- close and import ---------------------------------------------------
 
       shiny::observe({
         if (input$iClose > 0){
-          shiny::stopApp(returnValue = isolate(rModel$m$call))
+          shiny::stopApp(returnValue = shiny::isolate(rModel$m$call))
         }
       })
     }

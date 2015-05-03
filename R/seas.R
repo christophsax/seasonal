@@ -59,7 +59,6 @@
 #'   details).
 #' @param list  a named list with additional spec-arguments options. This is an
 #'   alternative to the \code{...} argument. It is useful for programming.
-#'   (experimental)
 #'
 #' @return returns an object of class \code{"seas"}, essentially a list with the
 #'   following elements: 

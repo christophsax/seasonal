@@ -2,6 +2,7 @@
 % Please edit documentation in R/seasonal-package.R
 \docType{data}
 \name{SPECS}
+\alias{INSPDATA}
 \alias{SPECS}
 \title{List of Available X-13ARIMA-SEATS Outputs}
 \format{An object of class \code{"data.frame"}}

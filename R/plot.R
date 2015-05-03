@@ -19,8 +19,7 @@
 #' @param choice     character string, \code{"seasonal"} (default) or 
 #'   \code{"irregular"}.
 #' @param main    character string, title of the graph.
-#' @param series  X-13 name of the series to plot, see the manual for a
-#'   description.
+#' @param transform   character string, optionally transform the data to period to period  \code{"PC"} or year to year\code{"PCY"} percentage change rates. 
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
 #' @return All plot functions return a plot as their side effect.

@@ -136,6 +136,6 @@ NULL
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #'   
 #' @name SPECS
-#' @aliases SPECS
+#' @aliases INSPDATA
 #' @keywords datasets
 NULL

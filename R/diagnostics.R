@@ -33,9 +33,8 @@
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
-#'   Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS 
-#'   manual: 
-#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
+#'   Comprehensive list of executable R examples from the X-13 manual: 
+#'   \url{http://www.seasonal.website/examples.html}
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
@@ -61,7 +60,6 @@
 #' 
 #' # accessing the .out file (see ?out)
 #' out(m)
-#' out(m, search = "Ljung-Box")
 #' }
 #' @export
 qs <- function(x){

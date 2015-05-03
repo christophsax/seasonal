@@ -11,8 +11,13 @@ inspect(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...)
 
 \item{fun}{a function or a list of functions (see details)}
 
+\item{check.version}{logical, should the version of shiny be checked}
+
+\item{quiet}{logical, if \code{TRUE} (default), error messages from calls in
+inspect are not shown in the console}
+
 \item{...}{further arguments, passed on to
-  \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument from
+  \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of
   version 0.8 can be still used that way)}
 }
 \description{
@@ -21,15 +26,23 @@ to summarize all relevant options, plots and statistics that should be
 usually considered.
 }
 \details{
-The \code{inspect} function opens an interactive window that allows for the
-manipulation of a number of arguments. It offers several views to analyze the
-series graphically. With each change, the adjustment process and the
-visualizations are recalculated.
+Frequently used options can be modified using the drop down selectors in the
+upper left window. Each change will result in a re-estimation of the seasonal
+adjustment model. The R-call, the output and the summary are updated
+accordingly.
 
-Summary statistics are shown in the first tab. The last tab offers access to
-all series that can be produced with X-13.
+Alternatively, the R-Call can be modified manually in the lower left window.
+Press 'Run Call' to re-estimate the model and to adjust the option selectors,
+the output, and the summary. With the 'Close and Import' button, inspect is
+closed and the call is imported to R.
 
-The views in \code{inspect} may be customized via the \code{fun} argument.
+The views in the upper right window can be selected from the drop down menu.
+
+The lower right panel shows the summary, as descibed in the help page of
+\code{\link{summary.seas}}. The 'Full X-13 output' button opens the complete
+output of X-13 in a separate tab or window.
+
+The views in \code{inspect} can be customized via the \code{fun} argument.
 One or several plot functions may be supplied. The plot functions should have
 a \code{"seas"} object as their only argument. Several functions must be
 wrapped in a list (see examples).
@@ -54,7 +67,7 @@ myfun[['Spectum X-13']] <- function(m){
   plot(series(m, "spectrum.specorig", verbose = FALSE)[,-1], t = "l")
 }
 myfun[['Spectum R']] <- function(m){
-  spectrum(diff(log(AirPassengers)), method = "ar")
+  spectrum(diff(log(AirPassengers)), method = "ar", main = "")
 }
 inspect(m, myfun)
 
@@ -73,6 +86,10 @@ ts.plot(window(z, start = time(ser)[(length(ser) - back- 15)]),
 inspect(m, spaghetti)
 
 }
+}
+\references{
+Online Web Interface for Seasonal Adjustment with X-13
+  \url{http://www.seasonal.website}
 }
 \seealso{
 \code{\link{seas}} for the main function of seasonal.

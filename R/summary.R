@@ -144,5 +144,6 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
     cat("\n")
     print(x$err)
   }
+  cat("\n")
   invisible(x)
 }

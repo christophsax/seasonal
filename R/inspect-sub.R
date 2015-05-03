@@ -2,9 +2,6 @@
 PrintSummarySeas <- function(x, digits = max(3, getOption("digits") - 3), 
                               signif.stars = getOption("show.signif.stars"), ...) {
   
-  # cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n",
-  #     sep = "")
-  
   if (is.null(coef(x))) {
     cat("No Coefficients\n")
   } else {
@@ -109,8 +106,8 @@ EvalOrFail <- function(cstr){
 
 
 
-AddSeriesToCall <- function(cl, series){
-  SP <- SPECS[SPECS$long == series, ]
+AddSeriesToCall <- function(cl, series, INSPDATA){
+  SP <- INSPDATA[INSPDATA$long == series, ]
 
   lcl <- as.list(cl)
 
@@ -261,30 +258,12 @@ AddFOpts <- function(x, FOpts){
   # call in which all arguments are specified by their full names
   lc <- as.list(match.call(definition = seas, x$call))
 
-  # x$call
-  # lc <- as.list(x$call)
-# browser()
   if (is.null(FOpts$method)) FOpts$method <- "user"
   if (is.null(FOpts$transform)) FOpts$transform <- "user"
   if (is.null(FOpts$arima)) FOpts$arima <- "user"
   if (is.null(FOpts$outlier)) FOpts$outlier <- "user"
   if (is.null(FOpts$easter)) FOpts$easter <- "user"
   if (is.null(FOpts$td)) FOpts$td <- "user"
-
-  # # convert 'call' objects in ccharacter vectors
-  # # dont know why this is needed, but it seems to convert some lists into character vectors
-  # is.cl <- lapply(lc, class) == "call"
-
-  # # but not for genhol or window
-  # is.cl[is.cl] <- !sapply(lc[is.cl], function(e) as.character(e[[1]])) %in% c("window", "genhol")
-
-  # if (length(is.cl) > 0){
-  #   lc[is.cl] <- lapply(lc[is.cl], function(e){as.character(e)[-1]})
-  # }
-
-
-
-
 
   if (FOpts$method == "X11"){
     lc$x11 <- ""
@@ -326,12 +305,10 @@ AddFOpts <- function(x, FOpts){
     lc$regression.usertype = NULL
   }
 
-
   # calls to not work well with union, so covert them to character before
   C2C <- function(x){
     eval(parse(text = deparse(x)))
   }
-
 
   if (FOpts$easter %in% c("easter[1]", "easter[8]", "easter[15]", "none")){
     g <- grepl("easter[", lc$regression.variables, fixed = TRUE)
