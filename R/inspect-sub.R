@@ -69,7 +69,7 @@ format_seascall <- function(x){
   xl <- as.list(x)
   z <- list()
   for (i in 2:length(xl)){
-    z[[i - 1]] <- paste(names(xl)[i], "=", deparse(xl[[i]]))
+    z[[i - 1]] <- paste(names(xl)[i], "=", deparse(xl[[i]], width.cutoff = 500))
   }
   argstr <- do.call(paste, c(z, sep = ",\n"))
   z <- paste("seas(", argstr, ")", sep = "\n")

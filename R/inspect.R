@@ -224,7 +224,9 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
       # model evaluation, updated by rModelCall$cstr or rUploadUpd$upd
       shiny::observe({
         cstr <- rModelCall$cstr
+        cat("Vor Eval: ", length(cstr))
         z <- EvalOrFail(cstr)
+
         if (inherits(z, "try-error")){
           rTerminalError$error <- z
 
@@ -307,7 +309,9 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
         }
 
         cl <- AddFOpts(m, shiny::isolate(rFOpts))
+
         cstr <- format_seascall(cl)
+cat("Auto upd: ", length(cstr))
 
         gTerminalCall <<- cstr
 
@@ -336,7 +340,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
       output$oTerminal <- shiny::renderUI({
         rTerminalUpd$upd
         cstr <- gTerminalCall
-        shiny::tags$textarea(id="iTerminal", class="form-control", rows=10, 
+        shiny::tags$textarea(id="iTerminal", class="form-control", rows=13, 
                              cols=60, cstr)
       })
 
@@ -436,6 +440,8 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
               iSeries <- paste0(tolower(input$iMethod), ".", iSeries)
             }
             cstr <- format_seascall(AddSeriesToCall(cl, iSeries, INSPDATA))
+cat("View: ", length(cstr))
+
             rModelCall$cstr <- cstr
           } 
           rPlotUpd$upd <- shiny::isolate(rPlotUpd$upd) + 1
