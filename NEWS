@@ -1,14 +1,21 @@
-0.81.3  
+0.81.10  2015-05-??
 enhancements
-- fully redesigned inspect() to include the functionality of 
-  www.seasonal.website
+- completely redesigned inspect() (graphical user interface), with the look and 
+  feel of the demo website: www.seasonal.website
 
 under the hood
 - temporary files are cleaned up after execution
 
+documentation
+- extended documentation on inspect()
+- list argument: no longer experimental
+
 bug fixes
+- fixes parsing problem with exogenous regressors when using the list arg
+- fixed parsing problem with new Build 19 in qs() (which also affected summary)
 - input longer than 133 char is broken into multiple lines to avoid X-13 error
 - names of ARMA coefficients contain lag rather than period
+
 
 0.80.0  2015-02-05
 
@@ -32,6 +39,7 @@ bug fixes
 
 defunct
 - slidingspans, revisions, regressioneffects changed from deprecated to defunct
+
 
 0.70.1  2014-10-02
 
@@ -76,7 +84,8 @@ new features
 0.50.0  2014-03-27
 
 new features
-- 'series' function, which allows the import of all tables produced by X-13 (except composite spec)
+- 'series' function, which allows the import of all tables produced by X-13 
+  (except composite spec)
 
 enhancements
 - new na.action function: NA handling by X-13 (including interpolation)
@@ -88,7 +97,8 @@ enhancements
 - more flexible arima model specification (numeric vectors also allowed)
 
 deprecated
-- the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is now part of the new 'series' function. The old functions are deprecated.
+- the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is 
+  now part of the new 'series' function. The old functions are deprecated.
 
 code improvements
 - code takes advantage of the series function, simplified import from X-13
