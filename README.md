@@ -134,6 +134,10 @@ details):
     inspect(m)
 
 
+![graphical tool for choosing a seasonal adjustment
+model](./vignettes/images/inspect.png)
+
+
 ### Input
 
 In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-
@@ -290,13 +294,15 @@ accordingly.
 Alternatively, the R-Call can be modified manually in the lower left window.
 Press 'Run Call' to re-estimate the model and to adjust the option selectors,
 the output, and the summary. With the 'Close and Import' button, inspect is 
-closed and the call is imported to R.
+closed and the call is imported to R. The 'static' button substitutes 
+automatic procedures are substituted by the automatically chosen 
+spec-argument options, in the same way as `static`.
 
 The views in the upper right window can be selected from the drop down menu. The
 views can also be customized (see `?inspect`for details)
 
 The lower right panel shows the summary, as descibed in the help page of
-\code{\link{summary.seas}}. The 'Full X-13 output' button opens the complete 
+`?summary.seas`. The 'Full X-13 output' button opens the complete 
 output of X-13 in a separate tab or window.
 
 

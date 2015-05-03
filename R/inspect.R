@@ -12,7 +12,9 @@
 #' Alternatively, the R-Call can be modified manually in the lower left window.
 #' Press 'Run Call' to re-estimate the model and to adjust the option selectors,
 #' the output, and the summary. With the 'Close and Import' button, inspect is 
-#' closed and the call is imported to R.
+#' closed and the call is imported to R. The 'static' button substitutes 
+#' automatic procedures are substituted by the automatically chosen 
+#' spec-argument options, in the same way as \code{\link{static}}.
 #'
 #' The views in the upper right window can be selected from the drop down menu.
 #'
@@ -491,6 +493,16 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
           shiny::stopApp(returnValue = shiny::isolate(rModel$m$call))
         }
       })
+
+
+      shiny::observe({
+        if (input$iStatic > 0){
+          cstr <- format_seascall(static(isolate(rModel$m)))
+          gTerminalCall <<- cstr
+          rModelCall$cstr <- cstr
+        }
+      })
+
     }
   ), quiet = quiet)
 
