@@ -92,7 +92,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
     stop("first argument must be of class 'seas'")
   }
 
-  cat("Press ESC to get back to the console")
+  cat("Press ESC to get back to the console\n")
   
   init.model <- x
   init.icstr <- format_seascall(init.model$call)
