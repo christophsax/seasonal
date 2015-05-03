@@ -7,6 +7,8 @@ Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the
 older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by
 the Bank of Spain).
 
+![Graphical user interface for X-13](vignettes/images/inspect.jpg)
+
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated
 procedures of *seasonal* allow you to quickly produce good seasonal adjustments
 of time series. Start with the [Installation](#installation) and [Getting
@@ -271,8 +273,6 @@ click. Click several times to loop through different outlier types.
 
 ### Inspect tool
 
-![Graphical user interface for X-13](vignettes/images/inspect.jpg)
-
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
 model, using *[Shiny][shiny]*, with the same structure as the [demo website of
 seasonal][seasweb]. To install the latest version of Shiny, type:
@@ -286,18 +286,18 @@ argument:
     inspect(m)
 
 Frequently used options can be modified using the drop down selectors in the
-upper left window. Each change will result in a re-estimation of the seasonal
+upper left panel. Each change will result in a re-estimation of the seasonal
 adjustment model. The R-call, the output and the summary are updated
 accordingly.
 
-Alternatively, the R-Call can be modified manually in the lower left window.
+Alternatively, the R-Call can be modified manually in the lower left panel.
 Press 'Run Call' to re-estimate the model and to adjust the option selectors,
 the output, and the summary. With the 'Close and Import' button, inspect is 
 closed and the call is imported to R. The 'static' button substitutes 
 automatic procedures are substituted by the automatically chosen 
 spec-argument options, in the same way as `static`.
 
-The views in the upper right window can be selected from the drop down menu. The
+The views in the upper right panel can be selected from the drop down menu. The
 views can also be customized (see `?inspect`for details)
 
 The lower right panel shows the summary, as descibed in the help page of
