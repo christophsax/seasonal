@@ -36,8 +36,6 @@
 #'   
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #'
-#' @references  Online Web Interface for Seasonal Adjustment with X-13
-#'   \url{http://www.seasonal.website}
 #' @examples
 #' \dontrun{
 #' 
@@ -255,8 +253,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
       output$oFOpts <- shiny::renderUI({
         fopts <- GetFOpts(rModel$m)
 
-        # update if new fivebestmdl are available, otheœrwise, use last
-        # fivebestmdl
+        # update if new fivebestmdl are available, otherwise, use last fivebestmdl
         if (is.null(rModel$m$spc$automdl$print)){
           fbm <- gFiveBestMdl
         } else {
@@ -335,7 +332,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
 
       # --- manual input elements ----------------------------------------------
 
-      # display terminal, updated by rTerminalCall$cstr
+      # display terminal, updated by rTerminalCall$cstr
       output$oTerminal <- shiny::renderUI({
         rTerminalUpd$upd
         cstr <- gTerminalCall
@@ -343,7 +340,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
                              cols=60, cstr)
       })
 
-      #  display error message and revert button, updated by rCall$error
+      # display error message and revert button, updated by rCall$error
       output$oRevert <- shiny::renderUI({
         if(!is.null(rTerminalError$error)){
            pp <- shiny::HTML(paste0('<div class="alert alert-danger alert-dismissible fade in" role="alert">

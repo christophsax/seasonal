@@ -118,8 +118,8 @@ m <- seas(AirPassengers)
 summary(m)
 
 # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
-# (consult the X-13ARIMA-SEATS manual for many more options and the wiki for
-# for more examples)
+# (consult the X-13ARIMA-SEATS manual for many more options and the list of
+# R examples for more examples)
 seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
 seas(AirPassengers, force.type = "denton")  # force equality of annual values
 seas(AirPassengers, x11 = "")  # use x11, overrides the 'seats' spec
@@ -186,8 +186,7 @@ inspect(m)
 Vignette with a more detailed description:
   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 
-  Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS
-  manual:
+  Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 
 

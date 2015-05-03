@@ -33,8 +33,8 @@
 #' @references Vignette with a more detailed description: 
 #'   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 #'   
-#'   Comprehensive list of executable R examples from the X-13 manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}

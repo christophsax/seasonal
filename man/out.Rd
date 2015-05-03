@@ -51,8 +51,7 @@ out(m, search = "Normality Statistics for regARIMA")
 Vignette with a more detailed description:
   \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
 
-  Wiki page with a comprehensive list of R examples from the X-13ARIMA-SEATS
-  manual:
+  Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
   \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
 
 

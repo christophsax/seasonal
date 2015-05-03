@@ -87,10 +87,6 @@ inspect(m, spaghetti)
 
 }
 }
-\references{
-Online Web Interface for Seasonal Adjustment with X-13
-  \url{http://www.seasonal.website}
-}
 \seealso{
 \code{\link{seas}} for the main function of seasonal.
 }

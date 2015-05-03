@@ -77,7 +77,7 @@ format_seascall <- function(x){
 }
 
 
-# no limits on local machines
+# no limits on local machines
 IsCallSave <- function(cl){
   TRUE
 }
@@ -180,7 +180,7 @@ GetFOpts <- function(x){
      z$outlier <- "none"
   }
   
-  # easter and td: common preparations
+  # easter and td: common preparations
   if (!is.null(x$spc$regression$aictest)){
      aic <- x$spc$regression$aictest
   } else {
@@ -193,7 +193,7 @@ GetFOpts <- function(x){
      v <- ""
   }
   
-  # easter
+  # easter
   g <- grepl("easter[", x$spc$regression$variables, fixed = TRUE)
 
   if (sum(g) > 1){
