@@ -271,7 +271,7 @@ click. Click several times to loop through different outlier types.
 
 ### Inspect tool
 
-![Graphical user interface for X-13](https://github.com/christophsax/seasonal/blob/master/vignettes/images/inspect.jpg)
+![Graphical user interface for X-13](vignettes/images/inspect.jpg)
 
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
 model, using *[Shiny][shiny]*, with the same structure as the [demo website of
