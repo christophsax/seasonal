@@ -497,7 +497,18 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
 
       shiny::observe({
         if (input$iStatic > 0){
-          cstr <- format_seascall(static(shiny::isolate(rModel$m)))
+          m <- isolate(rModel$m)
+          scl <- static(m, test = FALSE)
+          # fix to avoid reevalation after sorting by AddFOpts
+          if (!is.null(scl$regression.variables)){
+            rv <- scl$regression.variables
+            eav <- c("easter[1]", "easter[8]", "easter[15]")
+            tdv <- c("td", "td1coef")
+            rv <- c(rv[!rv %in% eav], rv[rv %in% eav])
+            rv <- c(rv[!rv %in% tdv], rv[rv %in% tdv])
+            scl$regression.variables <- rv
+          }
+          cstr <- format_seascall(scl)
           gTerminalCall <<- cstr
           rModelCall$cstr <- cstr
         }
