@@ -497,7 +497,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
 
       shiny::observe({
         if (input$iStatic > 0){
-          cstr <- format_seascall(static(isolate(rModel$m)))
+          cstr <- format_seascall(static(shiny::isolate(rModel$m)))
           gTerminalCall <<- cstr
           rModelCall$cstr <- cstr
         }
