@@ -515,6 +515,6 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
       })
 
     }
-  ), quiet = quiet)
+  ), quiet = quiet, ...)
 
 }
