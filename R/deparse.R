@@ -9,8 +9,8 @@ deparse_spc <- function(x){
   for (i in seq_along(x)){
     if (length(x[[i]]) > 1){
       str <- paste(x[[i]], collapse = " ")
-      if (nchar(str) > 130){  # strings should be no longer than 130 
-        str <- paste(strwrap(str, width = 130), collapse = "\n  ")
+      if (nchar(str) > 115){  # strings should be no longer than 130 
+        str <- paste(strwrap(str, width = 115), collapse = "\n  ")
       }
       # put brackets around several elements
       z[i] <- paste0("  ", nx[i], " = (", str, ")")
