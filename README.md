@@ -30,9 +30,8 @@ X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
 The stable version is available from CRAN:
 
-```R
-install.packages("seasonal")
-```
+    install.packages("seasonal")
+
 To install the latest development version directly from Github, type to the R
 console:
        
