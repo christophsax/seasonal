@@ -35,6 +35,14 @@ The stable version is available from CRAN:
 install.packages("seasonal")
 \end{verbatim}
 
+To install the latest development version directly from Github, type to
+the R console:
+
+\begin{verbatim}
+install.packages("devtools")       
+devtools::install_github('christophsax/seasonal')      
+\end{verbatim}
+
 \subsection{Getting X-13}\label{getting-x-13}
 
 \emph{seasonal} does not include the binary executables of
@@ -165,8 +173,8 @@ static(m, coef = TRUE)  # also fixes the coefficients
 \end{verbatim}
 
 If you have \emph{Shiny} installed, the \texttt{inspect} command offers
-a way to analyze and modify a seasonal adjustment procedure (see the
-section below for details):
+an easy way to analyze and modify a seasonal adjustment procedure (see
+the section below for details):
 
 \begin{verbatim}
 inspect(m)
@@ -263,8 +271,7 @@ overwritten according the following priority rules:
 \end{itemize}
 
 As an alternative to the \texttt{...} argument, spec-arguments can also
-be supplied as a named list (experimental feature, inspired by base R
-\texttt{save}). This is useful for programming:
+be supplied as a named list. This is useful for programming:
 
 \begin{verbatim}
 seas(list = list(x = AirPassengers, x11 = ""))
@@ -367,10 +374,17 @@ identify(m)
 
 \section{Inspect tool}\label{inspect-tool}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{images/inspect.jpg}
+\caption{Graphical user interface for X-13}
+\end{figure}
+
 The \texttt{inspect} function is a graphical tool for choosing a
 seasonal adjustment model, using
-\emph{\href{http://shiny.rstudio.com}{Shiny}}. To install the latest
-version of Shiny, type:
+\emph{\href{http://shiny.rstudio.com}{Shiny}}, with the same structure
+as the \href{http://www.seasonal.website}{demo website of seasonal}. To
+install the latest version of Shiny, type:
 
 \begin{verbatim}
 install.packages("shiny")
@@ -378,19 +392,32 @@ install.packages("shiny")
 
 The goal of \texttt{inspect} is to summarize all relevant options, plots
 and statistics that should be usually considered. \texttt{inspect} uses
-a \texttt{"seas"} object as its only argument:
+a \texttt{"seas"} object as its main argument:
 
 \begin{verbatim}
 inspect(m)
 \end{verbatim}
 
-The \texttt{inspect} function opens an interactive window that allows
-for the manipulation of a number of arguments. It offers several views
-to analyze the series graphically. With each change, the adjustment
-process and the visualizations are recalculated. Summary statistics are
-shown in the first tab. The last tab offers access to all series that
-can be produced with X-13. The views in \texttt{inspect} are also
-customizable, see the examples in \texttt{?inspect}.
+Frequently used options can be modified using the drop down selectors in
+the upper left window. Each change will result in a re-estimation of the
+seasonal adjustment model. The R-call, the output and the summary are
+updated accordingly.
+
+Alternatively, the R-Call can be modified manually in the lower left
+window. Press `Run Call' to re-estimate the model and to adjust the
+option selectors, the output, and the summary. With the `Close and
+Import' button, inspect is closed and the call is imported to R. The
+`static' button substitutes automatic procedures are substituted by the
+automatically chosen spec-argument options, in the same way as
+\texttt{static}.
+
+The views in the upper right window can be selected from the drop down
+menu. The views can also be customized (see \texttt{?inspect}for
+details)
+
+The lower right panel shows the summary, as descibed in the help page of
+\texttt{?summary.seas}. The `Full X-13 output' button opens the complete
+output of X-13 in a separate tab or window.
 
 \section{Chinese New Year, Indian Diwali and other customized
 holidays}\label{chinese-new-year-indian-diwali-and-other-customized-holidays}
