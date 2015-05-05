@@ -140,7 +140,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
                       symbols = c("***", "**", "*", ".", " "))
     cat(" Shapiro (normality):", formatC(swtest$statistic, digits = digits), swstars)
   }
-  if (is.null(x$err)){
+  if (!is.null(x$err)){
     cat("\n")
     print(x$err)
   }
