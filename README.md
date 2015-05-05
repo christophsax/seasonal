@@ -271,7 +271,7 @@ click. Click several times to loop through different outlier types.
     identify(m)
 
 
-### Inspect tool
+### Inspect graphical user interface
 
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
 model, using *[Shiny][shiny]*, with the same structure as the [demo website of
