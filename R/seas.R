@@ -493,9 +493,15 @@ run_x13 <- function(file, out){
 
   # error message if output contains the ERROR
   if (inherits(msg, "character")){
-    le <- grep("ERROR", msg)
-    if (length(le) > 0){
-      stop("X-13 has returned an Error, with the following message(s):\n\n", paste(msg[le], collapse = "\n"))
+    le0 <- grep("ERROR", msg)
+    if (length(le0) > 0){
+      le1 <- grep("Program error", msg)
+      if (length(le1) > 0){
+         x13err <- paste(msg[le0:(le1-1)], collapse = "\n")
+      } else {
+         paste(msg[le0], collapse = "\n")
+      }
+      stop("X-13 has returned an Error, with the following message(s):\n\n", x13err, call. = FALSE)
     }
   }
 

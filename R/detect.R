@@ -23,6 +23,7 @@ detect_error <- function(err){
       z <- gsub("&nbsp;", "", z)  
       z <- gsub("\\s+", " ", z)          # remove multiple space
       z <- gsub("^\\s", "", z)           # remove trailing space
+      z <- gsub("<.+?>", "", z)           # remove inside HTML tags
       z
     }
   } else {
@@ -46,6 +47,9 @@ detect_error <- function(err){
   class(z) <- "x13messages"
   z$error <- sapply(grep("ERROR:", err), ParseInfo, x = err)
   z$warning <- sapply(grep("WARNING:", err), ParseInfo, x = err)
+  # do not show this meaningless warning 
+  # (its caused by default activation of spectrum)
+  z$warning <- z$warning[!grepl("Spectrums are only generated for monthly series.", z$warning)]
   z$note <- sapply(grep("note:", err), ParseInfo, x = err)
   z
 }
