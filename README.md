@@ -7,6 +7,8 @@ Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the
 older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by
 the Bank of Spain).
 
+![Graphical user interface for X-13](https://github.com/christophsax/seasonal/blob/master/vignettes/images/inspect.jpg)
+
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated
 procedures of *seasonal* allow you to quickly produce good seasonal adjustments
 of time series. Start with the [Installation](#installation) and [Getting
