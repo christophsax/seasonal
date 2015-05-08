@@ -36,6 +36,8 @@
 #'   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of 
 #'   version 0.8 can be still used that way)
 #'   
+#' @return an object of class \code{"seas"}, the modified model.
+#'
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #'
 #' @examples
@@ -45,6 +47,7 @@
 #' 
 #' inspect(m)
 #' 
+#' m2 <- inspect(m)  # save the model after closing the GUI
 #' 
 #' ### customizing inspect
 #' 
@@ -490,7 +493,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
 
       shiny::observe({
         if (input$iClose > 0){
-          shiny::stopApp(returnValue = shiny::isolate(rModel$m$call))
+          shiny::stopApp(returnValue = shiny::isolate(rModel$m))
         }
       })
 

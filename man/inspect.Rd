@@ -20,6 +20,9 @@ inspect are not shown in the console}
   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of
   version 0.8 can be still used that way)}
 }
+\value{
+an object of class \code{"seas"}, the modified model.
+}
 \description{
 Interactively inspect a \code{"seas"} object. The goal of \code{inspect} is
 to summarize all relevant options, plots and statistics that should be
@@ -56,6 +59,7 @@ m <- seas(AirPassengers)
 
 inspect(m)
 
+m2 <- inspect(m)  # save the model after closing the GUI
 
 ### customizing inspect
 
