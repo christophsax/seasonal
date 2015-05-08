@@ -500,7 +500,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
 
       shiny::observe({
         if (input$iStatic > 0){
-          m <- isolate(rModel$m)
+          m <- shiny::isolate(rModel$m)
           scl <- static(m, test = FALSE)
           # fix to avoid reevalation after sorting by AddFOpts
           if (!is.null(scl$regression.variables)){

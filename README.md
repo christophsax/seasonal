@@ -7,8 +7,6 @@ Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the
 older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by
 the Bank of Spain).
 
-![Graphical user interface for X-13](https://github.com/christophsax/seasonal/blob/master/vignettes/images/inspect.jpg)
-
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated
 procedures of *seasonal* allow you to quickly produce good seasonal adjustments
 of time series. Start with the [Installation](#installation) and [Getting
@@ -274,8 +272,8 @@ click. Click several times to loop through different outlier types.
 ### Inspect
 
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
-model, using *[Shiny][shiny]*, with the same structure as the [demo website of
-seasonal][seasweb]. To install the latest version of Shiny, type:
+model, using *[Shiny][shiny]*, with the same structure as the demo website of
+seasonal. To install the latest version of Shiny, type:
 
     install.packages("shiny")
 
@@ -451,5 +449,3 @@ Please report bugs and suggestions on [Github][github] or send me an
 [ubuntu]: http://askubuntu.com/questions/444354/how-do-i-install-x13-arima-seats-for-rstudio-from-source "Unix Installation Notes"
 
 [os-x]: https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-OS-X "OS-X Installation Notes"
-
-[seasweb]: http://www.seasonal.website "Online Web Interface for Seasonal Adjustment with X-13"
