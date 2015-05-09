@@ -294,11 +294,11 @@ Alternatively, the R-Call can be modified manually in the lower left panel.
 Press 'Run Call' to re-estimate the model and to adjust the option selectors,
 the output, and the summary. With the 'Close and Import' button, inspect is 
 closed and the call is imported to R. The 'static' button substitutes 
-automatic procedures are substituted by the automatically chosen 
+automatic procedures by the automatically chosen 
 spec-argument options, in the same way as `static`.
 
 The views in the upper right panel can be selected from the drop down menu. The
-views can also be customized (see `?inspect`for details)
+views can also be customized (see `?inspect` for details)
 
 The lower right panel shows the summary, as descibed in the help page of
 `?summary.seas`. The 'Full X-13 output' button opens the complete 
