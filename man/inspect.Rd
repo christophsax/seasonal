@@ -38,7 +38,7 @@ Alternatively, the R-Call can be modified manually in the lower left window.
 Press 'Run Call' to re-estimate the model and to adjust the option selectors,
 the output, and the summary. With the 'Close and Import' button, inspect is
 closed and the call is imported to R. The 'static' button substitutes
-automatic procedures are substituted by the automatically chosen
+automatic procedures by the automatically chosen
 spec-argument options, in the same way as \code{\link{static}}.
 
 The views in the upper right window can be selected from the drop down menu.
