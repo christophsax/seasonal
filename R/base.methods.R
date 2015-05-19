@@ -25,7 +25,9 @@ print.seas <- function(x, ...){
 #' @method print spclist
 #' @export
 print.spclist <- function(x, ...){
-  cat(deparse_spclist(x))
+  z <- deparse_spclist(x)
+  cat(z)
+  invisible(z)
 }
 
 
