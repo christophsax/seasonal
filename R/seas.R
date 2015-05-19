@@ -499,7 +499,7 @@ run_x13 <- function(file, out){
       if (length(le1) > 0){
          x13err <- paste(msg[le0:(le1-1)], collapse = "\n")
       } else {
-         paste(msg[le0], collapse = "\n")
+         x13err <- paste(msg[le0], collapse = "\n")
       }
       stop("X-13 has returned an Error, with the following message(s):\n\n", x13err, call. = FALSE)
     }
