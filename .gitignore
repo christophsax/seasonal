@@ -9,3 +9,5 @@ seasonal.Rproj
 build.R
 
 .Rapp.history
+
+.DS_Store
