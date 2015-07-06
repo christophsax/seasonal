@@ -124,10 +124,15 @@ seas(AirPassengers, regression.aictest = c("td"))  # no easter testing
 seas(AirPassengers, force.type = "denton")  # force equality of annual values
 seas(AirPassengers, x11 = "")  # use x11, overrides the 'seats' spec
 
-# 'spec.argument' combinations can also be supplied as a named list
-# (useful for programming)
-seas(AirPassengers, list = list(regression.aictest = c("td")))
-seas(list = list(x = AirPassengers, force.type = "denton"))
+# 'spec.argument' combinations can also be supplied as a named list, which is
+# useful for programming
+seas(AirPassengers, list = list(regression.aictest = c("td"), outlier = NULL))
+# constructing the list step by step
+ll <- list()
+ll[["x"]] <- AirPassengers
+ll[["regression.aictest"]] <- "td"
+ll["outlier"] <- list(NULL)  # assigning NULL to a list using single brackets
+seas(list = ll)
 
 # options can be entered as vectors
 seas(AirPassengers, regression.variables = c("td1coef", "easter[1]"))
