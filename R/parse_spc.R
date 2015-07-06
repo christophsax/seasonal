@@ -1,5 +1,5 @@
 #' @export
-parse_spc <- function(txt){
+parse_spc <- function(txt){  
   # parse text of an X-13 spc file
   # 
   # text  character vector
@@ -7,7 +7,12 @@ parse_spc <- function(txt){
   # return "spclist" object
   #
   # requires parse_spec
-  
+
+  stopifnot(inherits(txt, "character"))
+  if (length(txt) > 1) {
+    txt <- paste(txt, collapse = " ")
+  }
+
   # positions of curly braces
   op <- gregexpr("\\{", txt)[[1]]
   cl <- gregexpr("\\}", txt)[[1]]
@@ -36,7 +41,6 @@ parse_spc <- function(txt){
 }
 
 
-#' @export
 parse_singlespc <- function(txt){
   # parse a single spec into arguments
   #
@@ -63,9 +67,48 @@ parse_singlespc <- function(txt){
 
   z <- as.list(arg)
   names(z) <- nam
-
-  z <- lapply(z, tidyup_arg)
+  
+  # invoke tidyup_arg, but not for the 'model' argument
+  z[names(z) != "model"] <- lapply(z[names(z) != "model"], tidyup_arg)
 
   z
 }
+
+
+
+
+tidyup_arg <- function(x){
+  # tidy up an argument from a spec
+  # removes brackets, converts to (numeric) vector
+  #
+  # x   character vector of length 1
+  #
+  # returns a character string
+  
+  stopifnot(length(x) == 1)
+  
+  # remove curved brackets
+  x.nb <- gsub("[\\(\\)]", " ", x)
+  
+  # split along spaces (if not double quoted)
+  if (!grepl('[\\"].*[\\"]', x.nb)){
+    z <- strsplit(x.nb, '\\s+')[[1]]
+    z <- z[z != ""]    # remove emtpy elements
+  } else {
+    z <- x.nb
+  }
+  
+  # convert to numeric if possible
+  try.numeric <- suppressWarnings(as.numeric(z))
+  if (!any(is.na(try.numeric))){
+    z <- as.numeric(z)
+    if (identical(z, numeric(0))){ # don't return 'numeric(0)'
+      z <- NULL
+    }
+  }
+  
+  z
+}
+
+
 

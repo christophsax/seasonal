@@ -1,3 +1,6 @@
+# DEPRECATED, substituted by more universal parse_spc remove if tests in seas are done
+
+
 read_mdl <- function(file){
   # read and parse a .mdl file
   # 
@@ -48,8 +51,6 @@ parse_spec <- function(txt){
   
   # positions of curly braces (ignore subsequent bracktets form arima model)
   
-
-  
   op <- gregexpr("[^\\)]\\(", txt)[[1]] + 1
   cl <- gregexpr("\\)[^\\(]", txt)[[1]]
   
@@ -74,40 +75,5 @@ parse_spec <- function(txt){
   z
 }
 
-
-
-
-tidyup_arg <- function(x){
-  # tidy up an argument from a spec
-  # removes brackets, converts to (numeric) vector
-  #
-  # x   character vector of length 1
-  #
-  # returns a character string
-  
-  stopifnot(length(x) == 1)
-  
-  # remove curved brackets
-  x.nb <- gsub("[\\(\\)]", " ", x)
-  
-  # split along spaces (if not double quoted)
-  if (!grepl('[\\"].*[\\"]', x.nb)){
-    z <- strsplit(x.nb, '\\s+')[[1]]
-    z <- z[z != ""]    # remove emtpy elements
-  } else {
-    z <- x.nb
-  }
-  
-  # convert to numeric if possible
-  try.numeric <- suppressWarnings(as.numeric(z))
-  if (!any(is.na(try.numeric))){
-    z <- as.numeric(z)
-    if (identical(z, numeric(0))){ # don't return 'numeric(0)'
-      z <- NULL
-    }
-  }
-  
-  z
-}
 
 

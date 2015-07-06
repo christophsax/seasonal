@@ -408,7 +408,19 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   z$lks <- read_lks(iofile)
 
   # read .mdl file
-  z$model <- try(read_mdl(iofile), silent = TRUE) 
+  z$model <- parse_spc(readLines(paste0(iofile, ".mdl")))
+
+# browser()
+# DEPRECATED, remove if tests are done
+old_parsing <- try(read_mdl(iofile), silent = TRUE) 
+if (!isTRUE(all.equal(z$model, old_parsing))){
+  cat("new:\n")
+  print(z$model)
+  cat("old:\n")
+  print(old_parsing)
+}
+
+
   # fails for very complicated models, but is needed only for static()
   if (inherits(z$mdl, "try-error")){
     z$model <- NULL
