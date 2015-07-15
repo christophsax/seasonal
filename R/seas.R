@@ -245,11 +245,12 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   x.na <- na.action(x)
   
   # temporary working dir and filenames
-  wdir <- file.path(tempdir(), "x13")
-  if (!file.exists(wdir)){
-    dir.create(wdir)
+  wdir <- tempfile(pattern = "x13")
+  while (dir.exists(wdir)) {
+    wdir <- tempfile(pattern = "x13")
   }
-  file.remove(list.files(wdir, full.names = TRUE))
+
+  dir.create(wdir)
   
   # file names for 
   iofile <- file.path(wdir, "iofile")      # inputs and outputs (w/o suffix)
@@ -472,7 +473,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   # clean up
   if (!out){
-      file.remove(list.files(wdir, full.names = TRUE))
+    unlink(wdir, recursive = TRUE)
   }
 
   class(z) <- "seas"
