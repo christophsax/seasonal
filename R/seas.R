@@ -245,9 +245,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   x.na <- na.action(x)
   
   # temporary working dir and filenames
-  wdir <- tempfile(pattern = "x13")
+  pat <- if (out) "x13out" else "x13"
+  wdir <- tempfile(pattern = pat)
   while (dir.exists(wdir)) {
-    wdir <- tempfile(pattern = "x13")
+    wdir <- tempfile(pattern = pat)
   }
 
   dir.create(wdir)

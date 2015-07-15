@@ -51,7 +51,7 @@ out <- function(x, browser = getOption("browser"), line = 1, n = 100,
     return(outTxt(x, line = line, n = n, search = search, ldots = list(...)))
   }
   # clean remainings from previous out runs
-  unlink(list.files(tempdir(), pattern = "^x13", full.names = TRUE), recursive = TRUE)
+  unlink(list.files(tempdir(), pattern = "^x13out", full.names = TRUE), recursive = TRUE)
   
   m <- reeval(x, ldots = list(...), out = TRUE)
   browseURL(url = file.path(m$wdir, "iofile.html"), browser = browser)
