@@ -35,7 +35,7 @@ read_data <- function(method = "seats", file, frequency){
 }
 
 
-read_series <- function(file, frequency){
+read_series <- function(file, frequency = NULL){
   # Read data from a particular X13-ARIMA-SEATS file
   # 
   # file  full path including file ending
@@ -65,6 +65,10 @@ read_series <- function(file, frequency){
   if (nchar(time.raw[1]) == 6){  # time series
     year <- substr(time.raw, start = 1, stop = 4)
     per <- substr(time.raw, start = 5, stop = 6)
+
+    if (is.null(frequency)){
+      frequency <- length(unique(as.numeric(per)))
+    }
     
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
     z <- ts(dta[, -1], start = time[1], frequency = frequency)

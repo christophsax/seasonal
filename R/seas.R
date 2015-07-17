@@ -297,10 +297,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
       if (inherits(substitute(xreg), "name")){
         user <- deparse(substitute(xreg))
       } else {
-        user <- "user"
+        user <- "xreg"
       }
     } else {
-      user <- gsub("[\\(\\)]", "", colnames(xreg))
+      user <- paste0("xreg", 1:NCOL(xreg))
+      # user <- gsub("[\\(\\)]", "", colnames(xreg))
     }
     if (!is.null(spc$regression)){
       spc$regression$user <- user
@@ -323,10 +324,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
       if (inherits(substitute(xtrans), "name")){
         name <- deparse(substitute(xtrans))
       } else {
-        name <- "user"
+        name <- "xtrans"
       }
     } else {
-      name <- gsub("[\\(\\)]", "", colnames(xtrans))
+      name <- paste0("xreg", 1:NCOL(xreg))
+      # name <- gsub("[\\(\\)]", "", colnames(xtrans))
     }
     spc$transform$name = name
     spc$transform$file <- paste0("\"", xtrans.file, "\"")

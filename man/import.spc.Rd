@@ -2,18 +2,41 @@
 % Please edit documentation in R/import.spc.R
 \name{import.spc}
 \alias{import.spc}
-\title{read time series from X-13 input files}
+\alias{print.import.spc}
+\title{Import X-13 \code{.spc} Files to R (experimental)}
 \usage{
 import.spc(file)
+
+\method{print}{import.spc}(x)
 }
 \arguments{
-\item{x}{dsfdf}
+\item{file}{character, name of the X-13 spc file}
+}
+\value{
+returns an object of class \code{import.spc}, which is list with the following (optional) elements:
+  \item{call}{object of class \code{call}, the call to \code{\link{seas}}}
+  \item{x}{object of class \code{call}, the call to retrieve the data for the input series}
+  \item{xtrans}{object of class \code{call}, the call to retrieve the data for the \code{xtrans} series (if required by the call)}
+  \item{xreg}{object of class \code{call}, the call to retrieve the data for the \code{xreg} series (if required by the call)}
 }
 \description{
-helper function to read time series from X-13 input files
+Helper function to read time series from X-13 input files. It generates a
+list of calls that can be run in R, replicating the X-13 spc file. The print
+method displays the calls in way so they can be copy-pasted into an R script.
+\bold{This is an experimental function that may change substantially in the future.}
 }
 \examples{
-import.spc("~/Desktop/Testairline.spc")
-import.spc("/Users/christoph/tmp/iofile.spc")
+# importing the orginal X-13 example file
+import.spc(file.path(path.package("seasonal"), "tests", "Testairline.spc"))
+
+# a spc with multiple user defined regression and transformation series
+tdir <- tempdir()
+seas(x = AirPassengers, xreg = cbind(a = genhol(cny, start = 1, end = 4,
+    center = "calendar"), b = genhol(cny, start = -3, end = 0,
+    center = "calendar")), xtrans = cbind(sqrt(AirPassengers), AirPassengers^3),
+    transform.function = "log", transform.type = "temporary",
+    regression.aictest = "td", regression.usertype = "holiday", dir = tdir,
+    out = TRUE)
+import.spc(file.path(tdir, "iofile.spc"))
 }
 
