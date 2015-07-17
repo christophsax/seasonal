@@ -140,9 +140,6 @@ expand_spclist_to_args <- function(ll){
 rem_defaults_from_args <- function(x) {
   z <- x
 
-  # set these non-present specs to NULL
-  if (!"automdl" %in% names(z)) {z['automdl'] <- list(NULL)}
-  if (!"outlier" %in% names(z)) {z['outlier'] <- list(NULL)}
 
 
   # default arguents
@@ -173,9 +170,14 @@ rem_defaults_from_args <- function(x) {
   dx <- d[names(xd)]
   z[names(xd)] <- Map(setdiff, xd, dx)
 
-
-
   z[lapply(z, length) == 0] <- NULL
+
+
+  # set these non-present specs to NULL
+  if (!any(grepl("^automdl", names(x)))) {z['automdl'] <- list(NULL)}
+  if (!any(grepl("^outlier", names(x)))) {z['outlier'] <- list(NULL)}
+  if (!"regression.aictest" %in% names(x)) {z['regression.aictest'] <- list(NULL)}
+
 
   # make sure not to loose x11 with default save
   if (any(grepl("^x11", names(x))) & !any(grepl("^x11", names(z)))){
