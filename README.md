@@ -448,6 +448,6 @@ Please report bugs and suggestions on [Github][github] or send me an
 
 [shiny]: http://shiny.rstudio.com
 
-[ubuntu]: http://askubuntu.com/questions/444354/how-do-i-install-x13-arima-seats-for-rstudio-from-source "Unix Installation Notes"
+[ubuntu]: https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-Ubuntu "Linux Installation Notes"
 
 [os-x]: https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-OS-X "OS-X Installation Notes"
