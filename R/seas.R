@@ -327,7 +327,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
         name <- "xtrans"
       }
     } else {
-      name <- paste0("xreg", 1:NCOL(xreg))
+      name <- paste0("xtrans", 1:NCOL(xtrans))
       # name <- gsub("[\\(\\)]", "", colnames(xtrans))
     }
     spc$transform$name = name
