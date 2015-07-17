@@ -34,6 +34,7 @@ parse_spc <- function(txt){
    stop = op - 1)
   
   nam <- gsub("\\n", "", nam)
+  nam <- gsub("^ +| +$", "", nam)
 
 
   stopifnot(length(z0) == length(nam))
@@ -80,18 +81,26 @@ parse_singlespc <- function(txt){
   # parse_singlespc("\n  noadmiss = yes\n  save = (s10 s11 s12 s13 s16 s18)\n")
   # parse_singlespc("\n  aictest = (td easter)\n")
   # parse_singlespc("\n\n")
+  # parse_singlespc("\n  print = qs\n")
 
+  txt <- gsub("= *\\n", "=", txt)  # remove new lines after =
 
+  # remove new lines inside ()
+  op <- gregexpr("\\(", txt)[[1]]
+  cl <- gregexpr("\\)", txt)[[1]]
+  pp <- Map(c, op, cl)
+  for (ppi in pp){
+    substr(txt, start = ppi[1], stop = ppi[2]) <- gsub("\\n", " ", substr(txt, start = ppi[1], stop = ppi[2]))
+  }
 
+  st <- strsplit(txt, split = "\n")[[1]]
+  st <- st[st != ""]
 
-  st <- strsplit(txt, split = "\n ")[[1]]
-  if (length(st) == 1) return(gsub("\\n|^ *| *$", "", st))
+  # if (length(st) == 1) return(gsub("\\n|^ *| *$", "", st))
 
   st <- st[!grepl("^ *$", st)]
 
   snamarg <- strsplit(st, split = "=")
-
-  # arg <- spltxt[-1]
 
   arg <- sapply(snamarg, function(e) e[[2]])
 

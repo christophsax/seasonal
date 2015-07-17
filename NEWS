@@ -9,7 +9,7 @@ enhancements
   Windows machines. Thanks, Vidur Dhanda!
 
 under the hood
-(- rewritten parsing for spc and mdl files) REVERTED
+- rewritten parsing for spc and mdl files
 
 bug fixes
 - some X13 warnings were not fully shown in summary

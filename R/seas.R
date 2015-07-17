@@ -417,8 +417,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   z$lks <- read_lks(iofile)
 
   # read .mdl file
-  # z$model <- parse_spc(readLines(paste0(iofile, ".mdl")))
-
+  z$model <- parse_spc(readLines(paste0(iofile, ".mdl")))
+# 
 # browser()
 # DEPRECATED, remove if tests are done
 # old_parsing <- try(read_mdl(iofile), silent = TRUE) 
@@ -430,8 +430,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 # }
 
 
-  # temporarily mode back to old parsing
-  z$model <- try(read_mdl(iofile), silent = TRUE) 
+  # # temporarily mode back to old parsing
+  # z$model <- try(read_mdl(iofile), silent = TRUE) 
 
 
   # fails for very complicated models, but is needed only for static()
