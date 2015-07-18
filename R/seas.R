@@ -417,7 +417,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   z$lks <- read_lks(iofile)
 
   # read .mdl file
-  z$model <- parse_spc(readLines(paste0(iofile, ".mdl")))
+  z$model <- try(parse_spc(readLines(paste0(iofile, ".mdl"))), silent = TRUE) 
 # 
 # browser()
 # DEPRECATED, remove if tests are done
