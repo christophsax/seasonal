@@ -32,7 +32,8 @@
 #' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"} 
 #'   (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
 #'   an alternative model is used (a message is returned). If \code{noadmiss =
-#'   "no"}, no approximation is done.
+#'   "no"}, no approximation is done. If the seats spec is removed 
+#'   (\code{seats = NULL}), no seasonal adjustment is performed.
 #' @param transform.function   spec \code{transform} with argument 
 #'   \code{function = "auto"} (default). Automatic log transformation detection.
 #'   Set equal to \code{"none"}, \code{"log"} or any value that is allowed by 
@@ -167,6 +168,10 @@
 #' # identical to a X-13ARIMA-SEATS specification of the the level shift
 #' seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"), 
 #'      outlier = NULL)
+#' 
+#' # forecasting an annual series without seasonal adjustment
+#' m <- seas(airmiles, seats = NULL, regression.aictest = NULL)
+#' series(m, "forecast.forecasts")
 #' 
 #' # NA handling
 #' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
@@ -371,6 +376,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # add all series that have been produced and are specified in SERIES_SUFFIX
   file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[2]]))
   is.series <- file.suffix %in% SERIES_SUFFIX
+
   series.list <- lapply(file.path(wdir, flist[is.series]), read_series, 
                         frequency = frequency(x))
   names(series.list) <- file.suffix[is.series]
@@ -381,8 +387,9 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     z$data <- read_data(method = "seats", file = iofile, frequency(x))
   } else if (!is.null(spc$x11)){
     z$data <- read_data(method = "x11", file = iofile, frequency(x))
-  } 
-
+  } else {
+    z$data <- NULL
+  }
   # read errors/warnings
   if (getOption("htmlmode") == 1){
     errtxt <- readLines(paste0(iofile, "_err.html"))
@@ -453,12 +460,15 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   # check if freq detection in read_series has worked
-  if (frequency(z$data) != as.numeric(z$udg['freq'])){
-    if (is.null(z$data)){
-      stop("X-13 has run but produced no data")
+  if (any(c("x11", "seats") %in% names(spc))){
+    if (frequency(z$data) != as.numeric(z$udg['freq'])){
+      if (is.null(z$data)){
+        stop("X-13 has run but produced no data")
+      }
+      stop("Frequency of imported data (", frequency(z$data), ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), ").")
     }
-    stop("Frequency of imported data (", frequency(z$data), ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), ").")
   }
+
 
   ### final additions to output
   if (!is.null(attr(x.na, "na.action"))){

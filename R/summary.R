@@ -102,9 +102,10 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   cat("\n")
   if (!is.null(x$spc$seats)){
     cat("SEATS adj.")
-  }
-  if (!is.null(x$spc$x11)){
+  } else if (!is.null(x$spc$x11)){
     cat("X11 adj.")
+  } else {
+    cat("No adj.")
   }
   
   cat("  ARIMA:", x$model$arima$model)
