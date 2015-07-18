@@ -59,25 +59,26 @@ read_series <- function(file, frequency = NULL){
     return(z)
   }
 
-  dta <- apply(dta.raw[-1, ], 2, type.convert)
-  time.raw <- as.numeric(dta[, 1])
+  dta <- do.call("cbind", lapply(dta.raw[-1, ], type.convert))
+  tt <- as.numeric(dta[, 1])
+  dd <- dta[, -1, drop = FALSE]
     
-  if (nchar(time.raw[1]) == 6){  # time series
-    year <- substr(time.raw, start = 1, stop = 4)
-    per <- substr(time.raw, start = 5, stop = 6)
+  rownames(dd) <- NULL
+
+  if (nchar(tt[1]) == 6){  # time series
+    year <- substr(tt, start = 1, stop = 4)
+    per <- substr(tt, start = 5, stop = 6)
 
     if (is.null(frequency)){
       frequency <- length(unique(as.numeric(per)))
     }
     
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
-    z <- ts(dta[, -1], start = time[1], frequency = frequency)
-    
+    z <- ts(dd, start = time[1], frequency = frequency)
     z[z==-999] <- NA   # usual NA code
     
   } else {
-    z <- dta
-    rownames(z) <- NULL
+    z <- dd
   }
   z
 }

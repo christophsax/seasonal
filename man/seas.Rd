@@ -23,7 +23,8 @@ together with \code{xreg}.}
 \item{seats.noadmiss}{spec 'seats' with argument \code{noadmiss = "yes"}
 (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
 an alternative model is used (a message is returned). If \code{noadmiss =
-"no"}, no approximation is done.}
+"no"}, no approximation is done. If the seats spec is removed
+(\code{seats = NULL}), no seasonal adjustment is performed.}
 
 \item{transform.function}{spec \code{transform} with argument
 \code{function = "auto"} (default). Automatic log transformation detection.
@@ -172,6 +173,10 @@ seas(AirPassengers, xreg = tls, outlier = NULL)
 # identical to a X-13ARIMA-SEATS specification of the the level shift
 seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"),
      outlier = NULL)
+
+# forecasting an annual series without seasonal adjustment
+m <- seas(airmiles, seats = NULL, regression.aictest = NULL)
+series(m, "forecast.forecasts")
 
 # NA handling
 AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)

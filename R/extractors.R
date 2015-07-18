@@ -88,6 +88,7 @@ extract_w_na_action <- function(x, name){
   # 
   # used by: time series extractor functions
   #
+  if (is.null(x$data)) return (NULL)
   z <- na.omit(x$data[, name])
   if (!is.null(x$na.action)){
     if (attr(x$na.action, "class") == "exclude") {
