@@ -1,6 +1,8 @@
 R interface to X-13ARIMA-SEATS
 ------------------------------
 
+[![Build Status](https://travis-ci.org/christophsax/seasonal.png?branch=master)](https://travis-ci.org/christophsax/seasonal)
+
 *seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS,
 the newest seasonal adjustment software developed by the [United States Census
 Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the
