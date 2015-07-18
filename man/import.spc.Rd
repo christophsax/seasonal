@@ -29,6 +29,7 @@ method displays the calls in way so they can be copy-pasted into an R script.
 # importing the orginal X-13 example file
 import.spc(file.path(path.package("seasonal"), "tests", "Testairline.spc"))
 
+\dontrun{
 # a spc with multiple user defined regression and transformation series
 tdir <- tempdir()
 seas(x = AirPassengers, xreg = cbind(a = genhol(cny, start = 1, end = 4,
@@ -37,6 +38,12 @@ seas(x = AirPassengers, xreg = cbind(a = genhol(cny, start = 1, end = 4,
     transform.function = "log", transform.type = "temporary",
     regression.aictest = "td", regression.usertype = "holiday", dir = tdir,
     out = TRUE)
-import.spc(file.path(tdir, "iofile.spc"))
+ii <- import.spc(file.path(tdir, "iofile.spc"))
+ii  # list with 4 calls (3 series import, 1 main call)
+
+# evaluating the imported calls in R
+ee <- lapply(ii, eval, envir = globalenv())
+ee$call  # the 'seas' object produced from the .spc file
+}
 }
 
