@@ -8,7 +8,6 @@ parse_spc <- function(txt){
   #
   # requires parse_spec
 
-# browser()
 
 
 
@@ -20,6 +19,8 @@ parse_spc <- function(txt){
   if (length(txt) > 1) {
     txt <- paste(txt, collapse = "\n")
   }
+
+  txt <- gsub("= *\\n", "=", txt)  # remove new lines after =
 
   # positions of curly braces
   op <- gregexpr("\\{", txt)[[1]]
@@ -40,7 +41,7 @@ parse_spc <- function(txt){
   stopifnot(length(z0) == length(nam))
 
 
-names(z0) <- nam
+  names(z0) <- nam
   
   # # separate individual specs
   # z0 <- list()
@@ -88,6 +89,19 @@ parse_singlespc <- function(txt){
   # remove new lines inside ()
   op <- gregexpr("\\(", txt)[[1]]
   cl <- gregexpr("\\)", txt)[[1]]
+
+
+  if (length(op) != length(cl)){
+    # workaround for unmatching parenteses in .mdl
+    # seasonal//(change for after 1952.Dec/
+    txt <- gsub("\\(change for", "change for", txt)
+    op <- gregexpr("\\(", txt)[[1]]
+    cl <- gregexpr("\\)", txt)[[1]]
+    if (length(op) != length(cl)){
+      message("unmatching parenteses")
+    }
+  }
+
   pp <- Map(c, op, cl)
   for (ppi in pp){
     substr(txt, start = ppi[1], stop = ppi[2]) <- gsub("\\n", " ", substr(txt, start = ppi[1], stop = ppi[2]))
