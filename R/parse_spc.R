@@ -1,4 +1,4 @@
-#' @export
+
 parse_spc <- function(txt){  
   # parse text of an X-13 spc file
   # 

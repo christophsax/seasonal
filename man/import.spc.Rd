@@ -11,6 +11,10 @@ import.spc(file)
 }
 \arguments{
 \item{file}{character, name of the X-13 spc file}
+
+\item{x}{object of class \code{import.spc}}
+
+\item{...}{further arguments, not used}
 }
 \value{
 returns an object of class \code{import.spc}, which is list with the following (optional) elements:

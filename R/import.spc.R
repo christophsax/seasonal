@@ -121,6 +121,8 @@ import.spc <- function(file){
 #' @export
 #' @rdname import.spc
 #' @method print import.spc
+#' @param x    object of class \code{import.spc}
+#' @param ... further arguments, not used
 print.import.spc <- function(x, ...){
 
   inps <- x[!names(x) == "call"]
