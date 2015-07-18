@@ -7,7 +7,7 @@
 \usage{
 import.spc(file)
 
-\method{print}{import.spc}(x)
+\method{print}{import.spc}(x, ...)
 }
 \arguments{
 \item{file}{character, name of the X-13 spc file}

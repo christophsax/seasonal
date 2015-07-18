@@ -12,6 +12,12 @@ import.ts(file, format = c("datevalue", "datevaluecomma", "free", "freecomma",
 
 \item{format}{a valid X-13 file format as described in 7.15, p. 173 of the
 X-13 manual.}
+
+\item{start}{vector of length 2, time of the first observation (only for
+formats \code{"free"} and \code{"freecomma"})}
+
+\item{frequency}{the number of observations per unit of time (only for
+formats \code{"free"} and \code{"freecomma"})}
 }
 \description{
 Helper function to read time series from X-13 input files. A call to
@@ -23,10 +29,12 @@ Helper function to read time series from X-13 input files. A call to
 tpath <- file.path(path.package("seasonal"), "tests")
 
 import.ts(file.path(tpath, "datavalue.dta"))
-import.ts(file.path(tpath, "free.dta"), format = "free", start = c(1949, 1), frequency = 12)
+import.ts(file.path(tpath, "free.dta"), format = "free", start = c(1949, 1),
+          frequency = 12)
 import.ts(file.path(tpath, "x13save.dta"), format = "x13save")
 import.ts(file.path(tpath, "datavaluecomma.dta"), format = "datevaluecomma")
-import.ts(file.path(tpath, "freecomma.dta"), format = "freecomma", start = c(1949, 1), frequency = 12)
+import.ts(file.path(tpath, "freecomma.dta"), format = "freecomma",
+          start = c(1949, 1), frequency = 12)
 import.ts(file.path(tpath, "datavalue_q.dta"))
 import.ts(file.path(tpath, "x13save_q.dta"), format = "x13save")
 import.ts(file.path(tpath, "datavalue_mult.dta"))
