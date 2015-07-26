@@ -45,7 +45,7 @@ r <- rr[-c(87, 98)]  # remove known issues
 
 # --- numerical equality -------------------------------------------------------
 
-z <- lapply(cl, r, function(e) try(eval(parse(text = e))))
+z <- lapply(r, function(e) try(eval(parse(text = e))))
 
 failing <- which(sapply(z, class) == "try-error")
 
