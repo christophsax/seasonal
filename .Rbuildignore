@@ -4,4 +4,4 @@
 .gitignore
 ^\.travis\.yml$
 build.R
-no-cran
+travis-tests
