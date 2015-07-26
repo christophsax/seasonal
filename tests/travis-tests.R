@@ -1,5 +1,6 @@
 cat("GOOD")
-Sys.setenv(X13_PATH = "./not-on-cran/x13")
+Sys.setenv(X13_PATH = "./travis-tests/x13")
+library(seasonal)
 cat("BETTER")
 checkX13()
 cat("BEST")
