@@ -29,14 +29,9 @@ Helper function to read time series from X-13 input files. A call to
 tpath <- file.path(path.package("seasonal"), "tests")
 
 import.ts(file.path(tpath, "datavalue.dta"))
-import.ts(file.path(tpath, "free.dta"), format = "free", start = c(1949, 1),
+import.ts(file.path(tpath, "free1.txt"), format = "free", start = c(1949, 1),
           frequency = 12)
-import.ts(file.path(tpath, "x13save.dta"), format = "x13save")
-import.ts(file.path(tpath, "datavaluecomma.dta"), format = "datevaluecomma")
-import.ts(file.path(tpath, "freecomma.dta"), format = "freecomma",
-          start = c(1949, 1), frequency = 12)
-import.ts(file.path(tpath, "datavalue_q.dta"))
-import.ts(file.path(tpath, "x13save_q.dta"), format = "x13save")
-import.ts(file.path(tpath, "datavalue_mult.dta"))
+import.ts(file.path(tpath, "free2.txt"), format = "free", start = c(1949, 1),
+          frequency = 12)
 }
 

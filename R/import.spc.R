@@ -44,12 +44,10 @@ import.spc <- function(file){
   # file <- "/Users/christoph/tmp/urtest2.spc"
 
   txt <- readLines(file)
-
-
   txt <- gsub("\\\\", "/", txt)  # window file names to unix
-
-  txt <- tolower(txt)  # TODO dont do this for file names
-
+  # keep everything lowercase, also works for filenames on mac and windows.
+  # Untested on linux.
+  txt <- tolower(txt)            
   txt <- gsub("#.*$", "", txt) # remove comments
 
   pp <- parse_spc(txt)
@@ -230,15 +228,10 @@ rem_defaults_from_args <- function(x) {
 #' tpath <- file.path(path.package("seasonal"), "tests")
 #' 
 #' import.ts(file.path(tpath, "datavalue.dta"))
-#' import.ts(file.path(tpath, "free.dta"), format = "free", start = c(1949, 1), 
+#' import.ts(file.path(tpath, "free1.txt"), format = "free", start = c(1949, 1), 
 #'           frequency = 12)
-#' import.ts(file.path(tpath, "x13save.dta"), format = "x13save")
-#' import.ts(file.path(tpath, "datavaluecomma.dta"), format = "datevaluecomma")
-#' import.ts(file.path(tpath, "freecomma.dta"), format = "freecomma", 
-#'           start = c(1949, 1), frequency = 12)
-#' import.ts(file.path(tpath, "datavalue_q.dta"))
-#' import.ts(file.path(tpath, "x13save_q.dta"), format = "x13save")
-#' import.ts(file.path(tpath, "datavalue_mult.dta"))
+#' import.ts(file.path(tpath, "free2.txt"), format = "free", start = c(1949, 1), 
+#'           frequency = 12)
 import.ts <- function(file, 
                     format = c("datevalue", "datevaluecomma", "free", "freecomma", "x13save"), 
                     start = NULL, frequency = NULL){
