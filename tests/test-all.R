@@ -4,7 +4,7 @@ cat(Sys.getenv("TRAVIS_BUILD_DIR"))
 
 
 
-Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13")
+Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
 library(seasonal)
 cat("BETTER")
 checkX13()
@@ -16,7 +16,7 @@ message("LOOOKS GOOD")
 
 
 
-cc <- read.csv("./travis/examples/ex_run.csv")  # runnable examples
+cc <- read.csv(file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/examples/ex_run.csv"))  # runnable examples
 
 # known issues:
 
@@ -65,7 +65,7 @@ s.final <- final(z[ff == 6][[1]])
 
 # save(m.final, q.final, s.final, file = "test0.90.0.RData")
 bench <- new.env()
-load("./travis/examples/test0.90.0.RData", envir = bench)
+load(file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "./travis/examples/test0.90.0.RData"), envir = bench)
 
 stopifnot(all.equal(m.final, bench$m.final))
 stopifnot(all.equal(q.final, bench$q.final))
