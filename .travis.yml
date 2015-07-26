@@ -1,9 +1,3 @@
 language: r
 warnings_are_errors: true
 sudo: required
-install:
-  - curl -o /tmp/x13ashtml.tar.gz http://www.seasonal.website/downloads/x13ashtml.tar.gz
-  - tar -zxvf /tmp/x13ashtml.tar.gz 
-  - mkdir ${HOME}/opt/x13
-  - cp /tmp/x13ashtml ${HOME}/opt/x13/x13ashtml
-  - echo X13_PATH = /opt/x13 >> /usr/lib/R/etc/Renviron.site
