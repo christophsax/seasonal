@@ -1,10 +1,16 @@
-cat("GOOD")
-Sys.setenv(X13_PATH = "./travis/x13")
+cat(Sys.getenv("TRAVIS"))
+cat(Sys.getenv("TRAVIS_BUILD_DIR"))
+
+
+
+
+Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13")
 library(seasonal)
 cat("BETTER")
 checkX13()
 seas(AirPassengers)
 message("LOOOKS GOOD")
+
 
 
 
