@@ -1,0 +1,5 @@
+cat("GOOD")
+Sys.setenv(X13_PATH = "./not-on-cran/x13")
+cat("BETTER")
+checkX13()
+cat("BEST")
