@@ -41,8 +41,17 @@ import.spc <- function(file){
 
   # file <- "~/Desktop/Testairline.spc"
   # file <- "/Users/christoph/tmp/iofile.spc"
+  # file <- "/Users/christoph/tmp/urtest2.spc"
 
   txt <- readLines(file)
+
+
+  txt <- gsub("\\\\", "/", txt)  # window file names to unix
+
+  txt <- tolower(txt)  # TODO dont do this for file names
+
+  txt <- gsub("#.*$", "", txt) # remove comments
+
   pp <- parse_spc(txt)
 
   ext_ser_call <- function(spc, vname){
@@ -68,11 +77,18 @@ import.spc <- function(file){
       if (frm == "datevalue"){
         xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
       } else if (frm %in% c("datevaluecomma", "x13save")){
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = ', frm, ')')
+        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
       } else if (frm %in% c("free", "freecomma")){
-        start <- spc$start
+        sspl <- strsplit(spc$start, "\\.")[[1]]
+        s1 <- sspl[1]
+        s2 <- sspl[2]
+
+        if (s2 %in% tolower(month.abb)){
+          s2 <- match(sspl[2], tolower(month.abb))
+        }
+        start <- as.numeric(c(s1, s2))
         frequency <- if (is.null(spc$period)) 12 else spc$period
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = ', frm, ' start = ', start , ' frequency = ', frequency, ')')
+        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", start = ', deparse(start) , ', frequency = ', frequency, ')')
       } else {
       message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
          gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
@@ -147,8 +163,6 @@ expand_spclist_to_args <- function(ll){
 
 rem_defaults_from_args <- function(x) {
   z <- x
-
-
 
   # default arguents
   e <- list(seats.noadmiss = "yes", 
@@ -232,25 +246,26 @@ import.ts <- function(file,
   format <- match.arg(format)
   stopifnot(file.exists(file))
 
-  if (format %in% c("datevalue", "datevaluecomma")){
-    dec <- if (format == "datevaluecomma") "," else "."
-    dta <- read.table(file, sep = " ", dec = dec)
-    ser <- dta[,-c(1:2)]
-    ser <- unname(ser)
-    frequency <- length(unique(dta[, 2]))
-    start <- c(as.matrix(dta[1, 1:2]))
-    z <- ts(ser, frequency = frequency, start = start)
+  if (format %in% c("datevalue", "datevaluecomma", "free", "freecomma")){
+    txt <- readLines(file)
 
-  } 
-  if (format %in% c("free", "freecomma")){
-    dec <- if (format == "freecomma") "," else "."
-    dta <- read.table(file, sep = " ", dec = dec)
-    ser <- as.numeric(t(dta))
-    frequency <- frequency
-    start <- start
+    dec <- if (format %in% c("datevaluecomma", "freecomma")) "," else "."
+    sep <- if (grepl("\\t", txt[2])) "\t" else " "
 
-    z <- ts(ser, frequency = frequency, start = start)
+    txt <- gsub(" +", " ", txt)
+    txt <- gsub("^ | $", "", txt)
 
+    dta <- read.table(text = txt, sep = sep, dec = dec)
+
+    if (format %in% c("datevalue", "datevaluecomma")){
+      frequency <- length(unique(dta[, 2]))
+      start <- c(as.matrix(dta[1, 1:2]))
+      dta <- dta[,-c(1:2)]
+    } else {
+      stopifnot(!is.null(frequency))
+      stopifnot(!is.null(frequency))
+    }
+    z <- ts(unname(dta), frequency = frequency, start = start)
   } 
 
   if (format %in% c("x13save")){
