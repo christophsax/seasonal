@@ -1,4 +1,6 @@
 language: r
 warnings_are_errors: true
 sudo: required
-r_binary_packages: testthat
+r_binary_packages:
+ - testthat
+ 
