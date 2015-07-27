@@ -876,14 +876,12 @@ Seats {  Finite = yes
 History { Estimates = (Sadj Trend)
           Save = ( Sarevisions Trendrevisions )
 }"
-66,"# bimonthly data
-require(tempdisagg)
-AirPassengersBM <- ta(AirPassengers, to = 6)
-seas(AirPassengersBM, 
-     regression.aictest = NULL,
-     outlier.types = c(""ao"", ""ls"", ""tc""),
-     forecast.maxlead = 18
-)
+66,"bm <- ts(AirPassengers[as.logical(rep(c(1, 0), length.out = length(AirPassengers)))],
+   start = start(AirPassengers), frequency = 6)
+seas(bm, 
+  regression.aictest = NULL,
+  outlier.types = c(""ao"", ""ls"", ""tc""),
+forecast.maxlead = 18)
 ","Series  { Title=""Model based adjustment of Bimonthly exports""
           Start = 1995.1  File = ""Xports6.Ori""  Period = 6 }
 Transform { Function = Log } Regression { Variables = Td } 
