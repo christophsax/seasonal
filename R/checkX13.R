@@ -128,6 +128,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       message("  - seasonal test run successful")
     } else {
       message("\nERROR: seasonal test run failed.")
+      has.failed <- TRUE
     }
 
     if (has.failed){
