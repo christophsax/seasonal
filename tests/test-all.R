@@ -8,13 +8,7 @@ Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
 library(seasonal)
 library(tempdisagg)
 
-cat("BETTER")
 checkX13()
-seas(AirPassengers)
-message("LOOOKS GOOD")
-
-
-
 
 
 
