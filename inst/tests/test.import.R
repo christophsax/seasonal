@@ -27,6 +27,17 @@ import.ts(file.path(tpath, "datavalue_mult1.dta"))
 
 
 
+import.ts(file.path(tpath, "x11_m1l.dat"))
+import.ts(file.path(tpath, "x11_m2l.dat"))
+import.ts(file.path(tpath, "x11_m2l2.dat"))
+import.ts(file.path(tpath, "x11_m2r.dat"))
+
+
+
+
+
+
+
 # import.spc
 # ------------------------------------------------------------------------------
 
@@ -46,5 +57,18 @@ import.spc(file.path(tdir, "iofile.spc"))
 
 import.spc(file.path(tpath, "urtest0.spc"))
 import.spc(file.path(tpath, "urtest1.spc"))
+
+
+import.spc(file.path(tpath, "x11/SHOERS1982.spc"))
+
+
+
+
+
+
+
+
+
+
 
 
