@@ -4,3 +4,4 @@
 .gitignore
 ^\.travis\.yml$
 build.R
+travis

@@ -1,0 +1,1365 @@
+,r,x13
+1,"seas(AirPassengers,
+     x11 = """",
+     arima.model = ""(0 1 1)""
+)
+
+seas(AirPassengers,
+     x11 = """",
+     arima.model = c(0, 1, 1)
+)","series { title  =  ""Quarterly Grape Harvest"" start = 1950.1
+         period =  4
+         data  = (8997 9401 ... 11346) }
+arima { model = (0 1 1) }
+estimate { }"
+2,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     arima.model = ""(2 1 0)(0 1 1)""
+)","series { title = ""Monthly sales"" start = 1976.jan
+         data = (138 128 ... 297) }
+transform { function = log } arima{model =(210)(011)} estimate { }"
+3,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     regression.variables = c(""seasonal"", ""const""),
+     arima.model = ""(0 1 1)""
+)","Series { Title = ""Monthly Sales""  Start = 1976.jan
+         Data = (138 128 ... 297)  }
+Transform { Function = log }
+Regression { Variables= (seasonal const) } Arima {Model=(011)}
+Estimate { }"
+4,"seas(AirPassengers,
+     x11 = """",
+     arima.model = ""([2] 1 0)""
+)","series{title = ""Annual Olive Harvest"" start = 1950
+        data = (251 271 ... 240)  }
+arima{model  = ([2] 1 0)}
+estimate{ }"
+5,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     regression.variables = c(""const""),
+     arima.model = ""(0 1 1)12""
+)","series { title = ""Monthly sales""  start = 1976.jan
+         data = (138 128 ... 297) }
+transform { function = log }
+regression { variables = const }
+arima { model  = (0 1 1)12 }
+estimate { }"
+6,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     regression.variables = c(""const"", ""seasonal""),
+     arima.model = ""(1 1 0)(1 0 0)3(0 0 1)""
+)","series { title = ""Monthly sales""  start = 1976.jan
+          data = (138 128 ... 297) }
+transform { function = log }
+regression { variables = (const seasonal)} arima{model =(110)(100)3(001)} estimate { }"
+7,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     arima.ma = "" , 1.0f""
+)","series { title = ""Monthly sales""  start = 1976.jan
+         data = (138 128 ...  297) }
+transform{ function = log }
+arima  { model = (0 1 1)(0 1 1)12
+            ma = ( ,1.0f)}
+estimate { }"
+8,"seas(AirPassengers, 
+     x11 = """",
+     regression.variables = c(""td"", ""seasonal"")
+)","series      { title = ""Monthly sales""   start = 1976.jan
+            file=""ussales.dat""  }
+regression { variables = (td seasonal) } automdl { }
+estimate { }
+x11 {}"
+9,"seas(AirPassengers, 
+     x11 = """",
+     regression.variables = c(""td""),
+     automdl.diff = c(1, 1),
+     automdl.maxorder = ""3, ""
+)","series      { title = ""Monthly sales""
+              file=""ussales.dat"" }
+regression  { variables = td  }
+start = 1976.jan
+automdl {
+diff=(11)
+maxorder = ( 3, ) }
+outlier     {   }
+estimate { } x11 {}"
+10,"seas(AirPassengers, 
+         x11 = """",
+         regression.aictest = c(""td""),
+         automdl.savelog = ""amd""
+         )
+","series      { title = ""Monthly sales""
+              file=""ussales.dat"" }
+regression { aictest = td } automdl { savelog = amd } estimate { }
+x11 {}"
+11,"seas(AirPassengers, 
+         x11 = """",
+         arima.model = ""(0 1 1)(0 1 1)"",
+         check.print = ""all""
+         )
+","series { title = ""Monthly Retail Sales""
+         start = 1964.jan
+         file = ""sales1.dat"" }
+regression { variables = (td ao1967.jun
+                          ls1971.jun easter[14]) }
+arima { model = (0 1 1)(0 1 1) }
+check { print = (all) }
+ "
+12,"seas(AirPassengers, 
+         x11 = """",
+         regression.variables = c(""td"", ""ao1951.jun"", ""ls1953.jun"", ""easter[14]""),
+         arima.model = c(0, 1, 1, 0, 1, 1),
+         check.print = c(""all"", ""-pacf"", ""-pacfplot""),
+         check.maxlag = 36
+         )
+","series { title = ""Monthly Retail Sales""
+         start = 1964.jan
+         file = ""sales1.dat"" }
+regression { variables = (td ao1967.jun
+                          ls1971.jun easter[14]) }
+arima { model = (0 1 1)(0 1 1) }
+check { print = (all -pacf -pacfplot)
+        maxlag = 36 }"
+13,"seas(AirPassengers, 
+     x11 = """",
+     regression.variables = c(""seasonal""),
+     arima.model = c(0, 1, 1),
+     arima.ma = ""0.25f""
+)
+","series { title = ""Monthly Sales"" start = 1976.1
+          data = (138 128 ... 297) }
+regression { variables = seasonal }
+arima { model = (0,1,1)   ma = (0.25f) }
+estimate { save = residuals }"
+14,"seas(AirPassengers, 
+     x11 = """",
+     outlier = NULL, 
+     transform.function = ""log"",
+     regression.variables = c(""td"", ""ao1959.01""),
+     arima.model = c(1, 1, 0, 0, 1, 1),
+     regression.aictest = NULL,
+     estimate.tol = 1e-4,
+     estimate.maxiter = 100,
+     estimate.exact = ""ma""
+)","series { title = ""Monthly Inventory"" start = 1978.12
+          data = (1209 834 ... 1002) }
+transform { function = log }
+regression { variables = (td ao1999.01)  }
+arima { model = (1,1,0)(0,1,1) }
+estimate { tol = 1e-4  maxiter = 100  exact = ma  save = mdl
+print = (iterations roots) }
+  "
+15,"seas(x = AirPassengers, 
+     x11 = """", 
+     regression.variables = c(""td"", ""ao1959.01""), 
+     estimate.maxiter = 100, 
+     estimate.exact = ""ma"", 
+     arima.model = ""(1 1 0)(0 1 1)"", 
+     regression.aictest = NULL, 
+     outlier = NULL, 
+     transform.function = ""log"", 
+     regression.b = c(""-0.006263974216f"", ""-0.003388544874f"", 
+                      ""-0.002629579663f"", ""-0.002867539316f"", 
+                      ""0.002675064631f"", ""0.003928729538f"", 
+                      ""0.000897413435f""), 
+     arima.ma = ""0.574618733f"", 
+     arima.ar = ""-0.2255735128f""
+     )","series { title = ""Monthly Inventory"" start = 1978.12
+              data = (1209 834 ... 1002) }
+transform { function = log }
+estimate { file = ""Inven.mdl""
+     fix = all }"
+16,"seas(AirPassengers, 
+     pickmdl = """", 
+     x11.seasonalma = ""S3X9"",
+     force.start = ""oct""
+     )","SERIES  { TITLE=""EXPORTS OF TRUCK PARTS"" START =1967.1
+         FILE = ""X21109.ORI""   }
+PICKMDL {   }
+X11  { SEASONALMA = S3X9    }
+FORCE  {  START = OCTOBER   }"
+17,"seas(AirPassengers, 
+     pickmdl = """", 
+     x11.seasonalma = ""S3X9"",
+     force.start = ""oct"",
+     force.type = ""regress"",
+     force.rho = 0.8
+)","SERIES  { TITLE=""EXPORTS OF TRUCK PARTS"" START =1967.1
+          FILE = ""X21109.ORI""   }
+PICKMDL {   }
+X11  { SEASONALMA = S3X9    }
+FORCE  {  START = OCTOBER
+          TYPE = REGRESS
+          RHO = 0.8
+}"
+18,"seas(AirPassengers, 
+     pickmdl = """", 
+     x11.seasonalma = ""S3X5"",
+     force.type = ""none""
+)","Series  { Title=""Imports Of Truck Engines"" Start =1967.1
+          File = ""I21110.Ori""   }
+Pickmdl {   }
+X11  { Seasonalma = S3X5    }
+Force  {  Type = None }"
+19,"seas(AirPassengers, 
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast = """"
+)
+","SERIES { TITLE = ""Monthly sales""  START = 1976.JAN
+         DATA = (138 128 ... 297) }
+TRANSFORM { FUNCTION = LOG } REGRESSION { VARIABLES = TD } ARIMA {
+  MODEL = (0 1 1)(0 1 1)12 } FORECAST { }"
+20,"seas(AirPassengers, 
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast.maxlead = 24
+)
+","Series { Title = ""Monthly Sales""  Start = 1976.jan
+         Data = (138 128 ... 297) }
+Transform { Function = Log}
+Regression { Variables = Td }
+Arima { Model = (0 1 1)(0 1 1)12 }
+Estimate { }
+Outlier { }
+Forecast { Maxlead = 24 }"
+21,"seas(AirPassengers, 
+     x11 = """",
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast.maxlead = 15,
+     forecast.probability = 0.9,
+     forecast.exclude = 10
+)
+","series { title = ""Monthly sales""  start = 1976.jan
+         data = (138 128 ... 297) }
+transform { function = log }
+regression { variables = td }
+arima { model = (0 1 1)(0 1 1)12 }
+estimate { }
+forecast { maxlead = 15
+           probability = .90
+           exclude = 10 }"
+22,"seas(window(AirPassengers,  end = c(1958, 3)),
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast.maxlead = 24
+)
+
+seas(AirPassengers,
+     series.span = "" ,1958.mar"",
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast.maxlead = 24
+)","series { title = ""Monthly sales""  start = 1976.jan
+         data = (138 128 ... 297)
+         span = ( ,1990.mar) }
+transform { function = log}
+regression { variables = td }
+arima { model = (0 1 1)(0 1 1)12 }
+estimate { }
+forecast { maxlead = 24 }"
+23,"seas(AirPassengers, 
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast.maxback = 12,
+     x11 = """"
+)
+","series { title = ""monthly sales""  start = 2000.jan
+         file = ""ussales.dat""     }
+transform { function = log }
+regression { variables = td }
+arima { model = (0 1 1)(0 1 1)12 }
+forecast {  maxback=12  }
+x11{   }"
+24,"seas(AirPassengers, 
+     transform.function = ""log"", 
+     regression.variables = ""td"",
+     arima.model = ""(0 1 1)(0 1 1)12"",
+     forecast.maxlead = 24,
+     forecast.lognormal = ""yes""
+)
+","Series { Title = ""Monthly Sales""  Start = 1976.jan
+         Data = (138 128 ... 297) }
+Transform { Function = Log}
+Regression { Variables = Td }
+Arima { Model = (0 1 1)(0 1 1)12 }
+Estimate { }
+Outlier { }
+Forecast { Maxlead = 24  Lognormal = Yes }"
+25,"seas(austres, 
+          x11.seasonalma = ""S3X9"",
+          history.sadjlags = 2
+)
+","Series {  Title = ""Sales Of Livestock""  Start = 1967.1
+          File = ""cattle.ori""  }
+X11 {  SeasonalMA = S3X9   }
+History  {  sadjlags = 2  }"
+26,"seas(AirPassengers, 
+     regression.variables = c(""const"", ""td"", ""ls1952.may"", ""ls1956.oct""),
+     arima.model= ""(0 1 2)(1 1 0)"",
+     x11.seasonalma = ""S3X9"",
+     history.estimates = ""fcst"",
+     history.fstep = 1,
+     history.start = ""1955.jan""
+)
+","series     {  title = ""Exports of Leather goods""
+              start = 1969.jul  file = ""expleth.dat""  }
+regression { variables = (const td ls1972.may ls1976.oct) } arima { model=(012)(110) }
+estimate { }
+history { estimates = fcst fstep = 1 start=1975.jan }"
+27,"seas(AirPassengers, 
+     regression.variables = c(""const"", ""td"", ""ls1952.may"", ""ls1956.oct""),
+     arima.model= ""(0 1 2)(1 1 0)"", 
+     history.estimates = ""fcst"",
+     history.save = ""fch""
+)
+","series     {  title = ""Exports of Leather goods""
+              start = 1969.jul
+              file = ""expleth.dat"" }
+regression { variables = (const td ls1972.may ls1976.oct) } arima { model=(012)(110) }
+estimate { }
+history { estimates = fcst save = r6 start = 1975.jan }"
+28,"seas(AirPassengers, 
+     regression.variables = ""td"",
+     arima.model= ""(0 1 2)(0 1 1)"",
+     x11.seasonalma = ""S3X3"",
+     history.estimates = c(""sadj"", ""trend"")
+)
+","series {  title = ""Housing Starts in the Midwest""
+          start = 1967.1
+          file = ""hsmwtot.ori""
+          modelspan = (,0.Dec)
+          comptype=add
+}
+regression { variables = td } arima{model=(012)(011) }
+x11 { seasonalMA = S3X3 }
+history { estimates = (sadj trend) }"
+29,"seas(AirPassengers, 
+     regression.variables = ""td"",
+     arima.model= ""(0 1 1)(0 1 1)"",
+     x11.seasonalma = ""S3X3"",
+     history.estimates = c(""sadj"", ""trend"")
+)
+","composite{ title = ""Total Housing Starts in the US""
+           modelspan = (,0.Dec)
+}
+regression { variables = td } arima{model=(011)(011) } x11 { seasonalMA = S3X3 }
+history { estimates = (sadj trend)
+          save = (sar iar trr)  }"
+30,"seas(AirPassengers, 
+     transform.function = ""log"",
+     identify.diff = c(0, 1), 
+     identify.sdiff = c(0, 1),
+     identify.print = c(""none"", ""+acf"")
+)
+","series {  title = ""Monthly Sales""  start = 1976.jan
+             data = (138 128 ... 297) }
+transform { function = log }
+identify { diff = (0, 1)
+            sdiff = (0, 1)
+            print = (none +acf) }"
+31,"seas(AirPassengers, 
+     regression.variables = c(""const"", ""seasonal""),
+     identify.diff = c(0,1)
+)","SERIES      { TITLE = ""MONTHLY SALES""  START = 1976.JAN
+              DATA = (138 128 ... 297) }
+REGRESSION  { VARIABLES = (CONST SEASONAL) }
+IDENTIFY    { DIFF = (0,1) }"
+32,"seas(AirPassengers, 
+     transform.function = ""log"",
+     regression.variables = c(""td"", ""easter[14]""),
+     identify.diff = 1, 
+     identify.sdiff = 1,
+     identify.maxlag = 30,
+     identify.print = c(""none"", ""+acfplot"", ""+pacfplot"")
+)
+","Series { Title = ""Monthly Sales""  Start = 1976.Jan
+         Data = (138 128 ... 297) }
+Transform { Function = Log }
+Regression { Variables = (Td Easter[14])}
+Identify { Diff = (1)  Sdiff = (1)  Maxlag = 30
+            Print = (None +ACFplot +PACFplot)  }"
+33,"seas(AirPassengers, 
+     regression.variables = c(""ls1952.1""),
+     identify.diff = c(0, 1), 
+     identify.sdiff = c(0, 1),
+     identify.maxlag = 16
+)","series { title = ""Quarterly Sales""  start = 1963.1  period = 4
+         data = (56.7 57.7 ... 68.0) }
+regression { variables = (ls1971.1) }
+arima { model = (0 1 1)(0 1 1) }
+identify { diff = (0, 1)  sdiff = (0, 1)  maxlag = 16 }
+estimate {  }
+check {  }"
+34,"seas(AirPassengers, 
+     arima.model= ""(0 1 1)(0 1 1)12"",
+     outlier.lsrun = 5, 
+     outlier.types = c(""ao"", ""ls"")
+)","series {  title = ""Monthly sales""  start = 1976.jan
+          data = (138 128 ... 297) }
+arima {   model = (0 1 1)(0 1 1)12 }
+outlier { lsrun = 5  types=(ao ls) }"
+35,"seas(window(AirPassengers, start = c(1950, 1), end = c(1959, 12)), 
+     regression.variables = c(""ls1951.jun"", ""ls1952.nov""),
+     arima.model= ""(0 1 1)(0 1 1)12"",
+     outlier.lsrun = 5, 
+     outlier.types = ""ao"",
+     outlier.method = ""addall"",
+     outlier.critical = 4
+)","Series { Title = ""Monthly Sales""  Start = 1976.Jan
+         Data = (138 128 ... 297)
+         Span = (1980.Jan, 1992.Dec) }
+Regression { Variables = (LS1981.Jun LS1990.Nov) }
+Arima { Model = (0 1 1)(0 1 1)12 }
+Estimate {  }
+Outlier { Types = AO   Method = Addall  Critical = 4.0  }"
+36,"seas(window(AirPassengers, start = c(1950, 1), end = c(1959, 12)),
+     outlier.types = ""ls"",
+     outlier.critical = 3,
+     outlier.lsrun = 2, 
+     outlier.span = ""1953.jan, 1958.dec""
+)","series { title = ""Monthly sales""  start = 1976.jan
+         data = (138 128 ... 297)
+         span = (1980.jan, 1992.dec) } arima{ model=(011)(011)12}
+estimate { }
+outlier { types = ls
+          critical = 3.0
+          lsrun = 2
+          span = (1987.jan, 1988.dec) }"
+37,"seas(window(AirPassengers, start = c(1950, 1), end = c(1959, 12)), 
+     arima.model= ""(0 1 1)(0 1 1)12"",
+     outlier.critical = c(3, 4.5, 4),
+     outlier.types = ""all""
+)","series { title = ""Monthly sales""  start = 1976.jan
+         data = (138 128 ... 297)
+         span = (1980.jan, 1992.dec) } arima{model =(011)(011)12}
+estimate { }
+outlier { critical = (3.0, 4.5, 4.0)
+          types = all }"
+38,"seas(AirPassengers, 
+     x11 = """",
+     pickmdl.mode = ""fcst""
+)","series      { title = ""Monthly sales""   start = 1976.jan
+                data = (138 128  ...  297) }
+regression { variables = (td seasonal) }
+pickmdl { mode = fcst file = ""nosdiff.mdl"" } estimate { }
+x11 {}"
+39,"seas(AirPassengers, 
+     x11 = """",
+     regression.variables = ""td"",
+     pickmdl.mode = ""fcst"",
+     pickmdl.method = ""first"",
+     pickmdl.fcstlim = 20,
+     pickmdl.qlim = 10,
+     pickmdl.overdiff = 0.99,
+     pickmdl.identify = ""all""
+)","series      { title = ""Monthly sales""   start = 1976.jan
+                data = (138 128  ...  297) }
+regression  { variables = td }
+pickmdl     { mode = fcst    file = ""nosdiff.mdl""
+                method = first   fcstlim = 20   qlim = 10
+                overdiff = 0.99  identify = all }
+outlier     {  }
+estimate { } 
+x11 {}"
+40,"seas(AirPassengers, 
+     x11 = """",
+     regression.variables = ""td"",
+     pickmdl.mode = ""fcst"",
+     pickmdl.outofsample = ""yes""
+)","series      { title = ""Monthly sales""   start = 1976.jan
+                data = (138 128  ...  297) }
+regression  { variables = td }
+pickmdl     { mode = fcst    file = ""nosdiff.mdl""
+                outofsample=yes  }
+estimate    {   }
+x11 {}"
+41,"seas(AirPassengers, 
+     regression.aictest = NULL,
+     regression.variables = c(""const"", ""seasonal""),
+     arima.model = ""(0 1 1)""
+)","SERIES      { TITLE = ""Monthly sales""  START = 1976.JAN
+                 DATA = (138 128 ... 297) }
+  REGRESSION { VARIABLES = (CONST SEASONAL) }
+  ARIMA { MODEL = (0 1 1) }
+  ESTIMATE { }"
+42,"seas(AirPassengers, 
+     x11 = """",
+     regression.aictest = NULL,
+     regression.variables = c(""const"", ""sincos[4,5]""),
+     spectrum.savelog = ""peaks""
+)
+","series { title = ""Irregular Component of Monthly Sales""
+         start = 1976.jan
+         file = ""sales.d13""
+         format = ""x13save""
+       }
+regression { variables = (const sincos[4,5]) }
+estimate { }
+spectrum { savelog=peaks }"
+43,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.aictest = NULL,
+     regression.variables = c(""const"", ""easter[8]"", ""thank[3]""),
+     identify.diff = c(0, 1),
+     identify.sdiff = c(0, 1)
+)","Series { Title = ""Monthly Sales""  Start = 1976.Jan
+          Data = (138 128 ... 297) }
+Transform { Function = Log }
+Regression { Variables = (TD Easter[8] Labor[10] Thank[3]) }
+Identify { Diff = (0 1) SDiff = (0 1) }"
+44,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.aictest = NULL,
+     regression.variables = c(""tdnolpyear"", ""lom"", ""easter[8]"", ""labor[10]"",
+                              ""thank[3]""),
+     arima.model = ""(0 1 1)(0 1 1)""
+)","series      { title = ""Monthly sales""  start = 1976.jan
+                data = (138 128 ... 297) }
+transform { function = log }
+regression { variables = (tdnolpyear lom easter[8] labor[10] thank[3])
+               aictest = (lom td easter) }
+arima { model = (0 1 1)(0 1 1) }
+estimate { }"
+45,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""tdstock1coef[31]"", ""easterstock[8]""),
+     arima.model = ""(0 1 1)(0 1 1)"",
+     x11 = """"
+)","series     {  title = ""Retail inventory of food products""
+                start = 1990.jan  data = ""foodri.dat""  type = stock
+             }
+regression {  variables = ( tdstock1coef[31]  easterstock[8] )
+                aictest = ( td easter )
+             }
+arima { model=(011)(011) } x11{ }"
+46,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.aictest = NULL,
+     regression.variables = c(""ao1950.1"", ""rp1950.2-1950.4"", ""ao1951.1"", ""td""),
+     arima.model = ""(0 1 1)(0 1 1)""
+)","Series     { Title  = ""Quarterly Sales""  Start = 1990.1  Period = 4
+               Data  = (1039 1241 ...  2210)  }
+Transform { Function = Log }
+Regression { Variables = (AO2007.1 RP2005.2-2005.4 AO1998.1 TD) } 
+Arima { Model=(011)(011)}
+Estimate { }"
+47,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.aictest = NULL,
+     regression.variables = c(""ao1950.1"", ""qi1950.2-1950.4"", ""ao1951.1"", ""td""),
+     arima.model = ""(0 1 1)(0 1 1)""
+)","Series     { Title  = ""Quarterly Sales""  Start = 1990.1  Period = 4
+               Data  = (1039 1241 ...  2210)  }
+Transform { Function = Log }
+Regression { Variables = (AO2007.1 QI2005.2-2005.4 AO1998.1 TD) } 
+Arima { Model=(011)(011)}
+Estimate { }"
+48,"# user defined regressor
+tls <- ts(0, start = 1949, end = 1965, freq = 12)
+window(tls, start = c(1955, 1), end = c(1957, 12)) <- 1
+
+seas(AirPassengers, 
+     xreg = tls, 
+     identify.diff = c(0, 1),
+     identify.sdiff = c(0, 1),
+     outlier = NULL
+)","series {title = ""Quarterly sales""  start = 1981.1
+           data = (301 294 ...  391)  period = 4  }
+regression {user = tls
+              data = (0 0 0 0 0 0 0 0 0 0 0 0 ...
+                      0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 ... 0) }
+identify   { diff = (0 1) sdiff = (0 1) }"
+49,"seas(AirPassengers, 
+     regression.variables = c(""tl1955.01-1957.12""),
+     identify.diff = c(0, 1),
+     identify.sdiff = c(0, 1),
+     outlier = NULL)","series {title = ""Quarterly sales""  start = 1981.1
+           data = (301 294 ...  391)  period = 4  }
+regression {  variables = tl1985.03-1987.01  }
+identify   { diff = (0 1) sdiff = (0 1) }"
+50,"temp = ts(runif(200), start = 1948, frequency = 12)
+precip = ts(runif(200), start = 1948, frequency = 12)
+seas(AirPassengers,
+     x11 = """",
+     xreg = cbind(temp, precip),
+     regression.variables = c(""seasonal"", ""const""),
+     arima.model = ""(3 0 0)(0 0 0)"",
+     regression.aictest = NULL
+)","series { title = ""Monthly Riverflow""      start = 1970.1
+          data  = (8.234 8.209 ...  8.104) period = 12 }
+regression { variables = (seasonal const)
+              user = (temp precip)
+              file = ""weather.dat""
+              format = ""(t17,2f8.2)""
+              start = 1960.1 }
+arima { model = (3 0 0)(0 0 0) }
+estimate { }"
+51,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""tdstock[31]"", ""ao1950.jul""),
+     arima.model = ""(0 1 0)(0 1 1)"",
+     regression.aictest = ""tdstock""
+)","series {title = ""Retail Inventory - Family Apparel""
+        start = 1967.1  period = 12
+        data = (1893 1932 ... 3201 )
+        type = stock }
+transform {   function = log }
+regression {  variables = (tdstock[31] ao1980.jul)
+              aictest=tdstock }
+arima { model = (0 1 0)(0 1 1) }
+estimate    { }"
+52,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""td/1952.dec/"", ""seasonal/1952.dec/""),
+     arima.model = ""(0 1 1)"",
+     x11 = """"
+)","series { title = ""Retail Sales - Televisions""
+         start = 1976.1  period = 12  type = flow
+         file  = ’tvsales.ori’  }
+transform { function = log }
+regression {  variables = (td/1985.dec/ seasonal/1985.dec/) }
+arima { model = (0 1 1) }
+estimate { }"
+53,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""td"", ""td//1952.dec/"", ""seasonal"", 
+                              ""seasonal//1952.dec/""),
+     arima.model = ""(0 1 1)"",
+     x11 = """"
+)"," series {title = ""Retail Sales - Televisions""
+          start = 1976.1  period = 12  type = flow
+          file  = ’tvsales.ori’   }
+transform  { function = log }
+regression { variables = (td td//1985.dec/
+seasonal seasonal//1985.dec/) } arima{ model=(011)}
+estimate { }"
+54,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""ao1950.1"", ""ls1952.2"", ""ls1952.3"", ""ao1951.1""),
+     arima.model = ""(0 1 1)(0 1 1)""
+)","Series     { Title  = ""Quarterly Sales""  Start = 1993.1  Period = 4
+               Data  = (1039 1241 ...  2210)  }
+Transform { Function = Log }
+Regression { Variables = (AO2001.3 LS2007.1 LS2007.3 AO2008.4) } 
+Arima { Model=(011)(011)}
+Estimate { }"
+55,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""ao1950.1"", ""tl1952.2-1952.3"", ""ao1951.1""),
+     arima.model = ""(0 1 1)(0 1 1)""
+)","Series     { Title  = ""Quarterly Sales""  Start = 1993.1  Period = 4
+               Data  = (1039 1241 ...  2210)  }
+Transform { Function = Log }
+Regression { Variables = (AO2001.3 TL2007.1-2007.2 AO2008.4) } 
+Arima { Model=(011)(011)}
+Estimate { }"
+56,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""ao1950.1"", ""ls1952.2-1952.3"", ""ao1951.1""),
+     arima.model = ""(0 1 1)(0 1 1)""
+)","  Series     { Title  = ""Quarterly Sales""  Start = 1993.1  Period = 4
+               Data  = (1039 1241 ...  2210)  }
+Transform { Function = Log }
+Regression { Variables = (AO2001.3 LSS2007.1-2007.3 AO2008.4) } 
+Arima { Model=(011)(011)}
+Estimate { }"
+57,"seas(AirPassengers,
+     transform.function = ""none"",
+     regression.variables = c(""const"", ""td""),
+     x11.mode = ""add""
+)","series     {  title = ""Exports of pasta products""
+                start = 1980.jan  data = ""pasta.dat"" }
+  regression {  variables = (const td)               }
+  automdl    {                                       }
+  x11        {  mode = add                           }"
+58,"ser1 = ts(runif(200), start = 1948, frequency = 12)
+ser2 = ts(runif(200), start = 1948, frequency = 12)
+ser3 = ts(runif(200), start = 1948, frequency = 12)
+seas(AirPassengers,
+     transform.function = ""none"",
+     xreg = cbind(ser1, ser2, ser3),
+     regression.variables = c(""const"", ""td"", ""ao1956.oct"", ""ls1951.dec"",
+                              ""easter[8]"", ""seasonal""),
+     arima.model = c(2, 1, 0),
+     x11.appendfcst = ""yes""
+)","series{ title = ""Retail sales of children’s apparel""
+ file = ""capprl.dat"" start = 1975.1  }
+transform{   function = log }
+regression{
+  variables = (const td ao1976.oct ls1991.dec easter[8] seasonal)
+  user = (sale88 sale89 sale90)
+  start = 1975.1   file = ""promo.dat""   format = ""(3f12.0)""  }
+arima{   model = (2 1 0)   }
+forecast{   maxlead = 24   }
+x11{   save=seasonal  appendfcst=yes  }"
+59,"ser1 = ts(runif(200), start = 1948, frequency = 12)
+ser2 = ts(runif(200), start = 1948, frequency = 12)
+ser3 = ts(runif(200), start = 1948, frequency = 12)
+seas(AirPassengers,
+     transform.function = ""none"",
+     xreg = cbind(ser1, ser2, ser3),
+     regression.usertype = ""ao"",
+     regression.variables = c(""const"", ""td"", ""ao1956.oct"", ""ls1951.dec"",
+                              ""easter[8]"", ""seasonal""),
+     arima.model = c(2, 1, 0),
+     x11.appendfcst = ""yes""
+)","series{ title = ""Retail sales of children’s apparel""
+   file = ""capprl.dat"" start = 1975.1  }
+  transform{   function = log }
+  regression{
+    variables = (const td ao1976.oct ls1991.dec easter[8]
+                 seasonal)
+    user = (sale88 sale89 sale90)
+    start = 1975.1   file = ""promo.dat""   format = ""(3f12.0)""
+    usertype = ao
+  }
+  arima{   model = (2 1 0)   }
+  forecast{   maxlead = 24   }
+  x11{   save=seasonal  appendfcst=yes   }"
+60,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""ao1957.jan"", ""ls1959.jan"", ""ls1959.mar"", 
+                            ""ls1960.jan"", ""td""),
+     regression.b = c(""-0.7946f"", ""-0.8739f"", ""0.6773f"", ""-0.6850f"", 
+                      ""0.0209"", ""-0.0107"", ""-0.0022"", ""0.0018"", ""-0.0088"", 
+                      ""-0.0074""),
+     regression.aictest = NULL,
+     arima.model =  ""(0 1 2)(0 1 1)"", 
+     x11 = """"
+)","   series{
+       format = ""2L""
+       title  = ""Midwest Total Starts""
+       file   = ""mwtoths.dat""
+       name   = ""MWTOT ""
+}
+transform{ function=log } 
+arima{ model=(012)(011) } 
+estimate{ save=mdl } 
+regression{
+       variables = (ao1977.jan ls1979.jan ls1979.mar ls1980.jan td)
+       b = (  -0.7946F  -0.8739F  0.6773F  -0.6850F  0.0209
+              ~0.0107   -0.0022   0.0018   ~0.0088  -0.0074  )
+}
+x11{ }"
+61,"seas(AirPassengers,
+     transform.function = ""log"",
+     regression.variables = c(""td"", ""easter[8]""),
+     regression.aictest = NULL,
+     arima.model =  ""(0 1 1)(0 1 1)"", 
+     x11.mode = ""mult"",
+     x11.seasonalma = ""S3X3""
+)","Series {
+    Format=""1L""   File=""bdptrs.dat""   Name=""BDPTRS""
+    Title=""Department Store Sales""  }
+  Transform {  Function=Log  }
+  Regression {  Variables=( Td Easter[8] )
+                Save = ( Td Holiday )  }
+  Arima {   Model=(0 1 1)(0 1 1)  }
+Example 21
+Outlier {
+Estimate {
+Check {
+Forecast {  }
+X11 {Mode = Mult   Seasonalma = S3X3
+  Title = (""Department Store Retail Sales Adjusted For"")
+           ""Outlier, Trading Day, And Holiday Effects"" )
+}"
+62,"ser1 = ts(runif(200), start = 1948, frequency = 12)
+ser2 = ts(runif(200), start = 1948, frequency = 12)
+ser3 = ts(runif(200), start = 1948, frequency = 12)
+seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     xreg = cbind(ser1, ser2, ser3),
+     regression.usertype = ""seasonal"",
+     regression.aictest = NULL,
+     arima.model = c(0, 1, 1),
+     forecast.maxlead = 24
+)","series{ title = ""US Total Housing Starts""
+   file = ""ustoths.dat"" start = 1990.1
+   period = 4  save = b1}
+  transform{   function = log }
+  regression{
+    user = (s1 s2 s3)
+    usertype = seasonal
+    start = 1985.1   file = ""seasreg.rmx""
+    format = ""x13save""
+  }
+  outlier{   }
+  arima{   model = (0 1 1)   }
+  forecast{   maxlead = 24   }"
+63,"# construct chinese new year time series with 'genhol' function
+data(holiday)
+cny1 <- genhol(cny, start = -6, end = -1, frequency = 12, center = ""calendar"")
+cny2 <- genhol(cny, start = 0, end = 6, frequency = 12, center = ""calendar"")
+
+seas(AirPassengers,
+     transform.function = ""log"",
+     xreg = cbind(cny1, cny2),
+     regression.usertype = c(""holiday"", ""holiday2""),
+     regression.variables = c(""AO1955.Sep"", ""AO1957.Jan"", ""AO1957.Feb""),
+     arima.model = ""(0 1 1)(0 1 0)"",
+     forecast.maxlead = 12,
+     x11 = """"
+)","series{
+    file=""serv.dat""  start=1991.jan  span=(1993.jan,)
+    title = ""Payment to family nanny, taiwan""
+}
+transform{    function=log   }
+regression{
+   variables = (  AO1995.Sep AO1997.Jan AO1997.Feb  )
+   user=(    Beforecny      Betweencny      Aftercny
+    Beforemoon     Betweenmoon     Aftermoon
+    Beforemidfall  Betweenmidfall  Aftermidfall  )
+   file=""u1u2u3.dat""
+   format=""datevalue""
+   start=1991.1
+Example 23
+   usertype=(   holiday
+    holiday2    holiday2
+    holiday3    holiday3
+   chi2test = yes
+   savelog = chi2test
+}
+holiday
+holiday2
+holiday3  )
+holiday
+arima{  model=(0 1 1)(0 1 0)
+check{  }
+forecast{  maxlead=12  }
+estimate{  savelog=(aic aicc bic)  }"
+64,"seas(AirPassengers, 
+     regression.aictest = ""td"",
+     outlier.types = c(""ao"", ""ls"", ""tc""),
+     forecast.maxlead = 36
+)","SERIES  { TITLE=""EXPORTS OF TRUCK PARTS""
+          START =1987.1
+          FILE = ""X21109.ORI""
+          PERIOD = 12
+}
+TRANSFORM {  FUNCTION = AUTO  }
+REGRESSION {  AICTEST = TD  }
+AUTOMDL {   }
+OUTLIER {  TYPES = (AO LS TC)  }
+FORECAST {  MAXLEAD = 36  }
+SEATS  { SAVE = S11  }"
+65,"seas(AirPassengers, 
+          regression.aictest = ""td"",
+          arima.model = ""(0 1 1)(0 1 1)"",
+          forecast.maxlead = 12,
+          seats.finite = ""yes"",
+          history.estimates = c(""sadj"", ""trend""),
+          history.save = c(""sarevisions"", ""trendrevisions"")
+)
+","Series  { Title=""Quarterly Exports Of Mangos""
+          Start =1990.1  File = ""Xmango.Ori""  Period = 4 }
+Transform { Function = Log } Regression { Aictest = Td } Arima{ Model=(011)(011) } Forecast { Maxlead = 12 }
+Seats {  Finite = yes
+         Save = ( Squaredgainsaconc Timeshiftsaconc )
+         Savelog = Overunderestimation
+}
+History { Estimates = (Sadj Trend)
+          Save = ( Sarevisions Trendrevisions )
+}"
+66,"bm <- ts(AirPassengers[as.logical(rep(c(1, 0), length.out = length(AirPassengers)))],
+   start = start(AirPassengers), frequency = 6)
+seas(bm, 
+  regression.aictest = NULL,
+  outlier.types = c(""ao"", ""ls"", ""tc""),
+forecast.maxlead = 18)
+","Series  { Title=""Model based adjustment of Bimonthly exports""
+          Start = 1995.1  File = ""Xports6.Ori""  Period = 6 }
+Transform { Function = Log } Regression { Variables = Td } 
+Arima{ Model=(011)(011) } Outlier { types = (ao ls tc) } 
+Forecast { Maxlead = 18 }
+Seats {  save = (S11 S10 S12)  }"
+67,seas(AirPassengers),"series{
+  title = ""A Simple Example""
+  start = 1967.jan    # period defaults to 12
+data=(480 467 514 505 534 546 539 541 551 537 584 
+854 522 506 558 538 605 583 607 624 570 609 675 861 .
+      .
+      .
+      1684 1582 1512 1508 1574 2303 1425 1386) }"
+68,"seas(window(AirPassengers, start = c(1950, 1), end = c(1959, 12)))
+
+seas(AirPassengers, series.span = ""1950.1, 1959.12"")","series { data = (879 899 985 ...)   # There are 216 data values
+         start = 1940.1              #       ending in 1993.4
+         period = 4                # Quarterly series
+         span = (1946.1, 1990.4)  }"
+69,seas(AirPassengers),"SERIES{ TITLE = ""Monthly data in an X-11 format""
+        PERIOD = 12
+        FILE = ""C:\DATA\SALES1.DAT""    # a DOS path and file
+        PRECISION = 1
+        FORMAT = ""1r"" }"
+70,seas(AirPassengers),"series {title = ""Data read correctly in with trimzero = no""
+        start = 1980.2   period = 12
+        file = ""example4.new"" }    # file is in current directory"
+71,"seas(AirPassengers,
+     series.type = ""flow""
+     )","SERIES{  TITLE = ""Monthly data in a datevalue format""
+         PERIOD = 12
+         FILE = ""C:\DATA\SALES1.EDT""    # a DOS path and file
+         FORMAT = ""DATEVALUE""  TYPE = FLOW }"
+72,"seas(AirPassengers,
+     series.modelspan = "",1952.dec""
+     )","SERIES{  TITLE = ""Monthly data in a datevalue format""
+         PERIOD = 12
+         Example 6
+         Example 7
+         This example shows how the X-13ARIMA-SEATS program handles missing data. The same data format is used as in the previous two examples, except a missing value code is inserted for January of 1990:
+           FILE = ""C:\DATA\SALES1.EDT""
+         FORMAT = ""DATEVALUE""
+         COMPTYPE = ADD
+         DECIMALS = 2
+         MODELSPAN = (,1992.DEC)
+}"
+73,seas(AirPassengers),"SERIES{ TITLE = ""Monthly data in a date-value format""
+        PERIOD = 12
+        FILE = ""C:\DATA\SALES1.EDT""    # a DOS path and file
+        FORMAT = ""DATEVALUE""
+}"
+74,seas(AirPassengers),"SERIES{ TITLE = ""Monthly data in a file saved by \thisprogram\ ""
+        PERIOD = 12
+        FILE = ""C:\DATA\SALES1.A11""    # a DOS path and file
+        FORMAT = ""X13SAVE"" }"
+75,seas(AirPassengers),"SERIES{  TITLE = ""Monthly data in the comma variant of datevalue format""
+         PERIOD = 12
+         FILE = ""C:\DATA\SALES1C.EDT""    # a DOS path and file
+         FORMAT = ""DATEVALUECOMMA""  }"
+76,"seas(AirPassengers, 
+          x11.seasonalma = ""S3X9""
+)
+","SERIES { FILE = ""TOURIST.DAT""   START = 1976.1   }
+X11 {   SEASONALMA = S3X9    }
+SLIDINGSPANS {    }"
+77,"seas(AirPassengers, 
+          transform.function = ""log"",
+          x11.seasonalma = c(""S3x9"", ""S3x9"", ""S3x5"", ""S3x5"", ""S3x5"", ""S3x5"",
+                             ""S3x5"", ""S3x5"", ""S3x5"", ""S3x5"", ""S3x5"", ""S3x5""),
+          x11.trendma = 7,
+          x11.mode = ""logadd"",
+          slidingspans.cutseas = 5,
+          slidingspans.cutchng = 5
+)
+","Series       {
+  File = ""qstocks.dat""
+  Start = 1967.1
+  Title = ""Quarterly stock prices on NASDAC""
+  Freq = 4
+}
+X11 {
+  Seasonalma = (  S3x9 S3x9 S3x5 S3x5  )
+  Trendma = 7
+  Mode = Logadd
+}
+Slidingspans {
+  cutseas = 5.0
+  cutchng = 5.0
+}"
+78,"seas(AirPassengers, 
+          regression.variables = c(""const"", ""td"", ""rp1952.may-1952.oct""),
+          arima.model = ""(0 1 2)(0 1 1)"",
+          x11.mode = ""add"",
+          transform.function = ""none"",
+          slidingspans.outlier = ""keep"",
+          slidingspans.length = 50
+)
+","series {  title = ""Number of employed machinists - X-11""
+          start = 1980.jan  file = ""machine.emp""
+}
+regression { variables = (const td rp82.may-82.oct) } arima {model=(012)(011)}
+outlier {}
+estimate {}
+check {}
+forecast {}
+x11 { mode = add save = d11}
+slidingspans { outlier = keep
+               length = 144 }"
+79,"seas(AirPassengers, 
+          regression.variables = c(""const"", ""td"", ""rp1952.may-1952.oct""),
+          arima.model = ""(0 1 2)(0 1 1)"",
+          slidingspans.outlier = ""keep"",
+          slidingspans.length = 50
+)        
+","series {  title = ""Number of employed machinists - SEATS""
+          start = 1980.jan  file = ""machine.emp""
+}
+regression { variables = (const td rp82.may-82.oct) } arima {model=(012)(011)}
+outlier {}
+estimate {}
+check {}
+forecast {}
+seats { save = s11 }
+slidingspans { outlier = keep
+               length = 144 }"
+80,"seas(AirPassengers, 
+          transform.function = ""log"",
+          regression.variables = c(""const"", ""seasonal"", ""tdnolpyear""),
+          arima.model = ""(3 1 0)"",
+          x11.appendfcst = ""yes"",
+          slidingspans.fixmdl = ""no""
+)
+","series { title = ""Cheese Sales in Wisconsin""
+         file = ""cheez.fil""   start = 1975.1   }
+transform { function = log }
+regression { variables = (const seasonal tdnolpyear) } arima{ model=(310) }
+forecast { maxlead = 60 }
+x11 { save = seasonal appendfcst = yes } slidingspans { fixmdl = no }"
+81,"seas(AirPassengers, 
+          x11.seasonalma = ""S3X9"",
+          slidingspans.length = 40,
+          slidingspans.numspans = 3
+)
+","Series       {
+  File = ""qstocks.dat""
+  Start = 1987.1
+  Title = ""Quarterly stock prices on NASDAC""
+  Freq = 4
+}
+X11 {
+  Seasonalma = S3x9
+}
+Slidingspans {
+  Length = 40
+  Numspans = 3 }"
+82,"seas(AirPassengers, 
+          transform.function = ""log"",
+          spectrum.start = ""1952.jan"",
+          spectrum.print = ""specorig"",
+          spectrum.savelog = ""all""
+)
+","series{ title = ""Spectrum analysis of Building Permits Series""
+        start = 1967.Jan
+        file = ""permits.dat""
+        format = ""(12f6.0)""
+        print = none
+} transform{
+  function = log
+  print = none }
+spectrum{
+  start = 1987.Jan
+  print = (none +specorig)
+  savelog = all
+}"
+83,"# adjustment series
+tf <- ts(runif(250), start = c(1945, 1), frequency = 12)
+
+seas(AirPassengers, 
+          x11 = """",
+          xtrans = tf,
+          transform.mode = ""ratio"",
+          transform.adjust = ""lom"",
+          transform.function = ""log"",
+          regression.aictest = NULL
+          )","series { data = (879 899 462 670 985 973 ...)
+          start = 1967.jan }
+transform{data =(1 1.5.75 1 1...) mode = ratio
+adjust = lom }"
+84,"seas(AirPassengers, 
+          transform.constant = 45
+)","series { data = (6 79 98 42 4 73 85 26 ...)
+          start = 1997.1  period=4 }
+  transform { constant=45  function = auto  }"
+85,"# adjustment series
+tf <- ts(runif(250), start = c(1945, 1), frequency = 12)
+
+seas(AirPassengers, 
+          x11 = """",
+          xtrans = tf,
+          transform.function = ""log""
+          )","series {title = ""Total U.S. Retail Sales --- Current Dollars""
+           file = ""retail.dat""
+           start = 1980.jan }
+   transform {function = log
+              title = ""Consumer Price Index""
+              start = 1970.jan  # adj. factors start January, 1970
+              file = ""cpi.dat""
+              format  =  ""(12f6.3)"" }
+              "
+86,"# adjustment series
+tf <- ts(runif(250), start = c(1945, 1), frequency = 12)
+
+seas(AirPassengers, 
+          x11 = """",
+          xtrans = tf,
+          transform.type = ""temporary"",
+          transform.function = ""log""
+          )","series {title = ""Total U.S. Retail Sales --- Current Dollars""
+           file = ""retail.dat""
+           start = 1980.jan }
+   transform {function = log
+              title = ""Consumer Price Index""
+              start = 1970.jan  # adj. factors start January, 1970
+              file = ""cpi.dat""
+              format  =  ""1R""
+              precision = 3
+              name = ""cpi""
+              type = temporary
+}
+              "
+87,"seas(AirPassengers, 
+          transform.function = ""none"",
+          transform.power = 0.3333
+)"," SERIES {TITLE=""Annual Rainfall""
+           FILE=""RAIN.DAT""
+PERIOD=4
+           START=1901.1}
+   TRANSFORM {POWER=.3333}
+              "
+88,"# temporary and permanent adjustment
+cpi <- ts(runif(250), start = c(1945, 1), frequency = 12)
+strike <- ts(runif(250), start = c(1945, 1), frequency = 12)
+
+seas(AirPassengers, 
+          xtrans = cbind(cpi, strike),
+          transform.type = c(""temporary"", ""permanent""),
+          transform.function = ""log""
+          )"," series {title = ""Retail Sales of computers --- Current Dollars""
+           file = ""rscomp.dat""     start = 1980.jan
+   }
+   transform { function = log
+           title = ""Consumer Price Index & Strike Effect""
+           type = (permanent temporary)
+           start = 1970.jan  # adj. factors start January, 1970
+           file = (""cpi.dat"" ""strike.dat"")
+           format  = ""1R""     precision = 3
+           name = (""cpi"" ""strike"")
+}
+              "
+89,"seas(AirPassengers, 
+          transform.aicdiff = 0.0
+)"," series {title = ""Total U.K. Retail Sales""
+        file = ""ukretail.dat""
+        start = 1978.jan
+        }
+ transform {function = auto
+        aicdiff = 0.0
+        }
+              "
+90,"seas(AirPassengers, 
+     x11 = """"
+)    ","Series { File=""klaatu.dat"" Start = 1976.1 }
+X11 {  }"
+91,"seas(AirPassengers, 
+     regression.aictest = NULL,
+     x11.seasonalma = ""s3x9"", 
+     x11.trendma = 23,
+     x11regression.variables = ""td"",
+     x11regression.aictest = ""td""
+)","X11 { SeasonalMA =  s3x9  TrendMA = 23  }
+X11regression { variables = td   aictest=td  }"
+92,"# we have monthly data
+seas(AirPassengers, 
+     x11.seasonalma = c(""s3x3"", ""s3x3"", ""s3x3"", ""s3x3"", ""s3x3"", ""s3x3"",
+     ""s3x3"", ""s3x3"", ""s3x3"", ""s3x3"", ""s3x5"", ""s3x5""),
+     x11.trendma = 7
+)","series {
+  file=""qhstarts.dat""
+  start = 1967.1
+  period=4 }
+x11    {
+  seasonalma = (s3x3 s3x3 s3x5 s3x5)
+  trendma = 7
+}"
+93,"seas(AirPassengers, 
+     transform.function = ""none"", 
+     regression.variables = c(""const"", ""td"", ""ls1960.may"", ""ls1960.oct""),
+     arima.model = ""(0 1 2)(1 1 0)"",
+     forecast.maxlead = 0,
+     x11.mode = ""add"",
+     x11.sigmalim = c(2.0, 3.5)
+)","SERIES { TITLE = ""EXPORTS OF LEATHER GOODS""  START = 1969.JUL
+         DATA = (815 866 926 ... 942)  }
+REGRESSION { VARIABLES = (CONST TD LS1972.MAY LS1976.OCT)  }
+ARIMA {  MODEL=(0 1 2)(1 1 0)   }
+ESTIMATE {  }
+FORECAST {  MAXLEAD=0   }
+X11 {  MODE = ADD  PRINT = ALLTABLES  SIGMALIM = (2.0 3.5)  }"
+94,"seas(AirPassengers, 
+     transform.function = ""none"", 
+     regression.variables = c(""const"", ""td"", ""ls1960.may"", ""ls1960.oct""),
+     arima.model = ""(0 1 2)(1 1 0)"",
+     forecast.maxlead = 0,
+     x11.mode = ""add"",
+     x11.sigmalim = c(2.0, 3.5)
+)","series {  title = ""Unit Auto Sales""  file = ""autosal.dat""
+          start = 1985.1  }
+transform {  function = log  }
+regression  { variables = (const td)
+user = (sale88 sale90)
+              file = ""special.dat"" format = ""(2f12.2)"" } arima {model=(310)(011)12 }
+forecast  { maxlead=12    maxback=12  }
+x11  {  title = ( ""Unit Auto Sales""}"
+95,"seas(AirPassengers, 
+     transform.function = ""log"", 
+     regression.variables = c(""ao1956.feb"", ""ao1958.feb"", ""ls1960.feb"",
+                              ""ls1952.nov"", ""ao1954.feb""),
+     arima.model = ""(0 1 2)(0 1 1)"",
+     forecast.maxlead = 60,
+     x11.seasonalma = ""s3x9""
+)","series { title=""NORTHEAST ONE FAMILY Housing Starts""
+         file=""cne1hs.ori""   name=""CNE1HS""    format=""2R"" }
+transform {    function=log   }
+regression {
+  variables=(ao1976.feb ao1978.feb ls1980.feb
+             ls1982.nov ao1984.feb)
+}
+arima {  model=(0 1 2)(0 1 1)  }
+forecast {  maxlead=60  }
+x11 {  seasonalma=(s3x9)
+       title=""Adjustment of 1 family housing starts""
+       save = e2
+}"
+96,"seas(AirPassengers,
+     x11 = """",
+     regression.aictest = NULL,
+     x11regression.variables = ""td""
+)","Series { File = ""westus.dat""
+         Start = 1976.1
+} X11 { }
+X11Regression { Variables = td
+}"
+97,"seas(AirPassengers,
+     x11 = """",
+     regression.aictest = NULL,
+     x11regression.variables = ""td"",
+     x11regression.aictest = c(""td"", ""easter"")
+)","Series { File = ""westus.dat""
+         Start = 1976.1
+} X11 { }
+X11Regression { Variables = td
+                Aictest = (td easter)
+}"
+98,"data(holiday)
+easter1 <- genhol(easter, start = -10, end = -1, frequency = 12)
+easter2 <- genhol(easter, start = 0, end = 5, frequency = 12)
+seas(AirPassengers, 
+     x11 = """",
+     regression.aictest = NULL,
+     xreg = cbind(easter1, easter2),  
+     x11regression.aictest = ""td"",
+     x11regression.usertype = ""holiday"",
+     outlier = NULL
+     )","series {
+    file = ""ukclothes.dat""
+    start = 1985.Jan
+ }
+ x11 {  }
+ x11regression{
+    variables = td
+    outler = 4.0
+    user = (easter1 easter2)  file = ""ukeaster.dat""
+    usertype = holiday        start = 1980.Jan
+}"
+99,"seas(AirPassengers, 
+     x11 = """",
+     regression.aictest = NULL,
+     x11regression.variables = ""td"",
+     x11regression.tdprior = c(1.4, 1.4, 1.4, 1.4, 1.4, 0.0, 0.0),
+     transform.function = ""log""
+)","series {
+    file = ""nzstarts.dat""  start = 1980.Jan
+ }
+ x11 {  }
+ x11regression{
+    variables = td
+    tdprior = (1.4 1.4 1.4 1.4 1.4 0.0 0.0)
+}"
+100,"seas(AirPassengers, 
+     x11 = """",
+     regression.aictest = NULL,
+     x11regression.variables = c(""td"", ""easter[8]""),
+     x11regression.critical = 5, 
+     x11regression.b = c(""0.4453f"", ""0.8550f"", ""-0.3012f"", ""0.2717f"", 
+                         ""-0.1705f"", ""0.0983f"", ""-0.0082"")
+     )
+     ","series{
+format = ’2R’
+title = ’MIDWEST ONE FAMILY Housing Starts’
+name = ’CMW1HS’
+file = ’cmw1hs.ori’
+span = (1964.01,1989.03)
+}
+x11{   }
+x11regression{
+variables = (td easter[8])
+b = (  0.4453f  0.8550f -0.3012f  0.2717f
+      -0.1705f  0.0983f -0.0082)
+    }"
+101,"seas(AirPassengers,
+     x11 = """",
+     regression.aictest = NULL,
+     x11regression.variables = c(""td/1950.1/"", ""easter[8]"", 
+                                 ""labor[10]"", ""thank[10]""),
+     x11.seasonalma = ""x11default"",
+     x11.sigmalim = c(1.8, 2.9),
+     x11.appendfcst = ""yes"",
+     )
+     ","series{
+    title = ’Motor Home Sales’
+    start = 1967.1
+    span = (1972.1, )
+    name = ’SB0562’
+    file = ’C:\final.x12\T0B05601.TXT’
+    format = ’2L’
+   }
+X11REGRESSION {  variables = ( td/1990.1/
+   easter[8]  labor[10] thank[10] ) }
+x11{
+    seasonalma = x11default
+    sigmalim = (1.8 2.8)
+    appendfcst = YES
+    save = (D11 D16)
+}"
+102,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     regression.variables = ""const"",
+     regression.aictest = NULL,
+     arima.model = ""(0 1 1)(0 1 1)"",
+     outlier = NULL,
+     x11regression.variables = c(""td"", ""easter[8]"")
+)","series{ title = ""Automobile Sales""
+        file = ""carsales.dat""
+        start = 1975.Jan }
+transform{ function = log }
+regression{ variables = (const)
+            user = (strike80 strike85 strike90)
+            file = ""strike.dat""
+            format = ""(3f12.0)"" }
+arima{ model = (0 1 1)(0 1 1)12 }
+x11{  title = (""Car Sales in US""
+               ""Adjust for strikes in 80, 85, 90"")
+      save = seasonal appendfcst = yes
+      }
+x11regression{   variables = ( td easter[8] )  }"
+103,"seas(AirPassengers,
+     x11 = """",
+     arima.model = ""(0 1 1)""
+)
+
+seas(AirPassengers,
+     x11 = """",
+     arima.model = c(0, 1, 1)
+)",
+104,"seas(AirPassengers,
+     x11 = """",
+     transform.function = ""log"",
+     arima.model = ""(2 1 0)(0 1 1)""
+)",
