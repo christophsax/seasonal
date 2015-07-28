@@ -1,14 +1,22 @@
 cat(Sys.getenv("TRAVIS"))
 cat(Sys.getenv("TRAVIS_BUILD_DIR"))
 
+
 if (Sys.getenv("TRAVIS") != ""){
   Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
+  bdir <- Sys.getenv("TRAVIS_BUILD_DIR")
+} else {
+  bdir <- "~/seasonal"  # loc on ubuntu server
 }
 
+
 library(seasonal)
+
 checkX13()
 
-cc <- read.csv(file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/examples/ex_run.csv"))  # runnable examples
+
+
+cc <- read.csv(file.path(bdir, "travis/examples/ex_run.csv"))  # runnable examples
 
 # known issues:
 
@@ -37,10 +45,11 @@ r <- rr[-c(87, 98)]  # remove known issues
 
 # --- numerical equality -------------------------------------------------------
 
+set.seed(100)  # because we have runif() in the examples  (this should be removed)
+
 z <- lapply(r, function(e) try(eval(parse(text = e))))
 
 failing <- which(sapply(z, class) == "try-error")
-
 
 if (length(failing) > 0){
   stop("failing cases: ", paste(failing, collapse = ", "))
@@ -55,9 +64,9 @@ q.final <- final(z[ff == 4][[1]])
 s.final <- final(z[ff == 6][[1]])
 
 
-# save(m.final, q.final, s.final, file = "test0.90.0.RData")
+# save(m.final, q.final, s.final, file = file.path(bdir, "/travis/examples/test0.90.0.RData"))
 bench <- new.env()
-load(file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "./travis/examples/test0.90.0.RData"), envir = bench)
+load(file.path(bdir, "/travis/examples/test0.90.0.RData"), envir = bench)
 
 stopifnot(all.equal(m.final, bench$m.final))
 stopifnot(all.equal(q.final, bench$q.final))
@@ -68,36 +77,36 @@ stopifnot(all.equal(s.final, bench$s.final))
 # --- 2 way parsing ------------------------------------------------------------
 
 
-test_parse <- function(x){
-  tdir <-  "~/tmp"
-  ccc <- parse(text = x)
+# test_parse <- function(x){
+#   tdir <-  "~/tmp"
+#   ccc <- parse(text = x)
 
-  cc <- ccc[[length(ccc)]]
+#   cc <- ccc[[length(ccc)]]
 
-  if (length(ccc) > 1){
-    for (i in 1:(length(ccc)-1)){
-       eval(ccc[[i]])
-    }
-  }
+#   if (length(ccc) > 1){
+#     for (i in 1:(length(ccc)-1)){
+#        eval(ccc[[i]])
+#     }
+#   }
   
-  cc$out <- TRUE
-  cc$dir <- tdir
-  a <- eval(cc)
+#   cc$out <- TRUE
+#   cc$dir <- tdir
+#   a <- eval(cc)
   
-  bb <- import.spc(file.path(tdir, "iofile.spc"))
-  b <- lapply(bb, eval)$call
-  all.equal(final(a), final(b))
-}
+#   bb <- import.spc(file.path(tdir, "iofile.spc"))
+#   b <- lapply(bb, eval)$call
+#   all.equal(final(a), final(b))
+# }
 
-ll <- lapply(r, function(e) try(test_parse(e)))
+# ll <- lapply(r, function(e) try(test_parse(e)))
 
 
-failing <- which(sapply(ll, class) == "try-error")
+# failing <- which(sapply(ll, class) == "try-error")
 
- # TRUE
-if (length(failing) > 0){
-  stop("failing cases: ", paste(failing, collapse = ", "))
-}
+#  # TRUE
+# if (length(failing) > 0){
+#   stop("failing cases: ", paste(failing, collapse = ", "))
+# }
 
 
 
@@ -124,12 +133,12 @@ test_static <- function(x){
 
 
 
-ll <- lapply(r, function(e) try(test_static(e)))
+ll <- lapply(r, function(e) try(test_static(e), silent = TRUE))
 
 
 failing <- which(sapply(ll, class) == "try-error")
 
-if (!length(failing[!failing %in% c(47L, 52L, 53L, 60L)]) > 0){
+if (length(failing[!failing %in% c(47L, 52L, 53L, 60L)]) > 0){
   stop("failing cases: ", paste(failing, collapse = ", "))
 }
 
