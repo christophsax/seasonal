@@ -1,15 +1,12 @@
 cat(Sys.getenv("TRAVIS"))
 cat(Sys.getenv("TRAVIS_BUILD_DIR"))
 
+if (Sys.getenv("TRAVIS") != ""){
+  Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
+}
 
-
-
-Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
 library(seasonal)
-
 checkX13()
-
-
 
 cc <- read.csv(file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/examples/ex_run.csv"))  # runnable examples
 
