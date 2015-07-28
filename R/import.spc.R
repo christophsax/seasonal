@@ -269,11 +269,11 @@ import.ts <- function(file,
   } else if (format %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")) {
 
 
-file <- (file.path(tpath, "x11_m1l.dat")); format <- "1l"; frequency = 12
-file <- (file.path(tpath, "x11_m2l.dat")); format <- "2l"; frequency = 12
-file <- (file.path(tpath, "x11_m2r.dat")); format <- "2r"; frequency = 12
+# file <- (file.path(tpath, "x11_m1l.dat")); format <- "1l"; frequency = 12
+# file <- (file.path(tpath, "x11_m2l.dat")); format <- "2l"; frequency = 12
+# file <- (file.path(tpath, "x11_m2r.dat")); format <- "2r"; frequency = 12
 
-file <- (file.path(tpath, "x11_m2l2.dat")); format <- "2l2"; frequency = 12   # start
+# file <- (file.path(tpath, "x11_m2l2.dat")); format <- "2l2"; frequency = 12   # start
 
 
 
@@ -323,18 +323,42 @@ x11_to_fortran <- function(x, frequency) {
 
 
 
-# format <- x11_to_fortran(format, frequency)
 
+
+# ff <- "/Users/christoph/git/seasonal/inst/tests/x11m2l.dat"
+
+# read.fortran(ff, list(c("2F3.1","A2"), c("3I2","2X")))
+
+# read.fortran(ff, list(c("A6", "I2", "6F12.0"), c("8X", "2X", "6F12.0")))
+
+
+# read.fortran((A6,I2,6f12.0,/,8x,6f12.0))
+
+
+
+
+
+# TODO needs more work
+
+# tpath <- "/Users/christoph/git/seasonal/inst/tests/"
+# file <- (file.path(tpath, "x11_m1l.dat")); frequency = 12; format <- x11_to_fortran("1l", frequency)
+# file <- (file.path(tpath, "x11_m2l.dat")); frequency = 12; format <- x11_to_fortran("2l", frequency)
+# file <- (file.path(tpath, "x11_m2r.dat")); frequency = 12; format <- x11_to_fortran("2r", frequency)
+# file <- (file.path(tpath, "x11_m2l2.dat")); frequency = 12; format <- x11_to_fortran("2l2", frequency)
+
+
+
+parse_fortran_format <- function(format){
+  if (grepl("/", format)){
+    return(lapply(strsplit(format, "/")[[1]], parse_fortran_format))
+  }
+  z <- strsplit(gsub("[\\(\\)]", "", format), ",")[[1]]
+  # z[z != ""]
+  z
+}
 
 import_fortran <- function(file, format){
-  parse_fortran_format <- function(x){
-    if (grepl("/", x)){
-      return(lapply(strsplit(x, "/")[[1]], parse_fortran_format))
-    }
-    z <- strsplit(gsub("[\\(\\)]", "", x), ",")[[1]]
-    # z[z != ""]
-    z
-  }
+
   z <- read.fortran(file, parse_fortran_format(format))
   z <- z[, -c(1, 2)]
   c(t(as.matrix(z)))
