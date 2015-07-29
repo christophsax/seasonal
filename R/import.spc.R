@@ -71,7 +71,10 @@ import.spc <- function(file){
     } else if ("file" %in% names(spc)){
       
       frm <- gsub('"', '', spc$format)
+      frm <- gsub("'", "", frm)
+      frm <- gsub('"', '', frm)
 
+browser()
       if (frm == "tramo"){
       message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
          gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
@@ -85,8 +88,11 @@ import.spc <- function(file){
         xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
       } else if (frm %in% c("datevaluecomma", "x13save")){
         xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
+      } else if (frm %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")){
+        frequency <- if (is.null(spc$period)) 12 else spc$period
+        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", frequency = ', frequency, ')')
       } else {
-        browser()
+
         sspl <- strsplit(spc$start, "\\.")[[1]]
         s1 <- sspl[1]
         s2 <- sspl[2]
@@ -245,6 +251,12 @@ import.ts <- function(file,
     return(read_series(file))
   }  
 
+  if (format %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")) {
+    stopifnot(!is.null(frequency))
+    format <- x11_to_fortran(format, frequency)
+    return(import_fortran(file, format, frequency))
+  } 
+
 
   if (format %in% c("datevalue", "datevaluecomma", "free", "freecomma")){
     txt <- readLines(file)
@@ -264,21 +276,9 @@ import.ts <- function(file,
     } 
 
   } else if (grepl("[\\(.+\\)]", format)){  # fortran format
-    dta <- import_fortran(file, format)
-    dta <- dta[,-c(1:2)]
-  } else if (format %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")) {
-
-
-# file <- (file.path(tpath, "x11_m1l.dat")); format <- "1l"; frequency = 12
-# file <- (file.path(tpath, "x11_m2l.dat")); format <- "2l"; frequency = 12
-# file <- (file.path(tpath, "x11_m2r.dat")); format <- "2r"; frequency = 12
-
-# file <- (file.path(tpath, "x11_m2l2.dat")); format <- "2l2"; frequency = 12   # start
-
-
-
-    dta <- import_fortran(file, x11_to_fortran(format, frequency))
-    dta <- dta[,-c(1:2)]
+    stopifnot(!is.null(frequency))
+    stopifnot(!is.null(start))
+    dta <- import_fortran(file, format, frequency, start)
   } else {
     stop("no valid format.")
   }
@@ -296,55 +296,62 @@ import.ts <- function(file,
 
 
 
+
+# these examples work!!
+# tpath <- "/Users/christoph/git/seasonal/inst/tests/"
+# file <- (file.path(tpath, "x11_m1l.dat")); frequency = 12; format <- x11_to_fortran("1l", frequency)
+# file <- (file.path(tpath, "x11_m2l.dat")); frequency = 12; format <- x11_to_fortran("2l", frequency)
+# file <- (file.path(tpath, "x11_m2l2.dat")); frequency = 12; format <- x11_to_fortran("2l2", frequency)
+# file <- (file.path(tpath, "x11_m1r.dat")); frequency = 12; format <- x11_to_fortran("1r", frequency)   # composit spec TODO 
+
+# import_fortran(file, format, frequency)
+
+
+
+
 x11_to_fortran <- function(x, frequency) {
   stopifnot(frequency %in% c(4, 12))
   stopifnot(x %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2"))
-  p <- if (frequency == 4) "m" else "q"
+  p <- if (frequency == 4) "q" else "m"
+
+  # x11fort <- data.frame(m = c("(12f6.0,i2,a6)", 
+  #                           "(6f12.0,/,6f12.0,i2,a6)", 
+  #                           "(a6,i2,12f6.0)", 
+  #                           "(a6,i2,6f12.0,/,8x,6f12.0)" , 
+  #                           "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)", 
+  #                           "(a8,i2,10x,12e16.10,18x) ", 
+  #                           "(a8,i4,12x,12e16.10,14x)"),
+  #                     q = c("(4(12x,f6.0),i2,a6)", 
+  #                           "(4f12.0,24x,i2,a6)", 
+  #                           "(a6,i2,4(12x,f6.0))", 
+  #                           "(a6,i2,4f12.0)", 
+  #                           "(a8,i4,4f11.0,2x)", 
+  #                           "(a8,i2,10x,12e16.10,18x)", 
+  #                           "(a8,i4,12x,12e16.10,14x)"),
+  #                     stringsAsFactors = FALSE)
+
 
   x11fort <- data.frame(m = c("(12f6.0,i2,a6)", 
                             "(6f12.0,/,6f12.0,i2,a6)", 
                             "(a6,i2,12f6.0)", 
                             "(a6,i2,6f12.0,/,8x,6f12.0)" , 
                             "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)", 
-                            "(a8,i2,10x,12e16.10,18x) ", 
+                            "(a8,i2,10x,12e16.10,18x)", 
                             "(a8,i4,12x,12e16.10,14x)"),
-                      q = c("(4(12x,f6.0),i2,a6)", 
+                      q = c("(12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0,i2,a6)", 
                             "(4f12.0,24x,i2,a6)", 
-                            "(a6,i2,4(12x,f6.0))", 
+                            "(a6,i2,12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0)", 
                             "(a6,i2,4f12.0)", 
                             "(a8,i4,4f11.0,2x)", 
                             "(a8,i2,10x,12e16.10,18x)", 
                             "(a8,i4,12x,12e16.10,14x)"),
                       stringsAsFactors = FALSE)
 
+
+
   rownames(x11fort) = c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")
   x11fort[x, p]
 }
-
-
-
-
-
-# ff <- "/Users/christoph/git/seasonal/inst/tests/x11m2l.dat"
-
-# read.fortran(ff, list(c("2F3.1","A2"), c("3I2","2X")))
-
-# read.fortran(ff, list(c("A6", "I2", "6F12.0"), c("8X", "2X", "6F12.0")))
-
-
-# read.fortran((A6,I2,6f12.0,/,8x,6f12.0))
-
-
-
-
-
-# TODO needs more work
-
-# tpath <- "/Users/christoph/git/seasonal/inst/tests/"
-# file <- (file.path(tpath, "x11_m1l.dat")); frequency = 12; format <- x11_to_fortran("1l", frequency)
-# file <- (file.path(tpath, "x11_m2l.dat")); frequency = 12; format <- x11_to_fortran("2l", frequency)
-# file <- (file.path(tpath, "x11_m2r.dat")); frequency = 12; format <- x11_to_fortran("2r", frequency)
-# file <- (file.path(tpath, "x11_m2l2.dat")); frequency = 12; format <- x11_to_fortran("2l2", frequency)
 
 
 
@@ -353,18 +360,43 @@ parse_fortran_format <- function(format){
     return(lapply(strsplit(format, "/")[[1]], parse_fortran_format))
   }
   z <- strsplit(gsub("[\\(\\)]", "", format), ",")[[1]]
-  # z[z != ""]
+  z[z != ""]
+}
+
+
+import_fortran <- function(file, format, frequency, start = NULL){
+  zr <- read.fortran(file, parse_fortran_format(format))
+
+  # remove "\032" empty lines
+  zr <- zr[zr[, 1] != "\032", ]
+
+  zrcl <- sapply(zr, class)
+
+  vcol <- which(zrcl == "character")
+  ycol <- which(zrcl == "integer")
+
+  zl <- split(zr, zr[, vcol])
+
+  to_ts <- function(x){
+    if (is.null(start)){
+      sty <- x[1, c(ycol)]  
+      if (nchar(sty) == 2){   # if start yeear has 2 digits, guess 4 digits
+        sty <- if (sty > 45) sty + 1900 else sty + 2000
+      }
+      x <- x[, -c(vcol, ycol)]
+      start <- c(sty, 1)
+    }
+    ts(c(t(as.matrix(x))), start = start, frequency = frequency)
+  }
+
+  zlts <- lapply(zl, to_ts)
+
+  z <- do.call("cbind", zlts)
+  z2 <- try(na.omit(z), silent = TRUE)
+  if (!inherits(z2, "try-error")){
+    z <- z2
+  }
   z
 }
-
-import_fortran <- function(file, format){
-
-  z <- read.fortran(file, parse_fortran_format(format))
-  z <- z[, -c(1, 2)]
-  c(t(as.matrix(z)))
-}
-
-
-
 
 

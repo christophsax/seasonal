@@ -1,6 +1,7 @@
 tpath <- file.path(path.package("seasonal"), "tests")
 
 
+
 # import.ts
 # ------------------------------------------------------------------------------
 
@@ -25,12 +26,17 @@ import.ts(file.path(tpath, "datavalue_mult1.dta"))
 import.ts(file.path(tpath, "datavalue_mult1.dta"))
 
 
+# file <- (file.path(tpath, "x11_m1l.dat")); frequency = 12; format <- x11_to_fortran("1l", frequency)
+# file <- (file.path(tpath, "x11_m2l.dat")); frequency = 12; format <- x11_to_fortran("2l", frequency)
+# file <- (file.path(tpath, "x11_m2l2.dat")); frequency = 12; format <- x11_to_fortran("2l2", frequency)
+# file <- (file.path(tpath, "x11_m1r.dat")); frequency = 12; format <- x11_to_fortran("1r", frequency)   # composit spec TODO 
 
 
-import.ts(file.path(tpath, "x11_m1l.dat"))
-import.ts(file.path(tpath, "x11_m2l.dat"))
-import.ts(file.path(tpath, "x11_m2l2.dat"))
-import.ts(file.path(tpath, "x11_m2r.dat"))
+
+import.ts(file.path(tpath, "x11_m1l.dat"), format = "1l", frequency = 12)
+import.ts(file.path(tpath, "x11_m2l.dat"), format = "2l", frequency = 12)
+import.ts(file.path(tpath, "x11_m2l2.dat"), format = "2l2", frequency = 12)
+import.ts(file.path(tpath, "x11_m1r.dat"), format = "1r", frequency = 12)
 
 
 
@@ -59,9 +65,15 @@ import.spc(file.path(tpath, "urtest0.spc"))
 import.spc(file.path(tpath, "urtest1.spc"))
 
 
-import.spc(file.path(tpath, "x11/SHOERS1982.spc"))
 
 
+
+setwd(tpath)
+
+import.spc("SHOERS1982.spc")
+import.spc("tdtest.spc")
+import.spc("Mw1.spc")
+import.spc("iaiua.spc")   # parsing of several args on one line
 
 
 
