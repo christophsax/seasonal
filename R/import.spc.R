@@ -52,61 +52,12 @@ import.spc <- function(file){
 
   pp <- parse_spc(txt)
 
-  ext_ser_call <- function(spc, vname){
-    if (is.null(spc)) return(NULL)
-
-    # analyze series spec
-    if ("data" %in% names(spc)){
-      st <- as.character(spc$start)
-      stsp <- strsplit(st, "\\.")[[1]]
-      stsp.y <- as.numeric(stsp[1])
-      stsp.c <- as.numeric(stsp[2])  # TODO some tweaks to deal with jan, etc...
-      
-      f <- if (is.null(spc$period)) 12 else spc$period
-
-      xstr <- paste0(vname, " <- ts(", 
-                  paste(deparse(spc$data, control = "all"), collapse = ""), 
-                  ", start = ", deparse(c(stsp.y, stsp.c)), ", frequency = ", f, ")")
-   
-    } else if ("file" %in% names(spc)){
-      
-      frm <- gsub('"', '', spc$format)
-
-      if (frm == "datevalue"){
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
-      } else if (frm %in% c("datevaluecomma", "x13save")){
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
-      } else if (frm %in% c("free", "freecomma")){
-        sspl <- strsplit(spc$start, "\\.")[[1]]
-        s1 <- sspl[1]
-        s2 <- sspl[2]
-
-        if (s2 %in% tolower(month.abb)){
-          s2 <- match(sspl[2], tolower(month.abb))
-        }
-        start <- as.numeric(c(s1, s2))
-        frequency <- if (is.null(spc$period)) 12 else spc$period
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", start = ', deparse(start) , ', frequency = ', frequency, ')')
-      } else {
-      message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
-         gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
-         paste(capture.output(print(spc)), collapse = "\n"),
-         "\nThank you very much!"
-        )
-      return(NULL)
-      }
-    } else {
-      return(NULL)
-    }
-    xstr
-  }
-
   xstr <- ext_ser_call(pp$series, "x")
   xregstr <- ext_ser_call(pp$regression, "xreg")
   xtransstr <- ext_ser_call(pp$transform, "xtrans")
 
   # clean args that are produced by seas
-  pp[c("series", "regression", "transform")] <- lapply(pp[c("series", "regression", "transform")], function(spc) spc[!names(spc) %in% c("file", "data", "start", "title", "format", "period", "user")])
+  pp[c("series", "regression", "transform")] <- lapply(pp[c("series", "regression", "transform")], function(spc) spc[!names(spc) %in% c("file", "data", "start", "name", "title", "format", "period", "user")])
   
   if (identical(pp$series, structure(list(), .Names = character(0)))){
     pp$series <- NULL
@@ -150,6 +101,89 @@ print.import.spc <- function(x, ...){
   print(x$call)
 }
 
+
+
+
+ext_ser_call <- function(spc, vname){
+  if (is.null(spc)) return(NULL)
+
+  # analyze series spec
+  if ("data" %in% names(spc)){
+    start <- start_date_x13_to_ts(spc$start)
+
+    f <- if (is.null(spc$period)) 12 else spc$period
+
+    xstr <- paste0(vname, " <- ts(", 
+                paste(deparse(spc$data, control = "all"), collapse = ""), 
+                ", start = ", deparse(start), ", frequency = ", f, ")")
+ 
+  } else if ("file" %in% names(spc)){
+    
+    frm <- rem_quotes(spc$format)
+
+
+    if (frm == "tramo"){
+    message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
+       gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
+       paste(capture.output(print(spc)), collapse = "\n"),
+       "\nThank you very much!"
+      )
+    return(NULL)
+    }
+
+    # fragment for name, for fortran and x11 series
+    if (!is.null(spc$name)) {  
+      nm <- rem_quotes(spc$name)
+      if (frm %in% c("cs", "cs2")){
+        nm <- substr(nm, 1, 8)
+      } else {
+        nm <- substr(nm, 1, 8)
+      }
+      nmstr <- paste0(', name = "', nm, '"')
+    } else {
+      nmstr <- ""
+    }
+
+    if (frm == "datevalue"){
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
+    } else if (frm %in% c("datevaluecomma", "x13save")){
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
+    } else if (frm %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")){
+      frequency <- if (is.null(spc$period)) 12 else spc$period
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", frequency = ', frequency, nmstr, ')')
+    } else {
+      start <- start_date_x13_to_ts(spc$start)
+      frequency <- if (is.null(spc$period)) 12 else spc$period
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", start = ', deparse(start) , ', frequency = ', frequency, nmstr, ')')
+    } 
+  } else {
+    return(NULL)
+  }
+
+  xstr
+
+}
+
+
+start_date_x13_to_ts <- function(x){
+  sspl <- strsplit(as.character(x), "\\.")[[1]]
+  s1 <- sspl[1]
+  s2 <- sspl[2]
+
+  if (s2 %in% tolower(month.abb)){
+    s2 <- match(sspl[2], tolower(month.abb))
+  }
+  as.numeric(c(s1, s2))
+}
+
+
+
+
+
+rem_quotes <- function(x){
+  x <- gsub('"', '', x)
+  gsub("'", "", x)
+}
 
 expand_spclist_to_args <- function(ll){
   # substitute empty names lists by ""
@@ -223,6 +257,9 @@ rem_defaults_from_args <- function(x) {
 #'   formats \code{"free"} and \code{"freecomma"})
 #' @param frequency  the number of observations per unit of time (only for 
 #'   formats \code{"free"} and \code{"freecomma"})
+#' @param name  name of the series, to select from a multiple time series. For 
+#'   compatibility with the existing spc files in the x11 format. Omit if you 
+#'   want to read all time series from a file.
 #' @export
 #' @examples
 #' tpath <- file.path(path.package("seasonal"), "tests")
@@ -233,11 +270,21 @@ rem_defaults_from_args <- function(x) {
 #' import.ts(file.path(tpath, "free2.txt"), format = "free", start = c(1949, 1), 
 #'           frequency = 12)
 import.ts <- function(file, 
-                    format = c("datevalue", "datevaluecomma", "free", "freecomma", "x13save"), 
-                    start = NULL, frequency = NULL){
+                    format = "datevalue", 
+                    start = NULL, frequency = NULL, name = NULL){
   
-  format <- match.arg(format)
   stopifnot(file.exists(file))
+
+  if (format %in% c("x13save")){
+    return(read_series(file))
+  }  
+
+  if (format %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")) {
+    stopifnot(!is.null(frequency))
+    format <- x11_to_fortran(format, frequency)
+    return(import_fortran(file = file, format = format, frequency = frequency, name = name))
+  } 
+
 
   if (format %in% c("datevalue", "datevaluecomma", "free", "freecomma")){
     txt <- readLines(file)
@@ -254,20 +301,141 @@ import.ts <- function(file,
       frequency <- length(unique(dta[, 2]))
       start <- c(as.matrix(dta[1, 1:2]))
       dta <- dta[,-c(1:2)]
-    } else {
-      stopifnot(!is.null(frequency))
-      stopifnot(!is.null(frequency))
-    }
-    z <- ts(unname(dta), frequency = frequency, start = start)
-  } 
+    } 
 
-  if (format %in% c("x13save")){
-    z <- read_series(file)
-  } 
+  } else if (grepl("[\\(.+\\)]", format)){  # fortran format
+    stopifnot(!is.null(frequency))
+    stopifnot(!is.null(start))
+    dta <- import_fortran(file = file, format = format, frequency = frequency, start = start, name = name)
+  } else {
+    stop("no valid format.")
+  }
+
+  z <- ts(unname(dta), frequency = frequency, start = start)
+  z <- na.omit(z)
   z
   
 
 }
 
+
+
+
+
+
+
+
+# these examples work!!
+# tpath <- "/Users/christoph/git/seasonal/inst/tests/"
+# file <- (file.path(tpath, "x11_m1l.dat")); frequency = 12; format <- x11_to_fortran("1l", frequency)
+# file <- (file.path(tpath, "x11_m2l.dat")); frequency = 12; format <- x11_to_fortran("2l", frequency)
+# file <- (file.path(tpath, "x11_m2l2.dat")); frequency = 12; format <- x11_to_fortran("2l2", frequency)
+# file <- (file.path(tpath, "x11_m1r.dat")); frequency = 12; format <- x11_to_fortran("1r", frequency)   # composit spec TODO 
+
+# import_fortran(file, format, frequency)
+
+
+
+
+x11_to_fortran <- function(x, frequency) {
+  stopifnot(frequency %in% c(4, 12))
+  stopifnot(x %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2"))
+  p <- if (frequency == 4) "q" else "m"
+
+  # x11fort <- data.frame(m = c("(12f6.0,i2,a6)", 
+  #                           "(6f12.0,/,6f12.0,i2,a6)", 
+  #                           "(a6,i2,12f6.0)", 
+  #                           "(a6,i2,6f12.0,/,8x,6f12.0)" , 
+  #                           "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)", 
+  #                           "(a8,i2,10x,12e16.10,18x) ", 
+  #                           "(a8,i4,12x,12e16.10,14x)"),
+  #                     q = c("(4(12x,f6.0),i2,a6)", 
+  #                           "(4f12.0,24x,i2,a6)", 
+  #                           "(a6,i2,4(12x,f6.0))", 
+  #                           "(a6,i2,4f12.0)", 
+  #                           "(a8,i4,4f11.0,2x)", 
+  #                           "(a8,i2,10x,12e16.10,18x)", 
+  #                           "(a8,i4,12x,12e16.10,14x)"),
+  #                     stringsAsFactors = FALSE)
+
+
+  x11fort <- data.frame(m = c("(12f6.0,i2,a6)", 
+                            "(6f12.0,/,6f12.0,i2,a6)", 
+                            "(a6,i2,12f6.0)", 
+                            "(a6,i2,6f12.0,/,8x,6f12.0)" , 
+                            "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)", 
+                            "(a8,i2,10x,12e16.10,18x)", 
+                            "(a8,i4,12x,12e16.10,14x)"),
+                      q = c("(12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0,i2,a6)", 
+                            "(4f12.0,24x,i2,a6)", 
+                            "(a6,i2,12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0)", 
+                            "(a6,i2,4f12.0)", 
+                            "(a8,i4,4f11.0,2x)", 
+                            "(a8,i2,10x,12e16.10,18x)", 
+                            "(a8,i4,12x,12e16.10,14x)"),
+                      stringsAsFactors = FALSE)
+
+
+
+  rownames(x11fort) = c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")
+  x11fort[x, p]
+}
+
+
+
+parse_fortran_format <- function(format){
+  if (grepl("/", format)){
+    return(lapply(strsplit(format, "/")[[1]], parse_fortran_format))
+  }
+  z <- strsplit(gsub("[\\(\\)]", "", format), ",")[[1]]
+  z[z != ""]
+}
+
+
+import_fortran <- function(file, format, frequency, start = NULL, name = NULL){
+  zr <- read.fortran(file, parse_fortran_format(format))
+
+  # remove "\032" empty lines
+  zr <- zr[zr[, 1] != "\032", ]
+
+  zrcl <- sapply(zr, class)
+
+  vcol <- which(zrcl == "character")
+  ycol <- which(zrcl == "integer")
+
+  zl <- split(zr, zr[, vcol])
+
+  to_ts <- function(x){
+    if (is.null(start)){
+      sty <- x[1, c(ycol)]  
+      if (nchar(sty) == 2){   # if start yeear has 2 digits, guess 4 digits
+        sty <- if (sty > 45) sty + 1900 else sty + 2000
+      }
+      x <- x[, -c(vcol, ycol)]
+      start <- c(sty, 1)
+    }
+    ts(c(t(as.matrix(x))), start = start, frequency = frequency)
+  }
+
+  zlts <- lapply(zl, to_ts)
+
+  z <- do.call("cbind", zlts)
+
+
+  if (!is.null(colnames(z))){
+    colnames(z) <- tolower(colnames(z))
+    colnames(z) <- gsub(" +$", "", colnames(z))
+  }
+
+  if (!is.null(name) && !is.null(dim(z))){
+    z <- z[, name]
+  }
+
+  z2 <- try(na.omit(z), silent = TRUE)
+  if (!inherits(z2, "try-error")){
+    z <- z2
+  }
+  z
+}
 
 
