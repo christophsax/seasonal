@@ -10,7 +10,9 @@ transform {
 file = "tempprior.dat"
 precision = 1
 format = "2l2" 
-name = "CSFEMP" mode = ratio type = (temporary)
+name = "CSFEMP" 
+mode = ratio 
+type = (temporary)
 function=log}
 forecast{maxlead=24 print=none}
 check{print=all savelog=(lbq nrm)}

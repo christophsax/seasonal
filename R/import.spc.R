@@ -52,69 +52,12 @@ import.spc <- function(file){
 
   pp <- parse_spc(txt)
 
-  ext_ser_call <- function(spc, vname){
-    if (is.null(spc)) return(NULL)
-
-    # analyze series spec
-    if ("data" %in% names(spc)){
-      st <- as.character(spc$start)
-      stsp <- strsplit(st, "\\.")[[1]]
-      stsp.y <- as.numeric(stsp[1])
-      stsp.c <- as.numeric(stsp[2])  # TODO some tweaks to deal with jan, etc...
-      
-      f <- if (is.null(spc$period)) 12 else spc$period
-
-      xstr <- paste0(vname, " <- ts(", 
-                  paste(deparse(spc$data, control = "all"), collapse = ""), 
-                  ", start = ", deparse(c(stsp.y, stsp.c)), ", frequency = ", f, ")")
-   
-    } else if ("file" %in% names(spc)){
-      
-      frm <- gsub('"', '', spc$format)
-      frm <- gsub("'", "", frm)
-      frm <- gsub('"', '', frm)
-
-      if (frm == "tramo"){
-      message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
-         gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
-         paste(capture.output(print(spc)), collapse = "\n"),
-         "\nThank you very much!"
-        )
-      return(NULL)
-      }
-
-      if (frm == "datevalue"){
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
-      } else if (frm %in% c("datevaluecomma", "x13save")){
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
-      } else if (frm %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")){
-        frequency <- if (is.null(spc$period)) 12 else spc$period
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", frequency = ', frequency, ')')
-      } else {
-
-        sspl <- strsplit(spc$start, "\\.")[[1]]
-        s1 <- sspl[1]
-        s2 <- sspl[2]
-
-        if (s2 %in% tolower(month.abb)){
-          s2 <- match(sspl[2], tolower(month.abb))
-        }
-        start <- as.numeric(c(s1, s2))
-        frequency <- if (is.null(spc$period)) 12 else spc$period
-        xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", start = ', deparse(start) , ', frequency = ', frequency, ')')
-      } 
-    } else {
-      return(NULL)
-    }
-    xstr
-  }
-
   xstr <- ext_ser_call(pp$series, "x")
   xregstr <- ext_ser_call(pp$regression, "xreg")
   xtransstr <- ext_ser_call(pp$transform, "xtrans")
 
   # clean args that are produced by seas
-  pp[c("series", "regression", "transform")] <- lapply(pp[c("series", "regression", "transform")], function(spc) spc[!names(spc) %in% c("file", "data", "start", "title", "format", "period", "user")])
+  pp[c("series", "regression", "transform")] <- lapply(pp[c("series", "regression", "transform")], function(spc) spc[!names(spc) %in% c("file", "data", "start", "name", "title", "format", "period", "user")])
   
   if (identical(pp$series, structure(list(), .Names = character(0)))){
     pp$series <- NULL
@@ -158,6 +101,89 @@ print.import.spc <- function(x, ...){
   print(x$call)
 }
 
+
+
+
+ext_ser_call <- function(spc, vname){
+  if (is.null(spc)) return(NULL)
+
+  # analyze series spec
+  if ("data" %in% names(spc)){
+    start <- start_date_x13_to_ts(spc$start)
+
+    f <- if (is.null(spc$period)) 12 else spc$period
+
+    xstr <- paste0(vname, " <- ts(", 
+                paste(deparse(spc$data, control = "all"), collapse = ""), 
+                ", start = ", deparse(start), ", frequency = ", f, ")")
+ 
+  } else if ("file" %in% names(spc)){
+    
+    frm <- rem_quotes(spc$format)
+
+
+    if (frm == "tramo"){
+    message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
+       gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
+       paste(capture.output(print(spc)), collapse = "\n"),
+       "\nThank you very much!"
+      )
+    return(NULL)
+    }
+
+    # fragment for name, for fortran and x11 series
+    if (!is.null(spc$name)) {  
+      nm <- rem_quotes(spc$name)
+      if (frm %in% c("cs", "cs2")){
+        nm <- substr(nm, 1, 8)
+      } else {
+        nm <- substr(nm, 1, 8)
+      }
+      nmstr <- paste0(', name = "', nm, '"')
+    } else {
+      nmstr <- ""
+    }
+
+    if (frm == "datevalue"){
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
+    } else if (frm %in% c("datevaluecomma", "x13save")){
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
+    } else if (frm %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")){
+      frequency <- if (is.null(spc$period)) 12 else spc$period
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", frequency = ', frequency, nmstr, ')')
+    } else {
+      start <- start_date_x13_to_ts(spc$start)
+      frequency <- if (is.null(spc$period)) 12 else spc$period
+      xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", start = ', deparse(start) , ', frequency = ', frequency, nmstr, ')')
+    } 
+  } else {
+    return(NULL)
+  }
+
+  xstr
+
+}
+
+
+start_date_x13_to_ts <- function(x){
+  sspl <- strsplit(as.character(x), "\\.")[[1]]
+  s1 <- sspl[1]
+  s2 <- sspl[2]
+
+  if (s2 %in% tolower(month.abb)){
+    s2 <- match(sspl[2], tolower(month.abb))
+  }
+  as.numeric(c(s1, s2))
+}
+
+
+
+
+
+rem_quotes <- function(x){
+  x <- gsub('"', '', x)
+  gsub("'", "", x)
+}
 
 expand_spclist_to_args <- function(ll){
   # substitute empty names lists by ""
@@ -242,7 +268,7 @@ rem_defaults_from_args <- function(x) {
 #'           frequency = 12)
 import.ts <- function(file, 
                     format = "datevalue", 
-                    start = NULL, frequency = NULL){
+                    start = NULL, frequency = NULL, name = NULL){
   
   stopifnot(file.exists(file))
 
@@ -253,7 +279,7 @@ import.ts <- function(file,
   if (format %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")) {
     stopifnot(!is.null(frequency))
     format <- x11_to_fortran(format, frequency)
-    return(import_fortran(file, format, frequency))
+    return(import_fortran(file = file, format = format, frequency = frequency, name = name))
   } 
 
 
@@ -277,7 +303,7 @@ import.ts <- function(file,
   } else if (grepl("[\\(.+\\)]", format)){  # fortran format
     stopifnot(!is.null(frequency))
     stopifnot(!is.null(start))
-    dta <- import_fortran(file, format, frequency, start)
+    dta <- import_fortran(file = file, format = format, frequency = frequency, start = start, name = name)
   } else {
     stop("no valid format.")
   }
@@ -363,7 +389,7 @@ parse_fortran_format <- function(format){
 }
 
 
-import_fortran <- function(file, format, frequency, start = NULL){
+import_fortran <- function(file, format, frequency, start = NULL, name = NULL){
   zr <- read.fortran(file, parse_fortran_format(format))
 
   # remove "\032" empty lines
@@ -391,6 +417,17 @@ import_fortran <- function(file, format, frequency, start = NULL){
   zlts <- lapply(zl, to_ts)
 
   z <- do.call("cbind", zlts)
+
+
+  if (!is.null(colnames(z))){
+    colnames(z) <- tolower(colnames(z))
+    colnames(z) <- gsub(" +$", "", colnames(z))
+  }
+
+  if (!is.null(name) && !is.null(dim(z))){
+    z <- z[, name]
+  }
+
   z2 <- try(na.omit(z), silent = TRUE)
   if (!inherits(z2, "try-error")){
     z <- z2
