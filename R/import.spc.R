@@ -45,12 +45,16 @@ import.spc <- function(file){
 
   txt <- readLines(file)
   txt <- gsub("\\\\", "/", txt)  # window file names to unix
-  # keep everything lowercase, also works for filenames on mac and windows.
-  # Untested on linux.
-  txt <- tolower(txt)            
   txt <- gsub("#.*$", "", txt) # remove comments
 
-  pp <- parse_spc(txt)
+
+  # keep everything lowercase, except filenames
+  pp.cap <- parse_spc(txt)
+  pp <- parse_spc(tolower(txt))
+  pp[['series']][['file']] <- pp.cap[['series']][['file']]
+  pp[['transform']][['file']] <- pp.cap[['transform']][['file']]
+  pp[['regression']][['file']] <- pp.cap[['regression']][['file']]
+
 
   xstr <- ext_ser_call(pp$series, "x")
   xregstr <- ext_ser_call(pp$regression, "xreg")

@@ -1,28 +1,25 @@
 cat(Sys.getenv("TRAVIS"))
 cat(Sys.getenv("TRAVIS_BUILD_DIR"))
 
-
 if (Sys.getenv("TRAVIS") != ""){
   Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
   bdir <- Sys.getenv("TRAVIS_BUILD_DIR")
 } else {
   bdir <- "~/seasonal"  # loc on ubuntu server
+  # bdir <- "~/git/seasonal"  # local
+
 }
 
-
 library(seasonal)
-
 checkX13()
-
 
 
 cc <- read.csv(file.path(bdir, "travis/examples/ex_run.csv"))  # runnable examples
 
-# known issues:
+# known issues
 
 # # 87
 # seas(AirPassengers, transform.function = "none", transform.power = 0.3333)
-
 
 # # 98
 # data(holiday)
@@ -38,12 +35,13 @@ cc <- read.csv(file.path(bdir, "travis/examples/ex_run.csv"))  # runnable exampl
 #      )
 
 
-
 rr <- as.character(cc$r)
-
-r <- rr[-c(87, 98)]  # remove known issues
+r <- rr[-c(87, 98)]        # remove known issues
 
 # --- numerical equality -------------------------------------------------------
+
+# 1. evaluate test cases
+# 2. compare results to run from previous versions
 
 set.seed(100)  # because we have runif() in the examples  (this should be removed)
 
@@ -73,48 +71,52 @@ stopifnot(all.equal(q.final, bench$q.final))
 stopifnot(all.equal(s.final, bench$s.final))
 
 
+# --- two way parsing ----------------------------------------------------------
 
-# --- 2 way parsing ------------------------------------------------------------
+# 1. evaluate test cases
+# 2. import spc files
+# 3. evaluate parsed calls 
+# 4. compare series
 
+tdir <-  file.path(tempdir(), "x13test")
+if (!file.exists(tdir)) dir.create(tdir)
 
-# test_parse <- function(x){
-#   tdir <-  "~/tmp"
-#   ccc <- parse(text = x)
+test_parse <- function(x){
+  ccc <- parse(text = x)
 
-#   cc <- ccc[[length(ccc)]]
+  cc <- ccc[[length(ccc)]]
 
-#   if (length(ccc) > 1){
-#     for (i in 1:(length(ccc)-1)){
-#        eval(ccc[[i]])
-#     }
-#   }
+  if (length(ccc) > 1){
+    for (i in 1:(length(ccc)-1)){
+       eval(ccc[[i]])
+    }
+  }
   
-#   cc$out <- TRUE
-#   cc$dir <- tdir
-#   a <- eval(cc)
+  cc$out <- TRUE
+  cc$dir <- tdir
+  a <- eval(cc)
   
-#   bb <- import.spc(file.path(tdir, "iofile.spc"))
-#   b <- lapply(bb, eval)$call
-#   all.equal(final(a), final(b))
-# }
+  bb <- import.spc(file.path(tdir, "iofile.spc"))
+  b <- lapply(bb, eval)$call
+  all.equal(final(a), final(b))
+}
 
-# ll <- lapply(r, function(e) try(test_parse(e)))
+ll <- lapply(r, function(e) try(test_parse(e)))
 
 
-# failing <- which(sapply(ll, class) == "try-error")
+failing <- which(sapply(ll, class) == "try-error")
 
-#  # TRUE
-# if (length(failing) > 0){
-#   stop("failing cases: ", paste(failing, collapse = ", "))
-# }
-
+if (length(failing) > 0){
+  stop("failing cases: ", paste(failing, collapse = ", "))
+}
 
 
 # --- static -------------------------------------------------------------------
 
+# 1. evaluate test cases
+# 2. run static on seas model (including test run by static)
 
 test_static <- function(x){
-  tdir <-  "~/tmp"
   ccc <- parse(text = x)
 
   cc <- ccc[[length(ccc)]]
@@ -126,15 +128,10 @@ test_static <- function(x){
   }
   
   a <- eval(cc)
-  
   static(a)
-
 }
 
-
-
 ll <- lapply(r, function(e) try(test_static(e), silent = TRUE))
-
 
 failing <- which(sapply(ll, class) == "try-error")
 
@@ -143,13 +140,11 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L)]) > 0){
 }
 
 
+# known issues
 
-
-# known static issues: complicated outliers are not read correctly from the mdl
-# file
+# complicated outliers are not read correctly from the mdl file
 
 # r[47]
-
 # m <- seas(AirPassengers,
 #      transform.function = "log",
 #      regression.aictest = NULL,
@@ -158,7 +153,6 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L)]) > 0){
 #      outlier = NULL
 #      )
 # static(m, test = F)
-
 
 # # r[52]
 # m <- seas(AirPassengers,
@@ -169,7 +163,6 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L)]) > 0){
 #      dir = "~/tmp"
 #      )
 # static(m, test = F)
-
 
 # # r[53]
 # m <- seas(AirPassengers,
@@ -194,10 +187,4 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L)]) > 0){
 #      x11 = ""
 #      )
 # static(m, test = F)
-
-
-
-
-
-
 
