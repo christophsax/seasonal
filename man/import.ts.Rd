@@ -4,8 +4,7 @@
 \alias{import.ts}
 \title{Import Series from X-13 Data Files (experimental)}
 \usage{
-import.ts(file, format = c("datevalue", "datevaluecomma", "free", "freecomma",
-  "x13save"), start = NULL, frequency = NULL)
+import.ts(file, format = "datevalue", start = NULL, frequency = NULL)
 }
 \arguments{
 \item{file}{character, name of the X-13 file which the data are to be read from}
@@ -28,7 +27,7 @@ Helper function to read time series from X-13 input files. A call to
 \examples{
 tpath <- file.path(path.package("seasonal"), "tests")
 
-import.ts(file.path(tpath, "datavalue.dta"))
+import.ts(file.path(tpath, "datavalue1.dta"))
 import.ts(file.path(tpath, "free1.txt"), format = "free", start = c(1949, 1),
           frequency = 12)
 import.ts(file.path(tpath, "free2.txt"), format = "free", start = c(1949, 1),
