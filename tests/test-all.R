@@ -1,3 +1,5 @@
+# REMOVE TEST FOLDER FOR CRAN SUBMISSION
+
 cat(Sys.getenv("TRAVIS"))
 cat(Sys.getenv("TRAVIS_BUILD_DIR"))
 
@@ -198,28 +200,28 @@ spcpath <- file.path(bdir, "travis", "spc")
 
 ### import.ts
 
-import.ts(file.path(spcpath, "datavalue1.dta"))
-import.ts(file.path(spcpath, "datavalue2.dta"))
+a <- import.ts(file.path(spcpath, "datavalue1.dta"))
+a <- import.ts(file.path(spcpath, "datavalue2.dta"))
 
-import.ts(file.path(spcpath, "free1.txt"), format = "free", start = c(1949, 1), frequency = 12)
-import.ts(file.path(spcpath, "free2.txt"), format = "free", start = c(1949, 1), frequency = 12)
+a <- import.ts(file.path(spcpath, "free1.txt"), format = "free", start = c(1949, 1), frequency = 12)
+a <- import.ts(file.path(spcpath, "free2.txt"), format = "free", start = c(1949, 1), frequency = 12)
 
-import.ts(file.path(spcpath, "x13save.dta"), format = "x13save")
-import.ts(file.path(spcpath, "datavaluecomma.dta"), format = "datevaluecomma")
-import.ts(file.path(spcpath, "freecomma1.txt"), format = "freecomma", start = c(1949, 1), frequency = 12)
-import.ts(file.path(spcpath, "freecomma2.txt"), format = "freecomma",  start = c(1949, 1), frequency = 12)
-import.ts(file.path(spcpath, "datavalue_q.dta"))
-import.ts(file.path(spcpath, "x13save_q.dta"), format = "x13save")
-import.ts(file.path(spcpath, "datavalue_mult0.dta"))
-import.ts(file.path(spcpath, "datavalue_mult1.dta"))
-import.ts(file.path(spcpath, "datavalue_mult1.dta"))
+a <- import.ts(file.path(spcpath, "x13save.dta"), format = "x13save")
+a <- import.ts(file.path(spcpath, "datavaluecomma.dta"), format = "datevaluecomma")
+a <- import.ts(file.path(spcpath, "freecomma1.txt"), format = "freecomma", start = c(1949, 1), frequency = 12)
+a <- import.ts(file.path(spcpath, "freecomma2.txt"), format = "freecomma",  start = c(1949, 1), frequency = 12)
+a <- import.ts(file.path(spcpath, "datavalue_q.dta"))
+a <- import.ts(file.path(spcpath, "x13save_q.dta"), format = "x13save")
+a <- import.ts(file.path(spcpath, "datavalue_mult0.dta"))
+a <- import.ts(file.path(spcpath, "datavalue_mult1.dta"))
+a <- import.ts(file.path(spcpath, "datavalue_mult1.dta"))
 
 # this gives a harmless incomplete final line found warning
-suppressWarnings(import.ts(file.path(spcpath, "x11_m1l.dat"), format = "1l", frequency = 12))
+a <- suppressWarnings(import.ts(file.path(spcpath, "x11_m1l.dat"), format = "1l", frequency = 12))
 
-import.ts(file.path(spcpath, "x11_m2l.dat"), format = "2l", frequency = 12)
-import.ts(file.path(spcpath, "x11_m2l2.dat"), format = "2l2", frequency = 12)
-import.ts(file.path(spcpath, "x11_m1r.dat"), format = "1r", frequency = 12)
+a <- import.ts(file.path(spcpath, "x11_m2l.dat"), format = "2l", frequency = 12)
+a <- import.ts(file.path(spcpath, "x11_m2l2.dat"), format = "2l2", frequency = 12)
+a <- import.ts(file.path(spcpath, "x11_m1r.dat"), format = "1r", frequency = 12)
 
 
 ### import.spc
