@@ -257,6 +257,9 @@ rem_defaults_from_args <- function(x) {
 #'   formats \code{"free"} and \code{"freecomma"})
 #' @param frequency  the number of observations per unit of time (only for 
 #'   formats \code{"free"} and \code{"freecomma"})
+#' @param name  name of the series, to select from a multiple time series. For 
+#'   compatibility with the existing spc files in the x11 format. Omit if you 
+#'   want to read all time series from a file.
 #' @export
 #' @examples
 #' tpath <- file.path(path.package("seasonal"), "tests")
