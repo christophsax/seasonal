@@ -13,6 +13,7 @@ parse_spc <- function(txt){
 
 # txt <- "transform{\n  function = auto\n  print = aictransform\n}\n\nregression{\n  aictest = (td easter)\n}\n\noutlier{\n\n}\n\nautomdl{\n  print = bestfivemdl\n}\n\nx11{\n  save = (d10 d11 d12 d13 d16 e18)\n}\n\nestimate{\n  save = (model estimates lkstats residuals)\n}\n\nspectrum{\n  print = qs\n}"
 
+# txt <- "transform{\n  function = auto print = aictransform\n}\n\nregression{\n  aictest = (td easter)\n}\n\noutlier{\n\n}\n\nautomdl{\n  print = bestfivemdl\n}\n\nx11{\n  save = (d10 d11 d12 d13 d16 e18)\n}\n\nestimate{\n  save = (model estimates lkstats residuals)\n}\n\nspectrum{\n  print = qs\n}"
 
 
   stopifnot(inherits(txt, "character"))
@@ -77,6 +78,10 @@ parse_singlespc <- function(txt){
   # txt <- ("\n  function=auto\n  savelog=autotransform  \n")
   # txt <- ("\n  savelog=peaks\t\n")
 
+  # txt <- "\n  function = auto print = aictransform\n"
+
+
+  # txt <- "\nmaxlead=24 print=none"
   # positions of curly braces (ignore subsequent bracktets form arima model)
   
   # parse_singlespc("\n  noadmiss = yes\n  save = (s10 s11 s12 s13 s16 s18)\n")
@@ -86,7 +91,13 @@ parse_singlespc <- function(txt){
 
   txt <- gsub("= *\\n", "=", txt)  # remove new lines after =
 
-  # remove new lines inside ()
+  ### add \n before argument (its usually there)
+  ep <- gregexpr("\\n? *[a-zA-Z0-9]+ ?=", txt)
+  em <- regmatches(txt, ep)
+  regmatches(txt, ep) <- lapply(em, function(e) gsub("^ ", "\n", e))
+
+
+  ### remove new lines inside ()  (prehaps use regmatch assignment here as well)
   op <- gregexpr("\\(", txt)[[1]]
   cl <- gregexpr("\\)", txt)[[1]]
 

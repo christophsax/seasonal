@@ -3,8 +3,8 @@ SystemRequirements: Binary executables of X-13-ARIMA-SEATS (installation notes:
     see README or vignette)
 Type: Package
 Title: R Interface to X-13-ARIMA-SEATS
-Version: 0.90.9
-Date: 2015-07-26
+Version: 0.90.10
+Date: 2015-07-29
 Author: Christoph Sax
 Maintainer: Christoph Sax <christoph.sax@gmail.com>
 Description: Easy-to-use interface to X-13-ARIMA-SEATS, the

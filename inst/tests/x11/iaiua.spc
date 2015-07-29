@@ -9,10 +9,7 @@ arima {model = (0 1 2) (0 1 1)}
 transform {
 file = "tempprior.dat"
 precision = 1
-format = "2l2" 
-name = "CSFEMP" 
-mode = ratio 
-type = (temporary)
+format = "2l2" name = "CSFEMP" mode = ratio type = (temporary)
 function=log}
 forecast{maxlead=24 print=none}
 check{print=all savelog=(lbq nrm)}
