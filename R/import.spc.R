@@ -74,7 +74,6 @@ import.spc <- function(file){
       frm <- gsub("'", "", frm)
       frm <- gsub('"', '', frm)
 
-browser()
       if (frm == "tramo"){
       message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
          gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
