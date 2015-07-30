@@ -38,7 +38,7 @@ mod_spclist <- function(x, list){
     } else if (length(split.names.i[[1]]) == 2){
       spc.arg <- split.names.i[[1]][2]
       if (!is.list(x[[spc.name]])){
-        stop("Specification of ", spc.name, " without a dot is not allowed in this context.")
+        stop("Specification of ", spc.name, " without a dot is not allowed in this context.", call. = FALSE)
       }
       if (is.null(x[[spc.name]][[spc.arg]])){
         x[[spc.name]][[spc.arg]] <- list()
@@ -49,7 +49,7 @@ mod_spclist <- function(x, list){
         x[[spc.name]][[spc.arg]] <- unique(c(x[[spc.name]][[spc.arg]], content.i))
       }
     } else {
-      stop("X-13ARIMA-SEATS options should contain a spec and an optional argument after the dot.")
+      stop("X-13ARIMA-SEATS options should contain a spec and an optional argument after the dot.", call. = FALSE)
     }
   }
   x
