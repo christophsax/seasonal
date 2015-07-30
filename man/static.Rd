@@ -4,7 +4,7 @@
 \alias{static}
 \title{Static Call of a seas Object}
 \usage{
-static(x, coef = FALSE, test = TRUE, verbose = FALSE)
+static(x, coef = FALSE, test = TRUE, verbose = FALSE, fail = FALSE)
 }
 \arguments{
 \item{x}{an object of class \code{seas}.}
@@ -17,6 +17,9 @@ the input call. If the final series is not identical, a warning is
 returned. If \code{FALSE}, the option is disabled.}
 
 \item{verbose}{logical, if \code{TRUE}, droped and kept series are listed.}
+
+\item{fail}{logical, if \code{TRUE}, differences will cause an error. Ignored
+  if \code{test = FALSE}.}
 }
 \value{
 Object of class \code{"call"}. Static call of an object of class
@@ -30,7 +33,7 @@ evaluation of the same model.
 }
 \details{
 By default, the static call is tested. It is executed and compared to the
-input call. If the final series is not identical, a warning is returned.
+input call. If the final series is not identical, a message is returned.
 
 If \code{coef = TRUE}, the coefficients are fixed as well.
 }
