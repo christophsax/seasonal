@@ -4,9 +4,10 @@ if (Sys.getenv("TRAVIS") != ""){
   travisdir <- file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis")
 } else if (Sys.info()['sysname'] == "Darwin"){
   travisdir <- "~/git/seasonal/travis"  # local mac
-} else 
+} else {
   travisdir <- "~/seasonal/travis"      # ubuntu server
 }
+
 
 
 source(file.path(travisdir, "settings.R"))
