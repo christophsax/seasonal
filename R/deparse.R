@@ -74,7 +74,7 @@ as.character.arima <- function(x){
   # WriteDatavalue(austres, file = "data.dat")
   
   if (!class(x) %in% c("numeric", "character")){
-    stop("arima.model: must be numeric or character")
+    stop("arima.model: must be numeric or character", call. = FALSE)
   }
   
   if (is.numeric(x)){
@@ -91,7 +91,7 @@ as.character.arima <- function(x){
                   ")"
       )
     } else {
-      stop("arima.model: only numeric vector of length 3 or 6 allowed, or a character string.")
+      stop("arima.model: only numeric vector of length 3 or 6 allowed, or a character string.", call. = FALSE)
     }
   } else {
     z <- x

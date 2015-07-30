@@ -95,7 +95,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
     stop("first argument must be of class 'seas'")
   }
 
-  cat("Press ESC to get back to the console\n")
+  cat("Press ESC (or Ctrl-C) to get back to the R session\n")
   
   init.model <- x
   init.icstr <- format_seascall(init.model$call)
@@ -350,8 +350,7 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
         if(!is.null(rTerminalError$error)){
            pp <- shiny::HTML(paste0('<div class="alert alert-danger alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>Error</h4>
-            <p>', rTerminalError$error, '</p>
+            ', err_to_html(rTerminalError$error), '<br>
             <p>
               <button id="iRevert" type="button" class="btn action-button btn-danger" style = "margin-right: 4px;">Revert</button>
             </p>
