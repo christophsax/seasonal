@@ -1,14 +1,14 @@
 # subfunctions that search output files for some information
 # used by: seas
 
-detect_error <- function(err){
+detect_error <- function(err, htmlmode = getOption("htmlmode")){
   # error parsing from .err or .err.html character vector
   #
   # err  character vector, content of output file
   #
   # returns an object of class x13messages which can be printed
   
-  if (getOption("htmlmode") == 1){
+  if (htmlmode == 1){
     ParseInfo <- function(openl, x){
       # find next closing tag
       clt <- grep("</p>", x)
@@ -28,18 +28,18 @@ detect_error <- function(err){
     }
   } else {
     ParseInfo <- function(openl, x){
-      line2 <- NULL
-      for (l in openl:length(x)){
-        if (x[l] == "  "){
-          line2 <- l - 1
-        }
+      clt <- which(x == "  " | x == "" | grepl("^ [A-Z]{4}", x) | grepl("  \\*\\*", x)) 
+      closel <- clt[clt > openl][1] - 1
+
+      if (is.na(closel)){
+        closel <- length(x)
       }
-      if (is.null(line2)){
-        line2 <- length(x)
-      }
-      z <- paste(x[openl:line2], collapse = "")
+
+      z <- paste(x[openl:closel], collapse = "")
+      z <- gsub("\\s+", " ", z)          # remove multiple space
       z <- gsub("^.*: ", "", z)    # remove trailing tag
       z <- gsub("^\\s", "", z)     # remove trailing space
+      z
     }
   }
 

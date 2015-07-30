@@ -453,7 +453,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   if (!is.null(ff)){
-    if (as.numeric(z$udg['freq'] %in% ff)){
+    if (!as.numeric(z$udg['freq']) %in% ff){
       msg <- paste0("Frequency of imported data (", frequency(z$data), ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), "). X-13 retured the addital messages: \n\n")
       drop_x13messages(z$err, msg = msg, ontype = "all")
     }
@@ -517,23 +517,17 @@ run_x13 <- function(file, out){
   }
   # error message if output contains the word ERROR
   if (inherits(msg, "character")){
-    le0 <- grep("ERROR", msg)
-    if (length(le0) > 0){
-      if (any(grepl("iofile_err", msg))){
-        # read from separate file
-        err <- read_err(file)
-        drop_x13messages(err)
-      } else {
-        cat("")
-        # fallback: read from msg
-        le1 <- grep("Program error", msg)
-        if (length(le1) > 0){
-           x13err <- paste(msg[le0:(le1-1)], collapse = "\n")
+    if (any(grepl("ERROR", msg))){
+      if (file.exists(paste0(file, ".err"))){
+        if (any(grepl("iofile_err", msg))){
+          # read from separate file
+          err <- read_err(file)
+          drop_x13messages(err)
         } else {
-           x13err <- paste(msg[le0], collapse = "\n")
+          # fall back: parse message
+          err <- detect_error(msg, htmlmode = 0)
+          drop_x13messages(err)
         }
-        stop("X-13 run failed\n\n", 
-          x13err, call. = FALSE)
       }
     }
   }
