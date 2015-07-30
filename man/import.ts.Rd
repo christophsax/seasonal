@@ -11,7 +11,8 @@ import.ts(file, format = "datevalue", start = NULL, frequency = NULL,
 \item{file}{character, name of the X-13 file which the data are to be read from}
 
 \item{format}{a valid X-13 file format as described in 7.15, p. 173 of the
-X-13 manual.}
+X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"},
+\code{"freecomma"}, \code{"x13save"} or an X-11 or Fortran format.}
 
 \item{start}{vector of length 2, time of the first observation (only for
 formats \code{"free"} and \code{"freecomma"})}
@@ -30,12 +31,11 @@ Helper function to read time series from X-13 input files. A call to
 \bold{This is an experimental function that may change substantially in the future.}
 }
 \examples{
-tpath <- file.path(path.package("seasonal"), "tests")
-
-import.ts(file.path(tpath, "datavalue1.dta"))
-import.ts(file.path(tpath, "free1.txt"), format = "free", start = c(1949, 1),
-          frequency = 12)
-import.ts(file.path(tpath, "free2.txt"), format = "free", start = c(1949, 1),
-          frequency = 12)
+\dontrun{
+tdir <- tempdir()
+seas(x = AirPassengers, dir = tdir)
+import.ts(file.path(tdir, "data.dta"))
+import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
+}
 }
 

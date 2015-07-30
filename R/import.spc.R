@@ -256,7 +256,8 @@ rem_defaults_from_args <- function(x) {
 #' 
 #' @param file character, name of the X-13 file which the data are to be read from
 #' @param format a valid X-13 file format as described in 7.15, p. 173 of the
-#'  X-13 manual.
+#'  X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"}, 
+#'  \code{"freecomma"}, \code{"x13save"} or an X-11 or Fortran format.
 #' @param start vector of length 2, time of the first observation (only for
 #'   formats \code{"free"} and \code{"freecomma"})
 #' @param frequency  the number of observations per unit of time (only for 
@@ -266,13 +267,12 @@ rem_defaults_from_args <- function(x) {
 #'   want to read all time series from a file.
 #' @export
 #' @examples
-#' tpath <- file.path(path.package("seasonal"), "tests")
-#' 
-#' import.ts(file.path(tpath, "datavalue1.dta"))
-#' import.ts(file.path(tpath, "free1.txt"), format = "free", start = c(1949, 1), 
-#'           frequency = 12)
-#' import.ts(file.path(tpath, "free2.txt"), format = "free", start = c(1949, 1), 
-#'           frequency = 12)
+#' \dontrun{
+#' tdir <- tempdir()
+#' seas(x = AirPassengers, dir = tdir) 
+#' import.ts(file.path(tdir, "data.dta"))
+#' import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
+#' }
 import.ts <- function(file, 
                     format = "datevalue", 
                     start = NULL, frequency = NULL, name = NULL){
@@ -321,23 +321,6 @@ import.ts <- function(file,
   
 
 }
-
-
-
-
-
-
-
-
-# these examples work!!
-# tpath <- "/Users/christoph/git/seasonal/inst/tests/"
-# file <- (file.path(tpath, "x11_m1l.dat")); frequency = 12; format <- x11_to_fortran("1l", frequency)
-# file <- (file.path(tpath, "x11_m2l.dat")); frequency = 12; format <- x11_to_fortran("2l", frequency)
-# file <- (file.path(tpath, "x11_m2l2.dat")); frequency = 12; format <- x11_to_fortran("2l2", frequency)
-# file <- (file.path(tpath, "x11_m1r.dat")); frequency = 12; format <- x11_to_fortran("1r", frequency)   # composit spec TODO 
-
-# import_fortran(file, format, frequency)
-
 
 
 
