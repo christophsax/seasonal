@@ -6,7 +6,7 @@
 #' evaluation of the same model.
 #' 
 #' By default, the static call is tested. It is executed and compared to the 
-#' input call. If the final series is not identical, a warning is returned.
+#' input call. If the final series is not identical, a message is returned.
 #' 
 #' If \code{coef = TRUE}, the coefficients are fixed as well.
 #' 
@@ -17,7 +17,9 @@
 #'   the input call. If the final series is not identical, a warning is 
 #'   returned. If \code{FALSE}, the option is disabled.
 #' @param verbose logical, if \code{TRUE}, droped and kept series are listed.
-#'   
+#' @param fail logical, if \code{TRUE}, differences will cause an error. Ignored 
+#'   if \code{test = FALSE}.
+#' 
 #' @return Object of class \code{"call"}. Static call of an object of class
 #'   \code{seas}. Can be copy/pasted into an R script.
 #'   
@@ -40,7 +42,7 @@
 #' static(m)
 #' static(m, test = FALSE)
 #' }
-static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
+static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE, fail = FALSE){
   
   if (!inherits(x, "seas")){
     stop("first argument must be of class 'seas'")
@@ -94,8 +96,8 @@ static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE){
     # testing the static call
     x.static <- eval(z, envir = globalenv())
     test <- (all.equal(log(final(x.static)), log(final(x)), tolerance = 1e-05))
-    if (inherits(test, "character")){
-      message(paste("Static series is different.", test))
+    if (!isTRUE(test)){
+      (if (fail) stop else message)(paste("Static series is different.", test))
     }
   }
 
