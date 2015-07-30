@@ -39,3 +39,18 @@ x11 = ""
 
 
 
+m <- seas(
+x = AirPassengers,
+transform.function = "none",
+regression.aictest = "easter",
+outlier.critical = 3,
+arima.model = "(0 1 0)",
+regression.variables = "td1coef"
+)
+monthplot(m)
+
+
+
+
+
+

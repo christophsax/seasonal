@@ -459,6 +459,9 @@ inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){
                                         transform = "PC"))
         if (iSeries == "monthplot"){
           # instead of the seas method, to hide the main title
+          shiny::validate(shiny::need(("seasonal" %in% colnames(rModel$m$data)), 
+                    "This view is not available for the model. Change view or model."))
+
           monthplot(rModel$m$data[,'seasonal'], ylab = "", lwd = 2, col = "red", 
                     main = "")
           return(monthplot(siratio(rModel$m), col = "blue", type = "h", 

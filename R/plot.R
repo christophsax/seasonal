@@ -72,7 +72,9 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
 
   if (transform == "PC"){
     orignalx <- (lag(orignalx, -1) - orignalx) / lag(orignalx, -1)
-    finalx <- (lag(finalx, -1) - finalx) / lag(finalx, -1)
+    if (!is.null(final(x))){
+      finalx <- (lag(finalx, -1) - finalx) / lag(finalx, -1)
+    }
     if (main != ""){
       main <- paste(main, "(PC)")
     }
@@ -80,7 +82,9 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
   if (transform == "PCY"){
     fr <- frequency(orignalx)
     orignalx <- (lag(orignalx, -fr) - orignalx) / lag(orignalx, -fr)
-    finalx <- (lag(finalx, -fr) - finalx) / lag(finalx, -fr)
+    if (!is.null(final(x))){
+      finalx <- (lag(finalx, -fr) - finalx) / lag(finalx, -fr)
+    }
     if (main != ""){
       main <- paste(main, "(PCY)")
     }
@@ -100,7 +104,7 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
     lines(trendx, col = "blue", lty = "dashed")
   }
   
-  if (identical(outliers, TRUE)){
+  if (identical(outliers, TRUE) && (!is.null(final(x)))){
     ol.ts <- outlier(x)
     sym.ts <- ol.ts
     sym.ts[!is.na(sym.ts)] <- 3
@@ -112,6 +116,9 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
 #' @rdname plot.seas
 #' @export
 residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", ...){
+  if(is.null(resid(x))){
+    stop("no residuals to plot")
+  }
   ts.plot(resid(x), ylab = "value",
           main = main, ...
   )
@@ -133,10 +140,18 @@ residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", ...){
 monthplot.seas <- function(x, choice = c("seasonal", "irregular"), ...){
   choice <- match.arg(choice)
   if (choice == "seasonal"){
+    if(!'seasonal' %in% colnames(x$data)){
+      stop("model has no seasonal component")
+    }
+
     monthplot(x$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "Seasonal Component, SI Ratio", ...)
     monthplot(siratio(x), col = "blue", type = "h", add = TRUE)
   }
   if (choice == "irregular"){
+    if(!'irregular' %in% colnames(x$data)){
+      stop("model has no irregular component")
+    }
+
     monthplot(x$data[,'irregular'], ylab = "", main = "Irregular Component")
   }
 }
