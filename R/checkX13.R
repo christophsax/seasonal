@@ -92,12 +92,20 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     message("  - X13_PATH correctly specified")
     message("  - binary executable file found")
 
-    if (getOption("htmlmode") == 1){
-    # ignore case on unix to avoid problems with different binary names
-      fl <- list.files(env.path)
-      x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
+    if (.Platform$OS.type == "windows"){
+      if (getOption("htmlmode") == 1){
+        x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe"), "\"")
+      } else {
+        x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
+      }
     } else {
-      x13.bin <- file.path(env.path, "x13as")
+      if (getOption("htmlmode") == 1){
+        # ignore case on unix to avoid problems with different binary names
+        fl <- list.files(env.path)
+        x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
+      } else {
+        x13.bin <- file.path(env.path, "x13as")
+      }
     }
 
     # X-13 command line test run
@@ -108,14 +116,15 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     file.remove(list.files(wdir, full.names = TRUE))
     testfile <- file.path(path.package("seasonal"), "tests", "Testairline.spc")
     file.copy(testfile, wdir)
-    run_x13(file.path(wdir, "Testairline"), out = TRUE)
+    try(run_x13(file.path(wdir, "Testairline"), out = TRUE), silent = TRUE)
+
     if (file.exists(file.path(wdir, "Testairline.out")) | file.exists(file.path(wdir, "Testairline.html"))){
       message("  - command line test run successful")
       if (file.exists(file.path(wdir, "Testairline.html"))){
         message("  - command line test produced HTML output")
       }
     } else {
-      message("\nERROR: X-13 command line test run failed. To debug, try running the binary file directly in the terminal. Try using it with Testairline.spc which is part of the program package by the Census Office.")
+      message("\nError : X-13 command line test run failed. To debug, try running the binary file directly in the terminal. Try using it with Testairline.spc which is part of the program package by the Census Office.")
       if (.Platform$OS.type != "windows"){  
         message("Perhaps it is not executable; you can make it executable with 'chmod +x ", x13.bin, "', using the terminal.")
       }  
@@ -127,7 +136,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     if (inherits(m, "seas")){
       message("  - seasonal test run successful")
     } else {
-      message("\nERROR: seasonal test run failed.")
+      message("\nError : seasonal test run failed, with the message:\n", m)
       has.failed <- TRUE
     }
 

@@ -3,31 +3,32 @@
 \name{import.spc}
 \alias{import.spc}
 \alias{print.import.spc}
-\title{Import X-13 \code{.spc} Files to R (experimental)}
+\title{Import X-13 \code{.spc} Files (experimental)}
 \usage{
 import.spc(file)
 
 \method{print}{import.spc}(x, ...)
 }
 \arguments{
-\item{file}{character, name of the X-13 spc file}
+\item{file}{character, name of the X-13 \code{.spc} file}
 
 \item{x}{object of class \code{import.spc}}
 
 \item{...}{further arguments, not used}
 }
 \value{
-returns an object of class \code{import.spc}, which is list with the following (optional) elements:
-  \item{call}{object of class \code{call}, the call to \code{\link{seas}}}
-  \item{x}{object of class \code{call}, the call to retrieve the data for the input series}
-  \item{xtrans}{object of class \code{call}, the call to retrieve the data for the \code{xtrans} series (if required by the call)}
-  \item{xreg}{object of class \code{call}, the call to retrieve the data for the \code{xreg} series (if required by the call)}
+returns an object of class \code{import.spc}, which is a list with the following (optional) objects of class \code{call}:
+  \item{call}{the call to \code{\link{seas}}}
+  \item{x}{the call to retrieve the data for the input series}
+  \item{xtrans}{the call to retrieve the data for the \code{xtrans} series (if required by the call)}
+  \item{xreg}{the call to retrieve the data for the \code{xreg} series (if required by the call)}
 }
 \description{
-Helper function to read time series from X-13 input files. It generates a
-list of calls that can be run in R, replicating the X-13 spc file. The print
-method displays the calls in way so they can be copy-pasted into an R script.
-\bold{This is an experimental function that may change substantially in the future.}
+Utility function to import \code{.spc}
+files from X-13. It generates a list of calls to \code{seas} (and
+\code{import.ts}) that can be run in R, which should be
+equivalent to the original \code{.spc} file. The print method displays the calls in a way that they can
+be copy-pasted into an R script.
 }
 \examples{
 # importing the orginal X-13 example file
@@ -49,5 +50,10 @@ ii  # list with 4 calls (3 series import, 1 main call)
 ee <- lapply(ii, eval, envir = globalenv())
 ee$call  # the 'seas' object produced from the .spc file
 }
+}
+\seealso{
+\code{\link{import.ts}}, for importing X-13 data files.
+
+\code{\link{seas}} for the main function of seasonal.
 }
 

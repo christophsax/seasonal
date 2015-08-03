@@ -1,16 +1,20 @@
-#' Import X-13 \code{.spc} Files to R (experimental)
+#' Import X-13 \code{.spc} Files (experimental)
 #' 
-#' Helper function to read time series from X-13 input files. It generates a
-#' list of calls that can be run in R, replicating the X-13 spc file. The print
-#' method displays the calls in way so they can be copy-pasted into an R script.
+#' Utility function to import \code{.spc}
+#' files from X-13. It generates a list of calls to \code{seas} (and 
+#' \code{import.ts}) that can be run in R, which should be 
+#' equivalent to the original \code{.spc} file. The print method displays the calls in a way that they can
+#' be copy-pasted into an R script.
 #' 
-#' @param file   character, name of the X-13 spc file
-#' @return returns an object of class \code{import.spc}, which is list with the following (optional) elements:
-#'   \item{call}{object of class \code{call}, the call to \code{\link{seas}}}
-#'   \item{x}{object of class \code{call}, the call to retrieve the data for the input series} 
-#'   \item{xtrans}{object of class \code{call}, the call to retrieve the data for the \code{xtrans} series (if required by the call)} 
-#'   \item{xreg}{object of class \code{call}, the call to retrieve the data for the \code{xreg} series (if required by the call)} 
+#' @param file   character, name of the X-13 \code{.spc} file
+#' @return returns an object of class \code{import.spc}, which is a list with the following (optional) objects of class \code{call}:
+#'   \item{call}{the call to \code{\link{seas}}}
+#'   \item{x}{the call to retrieve the data for the input series} 
+#'   \item{xtrans}{the call to retrieve the data for the \code{xtrans} series (if required by the call)} 
+#'   \item{xreg}{the call to retrieve the data for the \code{xreg} series (if required by the call)} 
 #' @export
+#' @seealso \code{\link{import.ts}}, for importing X-13 data files.
+#' @seealso \code{\link{seas}} for the main function of seasonal.
 #' @examples
 #' 
 #' # importing the orginal X-13 example file
@@ -236,24 +240,27 @@ rem_defaults_from_args <- function(x) {
 
 
 
-#' Import Series from X-13 Data Files (experimental)
+#' Import Time Series from X-13 Data Files (experimental)
 #' 
-#' Helper function to read time series from X-13 input files. A call to
+#' Utility function to read time series from X-13 data files. A call to
 #' \code{import.ts} is constructed and included in the output of
 #' \code{\link{import.spc}}.
 #' 
 #' @param file character, name of the X-13 file which the data are to be read from
-#' @param format a valid X-13 file format as described in 7.15, p. 173 of the
+#' @param format a valid X-13 file format as described in 7.15 of the
 #'  X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"}, 
-#'  \code{"freecomma"}, \code{"x13save"} or an X-11 or Fortran format.
+#'  \code{"freecomma"}, \code{"x13save"}, \code{"tramo"} or an X-11 or Fortran format.
 #' @param start vector of length 2, time of the first observation (only for
-#'   formats \code{"free"} and \code{"freecomma"})
+#'   formats \code{"free"} and \code{"freecomma"} and the Fortran formats.)
 #' @param frequency  the number of observations per unit of time (only for 
-#'   formats \code{"free"} and \code{"freecomma"})
-#' @param name  name of the series, to select from a multiple time series. For 
-#'   compatibility with the existing spc files in the x11 format. Omit if you 
-#'   want to read all time series from a file.
+#'   formats \code{"free"}, \code{"freecomma"} and the X-11 or Fortran formats.)
+#' @param name  (X-11 formats only) name of the series, to select from a 
+#'   file with multiple time series. Omit if you want to read all time series from an X-11 format file.
 #' @export
+#' @return an object of class \code{ts} or \code{mts}
+#' @seealso \code{\link{import.spc}}, for importing X-13 \code{.spc} files.
+#' @seealso \code{\link{seas}} for the main function of seasonal.
+
 #' @examples
 #' \dontrun{
 #' tdir <- tempdir()
