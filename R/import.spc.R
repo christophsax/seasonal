@@ -3,7 +3,6 @@
 #' Helper function to read time series from X-13 input files. It generates a
 #' list of calls that can be run in R, replicating the X-13 spc file. The print
 #' method displays the calls in way so they can be copy-pasted into an R script.
-#' \bold{This is an experimental function that may change substantially in the future.}
 #' 
 #' @param file   character, name of the X-13 spc file
 #' @return returns an object of class \code{import.spc}, which is list with the following (optional) elements:
@@ -125,16 +124,6 @@ ext_ser_call <- function(spc, vname){
     
     frm <- rem_quotes(spc$format)
 
-
-    if (frm == "tramo"){
-    message("Data format '", frm, "' used by X-13 is currently not supported, mostly because of a lack of good testing examples. If you want to help out, you can do so by sending the following data file to christoph.sax@gmail.com.\n\n",
-       gsub('"', '', spc$file), "\n\nalong with the following spc information:\n\n",
-       paste(capture.output(print(spc)), collapse = "\n"),
-       "\nThank you very much!"
-      )
-    return(NULL)
-    }
-
     # fragment for name, for fortran and x11 series
     if (!is.null(spc$name)) {  
       nm <- rem_quotes(spc$name)
@@ -252,7 +241,6 @@ rem_defaults_from_args <- function(x) {
 #' Helper function to read time series from X-13 input files. A call to
 #' \code{import.ts} is constructed and included in the output of
 #' \code{\link{import.spc}}.
-#' \bold{This is an experimental function that may change substantially in the future.}
 #' 
 #' @param file character, name of the X-13 file which the data are to be read from
 #' @param format a valid X-13 file format as described in 7.15, p. 173 of the
@@ -279,10 +267,13 @@ import.ts <- function(file,
   
   stopifnot(file.exists(file))
 
-  if (format %in% c("x13save")){
+
+  if (format == "x13save"){
     return(read_series(file))
   }  
-
+  if (format == "tramo"){
+    return(import_tramo(file))
+  }
   if (format %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")) {
     stopifnot(!is.null(frequency))
     format <- x11_to_fortran(format, frequency)
@@ -424,5 +415,26 @@ import_fortran <- function(file, format, frequency, start = NULL, name = NULL){
   }
   z
 }
+
+
+
+import_tramo <- function(file){
+  txt <- readLines(file)
+  ssp <- strsplit(gsub("^ +| +$", "", txt[2]), " ")[[1]]
+  if (length(ssp) != 4){
+    stop("tramo format: line 2 must have 4 elements.")
+  }
+  ssp <- as.integer(ssp)
+
+
+  z <- as.numeric(txt[3:length(txt)])
+  if (length(z) != ssp[1]){
+    message("tramo format: number of obs. different to speicification, which will be ignored.")
+  }
+
+  ts(z, start = c(ssp[2], ssp[3]), frequency = ssp[4])
+}
+
+
 
 
