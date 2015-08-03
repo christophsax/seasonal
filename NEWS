@@ -1,166 +1,156 @@
-## 0.90.6  ???
+0.90.11  ???
+--------------------------------------------------------------------------------
 
-### enhancements
-
-  - experimental import.spc, to read existing .spc files into R
-
-  - experimental import.ts, to read existing X-13 data files into R
-
+new features
+  - experimental import.spc, to read existing .spc files into R. 
+    Thanks, Brian Monsell
+  - experimental import.ts, to read existing X-13 data files into R.
   - with 'seats = NULL', seasonal adjustment can be completly turned of, to use
-    X-13 for other purposes than seasonal adjustment. Thanks, Brian Monsell.
+    X-13 for other purposes than seasonal adjustment.
 
-    The automated ARIMA model search, for example, is 10 times faster than
-    auto.arima from the forecast package.
+enhancements
+  - parallel runs in same session: the temporary location name of the X13 run 
+    now changes each time, which makes the function suitable for  within-session parallelization (e.g., with mclapply). Cluster parallelization using 
+    parlApply works as before and is recommended on Windows machines. 
+    Thanks, Vidur Dhanda
+  - automated testing of all wiki examples on travis
+  - error messages in inspect are html formatted
 
-  - parallel runs in same session
-
-    temporary location name of the X13 run changes each time, which makes the 
-    function suitable for  within-session parallelization (e.g., with mclapply).
-    Cluster parallelization using parlApply works as before and is recommended on 
-    Windows machines. Thanks, Vidur Dhanda.
-
-
-### under the hood
-
+under the hood
   - rewritten parsing for spc and mdl files
 
-
-### bug fixes
-
+bug fixes
   - some X13 warnings were not fully shown in summary
+  - binary name now also shown in checkX13 on windows
+  - fixes for error message parsing in non-html version
 
 
-## 0.90.0  2015-05-08
+0.90.0  2015-05-08
+--------------------------------------------------------------------------------
 
-### enhancements
-
+enhancements
   - completely redesigned inspect() graphical user interface, with the look and 
     feel of the demo website: www.seasonal.website
-
   - support for the new X13 version 1.1 build 19 (released April 2, 2015)
 
-### under the hood
-
+under the hood
   - temporary files are cleaned up after execution
 
-### documentation
-
+documentation
   - extended documentation for inspect()
-
   - list argument: no longer experimental
 
 
-### bug fixes
-
+bug fixes
   - fixed parsing problem with build 19 in qs() that affected summary()
-
   - fixed parsing problem with exogenous regressors when using the list arg
-
   - input longer than 133 char is broken into multiple lines to avoid X-13 error
-
   - names of ARMA coefficients contain lag rather than period
-
   - X13 warnings are shown in summary (again)
-
   - better parsing breaking errors
 
 
-## 0.80.0  2015-02-05
+0.80.0  2015-02-05
+--------------------------------------------------------------------------------
 
-### enhancements
+enhancements
 - improved parsing and intergration of X-13 error messages
 - checkX13 performs more tests and returns an error report.
 - spec-arguments can also be entered as a named list (experimental)
 
-### under the hood
+under the hood
 - automated tests for all calls in the wiki
 
-### documentation
+documentation
 - new vignette sections on user defined holidays and production use
 - new example on Indian Diwali in ?genhol
 - dates of Indian Diwali and Indian industrial production
 - more detailed documentation for ?summary.seas explaining output details
 
-### bug fixes
+bug fixes
 - genhol() can be used inside a seas() call
 - arimamodel() shows model as expected
 
-### defunct
+defunct
 - slidingspans, revisions, regressioneffects changed from deprecated to defunct
 
 
-## 0.70.1  2014-10-02
+0.70.1  2014-10-02
+--------------------------------------------------------------------------------
 
-### new features
+new features
   - support for the HTML version of X-13. The 'out' function displays the output 
     of X-13 in the browser.
   - The 'inspect' function is based on Shiny and can be used without RStudio. It 
-    offers access to all series that can be produced by X-13, as well as access to 
-    the HTML output of X-13.
+    offers access to all series that can be produced by X-13, as well as access 
+    to the HTML output of X-13.
 
-### enhancements
-  - empty specs can be specified as empty strings. This is more intuitive than the 
-    previously employed empty lists (which are still working). Empty 
+enhancements
+  - empty specs can be specified as empty strings. This is more intuitive than 
+    the previously employed empty lists (which are still working). Empty 
     strings are also used as defaults and in the documentation.
   - improved parsing of X-13 messages.
   - documentation improvements.
 
-### under the hood
+under the hood
   - flags are used when calling X-13. This makes some early g77 compilations for 
     OS-X unusable.
   - use of the .udg file to extract summary statistics.
   - support for HTML and non-HTML versions of X-13.
 
-### bug fixes
+bug fixes
   - numerical specification of arima.model led to wrong seasonal part.
   - restrict start year > 999, to avoid some millenium bugs.
   - si-ratio was wrongly extracted if no trend was estimated
   - 'series' drops an error if the requested series is not compatible with the 
     adjustment method, rather than adjusting the method. E.g., if x11.trend is 
-    requested from a seats model, an error will be returned, rather than switching 
-    the adjustment to x11. The old behavior was confusing.
+    requested from a seats model, an error will be returned, rather than 
+    switching the adjustment to x11. The old behavior was confusing.
 
 
-## 0.60.0  2014-05-09
+0.60.0  2014-05-09
+--------------------------------------------------------------------------------
 
-### new features
+new features
   - views of 'inspect' are now customizable
   - 'identify' method for outlier selection by point and click
   - demo(seas) for a demonstration of basic functionality
 
 
-## 0.50.0  2014-03-27
+0.50.0  2014-03-27
+--------------------------------------------------------------------------------
 
-### new features
+new features
 
   - 'series' function, which allows the import of all tables produced by X-13 
     (except composite spec)
 
 
-### enhancements
+enhancements
 
   - new na.action function: NA handling by X-13 (including interpolation)
   - 'out' function also reads '.log'  and '.err' files
   - improved help pages
-  - all examples from the X-13 manual are now in the wiki (except composite spec)
+  - all examples from the X-13 manual are now in the wiki (except composite)
   - 'static' replicates a wider set of calls
   - summary shows decomposition method (X11, SEATS)
   - more flexible arima model specification (numeric vectors also allowed)
 
 
-### deprecated
+deprecated
 
   - the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is 
     now part of the new 'series' function. The old functions are deprecated.
 
-### code improvements
+code improvements
 
   - code takes advantage of the series function, simplified import from X-13
 
 
-## 0.40.0  2014-02-12
+0.40.0  2014-02-12
+--------------------------------------------------------------------------------
 
-### new features
+new features
 
   - support for 'slidingspans' and 'history' spec
   - genhol, a function to generate holiday regression variables
@@ -168,7 +158,7 @@
   - NA handling like in standard R
   - inspect function with model and transform selection, new views
 
-### enhancements
+enhancements
 
   - new diagnostical statistics
   - summary shows some useful statistics
@@ -180,13 +170,13 @@
   - fewer, more structured help pages
   - comprehensive list of examples from the official manual
 
-### bug fixes
+bug fixes
 
   - quotes in series name are now allowed
   - support for unorthodox frequencies (e.g. 2, 'seats' only)
   - spaces in folder names on windows are now allowed
 
-### code improvements
+code improvements
 
   - uses only standard R functions, no dependency on 'stringr'
   - clearer code structure
