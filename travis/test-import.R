@@ -30,6 +30,14 @@ a <- import.ts(file.path(spcpath, "x11_m2l.dat"), format = "2l", frequency = 12)
 a <- import.ts(file.path(spcpath, "x11_m2l2.dat"), format = "2l2", frequency = 12)
 a <- import.ts(file.path(spcpath, "x11_m1r.dat"), format = "1r", frequency = 12)
 
+# quarterly series
+a <- import.ts(file.path(spcpath, "x11_q1r.dat"), format = "1r", frequency = 4)
+a <- import.ts(file.path(spcpath, "x11_q1r_2ser.dat"), format = "1r", frequency = 4)
+
+
+a <- import.ts(file.path(spcpath, "tramo1.txt"), format = "tramo")
+
+
 
 ### import.spc
 
