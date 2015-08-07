@@ -1,18 +1,18 @@
-0.90.11  ???
+0.90.12  2015-08-??
 --------------------------------------------------------------------------------
 
 new features
   - experimental import.spc, to read existing .spc files into R. 
-    Thanks, Brian Monsell
+    Thanks, Brian Monsell.
   - experimental import.ts, to read existing X-13 data files into R.
   - with 'seats = NULL', seasonal adjustment can be completly turned of, to use
     X-13 for other purposes than seasonal adjustment.
 
 enhancements
-  - parallel runs in same session: the temporary location name of the X13 run 
-    now changes each time, which makes the function suitable for  within-session parallelization (e.g., with mclapply). Cluster parallelization using 
+  - within-session parallelization: the temporary location name of the X13 run 
+    now changes each time, which makes the function suitable for within-session parallelization (e.g., with mclapply). Cluster parallelization using 
     parlApply works as before and is recommended on Windows machines. 
-    Thanks, Vidur Dhanda
+    Thanks, Vidur Dhanda.
   - automated testing of all wiki examples on travis
   - error messages in inspect are html formatted
 
