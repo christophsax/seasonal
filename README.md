@@ -25,12 +25,12 @@ replicate in basic R. Read the [Input](#input) and [Output](#output) sections
 and have a look at the [wiki][examples], where the examples from the official
 X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
-*seasonal* includes a [graphical user interface](#inspect) that facitlitates
-model search both for beginners and advanced users. The final sections of this
-vignette cover some additional topics: [User defined holidays](#chinese-new-
-year-indian-diwali-in-other-customized-holidays), such as Chinese New Year, the
-[use of seasonal for production](#production-use), and the [import of existing
-X-13 model specs](#import-x-13-models-and-series) to R.
+*seasonal* includes a [graphical user interface](#inspect) that facitlitates the
+use of X-13 both for beginners and advanced users. The final sections of this
+vignette cover additional topics: [User defined holidays](#chinese-new- year-
+indian-diwali-in-other-customized-holidays), such as Chinese New Year, the [use
+of seasonal for production](#production-use), and the [import of existing X-13
+model specs](#import-x-13-models-and-series) to R.
 
 
 ### Installation
@@ -51,7 +51,7 @@ console:
 
 *seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can
 be obtained precompiled from [here][census_win] (Windows: `x13ashtmlall.zip`).
-There are guides for building it from source for [Ubuntu linux][ubuntu] or [Mac
+There are guides for building it from source for [Ubuntu][ubuntu] or [Mac
 OS-X][os-x].
 
 Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on Linux
@@ -258,7 +258,6 @@ outliers. Optionally, it also draws the trend of the seasonal decomposition:
 
     m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
     plot(m)
-    plot(m, outliers = FALSE)
     plot(m, trend = TRUE)
 
 The `monthplot` function allows for a monthwise plot (or quarterwise, with the
@@ -324,8 +323,9 @@ specifies the occurrence of the holiday.
 
 In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
 
-    data(seasonal) # Indian industrial production: iip
-    data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
+    # variables included in seasonal
+    # iip: Indian industrial production
+    # cny, diwali, easter: dates of Chinese New Year, Indian Diwali and Easter
     
     seas(iip, 
     x11 = "",
