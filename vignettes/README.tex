@@ -31,6 +31,15 @@ where the examples from the official X-13ARIMA-SEATS
 \href{http://www.census.gov/ts/x13as/docX13ASHTML.pdf}{manual} are
 reproduced in R.
 
+\emph{seasonal} includes a \hyperref[inspect]{graphical user interface}
+that facitlitates model search both for beginners and advanced users.
+The final sections of this vignette cover some additional topics:
+\hyperref[chinese-new-ux5cux2520year-indian-diwali-in-other-customized-holidays]{User
+defined holidays}, such as Chinese New Year, the
+\hyperref[production-use]{use of seasonal for production}, and the
+\hyperref[import-x-13-models-and-series]{import of existing X-13 model
+specs} to R.
+
 \hyperdef{}{installation}{\section{Installation}\label{installation}}
 
 \subsection{Getting seasonal}\label{getting-seasonal}
@@ -56,13 +65,13 @@ X-13ARIMA-SEATS. They can be obtained precompiled from
 \href{http://www.census.gov/srd/www/x13as/x13down_pc.html}{here}
 (Windows: \texttt{x13ashtmlall.zip}). There are guides for building it
 from source for
-\href{https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-Ubuntu}{Ubuntu}
-or
+\href{https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-Ubuntu}{Ubuntu
+linux} or
 \href{https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-OS-X}{Mac
 OS-X}.
 
 Download the file, unzip it and copy \texttt{x13ashtml.exe} (or
-\texttt{x13ashtml}, on a Unix system) to any desired location on your
+\texttt{x13ashtml}, on Linux or OS-X) to any desired location on your
 file system.
 
 \subsection{Telling R where to find
@@ -378,7 +387,7 @@ outlier types.
 identify(m)
 \end{verbatim}
 
-\section{Inspect}\label{inspect}
+\hyperdef{}{inspect}{\section{Inspect}\label{inspect}}
 
 The \texttt{inspect} function is a graphical tool for choosing a
 seasonal adjustment model, using
@@ -445,7 +454,8 @@ regression.usertype = "holiday"
 For more examples, including Chinese New Year and complex pre- and
 post-holiday adjustments, see \texttt{?genhol}.
 
-\section{Production use}\label{production-use}
+\hyperdef{}{production-use}{\section{Production
+use}\label{production-use}}
 
 While \emph{seasonal} offers a quick way to adjust a time series in R,
 it is equally suited for the recurring processing of potentially large
@@ -535,10 +545,11 @@ well suited for parallelization:
 # a list with 100 time series
 largedta <- rep(list(AirPassengers), 100)
 
-library(parallel)  # R-core team, part of R 
+library(parallel)  # this is part of a standard R installation
 \end{verbatim}
 
-If you are on Windows or want to use cluster parallelization, use this:
+If you are on Windows or want to use cluster parallelization, use
+\texttt{parLapply}:
 
 \begin{verbatim}
 # set up cluster
@@ -564,8 +575,8 @@ a single line:
 mclapply(cl, largedta, function(e) try(seas(e, x11 = "")))
 \end{verbatim}
 
-\section{Importing X-13 models and series
-(experimental)}\label{importing-x-13-models-and-series-experimental}
+\hyperdef{}{import-x-13-models-and-series}{\section{Import X-13 models
+and series}\label{import-x-13-models-and-series}}
 
 Two experimental utility functions allow you to import \texttt{.spc}
 files and X-13 data files from any X-13 set-up. Simply locate the path
@@ -588,7 +599,7 @@ imports arbitrary X-13 data files as R time series. See
 \emph{seasonal} is free and open source, licensed under GPL-3. It
 requires the X -13ARIMA-SEATS software by the U.S. Census Bureau, which
 is open source and freely available under the terms of its own
-(\href{https://www.census.gov/srd/www/disclaimer.html}{license}).
+\href{https://www.census.gov/srd/www/disclaimer.html}{license}.
 
 \emph{seasonal} has been originally developed for the use at the Swiss
 State Secretariat of Economic Affairs. It has been greatly improved over

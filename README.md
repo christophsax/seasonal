@@ -25,6 +25,13 @@ replicate in basic R. Read the [Input](#input) and [Output](#output) sections
 and have a look at the [wiki][examples], where the examples from the official
 X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
+*seasonal* includes a [graphical user interface](#inspect) that facitlitates
+model search both for beginners and advanced users. The final sections of this
+vignette cover some additional topics: [User defined holidays](#chinese-new-
+year-indian-diwali-in-other-customized-holidays), such as Chinese New Year, the
+[use of seasonal for production](#production-use), and the [import of existing
+X-13 model specs](#import-x-13-models-and-series) to R.
+
 
 ### Installation
 
@@ -44,11 +51,11 @@ console:
 
 *seasonal* does not include the binary executables of X-13ARIMA-SEATS. They can
 be obtained precompiled from [here][census_win] (Windows: `x13ashtmlall.zip`).
-There are guides for building it from source for [Ubuntu][ubuntu] or [Mac
+There are guides for building it from source for [Ubuntu linux][ubuntu] or [Mac
 OS-X][os-x].
 
-Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on a Unix
-system) to any desired location on your file system. 
+Download the file, unzip it and copy `x13ashtml.exe` (or `x13ashtml`, on Linux
+or OS-X) to any desired location on your file system.
 
 #### Telling R where to find X-13
 
@@ -404,9 +411,9 @@ suited for parallelization:
     # a list with 100 time series
     largedta <- rep(list(AirPassengers), 100)
 
-    library(parallel)  # R-core team, part of R 
+    library(parallel)  # this is part of a standard R installation
 
- If you are on Windows or want to use cluster parallelization, use this:
+ If you are on Windows or want to use cluster parallelization, use `parLapply`:
 
     # set up cluster
     cl <- makeCluster(detectCores())
@@ -429,7 +436,7 @@ single line:
     mclapply(cl, largedta, function(e) try(seas(e, x11 = "")))
 
 
-### Importing X-13 models and series (experimental)
+### Import X-13 models and series
 
 Two experimental utility functions allow you to import `.spc` files and X-13
 data files from any X-13 set-up. Simply locate the path of your X-13 `.spc`
@@ -448,7 +455,7 @@ data files as R time series. See `?import.ts` for examples.
 
 *seasonal* is free and open source, licensed under GPL-3. It requires the X
 -13ARIMA-SEATS software by the U.S. Census Bureau, which is open source and
-freely available under the terms of its own ([license][license]).
+freely available under the terms of its own [license][license].
 
 *seasonal* has been originally developed for the use at the Swiss State
 Secretariat of Economic Affairs. It has been greatly improved over time thanks
@@ -458,6 +465,7 @@ Brian Monsell, Pinaki Mukherjee, Bruno Parnisari, and many others.
 
 Please report bugs and suggestions on [Github][github] or send me an 
 [e-mail](mailto:christoph.sax@gmail.com). Thank you!
+
 
 [manual]: http://www.census.gov/ts/x13as/docX13ASHTML.pdf "Reference Manual"
 
