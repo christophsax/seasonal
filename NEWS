@@ -10,7 +10,8 @@ new features
 
 enhancements
   - within-session parallelization: the temporary location name of the X13 run 
-    now changes each time, which makes the function suitable for within-session parallelization (e.g., with mclapply). Cluster parallelization using 
+    now changes each time, which makes the function suitable for within-session
+    parallelization (e.g., with mclapply). Cluster parallelization using 
     parlApply works as before and is recommended on Windows machines. 
     Thanks, Vidur Dhanda.
   - automated testing of all wiki examples on travis
