@@ -107,6 +107,10 @@
 #'   Official X-13ARIMA-SEATS manual: 
 #'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
 #' @export
+#' @import datasets
+#' @import grDevices
+#' @import graphics
+#' @import utils
 #' 
 #' @examples
 #' \dontrun{

@@ -132,7 +132,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     }
 
     # seasonal test run
-    m <- try(seas(AirPassengers), silent = TRUE)
+    m <- try(seas(datasets::AirPassengers), silent = TRUE)
     if (inherits(m, "seas")){
       message("  - seasonal test run successful")
     } else {
