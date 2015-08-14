@@ -1,6 +1,8 @@
 # CRAN SUBMISSION
 # - remove test folder
 # - remove img links in README.md
+# - is NEWS up to date?
+# - r-devel test
 
 if (Sys.getenv("TRAVIS") != ""){
   travisdir <- file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis")
