@@ -252,9 +252,12 @@
 #' series(m, "slidingspans.sfspans") 
 #' series(m, "slidingspans.tdspans") 
 #' 
-#' # fundamental identity of multiplicative seasonal adj.: Y = T * I * (S * TD)
+#' # fundamental identities of seasonal adjustment 
+#' # Y = T * I * (S * TD)
 #' all.equal(AirPassengers, series(m, "seats.trend") * 
 #'          series(m, "seats.irregular") * series(m, "seats.adjustfac"))
+#' # Y_sa = Y / (S * TD)
+#' all.equal(final(m), AirPassengers / series(m, "seats.adjustfac"))
 #' 
 #' ### Some X-13ARIMA-SEATS functions can be replicated in R:
 #' 
