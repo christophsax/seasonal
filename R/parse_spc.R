@@ -125,6 +125,9 @@ parse_singlespc <- function(txt){
 
   st <- st[!grepl("^ *$", st)]
 
+  if (any(!grepl("=", st))){
+    stop("expected '=' in '", paste(st[!grepl("=", st)], collapse = ", "), "'", call. = FALSE)
+  }
   snamarg <- strsplit(st, split = "=")
 
   arg <- sapply(snamarg, function(e) e[[2]])

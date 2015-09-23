@@ -73,6 +73,9 @@ read_series <- function(file, frequency = NULL){
       frequency <- length(unique(as.numeric(per)))
     }
     
+    if (dim(dd)[2] == 1L){
+      dd <- c(dd)
+    }
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
     z <- ts(dd, start = time[1], frequency = frequency)
     z[z==-999] <- NA   # usual NA code
