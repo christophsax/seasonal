@@ -3,8 +3,8 @@ SystemRequirements: Binary executables of X-13-ARIMA-SEATS (installation notes:
     see README or vignette)
 Type: Package
 Title: R Interface to X-13-ARIMA-SEATS
-Version: 1.0.1
-Date: 2015-08-14
+Version: 1.0.2
+Date: 2015-10-01
 Author: Christoph Sax
 Maintainer: Christoph Sax <christoph.sax@gmail.com>
 Description: Easy-to-use interface to X-13-ARIMA-SEATS, the
@@ -20,6 +20,6 @@ Depends:
 Suggests:
     shiny (>= 0.11.1),
 License: GPL-3
-URL: www.seasonal.website
+URL: http://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal
 LazyData: true

@@ -194,11 +194,10 @@ inspect(m)
 }
 \references{
 Vignette with a more detailed description:
-  \url{http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf}
+  \url{http://www.seasonal.website/seasonal.html}
 
   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-  \url{https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R}
-
+  \url{http://www.seasonal.website/examples.html}
 
   Official X-13ARIMA-SEATS manual:
   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
