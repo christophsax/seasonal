@@ -1,32 +1,13 @@
 1.1.0  2015-??-??
 --------------------------------------------------------------------------------
 
-new features
-  - experimental import.spc, to read existing .spc files into R. 
-    Thanks, Brian Monsell.
-  - experimental import.ts, to read existing X-13 data files into R.
-  - with 'seats = NULL', seasonal adjustment can be completly turned of, to use
-    X-13 for other purposes than seasonal adjustment.
-
-enhancements
-  - within-session parallelization: the temporary location name of the X13 run 
-    now changes each time, which makes the function suitable for within-session
-    parallelization (e.g., with mclapply). Cluster parallelization using 
-    parlApply works as before and is recommended on Windows machines. 
-    Thanks, Vidur Dhanda.
-  - automated testing of all wiki examples on travis
-  - error messages in inspect are html formatted
-
-under the hood
-  - rewritten parsing for spc and mdl files
-
 bug fixes
-  - some X13 warnings were not fully shown in summary
-  - binary name now also shown in checkX13 on windows
-  - fixes for error message parsing in non-html version
+  - single series are dimension-less ts objects, rather than n times 1 matrices
+  - more precise error msg in parse_spc
 
 documentation
   - updated links to vignette and examples
+  - new example in series
 
 
 1.0.0  2015-08-14
