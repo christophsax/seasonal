@@ -22,8 +22,8 @@ input and output structure of *seasonal*. The package allows you to use (almost)
 all commands of X-13ARIMA-SEATS, and it can import (almost) all output generated
 by X-13ARIMA-SEATS. The only exception is the 'composite' spec, which is easy to
 replicate in basic R. Read the [Input](#input) and [Output](#output) sections
-and have a look at the [wiki][examples], where the examples from the official
-X-13ARIMA-SEATS [manual][manual] are reproduced in R.
+and have a look at the [website of seasonal][examples], where the examples from
+the official X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
 *seasonal* includes a [graphical user interface](#inspect) that facitlitates the
 use of X-13 both for beginners and advanced users. The final sections of this
@@ -83,8 +83,8 @@ R:
 If the file does not exist (by default), it will be created. Make sure that you
 get the quotes right: double quotes around your directory, single quotes around
 the whole `Sys.setenv` line, such that R understands your string. Check first
-that the the `Sys.setenv` line works correctly; once it is written you may have to edit
-`.Rprofile` manually. (Or add a second, overwriting line to it.) For
+that the the `Sys.setenv` line works correctly; once it is written you may have
+to edit `.Rprofile` manually. (Or add a second, overwriting line to it.) For
 other ways to set an environmental variable permanently in R, see `?Startup`.
 
 
@@ -166,10 +166,9 @@ details on the defaults. Note the difference between `""` (meaning the spec is
 enabled but has no arguments) and `NULL` (meaning the spec is disabled).
 
 It is possible to manipulate almost all inputs to X-13ARIMA-SEATS in this way.
-The best way to learn about the relationship between the syntax of 
-X-13ARIMA-SEATS and *seasonal* is to study the [comprehensive list of examples in
-the wiki][examples].  For instance, example 1 in section 7.1 from the
-[manual][manual],
+The best way to learn about the relationship between the syntax of  X-13ARIMA-
+SEATS and *seasonal* is to study the [comprehensive list of examples][examples].
+For instance, example 1 in section 7.1 from the [manual][manual],
 
     series { title  =  "Quarterly Grape Harvest" start = 1950.1
            period =  4
@@ -282,8 +281,8 @@ click. Click several times to loop through different outlier types.
 ### Inspect
 
 The `inspect` function is a graphical tool for choosing a seasonal adjustment
-model, using *[Shiny][shiny]*, with the same structure as the demo website of
-seasonal. To install the latest version of Shiny, type:
+model, using *[Shiny][shiny]*, with the same structure as the [demo website of
+seasonal][seasweb]. To install the latest version of Shiny, type:
 
     install.packages("shiny")
 
@@ -477,7 +476,9 @@ Please report bugs and suggestions on [Github][github] or send me an
 
 [census_linux]: http://www.census.gov/srd/www/x13as/x13down_unix.html "Combined X-13ARIMA-SEATS archives"
 
-[examples]: https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R "Wiki: Examples of X-13ARIMA-SEATS in R"
+[examples]: http://www.seasonal.website/examples.html "Examples of X-13ARIMA-SEATS in R"
+
+[seasweb]: http://www.seasonal.website "Examples of X-13ARIMA-SEATS in R"
 
 [github]: https://github.com/christophsax/seasonal "Development on Github"
 
