@@ -3,13 +3,13 @@ require(seasonal)
 
 # 'seas' ist the core function of the seasonal package. By default, 'seas'
 # calls the automatic procedures of X-13ARIMA-SEATS to perform a seasonal
-# adjustment that works well in most circumstances. It returns an object of
-# class "seas" that contains all necessary information on the adjustment.
+# adjustment that works well in most circumstances:
 
 m <- seas(AirPassengers)
 
-# The first argument of 'seas' has to be a time series of class "ts". It
-# returns an object of class 'seas'. 
+# The first argument of 'seas' has to be a time series of class "ts". It 
+# returns an object of class "seas" that contains all necessary information 
+# on the adjustment.
 
 # The 'final' function returns the adjusted series:
 
