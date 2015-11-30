@@ -98,7 +98,7 @@ EvalOrFail <- function(cstr){
     z <- "Call is not save and thus not allowed."
     class(z) <- "try-error"
   } else {
-    z <- try(eval(pcl), silent = TRUE)
+    z <- try(eval(pcl, envir = globalenv()), silent = TRUE)
   }
   z
 }

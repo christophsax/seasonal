@@ -62,7 +62,7 @@
 #'   alternative to the \code{...} argument. It is useful for programming.
 #'
 #' @return returns an object of class \code{"seas"}, essentially a list with the
-#'   following elements: 
+#'   following components: 
 #'   \item{series}{a list containing the output tables of X-13. To be accessed 
 #'   by the \code{series} function.} 
 #'   \item{data}{seasonally adjusted data, the 
