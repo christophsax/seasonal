@@ -80,6 +80,9 @@ read_series <- function(file, frequency = NULL){
     z <- ts(dd, start = time[1], frequency = frequency)
     z[z==-999] <- NA   # usual NA code
     
+  } else if (grepl("^[12]\\d\\d\\d$", tt[1])){  # annual time series
+    z <- ts(dd, start = tt[1], frequency = 1)
+    z[z==-999] <- NA   # usual NA code
   } else {
     z <- dd
   }

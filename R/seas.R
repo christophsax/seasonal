@@ -457,7 +457,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   if (!is.null(ff)){
     if (!as.numeric(z$udg['freq']) %in% ff){
-      msg <- paste0("Frequency of imported data (", frequency(z$data), ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), "). X-13 retured the addital messages: \n\n")
+      msg <- paste0("Frequency of imported data (", ff, ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), "). X-13 retured the addital messages: \n\n")
       drop_x13messages(z$err, msg = msg, ontype = "all")
     }
   }
