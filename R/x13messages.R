@@ -58,8 +58,6 @@ detect_error <- function(err, htmlmode = getOption("htmlmode")){
     ParseInfo <- ParseInfoNonHtml
   }
 
-  browser()
-
   z <- list()
   class(z) <- "x13messages"
   z$error <- sapply(grep("ERROR:", err), ParseInfo)
