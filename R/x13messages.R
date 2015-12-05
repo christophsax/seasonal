@@ -7,50 +7,67 @@ detect_error <- function(err, htmlmode = getOption("htmlmode")){
   # err  character vector, content of output file
   #
   # returns an object of class x13messages which can be printed
-  
-  if (htmlmode == 1){
-    ParseInfo <- function(openl, x){
-      # find next closing tag
-      clt <- grep("</p>", x)
-      closel <- clt[clt >= openl][1]
+  ParseInfoHtml <- function(openl){
+    # find next closing tag
+    clt <- grep("</p>", err)
 
-      # extract info between tags
-      z <- paste(x[openl:closel], collapse = "")
-
-      # clean info
-      z <- gsub("<p>.*</strong>", "", z) # remove trailing tag
-      z <- gsub("</p>", "", z)           # remove closing tag 
-      z <- gsub("&nbsp;", "", z)  
-      z <- gsub("\\s+", " ", z)          # remove multiple space
-      z <- gsub("^\\s", "", z)           # remove trailing space
-      z <- gsub("<.+?>", "", z)           # remove inside HTML tags
-      z
+    # in rare cases, X-13 html returns non html errors
+    if (all(clt < openl)){
+      return(ParseInfoNonHtml(openl))
     }
-  } else {
-    ParseInfo <- function(openl, x){
-      clt <- which(x == "  " | x == "" | grepl("^ [A-Z]{4}", x) | grepl("  \\*\\*", x)) 
-      closel <- clt[clt > openl][1] - 1
 
-      if (is.na(closel)){
-        closel <- length(x)
-      }
+    closel <- clt[clt >= openl][1]
 
-      z <- paste(x[openl:closel], collapse = "")
-      z <- gsub("\\s+", " ", z)          # remove multiple space
-      z <- gsub("^.*: ", "", z)    # remove trailing tag
-      z <- gsub("^\\s", "", z)     # remove trailing space
-      z
+    # in rare cases, there is a second paragraph after a ":". If so, go for the
+    # next:
+    if (grepl(":$", err[closel - 1]) && length(clt[clt >= openl] > 1)){
+      closel <- clt[clt >= openl][2]
     }
+
+    # extract info between tags
+    z <- paste(err[openl:closel], collapse = "")
+
+    # clean info
+    z <- gsub("<p>.*</strong>", "", z) # remove trailing tag
+    z <- gsub("</p>", "", z)           # remove closing tag 
+    z <- gsub("&nbsp;", "", z)  
+    z <- gsub("\\s+", " ", z)          # remove multiple space
+    z <- gsub("^\\s", "", z)           # remove trailing space
+    z <- gsub("<.+?>", "", z)          # remove inside HTML tags
+    z
   }
+
+  ParseInfoNonHtml <- function(openl){
+    clt <- which(err == "  " | err == "" | grepl("^ [A-Z]{4}", err) | grepl("  \\*\\*", err)) 
+    closel <- clt[clt > openl][1] - 1
+
+    if (is.na(closel)){
+      closel <- length(err)
+    }
+
+    z <- paste(err[openl:closel], collapse = "")
+    z <- gsub("\\s+", " ", z)    # remove multiple space
+    z <- gsub("^.*: ", "", z)    # remove trailing tag
+    z <- gsub("^\\s", "", z)     # remove trailing space
+    z
+  }
+
+  if (htmlmode == 1){
+    ParseInfo <- ParseInfoHtml
+  } else {
+    ParseInfo <- ParseInfoNonHtml
+  }
+
+  browser()
 
   z <- list()
   class(z) <- "x13messages"
-  z$error <- sapply(grep("ERROR:", err), ParseInfo, x = err)
-  z$warning <- sapply(grep("WARNING:", err), ParseInfo, x = err)
+  z$error <- sapply(grep("ERROR:", err), ParseInfo)
+  z$warning <- sapply(grep("WARNING:", err), ParseInfo)
   # do not show this meaningless warning 
   # (its caused by default activation of spectrum)
   z$warning <- z$warning[!grepl("Spectrums are only generated for monthly series.", z$warning)]
-  z$note <- sapply(grep("note:", err), ParseInfo, x = err)
+  z$note <- sapply(grep("note:", err), ParseInfo)
   z
 }
 
