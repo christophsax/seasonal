@@ -7,56 +7,55 @@ detect_error <- function(err, htmlmode = getOption("htmlmode")){
   # err  character vector, content of output file
   #
   # returns an object of class x13messages which can be printed
+  ParseInfoHtml <- function(openl){
+    # find next closing tag
+    clt <- grep("</p>", err)
 
-  ParseInfo <- if (htmlmode == 1){
-
-    function(openl){
-      # find next closing tag
-      clt <- grep("</p>", err)
-
-      # in rare cases, X-13 html returns non html errors
-      if (all(clt < openl)){
-        return(ParseInfoNonHtml(openl))
-      }
-
-      closel <- clt[clt >= openl][1]
-
-      # in rare cases, there is a second paragraph after a ":". If so, go for
-      # the next ":""
-      if (grepl(":$", err[closel - 1]) && length(clt[clt >= openl] > 1)){
-        closel <- clt[clt >= openl][2]
-      }
-
-      # extract info between tags
-      z <- paste(err[openl:closel], collapse = "")
-
-      # clean info
-      z <- gsub("<p>.*</strong>", "", z) # remove trailing tag
-      z <- gsub("</p>", "", z)           # remove closing tag 
-      z <- gsub("&nbsp;", "", z)  
-      z <- gsub("\\s+", " ", z)          # remove multiple space
-      z <- gsub("^\\s", "", z)           # remove trailing space
-      z <- gsub("<.+?>", "", z)          # remove inside HTML tags
-      z
+    # in rare cases, X-13 html returns non html errors
+    if (all(clt < openl)){
+      return(ParseInfoNonHtml(openl))
     }
 
+    closel <- clt[clt >= openl][1]
+
+    # in rare cases, there is a second paragraph after a ":". If so, go for the
+    # next ":".
+    if (grepl(":$", err[closel - 1]) && length(clt[clt >= openl] > 1)){
+      closel <- clt[clt >= openl][2]
+    }
+
+    # extract info between tags
+    z <- paste(err[openl:closel], collapse = "")
+
+    # clean info
+    z <- gsub("<p>.*</strong>", "", z) # remove trailing tag
+    z <- gsub("</p>", "", z)           # remove closing tag 
+    z <- gsub("&nbsp;", "", z)  
+    z <- gsub("\\s+", " ", z)          # remove multiple space
+    z <- gsub("^\\s", "", z)           # remove trailing space
+    z <- gsub("<.+?>", "", z)          # remove inside HTML tags
+    z
+  }
+
+  ParseInfoNonHtml <- function(openl){
+    clt <- which(err == "  " | err == "" | grepl("^ [A-Z]{4}", err) | grepl("  \\*\\*", err)) 
+    closel <- clt[clt > openl][1] - 1
+
+    if (is.na(closel)){
+      closel <- length(err)
+    }
+
+    z <- paste(err[openl:closel], collapse = "")
+    z <- gsub("\\s+", " ", z)    # remove multiple space
+    z <- gsub("^.*: ", "", z)    # remove trailing tag
+    z <- gsub("^\\s", "", z)     # remove trailing space
+    z
+  }
+
+  if (htmlmode == 1){
+    ParseInfo <- ParseInfoHtml
   } else {
-
-    function(openl){
-      clt <- which(err == "  " | err == "" | grepl("^ [A-Z]{4}", err) | grepl("  \\*\\*", err)) 
-      closel <- clt[clt > openl][1] - 1
-
-      if (is.na(closel)){
-        closel <- length(err)
-      }
-
-      z <- paste(err[openl:closel], collapse = "")
-      z <- gsub("\\s+", " ", z)    # remove multiple space
-      z <- gsub("^.*: ", "", z)    # remove trailing tag
-      z <- gsub("^\\s", "", z)     # remove trailing space
-      z
-    }
-
+    ParseInfo <- ParseInfoNonHtml
   }
 
   z <- list()
