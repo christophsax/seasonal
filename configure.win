@@ -36,11 +36,14 @@ echo ${SET_INTERNET2}
 echo ${USE_LIBCURL}
 
 
+cwd=$(pwd)
+
+
 cd ${cwd}
 
 "${R_SCRIPT}" -e "${SET_INTERNET2} download.file('${DLURL}', 'x13ashtml.zip', quiet = TRUE, mode = \"wb\")"
 
-mkdir inst/include
+mkdir -p inst/include
 
 
 echo "try unzipping"
