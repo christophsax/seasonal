@@ -38,45 +38,48 @@ download() {
 }
 
 ## some variables
-X13VERSION="V1.1_B19"
-DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_${X13VERSION}.tar.gz"
+DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_V1.1_B19.tar.gz"
 cwd=$(pwd)
 
 
 
-
+url="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_V1.1_B19.tar.gz"
 
 
 
 # --- Binary installation ------------------------------------------------------
 
-if [ ${platform} == "linux" ]; then
+# if [ ${platform} == "linux" ]; then
 
-    # TODO check linux platform
+#     # TODO check linux platform
 
-    echo "Try to downloading X-13 binaries for Ubuntu"
+#     echo "Try to downloading X-13 binaries for Ubuntu"
 
-    # DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml"
+#     # DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml"
     
-    DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml.tar.gz"
+#     DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml.tar.gz"
 
-    # temporary direction for installation
-    mkdir -p /tmp/x13dl
+#     # temporary direction for installation
+#     mkdir -p /tmp/x13dl
 
-    cd /tmp/x13dl
+#     cd /tmp/x13dl
 
-    cd ${cwd}
-    # download X-13-ARIMA-SEATS
-    download $DLURL
+#     cd ${cwd}
+#     # download
+#     download $DLURL
 
-    # extract X-13ARIMA-SEATS
-    tar xzv -C x13ashtml -f x13ashtml.tar.gz
-    mkdir inst/include
-    cp x13ashtml "inst/include/"
+#     # extract
+#     tar xzv -C x13ashtml -f x13ashtml.tar.gz
 
-    echo "Binary files for linux successfully installed."
-    exit 0
-fi
+#     tar xzv x13ashtml -f x13ashtml.tar.gz
+
+
+#     mkdir inst/include
+#     cp x13ashtml "inst/include/"
+
+#     echo "Binary files for linux successfully installed."
+#     exit 0
+# fi
 
 
 # --- From Source --------------------------------------------------------------
