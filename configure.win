@@ -47,9 +47,9 @@ mkdir -p inst/include
 
 
 echo "try unzipping"
-unzip x13ashtml.zip
+unzip -u x13ashtml.zip
 
-cp x13ashtml.exe inst/include/
+cp x13ashtml/x13ashtml.exe inst/include/
 
 
 
