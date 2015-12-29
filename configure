@@ -27,15 +27,15 @@ download() {
     url=${1}
 
     # because rscript is located in /usr/bin/Rscript sometimes
-    rs_path=$(which Rscript)  
+    # rs_path=$(which Rscript)  
 
 
     ## sadly, for Travis we cannot rely on R as it lacks libcurl
-    libcurl=$(${R_HOME}${rs_path} -e 'cat(capabilities()[["libcurl"]])')
+    libcurl=$(${R_HOME}/bin/Rscript -e 'cat(capabilities()[["libcurl"]])')
     ## so when we have libcurl in R, use it -- else fall back to curl
     if [ ${libcurl} == "TRUE" ]; then
         file=$(basename ${url})
-        ${R_HOME}${rs_path} -e "download.file(\"${url}\", \"${file}\", quiet=TRUE, method='libcurl')"
+        ${R_HOME}/bin/Rscript -e "download.file(\"${url}\", \"${file}\", quiet=TRUE, method='libcurl')"
     else
         curl -s -k -L -O ${url}
     fi
