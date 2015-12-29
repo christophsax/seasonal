@@ -56,9 +56,12 @@ cwd=$(pwd)
 if [ ${platform} == "linux" ]; then
 
     # TODO check linux platform
-
+    
     # TODO compress
 
+
+    echo "Try to download X-13 for Ubuntu"
+    
     DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml"
     
     # DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml.tar.gz"
