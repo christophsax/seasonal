@@ -37,8 +37,72 @@ download() {
     fi
 }
 
-## Get and install header files
+## some variables
+X13VERSION="V1.1_B19"
+DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_${X13VERSION}.tar.gz"
 cwd=$(pwd)
+
+
+## Check if gfortran is installed
+gf=$(type -P gfortran)
+if [ "${gf}" = "" ]; then
+    if [ ${platform} == "linux" ]; then
+        echo "You need to install gfortran in order to compile X-13 for Linux."
+        exit -1
+    fi
+    if [ ${platform} == "osx" ]; then
+        # TODO: some check if gfortran is of the right version
+
+        # gfortran --version
+        # GNU Fortran (GCC) 5.2.0
+
+        # the version on CRAN does not work for some reasons:
+        # https://cran.r-project.org/bin/macosx/tools/gfortran-4.2.3.pkg
+
+        # http://coudert.name/software/gfortran-5.2-Yosemite.dmg
+
+        echo "You do not have gfortran which is needed for building X-13. You can download and install the newest version from here:"
+        echo "http://coudert.name/software"
+    fi
+
+fi
+
+
+# This works for both OS-X and Linux (at least Ubuntu)
+
+# temporary direction for installation
+mkdir -p /tmp/x13dl
+mkdir -p /tmp/x13ashtmlsrc
+
+cd /tmp/x13dl
+
+# download
+download $DLURL
+
+# extract
+tar xzv -C /tmp/x13ashtmlsrc -f x13ashtmlsrc_${X13VERSION}.tar.gz
+
+# prepare source code
+cd /tmp/x13ashtmlsrc
+
+# a) remove the -static option in line 291, which otherwise causes an error
+sed 's/ \-static / /' makefile.g77 > makefile.gfortran
+
+# b) renamed misspelled files
+mv ADJREG.f adjreg.f
+mv Acf.f acf.f
+
+echo "*** Building X-13 binaries ***"
+echo "(this may take several minutes)"
+
+make -f makefile.gfortran
+
+mkdir "${cwd}/inst/include"
+cp x13ashtml "${cwd}/inst/include/x13ashtml"
+
+rm -R /tmp/x13dl
+rm -R /tmp/x13ashtmlsrc
+
 
 
 
@@ -46,69 +110,6 @@ cwd=$(pwd)
 # if [ ${platform} == "osx" ]; then
 #     cp "/Users/christoph/x13/x13ashtml" "${cwd}/inst/include/x13ashtml"
 # fi
-
-
-
-if [ ${platform} == "linux" ]; then
-
-    gf=$(type -P gfortran)
-    if [ "${gf}" = "" ]; then
-        echo "You do not have gfortran which is needed for building X-13. You can download and install the newest version from here:"
-        echo "http://coudert.name/software"
-        exit -1
-    fi
-
-    # TODO: some check if gfortran is of the right version
-
-
-    # gfortran --version
-    # GNU Fortran (GCC) 5.2.0
-
-    # the version on CRAN does not work for some reasons:
-    # https://cran.r-project.org/bin/macosx/tools/gfortran-4.2.3.pkg
-
-    # http://coudert.name/software/gfortran-5.2-Yosemite.dmg
-
-    X13VERSION="V1.1_B19"
-    DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_${X13VERSION}.tar.gz"
-
-    # temporary direction for installation
-    mkdir -p /tmp/x13dl
-    mkdir -p /tmp/x13ashtmlsrc
-
-    cd /tmp/x13dl
-
-    # download X-13-ARIMA-SEATS
-    download $DLURL
-
-    # extract X-13ARIMA-SEATS
-    tar xzv -C /tmp/x13ashtmlsrc -f x13ashtmlsrc_${X13VERSION}.tar.gz
-
-    # prepare source code
-    cd /tmp/x13ashtmlsrc
-
-    # a) remove the -static option in line 291, which otherwise causes an error
-    sed 's/ \-static / /' makefile.g77 > makefile.gfortran
-
-    # b) renamed misspelled files
-    mv ADJREG.f adjreg.f
-    mv Acf.f acf.f
-
-    echo "*** Building X-13 binaries ***"
-    echo "(this may take several minutes)"
-
-    make -f makefile.gfortran
-
-    mkdir "${cwd}/inst/include"
-    cp x13ashtml "${cwd}/inst/include/x13ashtml"
-
-    rm -R /tmp/x13dl
-    rm -R /tmp/x13ashtmlsrc
-fi
-
-
-
-
 
 
 # --- Binary installation ------------------------------------------------------
@@ -135,8 +136,6 @@ fi
 #     # download X-13-ARIMA-SEATS
 #     download $DLURL
 
-
-
 #     # extract X-13ARIMA-SEATS
 #     # tar xzv -C x13ashtml -f x13ashtml.tar.gz
 #     mkdir inst/include
@@ -148,65 +147,6 @@ fi
 
 
 
-if [ ${platform} == "osx" ]; then
-
-
-    gf=$(type -P gfortran)
-    if [ "${gf}" = "" ]; then
-        echo "You do not have gfortran which is needed for building X-13. You can download and install the newest version from here:"
-        echo "http://coudert.name/software"
-        exit -1
-    fi
-
-    # TODO: some check if gfortran is of the right version
-
-
-    # gfortran --version
-    # GNU Fortran (GCC) 5.2.0
-
-    # the version on CRAN does not work for some reasons:
-    # https://cran.r-project.org/bin/macosx/tools/gfortran-4.2.3.pkg
-
-    # http://coudert.name/software/gfortran-5.2-Yosemite.dmg
-
-    X13VERSION="V1.1_B19"
-    DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_${X13VERSION}.tar.gz"
-
-
-    # temporary direction for installation
-    mkdir -p /tmp/x13dl
-    mkdir -p /tmp/x13ashtmlsrc
-
-    cd /tmp/x13dl
-
-
-    # download X-13-ARIMA-SEATS
-    download $DLURL
-
-    # extract X-13ARIMA-SEATS
-    tar xzv -C /tmp/x13ashtmlsrc -f x13ashtmlsrc_${X13VERSION}.tar.gz
-
-    # prepare source code
-    cd /tmp/x13ashtmlsrc
-
-    # a) remove the -static option in line 291, which otherwise causes an error
-    sed 's/ \-static / /' makefile.g77 > makefile.gfortran
-
-    # b) renamed misspelled files
-    mv ADJREG.f adjreg.f
-    mv Acf.f acf.f
-
-    echo "*** Building X-13 binaries ***"
-    echo "(this may take several minutes)"
-
-    make -f makefile.gfortran
-
-    mkdir "${cwd}/inst/include"
-    cp x13ashtml "${cwd}/inst/include/x13ashtml"
-
-    rm -R /tmp/x13dl
-    rm -R /tmp/x13ashtmlsrc
-fi
 
 
 exit 0
