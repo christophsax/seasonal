@@ -36,9 +36,15 @@ echo ${SET_INTERNET2}
 echo ${USE_LIBCURL}
 
 
+cd ${cwd}
+
 "${R_SCRIPT}" -e "${SET_INTERNET2} download.file('${DLURL}', 'x13ashtml.zip', quiet = TRUE, mode = \"wb\")"
 
+mkdir inst/include
 
+
+echo "try unzipping"
+unzip -u x13ashtml.zip inst/include
 
 
 
@@ -53,9 +59,9 @@ echo ${USE_LIBCURL}
 
 # cd /tmp/x13dl
 
-cd ${cwd}
+
 # download X-13-ARIMA-SEATS
-download $DLURL
+# download $DLURL
 
 
 echo "  seems ok, ready to go"
