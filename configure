@@ -72,7 +72,7 @@ if [ ${platform} == "linux" ]; then
     download $DLURL
 
 
-    
+    echo $(ls ${cwd})
 
     # extract X-13ARIMA-SEATS
     # tar xzv -C x13ashtml -f x13ashtml.tar.gz
