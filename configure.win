@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# download pre-compiled windows libraries
+
+# TODO
+
+echo "  seems ok, ready to go"
+exit 0

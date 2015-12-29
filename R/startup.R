@@ -1,4 +1,4 @@
-.onLoad <- function(...){
+.onAttach <- function(...){
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
 }
 
