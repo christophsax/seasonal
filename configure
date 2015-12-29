@@ -44,9 +44,6 @@ cwd=$(pwd)
 
 
 
-url="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_V1.1_B19.tar.gz"
-
-
 
 # --- Binary installation ------------------------------------------------------
 
@@ -68,6 +65,8 @@ if [ ${platform} == "linux" ]; then
     cd ${cwd}
     # download
     download $DLURL
+
+    echo $(ls)
 
     # extract
     tar xzv x13ashtml -f x13ashtml.tar.gz
