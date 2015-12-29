@@ -2,7 +2,25 @@
 
 # download pre-compiled windows libraries
 
-# TODO
+echo "Try to download X-13 for Windows"
+
+
+## helper function to not rely on curl which at least on OS X fails to follow redirects
+download() {
+    url=${1}
+
+    ## sadly, for Travis we cannot rely on R as it lacks libcurl
+    libcurl=$(${R_HOME}/bin/Rscript -e 'cat(capabilities()[["libcurl"]])')
+    ## so when we have libcurl in R, use it -- else fall back to curl
+    if [ ${libcurl} == "TRUE" ]; then
+        file=$(basename ${url})
+        ${R_HOME}/bin/Rscript -e "download.file(\"${url}\", \"${file}\", quiet=TRUE, method='libcurl')"
+    else
+        curl -s -k -L -O ${url}
+    fi
+}
+
+
 
 echo "  seems ok, ready to go"
 exit 0
