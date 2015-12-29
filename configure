@@ -26,10 +26,6 @@ fi
 download() {
     url=${1}
 
-    # because rscript is located in /usr/bin/Rscript sometimes
-    # rs_path=$(which Rscript)  
-
-
     ## sadly, for Travis we cannot rely on R as it lacks libcurl
     libcurl=$(${R_HOME}/bin/Rscript -e 'cat(capabilities()[["libcurl"]])')
     ## so when we have libcurl in R, use it -- else fall back to curl
@@ -61,7 +57,7 @@ if [ ${platform} == "linux" ]; then
 
 
     echo "Try to download X-13 for Ubuntu"
-    
+
     DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml"
     
     # DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml.tar.gz"
@@ -71,15 +67,19 @@ if [ ${platform} == "linux" ]; then
 
     cd /tmp/x13dl
 
+    cd ${cwd}
     # download X-13-ARIMA-SEATS
     download $DLURL
 
+
+    
+    
     # extract X-13ARIMA-SEATS
     # tar xzv -C x13ashtml -f x13ashtml.tar.gz
 
-    cp x13ashtml "${cwd}/inst/include/x13ashtml"
+    cp x13ashtml "../../inst"
 
-    rm -R /tmp/x13dl
+    # rm -R /tmp/x13dl
 fi
 
 
