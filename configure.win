@@ -42,7 +42,7 @@ echo ${USE_LIBCURL}
 
 
 
-${R_HOME}/bin/Rscript -e "download.file(\"${DLURL}\", \"x13ashtml\", quiet=TRUE, mode = \"wb\")"
+# ${R_HOME}/bin/Rscript -e "download.file(\"${DLURL}\", \"x13ashtml\", quiet=TRUE, mode = \"wb\")"
 
 
 
