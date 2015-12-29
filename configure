@@ -73,11 +73,11 @@ if [ ${platform} == "linux" ]; then
 
 
     
-    
+
     # extract X-13ARIMA-SEATS
     # tar xzv -C x13ashtml -f x13ashtml.tar.gz
 
-    cp x13ashtml "../../inst"
+    cp x13ashtml "../../inst/include/"
 
     # rm -R /tmp/x13dl
 fi
