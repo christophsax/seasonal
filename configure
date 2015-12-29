@@ -38,7 +38,8 @@ download() {
 }
 
 ## some variables
-DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_V1.1_B19.tar.gz"
+X13VERSION="V1.1_B19"
+DLURL="https://www.census.gov/ts/x13as/unix/x13ashtmlsrc_${X13VERSION}.tar.gz"
 cwd=$(pwd)
 
 
