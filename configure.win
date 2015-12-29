@@ -5,27 +5,32 @@
 echo "Try to download X-13 for Windows"
 
 
-
+echo ${R_HOME}
 
 ## helper function to not rely on curl which at least on OS X fails to follow redirects
-download() {
-    url=${1}
+# download() {
+#     url=${1}
 
-    ## sadly, for Travis we cannot rely on R as it lacks libcurl
-    libcurl=$(${R_HOME}/bin/Rscript -e 'cat(capabilities()[["libcurl"]])')
-    ## so when we have libcurl in R, use it -- else fall back to curl
-    if [ ${libcurl} == "TRUE" ]; then
-        file=$(basename ${url})
-        ${R_HOME}/bin/Rscript -e "download.file(\"${url}\", \"${file}\", quiet=TRUE, method='libcurl')"
-    else
-        curl -s -k -L -O ${url}
-    fi
-}
+#     ## sadly, for Travis we cannot rely on R as it lacks libcurl
+#     libcurl=$(${R_HOME}/bin/Rscript -e 'cat(capabilities()[["libcurl"]])')
+#     ## so when we have libcurl in R, use it -- else fall back to curl
+#     if [ ${libcurl} == "TRUE" ]; then
+#         file=$(basename ${url})
+#         ${R_HOME}/bin/Rscript -e "download.file(\"${url}\", \"${file}\", quiet=TRUE, method='libcurl')"
+#     else
+#         curl -s -k -L -O ${url}
+#     fi
+# }
 
 
 
 
 DLURL="https://www.census.gov/ts/x13as/pc/x13ashtml_V1.1_B19.zip"
+
+
+${R_HOME}/bin/Rscript -e "download.file(\"${DLURL}\", \"x13ashtml\", quiet=TRUE, mode = \"wb\")"
+
+
 
 # DLURL="https://github.com/christophsax/seasonalbin/blob/master/ubuntu/x13ashtml.tar.gz"
 
