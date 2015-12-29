@@ -24,8 +24,26 @@ echo ${R_HOME}
 
 
 
-
 DLURL="https://www.census.gov/ts/x13as/pc/x13ashtml_V1.1_B19.zip"
+echo ${DLURL}
+
+# Don't use setInternet2() if R version > 3.2.1
+R_SCRIPT="${R_HOME}/bin${R_ARCH_BIN}/Rscript"
+SET_INTERNET2=`"${R_SCRIPT}" -e "cat(ifelse(compareVersion(sprintf('%s.%s', R.version['major'], R.version['minor']), '3.2.2') > 0, '', 'setInternet2();'))"`
+
+# Use libcurl if available
+USE_LIBCURL=`"${R_SCRIPT}" -e "cat(ifelse(capabilities('libcurl'), 'method=\'libcurl\',', ''))"`
+
+
+echo ${R_SCRIPT}
+echo ${SET_INTERNET2}
+echo ${USE_LIBCURL}
+
+
+"${R_SCRIPT}" -e "${SET_INTERNET2} download.file('${DLURL}', 'x13ashtml.zip', ${USE_LIBCURL} quiet = TRUE, mode = \"wb\")"
+
+
+
 
 
 ${R_HOME}/bin/Rscript -e "download.file(\"${DLURL}\", \"x13ashtml\", quiet=TRUE, mode = \"wb\")"
