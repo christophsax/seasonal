@@ -3,8 +3,8 @@ SystemRequirements: Binary executables of X-13-ARIMA-SEATS (installation notes:
     see README or vignette)
 Type: Package
 Title: R Interface to X-13-ARIMA-SEATS
-Version: 1.1.3
-Date: 2015-12-23
+Version: 1.1.4
+Date: 2015-12-31
 Author: Christoph Sax
 Maintainer: Christoph Sax <christoph.sax@gmail.com>
 Description: Easy-to-use interface to X-13-ARIMA-SEATS, the
@@ -12,11 +12,10 @@ Description: Easy-to-use interface to X-13-ARIMA-SEATS, the
     access to almost all options and outputs of X-13, including X-11 and SEATS,
     automatic ARIMA model search, outlier detection and support for user
     defined holiday variables, such as Chinese New Year or Indian Diwali. It
-    also includes a Shiny-based graphical user interface. Seasonal does not
-    contain the binaries of X-13, which must be installed separately. See the
-    README file or the vignette for installation notes.
+    also includes a Shiny-based graphical user interface. Seasonal uses the 
+    X-13 binaries from the 'x13binary' package.
 Depends:
-    R (>= 2.15)
+    R (>= 2.15), x13binary
 Suggests:
     shiny (>= 0.11.1),
 License: GPL-3

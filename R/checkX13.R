@@ -29,21 +29,6 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   \nFor installation details, consider Section 2 of the package vignette:\n  http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf\n"
   env.path <- Sys.getenv("X13_PATH")
 
-  # Set X13_PATH to default if binary is present
-  if (env.path == ""){
-    default.path <- file.path(path.package("seasonal"), "include")
-    if (.Platform$OS.type == "windows"){    
-      x13.bin.html <- file.path(default.path, "x13ashtml.exe")
-    } else {
-      x13.bin.html <- file.path(default.path, "x13ashtml")
-    }
-
-    if (file.exists(x13.bin.html)){
-      Sys.setenv(X13_PATH = default.path)
-      env.path = default.path
-    }
-  }
-
   if (env.path == ""){
     if (fail){
       message(no.path.message)
