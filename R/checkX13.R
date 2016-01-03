@@ -116,7 +116,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       dir.create(wdir)
     }
     file.remove(list.files(wdir, full.names = TRUE))
-    testfile <- file.path(path.package("seasonal"), "tests", "Testairline.spc")
+    testfile <- system.file("tests", "Testairline.spc", package="seasonal")
     file.copy(testfile, wdir)
     try(run_x13(file.path(wdir, "Testairline"), out = TRUE), silent = TRUE)
 

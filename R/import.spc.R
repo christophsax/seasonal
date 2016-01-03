@@ -18,7 +18,7 @@
 #' @examples
 #' 
 #' # importing the orginal X-13 example file
-#' import.spc(file.path(path.package("seasonal"), "tests", "Testairline.spc"))
+#' import.spc(system.file("tests", "Testairline.spc", package="seasonal"))
 #' 
 #' \dontrun{
 #' # a spc with multiple user defined regression and transformation series
