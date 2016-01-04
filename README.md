@@ -443,7 +443,7 @@ file, and the `import.spc` function will construct the corresponding call to
 `seas` as well as the calls for importing the data.
 
     # importing the orginal X-13 example file
-    import.spc(file.path(path.package("seasonal"), "tests", "Testairline.spc"))
+    import.spc(system.file("tests", "Testairline.spc", package="seasonal"))
 
 If data is stored outside the `.spc` file (as it usually will be), the
 calls will make use of the `import.ts` function, which imports arbitrary X-13
