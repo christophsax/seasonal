@@ -1,8 +1,4 @@
 
-if (Sys.getenv("TRAVIS") != ""){
-  Sys.setenv(X13_PATH = file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis/x13"))
-} 
-
 library(seasonal)
 checkX13()
 
