@@ -5,7 +5,7 @@ bug fixes
   - fix for rare convergence error messages
   - annual series are now recognized
   - 'inspect' call evaluated in global env. This solves an issue with series 
-    that had the same name as internal functions (e.g., 'prod').
+    that had the same name as primitive functions (e.g., 'prod').
 
 
 1.1.0  2015-10-08
