@@ -1,7 +1,7 @@
 .onLoad <- function(...){
 
   if (Sys.getenv("X13_PATH") == ""){
-    default.path <- file.path(path.package("x13binary"), "bin")
+    default.path <- system.file("bin", package="x13binary")
     if (.Platform$OS.type == "windows"){    
       x13.bin.html <- file.path(default.path, "x13ashtml.exe")
     } else {
