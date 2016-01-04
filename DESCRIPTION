@@ -15,7 +15,9 @@ Description: Easy-to-use interface to X-13-ARIMA-SEATS, the
     also includes a Shiny-based graphical user interface. Seasonal uses the 
     X-13 binaries from the 'x13binary' package.
 Depends:
-    R (>= 2.15), x13binary
+    R (>= 2.15)
+Imports: 
+    x13binary
 Suggests:
     shiny (>= 0.11.1),
 License: GPL-3

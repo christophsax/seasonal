@@ -1,4 +1,4 @@
-.onLoad <- function(...){
+.onAttach <- function(...){
 
   if (Sys.getenv("X13_PATH") == ""){
     default.path <- system.file("bin", package="x13binary")
@@ -37,5 +37,3 @@
 
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
 }
-
-
