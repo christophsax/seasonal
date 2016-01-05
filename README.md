@@ -3,7 +3,7 @@ R interface to X-13ARIMA-SEATS
 
 [![Build Status](https://travis-ci.org/christophsax/seasonal.svg?branch=master)](https://travis-ci.org/christophsax/seasonal)
 
-**Major Change: seaonal now relies on the x13binary package to access prebuilt
+**Major Change: seaonal now relies on the [x13binary](https://github.com/x13org/x13binary) package to access prebuilt
 binaries of X-13ARIMA-SEATS. No manual installation of X13-ARIMA-SEATS is
 requred anymore. As x13binary is not yet on CRAN, you need to install it from
 Github (see Installation)**
