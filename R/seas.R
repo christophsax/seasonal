@@ -196,7 +196,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
          automdl = "", na.action = na.omit,
          out = FALSE, dir = NULL, ..., list = NULL){
   
-  setX13Path()
+  # setX13Path()
+  
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
   
