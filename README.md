@@ -6,7 +6,7 @@ R interface to X-13ARIMA-SEATS
 **Major Change: seaonal now relies on the x13binary package to access prebuilt
 binaries of X-13ARIMA-SEATS. No manual installation of X13-ARIMA-SEATS is
 requred anymore. As x13binary is not yet on CRAN, you need to install it from
-Github (see installation)**
+Github (see Installation)**
 
 *seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS,
 the newest seasonal adjustment software developed by the [United States Census
@@ -45,7 +45,6 @@ console:
      
     install.packages("devtools")       
     devtools::install_github('x13org/x13binary')   
-    install.packages("devtools")       
     devtools::install_github('christophsax/seasonal')      
 
 
