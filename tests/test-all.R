@@ -4,6 +4,10 @@
 # - is NEWS up to date?
 # - r-devel test
 
+seasonal::checkX13()
+x13binary::checkX13binary()
+
+
 if (Sys.getenv("TRAVIS") != ""){
   travisdir <- file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis")
 } else if (Sys.info()['sysname'] == "Darwin"){
