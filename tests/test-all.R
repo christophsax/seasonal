@@ -5,7 +5,7 @@
 # - r-devel test
 
 seasonal::checkX13()
-x13binary::checkX13seasonal()
+x13binary::checkX13binary()
 
 
 if (Sys.getenv("TRAVIS") != ""){
