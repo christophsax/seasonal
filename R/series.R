@@ -278,7 +278,7 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
   stopifnot(inherits(x, "seas"))
   
   SPECS <- NULL 
-  data(specs, envir = environment())  # avoid side effects
+  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
   
   is.dotted <- grepl("\\.", series)
   

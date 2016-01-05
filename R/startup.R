@@ -1,18 +1,6 @@
 .onAttach <- function(...){
   x13binary.path <- system.file("bin", package="x13binary")
-  if (Sys.getenv("X13_PATH") == ""){
-    # Solaris users get this message (and return())
-    if ((.Platform$OS.type != "windows") && !(Sys.info()["sysname"] %in% c("Darwin", "Linux"))){
-      return(packageStartupMessage("Unusual platform: ", Sys.info()["sysname"], 
-        "\nFor this platform, the path to the binary executable of X-13",
-        "\nhas to be manually specified. For more information, consider", 
-        "\nAppendix A of the package vignette:",
-        "\n  vingnette(seas)\n")
-      )
-    }
-    Sys.setenv(X13_PATH = x13binary.path)
-  } else {
-    # Solaris users don't get this message
+  if (Sys.getenv("X13_PATH") != ""){
     if ((.Platform$OS.type == "windows") || (Sys.info()["sysname"] %in% c("Darwin", "Linux"))){
       # Also skip this message if X13_PATH is set to x13binary.path
       if (Sys.getenv("X13_PATH") != x13binary.path){
@@ -27,5 +15,24 @@
       }
     }
   }
+  setX13Path()
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
 }
+
+
+
+setX13Path <- function(){
+  if (Sys.getenv("X13_PATH") == ""){
+    # Solaris users get this message (and return())
+    if ((.Platform$OS.type != "windows") && !(Sys.info()["sysname"] %in% c("Darwin", "Linux"))){
+      return(message("Unusual platform: ", Sys.info()["sysname"], 
+        "\nFor this platform, the path to the binary executable of X-13",
+        "\nhas to be manually specified. For more information, consider", 
+        "\nAppendix A of the package vignette:",
+        "\n  vingnette(seas)\n")
+      )
+    }
+    Sys.setenv(X13_PATH = system.file("bin", package="x13binary"))
+  }
+}
+  

@@ -196,12 +196,13 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
          automdl = "", na.action = na.omit,
          out = FALSE, dir = NULL, ..., list = NULL){
   
+  setX13Path()
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
   
   # lookup table for output specification
   SPECS <- NULL 
-  data(specs, envir = environment())  # avoid side effects
+  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
   SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
   
   # save series name
