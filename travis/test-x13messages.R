@@ -81,3 +81,22 @@ arima.model = "(0 1 0)",
 regression.variables = "td1coef"
 )
 monthplot(m)
+
+
+
+# Ugly errors
+a1 <- structure(c(5479.1, 5536.7, 5641.8, 5663.3, 5557.9, 5493.7, 5695.4, 5817.9, 5606, 5300, 4788.9, 5603.3, 6380, 5630, 5700, 5700, 5550, 5830, 5860, 5900, 5620, 5850, 5680, 5940, 5650, 5720, 5730, 5040, 5070, 5450, 5590, 6000, 5360, 5520, 5630, 5440), .Tsp = c(1984, 1992.75, 4), class = "ts")
+seas(a1)
+# Error: X-13 has run but produced no data
+
+a2 <- structure(c(1620, 1500, 2570, 2030, 2690, 2250, 2160, 2980, 2590, 3090, 2780, 2010, 2810, 2740, 2540, 3130, 4120, 2840, 3330, 3030, 3370, 3830, 2920, 3290, 3890, 3110, 3660, 3020, 3420, 3940, 3910, 4150, 3460, 3810, 3690, 4450, 4150, 3720, 5100, 4320, 3980, 4800, 4870, 5100, 4950, 5250, 5320, 5020, 5520, 5210, 6110), .Tsp = c(1990, 1994.16666666667, 12), class = "ts")
+seas(a2)
+# sh: line 1: 12433 Bus error: 10           /Library/Frameworks/R.framework/Versions/3.2/Resources/library/x13binary/bin/x13ashtml /var/folders/8n/6xn1tf891q59s7qhrfjsmgrr0000gn/T//RtmpQAbmpi/x132b284c182f4a/iofile -n -s 2> /dev/null
+# Error: X-13 has returned a non-zero exist status, which means that the current spec file cannot be processed for an unknown reason.
+# In addition: Warning message:
+# running command '/Library/Frameworks/R.framework/Versions/3.2/Resources/library/x13binary/bin/x13ashtml /var/folders/8n/6xn1tf891q59s7qhrfjsmgrr0000gn/T//RtmpQAbmpi/x132b284c182f4a/iofile -n -s 2>/dev/null' had status 138 
+
+
+
+
+
