@@ -90,8 +90,6 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   if (fullcheck){
     has.failed <- FALSE
     message("X-13 installation test:")
-    x13binary::checkX13binary()
-    message("  - checkX13binary() from package x13binary has run successfully")
     message("  - X13_PATH correctly specified")
     message("  - binary executable file found")
 

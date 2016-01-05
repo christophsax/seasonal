@@ -1,9 +1,12 @@
 .onLoad <- function(...){
-  x13binary.path <- system.file("bin", package="x13binary")
   if (Sys.getenv("X13_PATH") != ""){
     if ((.Platform$OS.type == "windows") || (Sys.info()["sysname"] %in% c("Darwin", "Linux"))){
       # Also skip this message if X13_PATH is set to x13binary.path
-      if (Sys.getenv("X13_PATH") != x13binary.path){
+
+
+      # til we have x13binary::x13path()
+      if (Sys.getenv("X13_PATH") != system.file("bin", package="x13binary")){
+      # if (Sys.getenv("X13_PATH") != x13binary::x13path()){
         packageStartupMessage(
           "The system variable 'X13_PATH' has been manually set to: \n  ", 
           Sys.getenv("X13_PATH"),
@@ -25,7 +28,9 @@
         "\n  vingnette(seas)\n")
       )
     }
+    x13binary::checkX13binary()
     Sys.setenv(X13_PATH = system.file("bin", package="x13binary"))
+    # Sys.setenv(X13_PATH = x13binary::x13path())
   }
   # setX13Path()
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
