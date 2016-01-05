@@ -1,11 +1,23 @@
 1.1.3  2016-??-??
 --------------------------------------------------------------------------------
 
+major changes
+  - No X13-ARIMA-SEATS binary download required anymore! seaonal now relies on
+    the x13binary (https://github.com/x13org/x13binary) package to access
+    prebuilt binaries of X-13ARIMA-SEATS. Thanks to the fantastic work with Dirk
+    Eddelbuettel on x13binary!
+
+documentation
+  - updated to the reflect the new, download free installation process, wich is 
+    now as simple as: install.packages('seasonal')
+
 bug fixes
   - fix for rare convergence error messages
   - annual series are now recognized
   - 'inspect' call evaluated in global env. This solves an issue with series 
     that had the same name as primitive functions (e.g., 'prod').
+  - seas can be imported and used without loading the namespace 
+    (e.g. seasonal::seas())
 
 
 1.1.0  2015-10-08
