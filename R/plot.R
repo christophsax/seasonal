@@ -71,9 +71,9 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
   finalx <- final(x)
 
   if (transform == "PC"){
-    orignalx <- (lag(orignalx, -1) - orignalx) / lag(orignalx, -1)
+    orignalx <- (orignalx - lag(orignalx, -1)) / lag(orignalx, -1)
     if (!is.null(final(x))){
-      finalx <- (lag(finalx, -1) - finalx) / lag(finalx, -1)
+      finalx <- (finalx - lag(finalx, -1)) / lag(finalx, -1)
     }
     if (main != ""){
       main <- paste(main, "(PC)")
@@ -81,9 +81,9 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
   }
   if (transform == "PCY"){
     fr <- frequency(orignalx)
-    orignalx <- (lag(orignalx, -fr) - orignalx) / lag(orignalx, -fr)
+    orignalx <- (orignalx - lag(orignalx, -fr)) / lag(orignalx, -fr)
     if (!is.null(final(x))){
-      finalx <- (lag(finalx, -fr) - finalx) / lag(finalx, -fr)
+      finalx <- (finalx - lag(finalx, -fr)) / lag(finalx, -fr)
     }
     if (main != ""){
       main <- paste(main, "(PCY)")

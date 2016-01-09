@@ -8,8 +8,8 @@ major changes
     Eddelbuettel on x13binary!
 
 documentation
-  - updated to the reflect the new, download free installation process, wich is 
-    now as simple as: install.packages('seasonal')
+  - updated documentation to the reflect the new, download free installation
+    process, wich is now as simple as: install.packages('seasonal')
 
 bug fixes
   - fix for rare convergence error messages
@@ -18,6 +18,7 @@ bug fixes
     that had the same name as primitive functions (e.g., 'prod').
   - seas can be imported and used without loading the namespace 
     (e.g. seasonal::seas())
+  - plot.seas: fix for wrong in transfom = "PC" and "PCY"
 
 
 1.1.0  2015-10-08
