@@ -26,11 +26,12 @@
 #' by \pkg{x13binary}:
 #' \itemize{
 #' \item because you are on an unsupported system, like Solaris.
-#' \item because you cannot run executable files in your R library folders, due to corporate IT policy.
-#' \item you are using your own compilation of X-13ARIMA-SEATS
+#' \item because you cannot run executable files in your R library folders, due 
+#' to corporate IT policy.
+#' \item because you are using your own Fortran compilation of X-13ARIMA-SEATS.
 #' }
 #' 
-#' Setting the path manually can be done as in older versions of seasonal. In
+#' Setting the path manually can be done as in previous versions of seasonal. In
 #' order to tell seasonal where to find the binary executables of X-13ARIMA-
 #' SEATS, the specific environmental variable X13_PATH needs to be set. This may
 #' be done during your active session in R:
