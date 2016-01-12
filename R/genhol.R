@@ -165,6 +165,10 @@ genhol <- function(x, start = 0, end = 0, frequency = 12, center = "none"){
     stop("wrong center argument. Use 'mean', 'calendar' or 'none'.")
   }
 
+  if (start > end){
+    stop("start cannot be after end")
+  }
+
   event.st <- x + start
   event.en <- x + end
   frequency <- frequency

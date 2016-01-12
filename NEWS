@@ -25,6 +25,9 @@ bug fixes
     (e.g. seasonal::seas())
   - plot.seas: fixed wrong sign in transfom = "PC" and "PCY"
 
+defunct
+- slidingspans, revisions, regressioneffects are removed from the package
+
 
 1.1.0  2015-10-08
 --------------------------------------------------------------------------------
