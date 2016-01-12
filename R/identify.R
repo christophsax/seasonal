@@ -1,4 +1,4 @@
-#' Manually Identify Outliers (Experimental)
+#' Manually Identify Outliers
 #' 
 #' Select or deselect outliers by point and click. To quit and return the call, press
 #' ESC. Click several times to loop through different outlier types.
