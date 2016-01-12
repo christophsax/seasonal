@@ -45,10 +45,13 @@ model specs](#import-x-13-models-and-series) to R.
 
 ### Installation
 
-he stable version is available from CRAN:       
+Since Version 1.2, *seasonal* relies on the
+[x13binary](https://github.com/x13org/x13binary) package to access prebuilt
+binaries of X-13ARIMA-SEATS. To install both packages, type to the R console:
       
     install.packages("seasonal")      
  
+See the help page of `?seasonal` if you want to set the path to X-13 manually.
 
 ### Getting started
 

@@ -24,6 +24,12 @@
 #' @export
 checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
+  if (fullcheck){
+    if (identical(Sys.getenv("X13_PATH"), (x13binary::x13path()))){
+      message("seasonal is using the X-13 binaries provided by x13binary")
+    }
+  }
+
   ### check path
   no.path.message <- "No path to the binary executable of X-13 specified.
   \nFor installation details, consider Section 2 of the package vignette:\n  http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf\n"

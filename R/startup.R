@@ -7,10 +7,10 @@
         packageStartupMessage(
           "The system variable 'X13_PATH' has been manually set to: \n  ", 
           Sys.getenv("X13_PATH"),
-          "\n\nFrom version 1.2 on, 'seasonal' relies on the 'x13binary' ",
+          "\nSince version 1.2, 'seasonal' relies on the 'x13binary' ",
           "\npackage and does not require 'X13_PATH' to be set anymore. ",
           "\nOnly set 'X13_PATH' manually if you intend to use your own",
-          "\nbinaries."
+          "\nbinaries. See ?seasonal for details."
         )
       }
     }
@@ -21,12 +21,10 @@
       return(packageStartupMessage("Unsupported platform: ", 
         Sys.info()["sysname"], " ", Sys.info()["release"], 
         "\nFor this platform, the path to the binary executable of X-13",
-        "\nhas to be manually specified. For more information, consider", 
-        "\nAppendix A of the package vignette:",
-        "\n  vingnette(seas)\n")
-      )
+        "\nhas to be manually specified. See ?seasonal for details."
+      ))
     }
-    x13binary::checkX13binary()
+    x13binary::checkX13binary(verbose = FALSE)
     Sys.setenv(X13_PATH = x13binary::x13path())
   }
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
