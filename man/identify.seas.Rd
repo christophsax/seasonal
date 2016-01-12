@@ -2,7 +2,7 @@
 % Please edit documentation in R/identify.R
 \name{identify.seas}
 \alias{identify.seas}
-\title{Manually Identify Outliers (Experimental)}
+\title{Manually Identify Outliers}
 \usage{
 \method{identify}{seas}(x, type = c("ao", "tc", "ls"), ...)
 }
