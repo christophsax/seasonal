@@ -38,10 +38,8 @@
 #' 
 #' \code{Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")}
 #' 
-#' Exchange \code{YOUR_X13_DIRECTORY} with the path to your installation of X-13ARIMA-
-#' SEATS. Note that the Windows path \code{C:\\something\\somemore} has to be entered
-#' UNIX-like \code{C:/something/somemore} or \code{C:\\\\something\\\\somemore}. You can always
-#' check your installation with:
+#' Exchange \code{YOUR_X13_DIRECTORY} with the path to your installation of
+#' X-13ARIMA- SEATS. You can always check your installation with:
 #'
 #' \code{checkX13()}
 #'
