@@ -9,7 +9,8 @@ x13binary::checkX13binary()
 
 
 if (x13binary::supportedPlatform()){
-
+  
+  library(seasonal)
   checkX13()
 
 }

@@ -14,6 +14,7 @@ enhancements
 documentation
   - updated documentation to the reflect the new installation process
   - new example in ?genhol
+  - improved description of examples in ?import.spc
 
 bug fixes
   - fix for rare convergence error messages
