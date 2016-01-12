@@ -151,7 +151,7 @@ plot(series(m4, "regression.holiday"))
 
 ### Using genhol to re-estimate regARIMA estimation in R
 
-# easter regressor
+# easter regressor
 ea <- genhol(easter, start = -1, end = -1, center = "calendar")
 ea <- window(ea, start = start(AirPassengers), end = end(AirPassengers))
 

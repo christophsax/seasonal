@@ -25,7 +25,7 @@ console:
   \code{install.packages("seasonal")}
 
 A startup message is given if the path to X-13 is specified manually. To
-surpress the message, use \code{\link{suppressPackageStartupMessages()}}.
+surpress the message, use \code{\link{suppressPackageStartupMessages}}.
 }
 
 \section{Setting the X-13 path manually}{
@@ -66,7 +66,7 @@ around the whole \code{Sys.setenv} line, such that R understands your string.
 Check first that the the \code{Sys.setenv} line works correctly; once it is
 written you may have to edit \code{.Rprofile} manually. (Or add a second,
 overwriting line to it.) For other ways to set an environmental variable
-permanently in R, see \code{\link{?Startup}}.
+permanently in R, see \code{\link{Startup}}.
 }
 \author{
 Christoph Sax \email{christoph.sax@gmail.com}
