@@ -26,9 +26,9 @@ returns an object of class \code{import.spc}, which is a list with the following
 \description{
 Utility function to import \code{.spc} files from X-13. It generates a list
 of calls to \code{seas} (and  \code{import.ts}) that can be run in R.
-Evaluating these calls should perform the same operations as the orginal
-\code{.spc} file. The print method displays the calls in a way that they can
-be copy-pasted into an R script.
+Evaluating these calls should perform the same X-13 run as the original
+\code{.spc} file. The \code{print} method displays the calls in a way that 
+they can be copy-pasted into an R script.
 }
 \examples{
 
@@ -48,26 +48,26 @@ seas(x = AirPassengers, xreg = cbind(a = genhol(cny, start = 1, end = 4,
     regression.aictest = "td", regression.usertype = "holiday", dir = tdir, 
     out = TRUE)
 
-# importing the spc file from there
+# importing the .spc file from the temporary location
 ll <- import.spc(file.path(tdir, "iofile.spc"))
 
-# ll is list with 4 calls: 
+# ll is list containing 4 calls: 
 # - 3 calls to import.ts(), which read the series from the X-13 data files
-# - and 1 call to seas() which performs the adjustment in R
+# - and 1 call to seas() which performs the seasonal adjustment in R
 str(ll)
 
 # to replicate the original X-13 operation, run all 4 calls. You can either
 # copy/paste and run the print() output:
 ll
 
-# or use eval() to evaluate the call. This evaluates the first call and
-# imports the x variable:
+# or use eval() to evaluate the call(s). To evaluate the first call and
+# import the x variable:
 eval(ll$x)
 
 # to run all 4 calls, use lapply() and eval() to evaluate all calls in the
 # list:
 ee <- lapply(ll, eval, envir = globalenv())
-ee$call  # the 'seas' object produced from the .spc file
+ee$call  # the 'seas' object, produced by the final call to seas()
 }
 }
 \seealso{

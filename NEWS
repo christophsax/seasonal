@@ -9,10 +9,10 @@ major changes
     install.packages('seasonal')
 
 enhancements
-  - basic tests are now run on all CRAN platforms, except Solaris.
+  - basic X-13 tests on all CRAN platforms (except Solaris)
 
 documentation
-  - updated documentation to the reflect the new installation process
+  - updated documentation to reflect the new installation process
   - new example in ?genhol
   - improved description of examples in ?import.spc
 
