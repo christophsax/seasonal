@@ -1,12 +1,18 @@
 # # --- Startup tests ------------------------------------------------------------
 
-# x13binary::checkX13binary()
+x13binary::checkX13binary()
 
 
 # # --- Baisc tests of seasonal --------------------------------------------------
 
 # # examples from ?seas and ?series, without the graphs
 
+
+if (x13binary::supportedPlatform()){
+
+  checkX13()
+
+}
 # if (x13binary::supportedPlatform()){
 
 #   seasonal::checkX13()
