@@ -1,15 +1,20 @@
-1.1.3  2016-??-??
+1.2.0  2016-??-??
 --------------------------------------------------------------------------------
 
 major changes
   - No X13-ARIMA-SEATS binary download required anymore! seaonal now relies on
     the x13binary (https://github.com/x13org/x13binary) package to access
     prebuilt binaries of X-13ARIMA-SEATS. Thanks to the fantastic work with Dirk
-    Eddelbuettel on x13binary!
+    Eddelbuettel on x13binary! Installing seasonal is now as simple as:
+    install.packages('seasonal')
+
+enhancements
+  - basic X-13 tests on all CRAN platforms (except Solaris)
 
 documentation
-  - updated documentation to the reflect the new, download free installation
-    process, wich is now as simple as: install.packages('seasonal')
+  - updated documentation to reflect the new installation process
+  - new example in ?genhol
+  - improved description of examples in ?import.spc
 
 bug fixes
   - fix for rare convergence error messages
@@ -18,7 +23,7 @@ bug fixes
     that had the same name as primitive functions (e.g., 'prod').
   - seas can be imported and used without loading the namespace 
     (e.g. seasonal::seas())
-  - plot.seas: fix for wrong in transfom = "PC" and "PCY"
+  - plot.seas: fixed wrong sign in transfom = "PC" and "PCY"
 
 
 1.1.0  2015-10-08

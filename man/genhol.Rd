@@ -148,6 +148,22 @@ ts.plot(final(m4), final(m5), col = c("red", "black"))
 # plot the Diwali factor in Indian industrial production
 plot(series(m4, "regression.holiday"))
 
+
+### Using genhol to re-estimate regARIMA estimation in R
+
+# easter regressor
+ea <- genhol(easter, start = -1, end = -1, center = "calendar")
+ea <- window(ea, start = start(AirPassengers), end = end(AirPassengers))
+
+# estimating ARIMA model in R base
+arima(log(AirPassengers), order = c(0,1,1), 
+      seasonal = list(order = c(0,1,1)), xreg = ea)
+    
+summary(seas(AirPassengers, regression.variables = c("easter[1]"), 
+             regression.aictest = NULL))
+
+# Note that R defines the ARIMA model with negative signs before the MA term,
+# X-13 with a positive sign.
 }
 }
 \references{

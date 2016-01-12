@@ -3,3 +3,7 @@ warnings_are_errors: true
 sudo: required
 r_github_packages:
  - x13org/x13binary
+notifications:
+  email:
+    recipients:
+      - christoph.sax@gmail.com
