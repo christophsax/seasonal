@@ -3,9 +3,10 @@ R interface to X-13ARIMA-SEATS
 
 [![Build Status](https://travis-ci.org/christophsax/seasonal.svg?branch=master)](https://travis-ci.org/christophsax/seasonal)
 
-**Major Change: No X13-ARIMA-SEATS binary
-download is required anymore!** Thanks to the fantastic work with Dirk Eddelbuettel on
-[x13binary](https://cran.r-project.org/web/packages/x13binary), installing *seasonal* is now as easy as:**
+**No X13-ARIMA-SEATS binary download is required anymore!** Thanks to the
+fantastic work with Dirk Eddelbuettel on the
+[x13binary](https://cran.r-project.org/web/packages/x13binary) package,
+installing *seasonal* is now as easy as:
      
     install.packages("devtools")       
     devtools::install_github('christophsax/seasonal')      
@@ -424,7 +425,8 @@ Secretariat of Economic Affairs. It has been greatly improved over time thanks
 to suggestions and support from Matthias Bannert, Freya Beamish, Vidur Dhanda,
 Alain Galli, Ronald Indergand, Preetha Kalambaden, Stefan Leist, James Livsey,
 Brian Monsell, Pinaki Mukherjee, Bruno Parnisari, and many others. I am
-especially grateful to Dirk Eddelbuettel for the fantastic work on the *x13binary* package. 
+especially grateful to Dirk Eddelbuettel for the fantastic work on the
+[x13binary](https://cran.r-project.org/web/packages/x13binary) package.
 
 Please report bugs and suggestions on [Github][github] or send me an 
 [e-mail](mailto:christoph.sax@gmail.com). Thank you!
