@@ -11,7 +11,6 @@ installing *seasonal* is now as easy as:
     install.packages("devtools")       
     devtools::install_github('christophsax/seasonal')      
 
-
 *seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS,
 the newest seasonal adjustment software developed by the [United States Census
 Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the

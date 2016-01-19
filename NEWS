@@ -10,6 +10,8 @@ major changes
 
 enhancements
   - basic X-13 tests on all CRAN platforms (except Solaris)
+  - import.spc return value with more meaningful component names 
+    ($seas, instead of $call)
 
 documentation
   - updated documentation to reflect the new installation process
