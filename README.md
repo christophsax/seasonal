@@ -3,15 +3,13 @@ R interface to X-13ARIMA-SEATS
 
 [![Build Status](https://travis-ci.org/christophsax/seasonal.svg?branch=master)](https://travis-ci.org/christophsax/seasonal)
 
-**Major Change: No X13-ARIMA-SEATS binary download required anymore! seaonal now
-relies on the [x13binary](https://github.com/x13org/x13binary) package to access
-prebuilt binaries of X-13ARIMA-SEATS. As x13binary is not yet on CRAN, you need
-to install it from Github:**
+**No X13-ARIMA-SEATS binary download is required anymore!** Thanks to the
+fantastic work with Dirk Eddelbuettel on the
+[x13binary](https://cran.r-project.org/web/packages/x13binary) package,
+installing *seasonal* is now as easy as:
      
     install.packages("devtools")       
-    devtools::install_github('x13org/x13binary')   
     devtools::install_github('christophsax/seasonal')      
-
 
 *seasonal* is an easy-to-use and full-featured R-interface to X-13ARIMA-SEATS,
 the newest seasonal adjustment software developed by the [United States Census
@@ -45,13 +43,13 @@ model specs](#import-x-13-models-and-series) to R.
 
 ### Installation
 
-Since Version 1.2, *seasonal* relies on the
-[x13binary](https://github.com/x13org/x13binary) package to access prebuilt
+Since version 1.2, *seasonal* relies on the
+[x13binary](https://cran.r-project.org/web/packages/x13binary) package to access prebuilt
 binaries of X-13ARIMA-SEATS. To install both packages, type to the R console:
       
     install.packages("seasonal")      
  
-See the help page of `?seasonal` if you want to set the path to X-13 manually.
+See the documentation of `?seasonal` if you want to set the path to X-13 manually.
 
 ### Getting started
 
@@ -125,7 +123,7 @@ order to set the 'variables' argument of the 'regression' spec equal to `td` and
    
 Note that R vectors may be used as an input. If a spec is added without any
 arguments, the spec should be set equal to an empty string (or, alternatively,
-to an empty list, as in previous versions). Several defaults of `seas` are empty
+to an empty list, as in early versions). Several defaults of `seas` are empty
 strings, such as the default `seats = ""`. See the help page (`?seas`) for more
 details on the defaults. Note the difference between `""` (meaning the spec is
 enabled but has no arguments) and `NULL` (meaning the spec is disabled).
@@ -425,7 +423,9 @@ freely available under the terms of its own [license][license].
 Secretariat of Economic Affairs. It has been greatly improved over time thanks
 to suggestions and support from Matthias Bannert, Freya Beamish, Vidur Dhanda,
 Alain Galli, Ronald Indergand, Preetha Kalambaden, Stefan Leist, James Livsey,
-Brian Monsell, Pinaki Mukherjee, Bruno Parnisari, and many others.
+Brian Monsell, Pinaki Mukherjee, Bruno Parnisari, and many others. I am
+especially grateful to Dirk Eddelbuettel for the fantastic work on the
+[x13binary](https://cran.r-project.org/web/packages/x13binary) package.
 
 Please report bugs and suggestions on [Github][github] or send me an 
 [e-mail](mailto:christoph.sax@gmail.com). Thank you!
