@@ -1,12 +1,13 @@
 # for CRAN SUBMISSION:
-# - remove travis-rm-for-cran.R
+# - is NEWS and DESCRIPTION up to date?
+
+# - remove test-all.R
 # - remove img links in README.md
-# - is NEWS up to date?
+
+# - knit vignette
 # - r-devel test
 
-
 # These tests are more extensive and only need to run on travis, not on CRAN.
-
 
 seasonal::checkX13()
 x13binary::checkX13binary()
