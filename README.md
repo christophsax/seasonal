@@ -4,8 +4,7 @@ R interface to X-13ARIMA-SEATS
 [![Build Status](https://travis-ci.org/christophsax/seasonal.svg?branch=master)](https://travis-ci.org/christophsax/seasonal)
 
 **No X13-ARIMA-SEATS binary download is required anymore!** Thanks to the
-fantastic work with Dirk Eddelbuettel on the
-[x13binary](https://cran.r-project.org/web/packages/x13binary) package,
+fantastic work with Dirk Eddelbuettel on the [x13binary][x13binary] package,
 installing *seasonal* is now as easy as:
      
     install.packages("devtools")       
@@ -43,11 +42,16 @@ model specs](#import-x-13-models-and-series) to R.
 
 ### Installation
 
-Since version 1.2, *seasonal* relies on the
-[x13binary](https://cran.r-project.org/web/packages/x13binary) package to access prebuilt
-binaries of X-13ARIMA-SEATS. To install both packages, type to the R console:
+Since version 1.2, *seasonal* relies on the [x13binary][x13binary] package to
+access prebuilt binaries of X-13ARIMA-SEATS. To install both packages, type to
+the R console:
       
     install.packages("seasonal")      
+
+This automatically installs *x13binary*. If you are using an older version of R
+(< 3.2) on Windows, you have to install *x13binary* from source:
+
+    install.packages("x13binary", type = "source") 
  
 See the documentation of `?seasonal` if you want to set the path to X-13 manually.
 
@@ -425,11 +429,12 @@ to suggestions and support from Matthias Bannert, Freya Beamish, Vidur Dhanda,
 Alain Galli, Ronald Indergand, Preetha Kalambaden, Stefan Leist, James Livsey,
 Brian Monsell, Pinaki Mukherjee, Bruno Parnisari, and many others. I am
 especially grateful to Dirk Eddelbuettel for the fantastic work on the
-[x13binary](https://cran.r-project.org/web/packages/x13binary) package.
+[x13binary][x13binary] package.
 
 Please report bugs and suggestions on [Github][github] or send me an 
 [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
+[x13binary]: https://cran.r-project.org/package=x13binary "X-13ARIMA-SEATS binary for R"
 
 [manual]: http://www.census.gov/ts/x13as/docX13ASHTML.pdf "Reference Manual"
 

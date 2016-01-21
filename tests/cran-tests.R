@@ -7,7 +7,11 @@ x13binary::checkX13binary()
 
 # examples from ?seas and ?series, without the graphs
 
-if (x13binary::supportedPlatform()){
+# don't let the tests fail on oldrel (remove if x13binary works on oldrel)
+r.version <- paste(R.Version()$major, R.Version()$minor, sep = ".")
+is.oldrel <- .Platform$OS.type == "windows" && (compareVersion(r.version, "3.1.3") < 1)
+
+if (x13binary::supportedPlatform() && !is.oldrel){
 
   library(seasonal)
   checkX13()
