@@ -4,7 +4,7 @@
       # skip this message if X13_PATH is set to x13binary.path
       if (Sys.getenv("X13_PATH") != x13binary::x13path()){
       # if (Sys.getenv("X13_PATH") != x13binary::x13path()){
-        packageStartupMessage(
+        mymsg(
           "The system variable 'X13_PATH' has been manually set to: \n  ", 
           Sys.getenv("X13_PATH"),
           "\nSince version 1.2, 'seasonal' relies on the 'x13binary' ",
@@ -18,7 +18,7 @@
 
   if (Sys.getenv("X13_PATH") == ""){
     if (!x13binary::supportedPlatform()){
-      return(packageStartupMessage("Unsupported platform: ", 
+      return(mymsg("Unsupported platform: ", 
         Sys.info()["sysname"], " ", Sys.info()["release"], 
         "\nFor this platform, the path to the binary executable of X-13",
         "\nhas to be manually specified. See ?seasonal for details."
@@ -29,3 +29,6 @@
   }
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
 }
+
+# to avoid a NOTE in R CMD CHECK
+mymsg <- packageStartupMessage
