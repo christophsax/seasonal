@@ -42,14 +42,25 @@ specs} to R.
 
 \hyperdef{}{installation}{\section{Installation}\label{installation}}
 
+Since version 1.2, \emph{seasonal} relies on the
+\href{https://cran.r-project.org/package=x13binary}{x13binary} package
+to access prebuilt binaries of X-13ARIMA-SEATS. To install both
+packages, type to the R console:
 
 \begin{verbatim}
+install.packages("seasonal")      
 \end{verbatim}
 
+This automatically installs \emph{x13binary}. If you are using an older
+version of R (\textless{} 3.2) on Windows, you have to install
+\emph{x13binary} from source:
 
 \begin{verbatim}
+install.packages("x13binary", type = "source") 
 \end{verbatim}
 
+See the documentation of \texttt{?seasonal} if you want to set the path
+to X-13 manually.
 
 \hyperdef{}{getting-started}{\section{Getting
 started}\label{getting-started}}
@@ -148,6 +159,8 @@ m <- seas(AirPassengers, regression.variables = c("td", "ao1955.jan"))
 
 Note that R vectors may be used as an input. If a spec is added without
 any arguments, the spec should be set equal to an empty string (or,
+alternatively, to an empty list, as in early versions). Several defaults
+of \texttt{seas} are empty strings, such as the default
 \texttt{seats = ""}. See the help page (\texttt{?seas}) for more details
 on the defaults. Note the difference between \texttt{""} (meaning the
 spec is enabled but has no arguments) and \texttt{NULL} (meaning the
@@ -539,6 +552,9 @@ State Secretariat of Economic Affairs. It has been greatly improved over
 time thanks to suggestions and support from Matthias Bannert, Freya
 Beamish, Vidur Dhanda, Alain Galli, Ronald Indergand, Preetha
 Kalambaden, Stefan Leist, James Livsey, Brian Monsell, Pinaki Mukherjee,
+Bruno Parnisari, and many others. I am especially grateful to Dirk
+Eddelbuettel for the fantastic work on the
+\href{https://cran.r-project.org/package=x13binary}{x13binary} package.
 
 Please report bugs and suggestions on
 \href{https://github.com/christophsax/seasonal}{Github} or send me an
