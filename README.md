@@ -10,7 +10,8 @@ fantastic work on x13binary!
 
 Installing seasonal *and* the binaries is now as easy as:
 
-    install.packages('seasonal')
+    install.packages('devtools')
+    devtools::install_github('christophsax/seasonal')
     
 
 ### Introduction
