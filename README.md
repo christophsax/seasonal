@@ -10,9 +10,8 @@ fantastic work on x13binary!
 
 Installing seasonal *and* the binaries is now as easy as:
 
-    install.packages('devtools')
-    devtools::install_github('christophsax/seasonal')
-    
+    install.packages('seasonal')
+
 
 ### Introduction
 
@@ -52,7 +51,7 @@ Since version 1.2, *seasonal* relies on the [x13binary][x13binary] package to
 access prebuilt binaries of X-13ARIMA-SEATS. To install both packages, type to
 the R console:
       
-    devtools::install_github('christophsax/seasonal')   
+    install.packages('seasonal')
 
 This automatically installs *x13binary*. If you are using an older version of R
 (< 3.2) on Windows, you have to install *x13binary* from source:
