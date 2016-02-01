@@ -27,7 +27,7 @@
     cc <- try(x13binary::checkX13binary(verbose = FALSE))
     if (inherits(cc, "try-error")) {
       return(mymsg(
-        "The binaries provided by 'x13binary' do not work on this", 
+        "\n\nThe binaries provided by 'x13binary' do not work on this", 
         "\nplatform. To get more information, run:", 
         "\n  x13binary::checkX13binary()", 
         "\n\nYou can set 'X13_PATH' manually if you intend to use your own",
