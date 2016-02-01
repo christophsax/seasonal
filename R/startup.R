@@ -24,7 +24,7 @@
         "\nhas to be manually specified. See ?seasonal for details."
       ))
     }
-    cc <- try(x13binary::checkX13binary(verbose = FALSE))
+    cc <- try(x13binary::checkX13binary(verbose = FALSE), silent = TRUE)
     if (inherits(cc, "try-error")) {
       return(mymsg(
         "\n\nThe binaries provided by 'x13binary' do not work on this", 
