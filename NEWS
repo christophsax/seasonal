@@ -1,18 +1,15 @@
-1.2.0.1  2016-02-01
+1.2.0.2  2016-02-07
 --------------------------------------------------------------------------------
 
 bug fixes
-
   - non failing startup test that tells you what to do on some Windows systems.
-
-
+  - temporarily change working directory on windows, as X-13 writes to it.
 
 
 1.2.0  2016-01-22
 --------------------------------------------------------------------------------
 
 major changes
-
   - No separate binary download required anymore! seasonal now depends on the 
     x13binary package to access pre-built binaries of X-13ARIMA-SEATS for all
     platforms. Many thanks to Dirk Eddelbuettel for the fantastic work on
@@ -22,22 +19,17 @@ major changes
 
     install.packages('seasonal')
 
-
 enhancements
   - basic X-13 tests on all CRAN platforms (except Solaris)
   - The return value of the (experimental) import.spc function has a better name
     for the main compontent ('$seas', instead of '$call').
 
-
 documentation
-
   - updated documentation to reflect the new installation process
   - new example in ?genhol: replicate X-13 Arima model in R
   - improved description of examples in ?import.spc
 
-
 bug fixes
-
   - fix for rare convergence error messages
   - annual series are now recognized
   - 'inspect' call evaluated in global env. This solves an issue with series 
@@ -47,22 +39,18 @@ bug fixes
   - plot.seas: fixed wrong sign in transfom = "PC" and "PCY"
 
 defunct
-
-- slidingspans, revisions, regressioneffects have been defunct for a while and
-  were removed from the package
+  - slidingspans, revisions, regressioneffects have been defunct for a while and
+    were removed from the package
 
 
 1.1.0  2015-10-08
 --------------------------------------------------------------------------------
 
 bug fixes
-
   - single series are dimension-less ts objects, rather than n times 1 matrices
   - more precise error msg in parse_spc
 
-
 documentation
-
   - updated links to vignette and examples
   - new example in series
 
@@ -71,16 +59,13 @@ documentation
 --------------------------------------------------------------------------------
 
 new features
-
   - experimental import.spc, to read existing .spc files into R. 
     Thanks, Brian Monsell.
   - experimental import.ts, to read existing X-13 data files into R.
   - with 'seats = NULL', seasonal adjustment can be completly turned of, to use
     X-13 for other purposes than seasonal adjustment.
 
-
 enhancements
-
   - within-session parallelization: the temporary location name of the X13 run 
     now changes each time, which makes the function suitable for within-session
     parallelization (e.g., with mclapply). Cluster parallelization using 
@@ -89,14 +74,10 @@ enhancements
   - automated testing of all wiki examples on travis
   - error messages in inspect are html formatted
 
-
 under the hood
-
   - rewritten parsing for spc and mdl files
 
-
 bug fixes
-
   - some X13 warnings were not fully shown in summary
   - binary name now also shown in checkX13 on windows
   - fixes for error message parsing in non-html version
@@ -106,24 +87,18 @@ bug fixes
 --------------------------------------------------------------------------------
 
 enhancements
-
   - completely redesigned inspect() graphical user interface, with the look and 
     feel of the demo website: www.seasonal.website
   - support for the new X13 version 1.1 build 19 (released April 2, 2015)
 
 under the hood
-
   - temporary files are cleaned up after execution
 
-
 documentation
-
   - extended documentation for inspect()
   - list argument: no longer experimental
 
-
 bug fixes
-
   - fixed parsing problem with build 19 in qs() that affected summary()
   - fixed parsing problem with exogenous regressors when using the list arg
   - input longer than 133 char is broken into multiple lines to avoid X-13 error
@@ -136,25 +111,25 @@ bug fixes
 --------------------------------------------------------------------------------
 
 enhancements
-- improved parsing and intergration of X-13 error messages
-- checkX13 performs more tests and returns an error report.
-- spec-arguments can also be entered as a named list (experimental)
+  - improved parsing and intergration of X-13 error messages
+  - checkX13 performs more tests and returns an error report.
+  - spec-arguments can also be entered as a named list (experimental)
 
 under the hood
-- automated tests for all calls in the wiki
+  - automated tests for all calls in the wiki
 
 documentation
-- new vignette sections on user defined holidays and production use
-- new example on Indian Diwali in ?genhol
-- dates of Indian Diwali and Indian industrial production
-- more detailed documentation for ?summary.seas explaining output details
+  - new vignette sections on user defined holidays and production use
+  - new example on Indian Diwali in ?genhol
+  - dates of Indian Diwali and Indian industrial production
+  - more detailed documentation for ?summary.seas explaining output details
 
 bug fixes
-- genhol() can be used inside a seas() call
-- arimamodel() shows model as expected
+  - genhol() can be used inside a seas() call
+  - arimamodel() shows model as expected
 
 defunct
-- slidingspans, revisions, regressioneffects changed from deprecated to defunct
+  - slidingspans, revisions, regressioneffects changed from deprecated to defunct
 
 
 0.70.1  2014-10-02
@@ -203,13 +178,10 @@ new features
 --------------------------------------------------------------------------------
 
 new features
-
   - 'series' function, which allows the import of all tables produced by X-13 
     (except composite spec)
 
-
 enhancements
-
   - new na.action function: NA handling by X-13 (including interpolation)
   - 'out' function also reads '.log'  and '.err' files
   - improved help pages
@@ -218,14 +190,11 @@ enhancements
   - summary shows decomposition method (X11, SEATS)
   - more flexible arima model specification (numeric vectors also allowed)
 
-
 deprecated
-
   - the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is 
     now part of the new 'series' function. The old functions are deprecated.
 
 code improvements
-
   - code takes advantage of the series function, simplified import from X-13
 
 
@@ -233,7 +202,6 @@ code improvements
 --------------------------------------------------------------------------------
 
 new features
-
   - support for 'slidingspans' and 'history' spec
   - genhol, a function to generate holiday regression variables
   - user defined variable for 'transform' spec
@@ -241,7 +209,6 @@ new features
   - inspect function with model and transform selection, new views
 
 enhancements
-
   - new diagnostical statistics
   - summary shows some useful statistics
   - monthplot also shows SI ratios
@@ -253,12 +220,10 @@ enhancements
   - comprehensive list of examples from the official manual
 
 bug fixes
-
   - quotes in series name are now allowed
   - support for unorthodox frequencies (e.g. 2, 'seats' only)
   - spaces in folder names on windows are now allowed
 
 code improvements
-
   - uses only standard R functions, no dependency on 'stringr'
   - clearer code structure

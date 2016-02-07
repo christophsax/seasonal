@@ -508,6 +508,11 @@ run_x13 <- function(file, out){
     } else {
       x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
     }
+    # change wd on win as X-13 writes `fort.6` to it
+    owd <- getwd()
+    on.exit(setwd(owd))
+    setwd(tdir)
+
     msg <- shell(paste(x13.bin, file, flags), intern = TRUE)
   } else {
     if (getOption("htmlmode") == 1){
