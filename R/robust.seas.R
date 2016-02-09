@@ -1,4 +1,7 @@
-
+#' `robust.seas` is a \emph{highly experimental} utilitly function with the same
+#' usage as seas, but will always work. In case of a failing of `seas` it will
+#' try an alternative strategy, with a message.
+#' @rdname seas
 #' @export
 robust.seas <- function(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes", 
                         transform.function = "auto", 
