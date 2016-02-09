@@ -31,8 +31,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   }
 
   ### check path
-  no.path.message <- "No path to the binary executable of X-13 specified.
-  \nFor installation details, consider Section 2 of the package vignette:\n  http://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf\n"
+  no.path.message <- "No path to the binary executable of X-13 specified.\n\nYou can set 'X13_PATH' manually if you intend to use your own\nbinaries. See ?seasonal for details.\n"
   env.path <- Sys.getenv("X13_PATH")
 
   if (env.path == ""){
@@ -73,7 +72,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       x13.bin.html <- file.path(env.path, "x13ashtml")
     }
   }
-  no.file.message <- paste("Binary executable file", x13.bin, "or", x13.bin.html, "not found.\nFor installation details, consider Section 2 of the package vignette:\n  vignette(\"seas\")\n")
+  no.file.message <- paste("Binary executable file", x13.bin, "or", x13.bin.html, "not found.\nSee ?seasonal for details.\n")
   
   if (!(file.exists(x13.bin) | file.exists(x13.bin.html))){
     if (fail){
