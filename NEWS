@@ -1,9 +1,13 @@
-1.2.0.2  2016-02-07
+1.2.0.3  2016-02-09
 --------------------------------------------------------------------------------
 
 bug fixes
-  - non failing startup test that tells you what to do on some Windows systems.
-  - temporarily change working directory on windows, as X-13 writes to it.
+  - If the startup check of x13binary has failed, this prevented seasonal from   
+    beeing loaded and installed. Now the startup check tells you what to do in
+    such a case. This affects, e.g., Windows computers with library location set
+    to an UNC path. (https://github.com/x13org/x13binary/issues/30)
+  - temporarily change working directory on Windows, as X-13 (sometimes) writes
+    to it. (https://github.com/x13org/x13binary/issues/28)
 
 
 1.2.0  2016-01-22
