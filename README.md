@@ -54,7 +54,7 @@ the R console:
     install.packages("seasonal")
 
 This automatically installs *x13binary*. If you are using an older version of R
-(< 3.2) on Windows, you have to install *seasonal* from source:
+(< 3.2) on Windows, you may have to install *seasonal* from source:
 
     install.packages("seasonal", type = "source") 
  
