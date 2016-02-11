@@ -511,7 +511,7 @@ run_x13 <- function(file, out){
     # change wd on win as X-13 writes `fort.6` to it
     owd <- getwd()
     on.exit(setwd(owd))
-    setwd(tdir)
+    setwd(dirname(file))
 
     msg <- shell(paste(x13.bin, file, flags), intern = TRUE)
   } else {
