@@ -366,21 +366,21 @@ different automated routine.
     dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
 
     # loop over dta
-    ll <- lapply(dta, function(e) try(seas(e, x11 = "")))
+    l1 <- lapply(dta, function(e) try(seas(e, x11 = "")))
 
     # list failing models
-    is.err <- sapply(ll, class) == "try-error"
-    ll[is.err]
+    is.err <- sapply(l1, class) == "try-error"
+    l1[is.err]
 
     # return final series of successful evaluations
-    do.call(cbind, lapply(ll[!is.err], final))
+    do.cal1(cbind, lapply(l1[!is.err], final))
 
 
 If you have several cores and want to speed things up, the process is well
 suited for parallelization:
 
     # a list with 100 time series
-    largedta <- rep(list(AirPassengers), 100)
+    l2 <- rep(list(AirPassengers), 100)
 
     library(parallel)  # this is part of a standard R installation
 
@@ -393,10 +393,10 @@ suited for parallelization:
     clusterEvalQ(cl, library(seasonal))
 
     # export data to each node
-    clusterExport(cl, varlist = "largedta")
+    clusterExport(cl, varlist = "l2")
 
     # run in parallel (2.2s on a 8-core Macbook, vs 9.6s with standard lapply)
-    parLapply(cl, largedta, function(e) try(seas(e, x11 = "")))
+    parLapply(cl, l2, function(e) try(seas(e, x11 = "")))
 
     # finally, stop the cluster
     stopCluster(cl)
@@ -404,8 +404,7 @@ suited for parallelization:
 On Linux or OS-X, 'forking' parallelization allows you to do the same in a
 single line:
 
-    mclapply(cl, largedta, function(e) try(seas(e, x11 = "")))
-
+    mclapply(cl, l2, function(e) try(seas(e, x11 = "")), mc.cores = detectCores())
 
 ### Import X-13 models and series
 
