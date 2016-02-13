@@ -198,7 +198,7 @@ is also possible to return more than one output table at the same time:
 
     series(m, c("forecast.forecasts", "d1"))
    
-You can use either the unique short names of X-13 (such as `d1`), or the the
+You can use either the unique short names of X-13 (such as `d1`), or the
 long names (such as `forecasts`). Because the long table names are not unique,
 they need to be combined with the spec name (`forecast`). See `?series` for a
 complete list of options.
