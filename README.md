@@ -3,6 +3,8 @@ R interface to X-13ARIMA-SEATS
 
 [![Build Status](https://travis-ci.org/christophsax/seasonal.svg?branch=master)](https://travis-ci.org/christophsax/seasonal)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/y64skjd1g29t2gab?svg=true)](https://ci.appveyor.com/project/christophsax/seasonal)
+
 **No separate binary download required anymore!** *seasonal* now depends
 on the [x13binary][x13binary] package to access pre-built binaries of 
 X-13ARIMA-SEATS for all platforms. Many thanks to Dirk Eddelbuettel for the 
