@@ -3,5 +3,6 @@
 ^.*\.sublime-project
 .gitignore
 ^\.travis\.yml$
+^appveyor\.yml$
 build.R
 travis
