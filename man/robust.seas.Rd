@@ -73,11 +73,11 @@ cl <- makeCluster(detectCores())
 clusterEvalQ(cl, {library(seasonal); library(Mcomp)})
 
 # c) run in parallel (60 sec on an older Macbook Pro with 8 cores)
-lx13 <- parLapply(cl, M3, function(e) { series(
-    robust.seas(e$x, forecast.save = "fct", forecast.maxlead = 18, seats = NULL), 
-    "forecast.forecasts")[, 1]
-  }
-)
+ff <- function(e){
+  m <- robust.seas(e$x, forecast.save = "fct", forecast.maxlead = 18, seats = NULL)
+  series(m, "forecast.forecasts")[, 1]
+}
+lx13 <- parLapply(cl, M3, ff)
 
 # d) stop the cluster
 stopCluster(cl)
