@@ -217,5 +217,8 @@ Vignette with a more detailed description:
 \code{\link{plot.seas}}, for diagnostical plots.
 
 \code{\link{qs}}, for diagnostical statistics.
+
+\code{\link{robust.seas}}, for an version of \link{seas} that always 
+  works.
 }
 
