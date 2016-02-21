@@ -96,6 +96,8 @@
 #'   adjustment model.
 #' @seealso \code{\link{plot.seas}}, for diagnostical plots.
 #' @seealso \code{\link{qs}}, for diagnostical statistics.
+#' @seealso \code{\link{robust.seas}}, for an version of \code{seas} that always 
+#'   works.
 #'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://www.seasonal.website/seasonal.html}
