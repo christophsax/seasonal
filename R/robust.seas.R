@@ -3,7 +3,7 @@
 #' \code{robust.seas} has exactly the same usage as \code{\link{seas}}, the main 
 #' function of seasonal, but will always work. If \code{seas} is failing, 
 #' \code{robust.seas} tries an an alternative specification, and returns a 
-#' message. `robust.seas` currently works with all 3000+ series of the M3 
+#' message. \code{robust.seas} currently works with all 3000+ series of the M3 
 #' forecast competition.
 #' 
 #' If \code{seas} fails, \code{robust.seas} tries the following:
@@ -43,6 +43,35 @@
 #' 
 #' # working
 #' robust.seas(x)
+#' 
+#' 
+#' ### X-13 in the  IJF-M3 forecast competition
+#' 
+#' # Original analysis by Peter Ellis
+#' # http://ellisp.github.io/blog/2015/12/21/m3-and-x13/
+#' 
+#' library(Mcomp)     # IJF-M3 forecast competition data
+#' library(parallel)  # part of R base, but needs to be loaded
+#' 
+#' # using cluster parallelization, which also works on Windows 
+#' # (on Linux and Mac, you could simply use mclapply)
+#' 
+#' # a) set up cluster
+#' cl <- makeCluster(detectCores())
+#' 
+#' # b) load 'seasonal' and 'Mcomp' for each node
+#' clusterEvalQ(cl, {library(seasonal); library(Mcomp)})
+#' 
+#' # c) run in parallel (60 sec on an older Macbook Pro with 8 cores)
+#' lx13 <- parLapply(cl, M3, function(e) { series(
+#'     robust.seas(e$x, forecast.save = "fct", forecast.maxlead = 18, seats = NULL), 
+#'     "forecast.forecasts")[, 1]
+#'   }
+#' )
+#' 
+#' # d) stop the cluster
+#' stopCluster(cl)
+#' 
 #' }
 robust.seas <- function(...){
   rcl <- match.call(definition = seas)
