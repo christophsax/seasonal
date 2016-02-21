@@ -218,7 +218,7 @@ Vignette with a more detailed description:
 
 \code{\link{qs}}, for diagnostical statistics.
 
-\code{\link{robust.seas}}, for an version of \link{seas} that always 
+\code{\link{robust.seas}}, for an version of \code{seas} that always 
   works.
 }
 
