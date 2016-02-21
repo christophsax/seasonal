@@ -49,9 +49,11 @@ robust.seas <- function(...){
   scl <- rcl; scl[[1]] <- as.name("seas")
   sl <- as.list(scl)
 
+  x <- eval(rcl[['x']], envir = parent.frame(2))
+
   try_with <- function(...){
     cl <- as.call(c(sl, list(...)))
-    z <- try(eval(cl), silent = TRUE)
+    z <- try(eval(cl,  envir = parent.frame(2)), silent = TRUE)
     if (!inherits(z, "try-error")) {
       z$call <- rcl
     }
@@ -62,6 +64,7 @@ robust.seas <- function(...){
   if (tsp(x)[1] < 1000){
     message("adjusting invalid start year (+ 2000 years)")
     tsp(x)[1:2] <- tsp(x)[1:2] + 2000
+    assign(as.character(rcl[['x']]), x)
     z <- try_with(regression.aictest = NULL); if (!inherits(z, "try-error")) return(z)
   }
 
