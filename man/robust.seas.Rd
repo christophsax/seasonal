@@ -24,7 +24,8 @@ If \code{seas} fails, \code{robust.seas} tries the following:
 
 \enumerate{
 \item adjusting invalid start year
-\item increasing \code{maxiter} to 10000
+\item increasing \code{maxiter} to 10000 (if suggested in the error)
+\item switch to X-11
 \item fix model to (0 1 1)(0 1 1)
 \item turn off AIC testing
 \item turn off outlier detection

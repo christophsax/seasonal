@@ -10,7 +10,8 @@
 #' 
 #' \enumerate{
 #' \item adjusting invalid start year
-#' \item increasing \code{maxiter} to 10000
+#' \item increasing \code{maxiter} to 10000 (if suggested in the error)
+#' \item switch to X-11
 #' \item fix model to (0 1 1)(0 1 1)
 #' \item turn off AIC testing
 #' \item turn off outlier detection
@@ -113,21 +114,28 @@ robust.seas <- function(...){
     if (!inherits(z, "try-error")) return(z)
   }
 
-  message("increasing maxiter")
-  z <- try_with(estimate.maxiter = 10000)
+  # only do maxiter fix if suggested in the error
+  if (grepl("maxiter", z)){
+    message("increasing maxiter")
+    z <- try_with(estimate.maxiter = 10000)
+    if (!inherits(z, "try-error")) return(z)
+  }
+
+  message("use X-11")
+  z <- try_with(estimate.maxiter = 10000, x11 = "")
   if (!inherits(z, "try-error")) return(z)
 
   message("fix model to (0 1 1)(0 1 1)")
-  z <- try_with(estimate.maxiter = 10000, arima.model = c(0, 1, 1, 0, 1, 1))
+  z <- try_with(estimate.maxiter = 10000, x11 = "", arima.model = c(0, 1, 1, 0, 1, 1))
   if (!inherits(z, "try-error")) return(z)
 
   message("turn off aic testing")
-  z <- try_with(estimate.maxiter = 10000, arima.model = c(0, 1, 1, 0, 1, 1), 
+  z <- try_with(estimate.maxiter = 10000, x11 = "", arima.model = c(0, 1, 1, 0, 1, 1), 
                 regression.aictest = NULL)
   if (!inherits(z, "try-error")) return(z)
 
   message("turn off outlier detection")
-  z <- try_with(estimate.maxiter = 10000, arima.model = c(0, 1, 1, 0, 1, 1), 
+  z <- try_with(estimate.maxiter = 10000, x11 = "", arima.model = c(0, 1, 1, 0, 1, 1), 
                 regression.aictest = NULL, outlier = NULL)
 
   if (!inherits(z, "try-error")) return(z)
