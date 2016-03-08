@@ -447,7 +447,7 @@ import_tramo <- function(file){
 
   z <- as.numeric(txt[3:length(txt)])
   if (length(z) != ssp[1]){
-    message("tramo format: number of obs. different to speicification, which will be ignored.")
+    message("tramo format: number of obs. different to specification, which will be ignored.")
   }
 
   ts(z, start = c(ssp[2], ssp[3]), frequency = ssp[4])
