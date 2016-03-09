@@ -121,6 +121,9 @@ robust.seas <- function(...){
     if (!inherits(z, "try-error")) return(z)
   }
 
+  # TODO: perform stuff conditionally, e.g. 
+  # TODO: changes should be cumulative, think how to do that
+  # any(grepl("^x11", names(sl)))
   message("use X-11")
   z <- try_with(estimate.maxiter = 10000, x11 = "")
   if (!inherits(z, "try-error")) return(z)
@@ -148,6 +151,6 @@ https://github.com/christophsax/seasonal/wiki/Breaking-Examples-(and-Possible-So
 You can use the dput() function to copy/paste your time 
 series data. Thanks.\n")
 
-  return(z)
+  stop(z)
 
 }
