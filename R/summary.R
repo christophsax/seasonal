@@ -57,7 +57,8 @@
 #' 
 #' # user defined stats from the udg function (see ?udg)
 #' # also show the M quality statistics for X11
-#' options(seas.stats = c("f3.m01", "f3.m02", "f3.m03", "f3.m04", "f3.m05", "f3.m07", "f3.m09", "f3.m10", "f3.m11"))
+#' options(seas.stats = c("f3.m01", "f3.m02", "f3.m03", "f3.m04", "f3.m05", 
+#'                        "f3.m07", "f3.m09", "f3.m10", "f3.m11"))
 #' summary(seas(AirPassengers, x11 = ""))
 #' 
 #' # this does not affect the SEATS output
@@ -94,7 +95,7 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
 
   if (!is.null(stats)){
 
-    uu0 <- udg(object, stats, fail = FALSE)
+    uu0 <- udg(object, stats, fail = FALSE, simplify = FALSE)
       if (length(uu0 > 0)){
       # format numeric
       cformat <- function(x){

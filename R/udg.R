@@ -22,15 +22,13 @@
 #' names(udg(m))  # show all available stats
 #'
 #' # extracting a few selected stats from udg
-#' udg(m, c("f3.m01", "f3.m02", "f3.m03"))
+#' udg(m, c("f3.m02", "f3.m05", "qsori"))  # returns a list
+#' udg(m, c("f3.m02", "f3.m05"))           # returns a vector
 #'
-#' # this is faster than:
-#' udg(m)[c("f3.m01", "f3.m02", "f3.m03")]
-#'
-#' # a table with some m quality mesures
-#' do.call(rbind, udg(m, c("f3.m01", "f3.m02", "f3.m03")))
+#' # faster than:
+#' udg(m)[c("f3.m01", "f3.m02", "qsori")]
 #' @export
-udg <- function(x, stats = NULL, fail = TRUE){
+udg <- function(x, stats = NULL, fail = TRUE, simplify = TRUE){
   stopifnot(inherits(x, "seas"))
 
   xx <- x$udg
@@ -73,6 +71,6 @@ udg <- function(x, stats = NULL, fail = TRUE){
     z[is.char][is.long] <- ll
   }
   
-
-  z
+  if (simplify) simplify2array(z) else z
+  
 }
