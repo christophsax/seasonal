@@ -64,9 +64,8 @@
 #' @export
 qs <- function(x){
   qs.var <- c("qsori", "qsorievadj", "qsrsd", "qssadj", "qssadjevadj", "qsirr",  "qsirrevadj", "qssori", "qssorievadj", "qssrsd", "qsssadj", "qsssadjevadj",  "qssirr", "qssirrevadj")
-  z0 <- x$udg[names(x$udg) %in% qs.var]
-  z <- read.table(text = z0, colClasses = "numeric")
-  rownames(z) <- names(z0)
+  uu <- udg(x, qs.var)
+  z <- do.call(rbind, uu)
   colnames(z) <- c("qs", "p-val")
   z
 }
