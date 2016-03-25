@@ -51,6 +51,7 @@ udg <- function(x, stats = NULL, fail = TRUE, simplify = TRUE){
   # factors to character
   is.char <- sapply(z, inherits, "factor")
   if (any(is.char)){
+    # browser()
     z[is.char] <- lapply(z[is.char], as.character)
 
     # detect muli-element numeric vecotors
@@ -61,14 +62,18 @@ udg <- function(x, stats = NULL, fail = TRUE, simplify = TRUE){
     is.long[is.long] <- !grepl("\\(", zc[is.long])
 
     # split at spaces and convert to numeric
-    lsplit <- strsplit(as.character(zc[is.long]), split = " +")
-    ll <- lapply(lsplit, type.convert)
-    ll[sapply(ll, inherits, "factor")] <- lapply(ll[sapply(ll, inherits, "factor")], as.character)
+    if (any(is.long)){
+      lsplit <- strsplit(as.character(zc[is.long]), split = " +")
+      ll <- lapply(lsplit, type.convert)
+      ll[sapply(ll, inherits, "factor")] <- lapply(ll[sapply(ll, inherits, "factor")], as.character)
 
-    names(ll) <- names(zc[is.long])
+      names(ll) <- names(zc[is.long])
+      # pug in back
+      z[is.char][is.long] <- ll
 
-    # pug in back
-    z[is.char][is.long] <- ll
+    }
+
+
   }
   
   if (simplify) simplify2array(z) else z

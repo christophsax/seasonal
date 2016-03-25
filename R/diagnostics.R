@@ -64,8 +64,7 @@
 #' @export
 qs <- function(x){
   qs.var <- c("qsori", "qsorievadj", "qsrsd", "qssadj", "qssadjevadj", "qsirr",  "qsirrevadj", "qssori", "qssorievadj", "qssrsd", "qsssadj", "qsssadjevadj",  "qssirr", "qssirrevadj")
-  uu <- udg(x, qs.var)
-  z <- do.call(rbind, uu)
+  z <- t(udg(x, qs.var))
   colnames(z) <- c("qs", "p-val")
   z
 }
@@ -143,7 +142,7 @@ transformfunction <- function(x){
   }
   
   if (x$spc$transform$`function` == "auto"){
-    if (grepl("Log", x$udg['aictrans'])){
+    if (grepl("Log", udg(m, 'aictrans'))){
       z <- "log"
     } else {
       z <- "none"

@@ -4,7 +4,7 @@
 \alias{udg}
 \title{X-13ARIMA-SEATS Stats}
 \usage{
-udg(x, stats = NULL, fail = TRUE)
+udg(x, stats = NULL, fail = TRUE, simplify = TRUE)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}.}
@@ -32,12 +32,10 @@ udg(m)
 names(udg(m))  # show all available stats
 
 # extracting a few selected stats from udg
-udg(m, c("f3.m01", "f3.m02", "f3.m03"))
+udg(m, c("f3.m02", "f3.m05", "qsori"))  # returns a list
+udg(m, c("f3.m02", "f3.m05"))           # returns a vector
 
-# this is faster than:
-udg(m)[c("f3.m01", "f3.m02", "f3.m03")]
-
-# a table with some m quality mesures
-do.call(rbind, udg(m, c("f3.m01", "f3.m02", "f3.m03")))
+# faster than:
+udg(m)[c("f3.m01", "f3.m02", "qsori")]
 }
 
