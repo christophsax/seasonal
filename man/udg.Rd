@@ -19,11 +19,11 @@ parsed. Should be used for programming.}
 \code{stats} iis missing in the \code{names(udg(x))}.}
 }
 \value{
-a named \code{"list"}.
+a named vector or list.
 }
 \description{
-Returns an object of class \code{"list"} that contains properly parsed
-content of the \code{udg} stats file.
+The udg file contains most statistics of an X-13 run. The 
+\code{udg} function returns its content in a properly parsed form.
 }
 \examples{
 \dontrun{

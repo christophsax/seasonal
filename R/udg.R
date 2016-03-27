@@ -1,7 +1,7 @@
 #' X-13ARIMA-SEATS Stats
 #' 
-#' Returns an object of class \code{"list"} that contains properly parsed
-#' content of the \code{udg} stats file.
+#' The udg file contains most statistics of an X-13 run. The 
+#' \code{udg} function returns its content in a properly parsed form.
 #' 
 #' @param x  an object of class \code{"seas"}.
 #' @param stats  character vector. If specified, only a subset of the available 
@@ -11,7 +11,7 @@
 #' @param fail   logical; if TRUE, an error is droped if an element of 
 #'   \code{stats} iis missing in the \code{names(udg(x))}.
 #'   
-#' @return a named \code{"list"}.
+#' @return a named vector or list.
 #' 
 #' @export
 #' @examples
