@@ -15,7 +15,7 @@
 #' 
 #' @export
 #' @examples
-#' 
+#' \dontrun{
 #' m <- seas(AirPassengers, x11 = "")
 #'
 #' # a list with all entries from udg
@@ -28,6 +28,7 @@
 #'
 #' # faster than:
 #' udg(m)[c("f3.m01", "f3.m02", "qsori")]
+#' }
 #' @export
 udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
   stopifnot(inherits(x, "seas"))

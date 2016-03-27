@@ -142,7 +142,7 @@ transformfunction <- function(x){
   }
   
   if (x$spc$transform$`function` == "auto"){
-    if (grepl("Log", udg(m, 'aictrans'))){
+    if (grepl("Log", udg(x, 'aictrans'))){
       z <- "log"
     } else {
       z <- "none"
