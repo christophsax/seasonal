@@ -4,7 +4,7 @@
 \alias{udg}
 \title{X-13ARIMA-SEATS Stats}
 \usage{
-udg(x, stats = NULL, fail = TRUE, simplify = TRUE)
+udg(x, stats = NULL, simplify = TRUE, fail = TRUE)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}.}
@@ -13,15 +13,17 @@ udg(x, stats = NULL, fail = TRUE, simplify = TRUE)
 stats are returned. This speeds up the call, as only a subset needs to be 
 parsed. Should be used for programming.}
 
-\item{fail}{if TRUE, an error is droped if a stat is not in the \code{udg}
-file.}
+\item{simplify}{logical; should the result be simplified to a vector, if possible?}
+
+\item{fail}{logical; if TRUE, an error is droped if an element of 
+\code{stats} iis missing in the \code{names(udg(x))}.}
 }
 \value{
 a named \code{"list"}.
 }
 \description{
 Returns an object of class \code{"list"} that contains properly parsed
-content of the \code{udg} stat file.
+content of the \code{udg} stats file.
 }
 \examples{
 

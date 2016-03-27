@@ -1,14 +1,15 @@
 #' X-13ARIMA-SEATS Stats
 #' 
 #' Returns an object of class \code{"list"} that contains properly parsed
-#' content of the \code{udg} stat file.
+#' content of the \code{udg} stats file.
 #' 
-#' @param x      an object of class \code{"seas"}.
+#' @param x  an object of class \code{"seas"}.
 #' @param stats  character vector. If specified, only a subset of the available 
 #'  stats are returned. This speeds up the call, as only a subset needs to be 
 #'  parsed. Should be used for programming.
-#' @param fail   if TRUE, an error is droped if a stat is not in the \code{udg}
-#'  file.
+#' @param simplify  logical; should the result be simplified to a vector, if possible?
+#' @param fail   logical; if TRUE, an error is droped if an element of 
+#'   \code{stats} iis missing in the \code{names(udg(x))}.
 #'   
 #' @return a named \code{"list"}.
 #' 
@@ -28,7 +29,7 @@
 #' # faster than:
 #' udg(m)[c("f3.m01", "f3.m02", "qsori")]
 #' @export
-udg <- function(x, stats = NULL, fail = TRUE, simplify = TRUE){
+udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
   stopifnot(inherits(x, "seas"))
 
   xx <- x$udg
