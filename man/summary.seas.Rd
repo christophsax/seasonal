@@ -14,7 +14,7 @@
 \item{object}{an object of class \code{"seas"}, usually, a result of a 
 call to \code{\link{seas}}.}
 
-\item{stats}{character vector, additional stat to be shown in the \code{summary} output.
+\item{stats}{(experimental) character vector, additional stat to be shown in the \code{summary} output.
 function. For a list of all possible values, see the \code{\link{udg}} 
 function. If a value is not present, it will be ignored. Values can be 
 specified via \code{options}. See examples.}
@@ -75,10 +75,11 @@ hypothesis is rejected. The test statistic is the result of
 m <- seas(AirPassengers)
 summary(m)  
 
-# user defined stats from the udg function (see ?udg)
-# also show the M quality statistics for X11
-options(seas.stats = c("f3.m01", "f3.m02", "f3.m03", "f3.m04", "f3.m05", 
-                       "f3.m07", "f3.m09", "f3.m10", "f3.m11"))
+### user defined stats from the udg function 
+(experimental, see ?udg)
+
+# also show some M quality statistics for X11 in summary
+options(seas.stats = c("f3.m01", "f3.m02", "f3.m03", "f3.m04"))
 summary(seas(AirPassengers, x11 = ""))
 
 # this does not affect the SEATS output
