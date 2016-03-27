@@ -31,13 +31,12 @@ m <- seas(AirPassengers, x11 = "")
 
 # a list with all entries from udg
 udg(m)
-names(udg(m))  # show all available stats
 
 # extracting a few selected stats from udg
 udg(m, c("f3.m02", "f3.m05", "qsori"))  # returns a list
 udg(m, c("f3.m02", "f3.m05"))           # returns a vector
 
-# faster than:
+# faster than:
 udg(m)[c("f3.m01", "f3.m02", "qsori")]
 }
 }
