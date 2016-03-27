@@ -1,3 +1,13 @@
+1.2.1.2  2016-??-??
+--------------------------------------------------------------------------------
+
+new features
+  - robust.seas(): a robust version of seas that always works (experimental)
+  - udg(): utility function to extract properly parsed udg stats
+    e.g., the M quality statitistics of X-11
+
+
+
 1.2.1  2016-02-11
 --------------------------------------------------------------------------------
 

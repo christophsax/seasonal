@@ -5,7 +5,7 @@
 \alias{summary.seas}
 \title{Summary of a X13-ARIMA-SEATS seasonal adjustment}
 \usage{
-\method{summary}{seas}(object, ...)
+\method{summary}{seas}(object, stats = getOption("seas.stats"), ...)
 
 \method{print}{summary.seas}(x, digits = max(3, getOption("digits") - 3),
   signif.stars = getOption("show.signif.stars"), ...)
@@ -13,6 +13,11 @@
 \arguments{
 \item{object}{an object of class \code{"seas"}, usually, a result of a 
 call to \code{\link{seas}}.}
+
+\item{stats}{(experimental) character vector, additional stat to be shown in the \code{summary} output.
+function. For a list of all possible values, see the \code{\link{udg}} 
+function. If a value is not present, it will be ignored. Values can be 
+specified via \code{options}. See examples.}
 
 \item{x}{an object of class \code{"summary.seas"}, usually, a result 
 of a call to \code{summary.seas}.}
@@ -69,6 +74,19 @@ hypothesis is rejected. The test statistic is the result of
 \dontrun{
 m <- seas(AirPassengers)
 summary(m)  
+
+### user defined stats from the udg function 
+(experimental, see ?udg)
+
+# also show some M quality statistics for X11 in summary
+options(seas.stats = c("f3.m01", "f3.m02", "f3.m03", "f3.m04"))
+summary(seas(AirPassengers, x11 = ""))
+
+# this does not affect the SEATS output
+summary(seas(AirPassengers))
+
+# reset to default
+options(seas.stats = NULL)
 }
 }
 
