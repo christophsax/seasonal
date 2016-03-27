@@ -90,28 +90,7 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
   z$resid <- residuals(object)
   z$transform.function <- transformfunction(object)
   z$qsv <- qs(object)[c('qssadj'), ]
-
-
-
-  if (!is.null(stats)){
-
-    uu0 <- udg(object, stats, fail = FALSE, simplify = FALSE)
-      if (length(uu0 > 0)){
-      # format numeric
-      cformat <- function(x){
-        if (inherits(x, "numeric")) {
-          prettyNum(x, digits = digits)
-        } else {
-          x
-        }
-      }
-
-      # make multi element vetors single element, to char vector
-      uu0 <- sapply(uu0, function(e) paste(cformat(e), collapse = ", "))
-
-      z$stats <- paste0(names(uu0), ": ", uu0, " ")
-    }
-  }
+  z$stats <- stats
 
   class(z) <- "summary.seas"
   z
@@ -181,8 +160,25 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   }
   
   if (!is.null(x$stats)){
-    cat("\n")
-    cat(x$stats, fill = 0.8 * getOption("width"))
+    x1 <- x; class(x1) <- "seas"
+    uu0 <- udg(x1, x1$stats, fail = FALSE, simplify = FALSE)
+      if (length(uu0) > 0){
+        # format numeric
+        cformat <- function(x){
+          if (inherits(x, "numeric")) {
+            prettyNum(x, digits = digits)
+          } else {
+            x
+          }
+        }
+
+        # make multi element vetors single element, to char vector
+        uu0 <- sapply(uu0, function(e) paste(cformat(e), collapse = ", "))
+
+        stats <- paste0(names(uu0), ": ", uu0, " ")
+        cat("\n")
+        cat(stats, fill = 0.8 * getOption("width"))
+      }
   }
 
   if (!is.null(x$err)){
