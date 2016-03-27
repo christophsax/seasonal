@@ -26,7 +26,7 @@ Returns an object of class \code{"list"} that contains properly parsed
 content of the \code{udg} stats file.
 }
 \examples{
-
+\dontrun{
 m <- seas(AirPassengers, x11 = "")
 
 # a list with all entries from udg
@@ -39,5 +39,6 @@ udg(m, c("f3.m02", "f3.m05"))           # returns a vector
 
 # faster than:
 udg(m)[c("f3.m01", "f3.m02", "qsori")]
+}
 }
 
