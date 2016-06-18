@@ -395,7 +395,7 @@ suited for parallelization:
     # export data to each node
     clusterExport(cl, varlist = "l2")
 
-    # run in parallel (2.2s on a 8-core Macbook, vs 9.6s with standard lapply)
+    # run in parallel (2.2s on a 4-core / 8-thread Macbook, vs 9.6s with standard lapply)
     parLapply(cl, l2, function(e) try(seas(e, x11 = "")))
 
     # finally, stop the cluster
