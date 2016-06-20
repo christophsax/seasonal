@@ -404,7 +404,7 @@ suited for parallelization:
 On Linux or OS-X, 'forking' parallelization allows you to do the same in a
 single line:
 
-    mclapply(cl, l2, function(e) try(seas(e, x11 = "")), mc.cores = detectCores())
+    mclapply(l2, function(e) try(seas(e, x11 = "")), mc.cores = detectCores())
 
 ### Import X-13 models and series
 
