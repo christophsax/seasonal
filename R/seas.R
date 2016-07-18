@@ -500,6 +500,7 @@ run_x13 <- function(file, out){
   # required by seas
   
   env.path <- Sys.getenv("X13_PATH")
+  env.path <- gsub("\\\\", "/", env.path)
     
   # -n no tables
   # -s store additional output (.udg file)
