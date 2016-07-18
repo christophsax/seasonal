@@ -9,7 +9,7 @@
 #'  parsed. Should be used for programming.
 #' @param simplify  logical; should the result be simplified to a vector, if possible?
 #' @param fail   logical; if TRUE, an error is droped if an element of 
-#'   \code{stats} iis missing in the \code{names(udg(x))}.
+#'   \code{stats} is missing in \code{names(udg(x))}.
 #'   
 #' @return a named vector or list.
 #' 
@@ -38,7 +38,7 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
     stopifnot(inherits(stats, "character"))
     if (any(!stats %in% names(xx))){
       if (fail) {
-        stop(paste(stats[!stats %in% names(xx)], collapse = ", "), " not in 'names(x$udg)'")
+        stop(paste(stats[!stats %in% names(xx)], collapse = ", "), " not contained in 'names(udg(x))'")
       } else {
         stats <- stats[stats %in% names(xx)]
         if (length(stats) == 0) return(NULL)

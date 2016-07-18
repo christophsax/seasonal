@@ -16,7 +16,7 @@ parsed. Should be used for programming.}
 \item{simplify}{logical; should the result be simplified to a vector, if possible?}
 
 \item{fail}{logical; if TRUE, an error is droped if an element of 
-\code{stats} iis missing in the \code{names(udg(x))}.}
+\code{stats} is missing in \code{names(udg(x))}.}
 }
 \value{
 a named vector or list.
