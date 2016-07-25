@@ -262,6 +262,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   while (file.exists(wdir)) {
     wdir <- tempfile(pattern = pat)
   }
+  wdir <- normalizePath(wdir, winslash = "/", mustWork = FALSE)
+  message(wdir)
 
   dir.create(wdir)
   
@@ -511,8 +513,8 @@ run_x13 <- function(file, out){
   flags <- if (out) {"-s"} else {"-n -s"}
   if (.Platform$OS.type == "windows"){
     if (getOption("htmlmode") == 1){
-      env.path <- normalizePath(env.path, winslash = "/", mustWork = FALSE)
-      message(env.path)
+      # env.path <- normalizePath(env.path, winslash = "/", mustWork = FALSE)
+      # message(env.path)
       x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe", fsep = "/"), "\"")
     } else {
       x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
