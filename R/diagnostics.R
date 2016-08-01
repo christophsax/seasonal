@@ -70,6 +70,7 @@ qs <- function(x){
 }
 
 
+
 #' @rdname qs
 #' @export
 spc <- function(x){
@@ -114,11 +115,16 @@ fivebestmdl <- function(x){
 }
 
 
+# DEPRECATED
 
 #' @rdname qs
 #' @export
 arimamodel <- function(x){
   stopifnot(inherits(x, "seas"))
+
+  msg <- 'udg(x, "x13mdl")'
+  .Deprecated(msg)
+
   str <- x$model$arima$model
   str <- gsub("[ \\(\\)]", "", str)
   z <- c(substr(str, 1, 1),

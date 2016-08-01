@@ -3,13 +3,14 @@
 #' The udg file contains most statistics of an X-13 run. The 
 #' \code{udg} function returns its content in a properly parsed form.
 #' 
-#' @param x  an object of class \code{"seas"}.
+#' @param x,object  an object of class \code{"seas"}.
 #' @param stats  character vector. If specified, only a subset of the available 
 #'  stats are returned. This speeds up the call, as only a subset needs to be 
 #'  parsed. Should be used for programming.
 #' @param simplify  logical; should the result be simplified to a vector, if possible?
 #' @param fail   logical; if TRUE, an error is droped if an element of 
 #'   \code{stats} is missing in \code{names(udg(x))}.
+#' @param ...   further arguments (unused)
 #'   
 #' @return a named vector or list.
 #' 
@@ -69,14 +70,46 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
       ll[sapply(ll, inherits, "factor")] <- lapply(ll[sapply(ll, inherits, "factor")], as.character)
 
       names(ll) <- names(zc[is.long])
-      # pug in back
+      # plug in back
       z[is.char][is.long] <- ll
-
     }
-
-
   }
-  
   if (simplify) simplify2array(z) else z
-  
 }
+
+
+
+
+
+
+#' @rdname udg
+#' @method AIC seas
+#' @export
+AIC.seas <- function(object, ...){
+  unname(udg(object, "aic"))
+}
+
+#' @rdname udg
+#' @method BIC seas
+#' @export
+BIC.seas <- function(object, ...){
+  unname(udg(object, "bic"))
+}
+
+
+#' @rdname udg
+#' @export
+#' @method nobs seas
+nobs.seas <- function(object, ...){
+  length(final(object))
+}
+
+
+#' @rdname udg
+#' @method logLik seas
+#' @export
+logLik.seas <- function(object, ...){
+  unname(udg(object, "loglikelihood"))
+}
+
+

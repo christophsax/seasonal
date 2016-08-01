@@ -72,7 +72,6 @@ returns an object of class \code{"seas"}, essentially a list with the
   \item{err}{warning messages from X-13ARIMA-SEATS} 
   \item{udg}{content of the \code{.udg} output file} 
   \item{est}{content of the \code{.est} output file} 
-  \item{lks}{content of the \code{.lks} output file} 
   \item{model}{list with the model specification, 
   similar to \code{"spc"}. It typically contains \code{"regression"}, which 
   contains the regressors and parameter estimates, and \code{"arima"}, which 

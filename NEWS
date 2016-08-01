@@ -2,10 +2,17 @@
 --------------------------------------------------------------------------------
 
 new features
-  - udg(): utility function to extract properly parsed udg stats
-    e.g., the M quality statitistics of X-11
+  - udg(): utility function to extract properly parsed udg statistics
+    e.g., M quality statitistics of X-11
+  - summary() can be customized, e.g, to include M quality statitistics
+  - methods for R generics: AIC(), BIC(), nobs(), logLik()
+
+deprecated
+  - arimamodel(): use the more general 'udg(x, "x13mdl")'
 
 under the hood
+  - statistics read by other functions (e.g., summary) are read by udg()
+  - 'lks' output of X-13 is not produced anymore
   - on windows, use / instead of \\ in tempdir name, to be consistent with 
     file.path()
 

@@ -93,6 +93,10 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
   z$qsv <- qs(object)[c('qssadj'), ]
   z$stats <- stats
 
+  z$nobs <- nobs(object)
+  z$aicc <- unname(udg(object, "aicc"))
+  z$bic <- BIC(object)
+
   class(z) <- "summary.seas"
   z
 }
@@ -127,11 +131,10 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   }
   
   cat("  ARIMA:", x$model$arima$model)
-
-  cat("  Obs.:", formatC(x$lks['nobs'], format = "d"))
+  cat("  Obs.:", formatC(x$nobs, format = "d"))
   cat("  Transform:", x$transform.function)
-  cat("\nAICc:", formatC(x$lks['Aicc'], digits = digits))
-  cat(", BIC:", formatC(x$lks['bic'], digits = digits))
+  cat("\nAICc:", formatC(x$aicc, digits = digits))
+  cat(", BIC:", formatC(x$bic, digits = digits))
 
   # QS Test
   qsv <- x$qsv
@@ -161,7 +164,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   }
   
   if (!is.null(x$stats)){
-    x1 <- x; class(x1) <- "seas"
+    x1 <- x; class(x1) <- "seas"  # reclassify, so udg() can be used on it
     uu0 <- udg(x1, x1$stats, fail = FALSE, simplify = FALSE)
       if (length(uu0) > 0){
         # format numeric
