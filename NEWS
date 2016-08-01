@@ -8,6 +8,7 @@ new features
   - methods for R generics: AIC(), BIC(), nobs(), logLik()
 
 deprecated
+  - non-html binaries: startup message to announce planned support drop
   - arimamodel(): use the more general 'udg(x, "x13mdl")'
 
 under the hood

@@ -37,6 +37,16 @@
     Sys.setenv(X13_PATH = x13binary::x13path())
   }
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
+
+  if (identical(getOption("htmlmode"), 0)){
+    mymsg(
+        "You are using the non-html binaries of X-13. Support will be dropped", 
+        "\nin future versions of seasonal. Please install the html binaries or",
+        "\nunset the X13_PATH variable to use the binaries from the x13binary",
+        "\npackage. See ?seasonal for details.\n"
+    )
+  }
+
 }
 
 # to avoid a NOTE in R CMD CHECK
