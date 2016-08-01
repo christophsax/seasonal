@@ -262,9 +262,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   while (file.exists(wdir)) {
     wdir <- tempfile(pattern = pat)
   }
-  wdir <- normalizePath(wdir, winslash = "/", mustWork = FALSE)
-  message(wdir)
 
+  # on windows, use / instead of \\, to be consitent with file.path()
+  wdir <- normalizePath(wdir, winslash = "/", mustWork = FALSE)
+  
   dir.create(wdir)
   
   # file names for 
