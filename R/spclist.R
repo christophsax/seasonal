@@ -89,7 +89,7 @@ consist_spclist <-function(x){
 
   ### general output modification
   
-  x <- mod_spclist(x, list = list(estimate.save = c("model", "estimates", "lkstats", 
+  x <- mod_spclist(x, list = list(estimate.save = c("model", "estimates",  
                                         "residuals")))
   
   

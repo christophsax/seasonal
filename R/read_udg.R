@@ -9,6 +9,5 @@ read_udg <- function(file){
   udg <- udg1[,-1]
   names(udg) <- udg1[,1]
   udg <- gsub("^ +| +$", "", udg)
-  # TODO: list of elements to keep (memory reasons)
   udg
 }

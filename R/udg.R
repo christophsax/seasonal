@@ -69,14 +69,9 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
       ll[sapply(ll, inherits, "factor")] <- lapply(ll[sapply(ll, inherits, "factor")], as.character)
 
       names(ll) <- names(zc[is.long])
-      # pug in back
+      # plug in back
       z[is.char][is.long] <- ll
-
     }
-
-
   }
-  
   if (simplify) simplify2array(z) else z
-  
 }

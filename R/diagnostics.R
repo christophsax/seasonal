@@ -114,11 +114,16 @@ fivebestmdl <- function(x){
 }
 
 
+# DEPRECATED
 
 #' @rdname qs
 #' @export
 arimamodel <- function(x){
   stopifnot(inherits(x, "seas"))
+
+  msg <- 'udg(x, "x13mdl")'
+  .Deprecated(msg)
+
   str <- x$model$arima$model
   str <- gsub("[ \\(\\)]", "", str)
   z <- c(substr(str, 1, 1),
@@ -151,5 +156,37 @@ transformfunction <- function(x){
     z <- x$spc$transform$`function`
   }
   z
+}
+
+
+
+#' @rdname qs
+#' @method AIC seas
+#' @export
+AIC.seas <- function(x){
+  unname(udg(x, "aic"))
+}
+
+#' @rdname qs
+#' @method BIC seas
+#' @export
+BIC.seas <- function(x){
+  unname(udg(x, "bic"))
+}
+
+
+#' @rdname qs
+#' @export
+#' @method nobs seas
+nobs.seas <- function(object, ...){
+  length(final(object))
+}
+
+
+#' @rdname qs
+#' @method logLik seas
+#' @export
+logLik.seas <- function(x){
+  unname(udg(x, "loglikelihood"))
 }
 

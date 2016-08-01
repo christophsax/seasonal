@@ -39,9 +39,3 @@ coef.seas <- function(object, ...){
   object$est$coefficients
 }
 
-
-#' @export
-#' @method nobs seas
-nobs.seas <- function(object, ...){
-  unname(object$lks['nobs'])
-}

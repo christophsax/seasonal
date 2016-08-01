@@ -222,7 +222,7 @@ rem_defaults_from_args <- function(x) {
   # output defaults
   d <- list(transform.print = "aictransform",
              automdl.print = "bestfivemdl",
-             estimate.save = c("model", "estimates", "lkstats", "residuals"),
+             estimate.save = c("model", "estimates", "residuals"),
              spectrum.print = "qs",
              x11.save = c("d10", "d11", "d12", "d13", "d16", "e18"),
              seats.save = c("s10", "s11", "s12", "s13", "s16", "s18")
