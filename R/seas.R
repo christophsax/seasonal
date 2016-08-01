@@ -503,13 +503,12 @@ run_x13 <- function(file, out){
   # required by seas
   
   env.path <- Sys.getenv("X13_PATH")
-
   # -n no tables
   # -s store additional output (.udg file)
   flags <- if (out) {"-s"} else {"-n -s"}
   if (.Platform$OS.type == "windows"){
     if (getOption("htmlmode") == 1){
-      x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe", fsep = "/"), "\"")
+      x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe"), "\"")
     } else {
       x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
     }
