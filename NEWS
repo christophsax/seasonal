@@ -1,4 +1,4 @@
-1.2.1.2  2016-??-??
+1.2.1.8  2016-??-??
 --------------------------------------------------------------------------------
 
 new features
@@ -6,6 +6,9 @@ new features
   - udg(): utility function to extract properly parsed udg stats
     e.g., the M quality statitistics of X-11
 
+under the hood
+  - on windows, use / instead of \\ in tempdir name, to be consistent with 
+    file.path()
 
 
 1.2.1  2016-02-11

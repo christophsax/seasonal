@@ -263,6 +263,9 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     wdir <- tempfile(pattern = pat)
   }
 
+  # on windows, use / instead of \\, to be consistent with file.path()
+  wdir <- normalizePath(wdir, winslash = "/", mustWork = FALSE)
+
   dir.create(wdir)
   
   # file names for 
@@ -500,7 +503,6 @@ run_x13 <- function(file, out){
   # required by seas
   
   env.path <- Sys.getenv("X13_PATH")
-    
   # -n no tables
   # -s store additional output (.udg file)
   flags <- if (out) {"-s"} else {"-n -s"}
