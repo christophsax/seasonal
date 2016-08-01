@@ -70,6 +70,7 @@ qs <- function(x){
 }
 
 
+
 #' @rdname qs
 #' @export
 spc <- function(x){
@@ -156,37 +157,5 @@ transformfunction <- function(x){
     z <- x$spc$transform$`function`
   }
   z
-}
-
-
-
-#' @rdname qs
-#' @method AIC seas
-#' @export
-AIC.seas <- function(x){
-  unname(udg(x, "aic"))
-}
-
-#' @rdname qs
-#' @method BIC seas
-#' @export
-BIC.seas <- function(x){
-  unname(udg(x, "bic"))
-}
-
-
-#' @rdname qs
-#' @export
-#' @method nobs seas
-nobs.seas <- function(object, ...){
-  length(final(object))
-}
-
-
-#' @rdname qs
-#' @method logLik seas
-#' @export
-logLik.seas <- function(x){
-  unname(udg(x, "loglikelihood"))
 }
 
