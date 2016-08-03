@@ -64,7 +64,7 @@
 #' @export
 qs <- function(x){
   qs.var <- c("qsori", "qsorievadj", "qsrsd", "qssadj", "qssadjevadj", "qsirr",  "qsirrevadj", "qssori", "qssorievadj", "qssrsd", "qsssadj", "qsssadjevadj",  "qssirr", "qssirrevadj")
-  z <- t(udg(x, qs.var))
+  z <- t(udg(x, qs.var, fail = FALSE))
   colnames(z) <- c("qs", "p-val")
   z
 }
