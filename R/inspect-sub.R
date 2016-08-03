@@ -319,6 +319,11 @@ AddFOpts <- function(x, FOpts){
     }
 
     if ("regression.aictest" %in% names(lc)){ # non default, specified
+      
+      if (inherits(lc$regression.aictest, "call")){
+        lc$regression.aictest <- eval(lc$regression.aictest)
+      }
+
       lc$regression.aictest <- setdiff(lc$regression.aictest, "easter")
       if (length(lc$regression.aictest) == 0){
         lc['regression.aictest'] <- NULL
@@ -350,6 +355,10 @@ AddFOpts <- function(x, FOpts){
       lc$regression.variables <- union(C2C(lc$regression.variables), FOpts$td)
     }
 
+    if (inherits(lc$regression.aictest, "call")){
+      lc$regression.aictest <- eval(lc$regression.aictest)
+    }
+    
     if ("regression.aictest" %in% names(lc)){ # non default, specified
       lc$regression.aictest <- setdiff(lc$regression.aictest, "td")
       if (length(lc$regression.aictest) == 0){
