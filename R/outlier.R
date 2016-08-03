@@ -36,8 +36,9 @@ outlier <- function(x, full = FALSE){
   ol.time <- substr(ol, start = 3, stop = nchar(ol))
 
   # if a range ("2001.3-2004.3"), only use the start date ("2001.3")
-  if (grepl("-", ol.time, fixed = TRUE)){
-    ol.time <- gsub("-.+$", "", ol.time)
+  is.range <- grepl("-", ol.time, fixed = TRUE)
+  if (any(is.range)){
+    ol.time[is.range] <- gsub("-.+$", "", ol.time[is.range])
   }
   
   if (frequency(z) == 12){
