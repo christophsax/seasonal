@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
 
 new features
-  - udg(): utility function to extract properly parsed udg statistics
+  - udg(): utility function to extract properly type converted udg statistics
     e.g., M quality statitistics of X-11
   - summary() can be customized, e.g, to include M quality statitistics
   - methods for R generics: AIC(), BIC(), nobs(), logLik()
