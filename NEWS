@@ -1,4 +1,4 @@
-1.2.1.10  2016-??-??
+1.2.1.11  2016-08-05
 --------------------------------------------------------------------------------
 
 new features
@@ -18,13 +18,13 @@ under the hood
     file.path()
 
 bug fixes
-  - range outliers (e.g. TL) show up in plot.seas() with start date, rather
-    than causing an error. 
-    (https://github.com/christophsax/seasonal/issues/163)
   - estimate.armacmatrix can now be imported
     (https://github.com/christophsax/seasonal/issues/160)
   - minor fixes in inspect()
     (https://github.com/christophsax/seasonal/issues/162)
+  - range outliers (e.g. TL) show up in plot.seas() with start date, rather
+    than causing an error. 
+    (https://github.com/christophsax/seasonal/issues/163)
 
 
 1.2.1  2016-02-11
