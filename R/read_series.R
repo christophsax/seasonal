@@ -46,7 +46,16 @@ read_series <- function(file, frequency = NULL){
     return(NULL)
   }
 
-  if (grepl("\\.ipc$|\\.iac$", file)){  # exception handling for ipc and iac files
+  len <- nchar(file)
+  suffix <- substr(file, start = len - 2, stop = len)
+
+  if (suffix == "acm"){
+    # exception to deal with #160
+    return(read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE)[-1, ])
+  }
+
+  if (suffix %in% c("ipc", "iac")){  # these files heave a header
+    # browser()
     dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE, skip = 2)
   } else {
     dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE)
