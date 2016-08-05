@@ -80,16 +80,19 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
   # factors to character
   is.char <- sapply(z, inherits, "factor")
   if (any(is.char)){
-    # browser()
+
     z[is.char] <- lapply(z[is.char], as.character)
 
     # detect muli-element numeric vecotors
     zc <- z[is.char]
     is.long <- grepl("\\d+ +.", zc)
 
-    # exclude false positives (ARIMA models)
+    ## exclude false positives 
+    # ARIMA models
     is.long[is.long] <- !grepl("\\(", zc[is.long])
-
+    # time spans
+    is.long[grepl("span$", names(zc))] <- FALSE
+    
     # split at spaces and convert to numeric
     if (any(is.long)){
       lsplit <- strsplit(as.character(zc[is.long]), split = " +")
