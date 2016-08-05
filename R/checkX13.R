@@ -1,8 +1,8 @@
-#' Check the installation of X-13ARIMA-SEATS
+#' Check Installation of X-13ARIMA-SEATS
 #' 
-#' Check the installation of the binary executables of X-13ARIMA-SEATS. For
-#' installation details, consider Section 2 of the package vignette:
-#' \code{vignette("seas")}
+#' Check the installation of the binary executables of X-13ARIMA-SEATS. See 
+#' \code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if 
+#' you intend to use your own binaries. 
 #' 
 #' @param fail  logical, whether an error should interrupt the process. If 
 #'   \code{FALSE}, a message is returned.

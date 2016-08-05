@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkX13.R
 \name{checkX13}
 \alias{checkX13}
-\title{Check the installation of X-13ARIMA-SEATS}
+\title{Check Installation of X-13ARIMA-SEATS}
 \usage{
 checkX13(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE)
 }
@@ -18,9 +18,9 @@ working of the binaries. Returns a message.}
 X-13 should be checked.}
 }
 \description{
-Check the installation of the binary executables of X-13ARIMA-SEATS. For
-installation details, consider Section 2 of the package vignette:
-\code{vignette("seas")}
+Check the installation of the binary executables of X-13ARIMA-SEATS. See 
+\code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if 
+you intend to use your own binaries.
 }
 \examples{
 \dontrun{
