@@ -15,7 +15,7 @@ should consider the table in \code{\link{series}} or in the official manual.
 }
 \references{
 Official X-13ARIMA-SEATS manual: 
-  \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \keyword{datasets}
 

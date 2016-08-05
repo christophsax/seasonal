@@ -1,23 +1,50 @@
-#' X-13ARIMA-SEATS Stats
+#' Diagnostical Statistics
 #' 
-#' The udg file contains most statistics of an X-13 run. The 
-#' \code{udg} function returns its content in a properly parsed form.
+#' The \code{udg} function provides access to a large number of diagnostical
+#' statistics. The \code{qs} function and the \code{AIC}, \code{BIC} and 
+#' \code{logLik} methods are  wrappers that use \code{udg} to access some 
+#' specific diagnostical statistics.
 #' 
 #' @param x,object  an object of class \code{"seas"}.
-#' @param stats  character vector. If specified, only a subset of the available 
-#'  stats are returned. This speeds up the call, as only a subset needs to be 
-#'  parsed. Should be used for programming.
+#' @param stats  character vector; if specified, only a subset of the available 
+#'   stats are returned. This speeds up the call, as only a subset needs to be 
+#'   type converted. Should be used for programming.
 #' @param simplify  logical; should the result be simplified to a vector, if possible?
-#' @param fail   logical; if TRUE, an error is droped if an element of 
+#' @param fail   logical; if \code{TRUE}, an error is droped if an element of 
 #'   \code{stats} is missing in \code{names(udg(x))}.
-#' @param ...   further arguments (unused)
+#' @param ...   further arguments (not used)
 #'   
-#' @return a named vector or list.
+#' @return \code{udg} returns a named vector or list, containing the content of 
+#'    the \code{.udg} file.
+#' @return  \code{qs} returns the QS statistics for seasonality of input and
+#'   output series and the corresponding p-values.
+#' @return  \code{AIC}, \code{BIC}, \code{nobs} and \code{logLik} return the 
+#'   corresponding statistics.
+#' 
+#' @seealso \code{\link{seas}} for the main function.
+#' @seealso \code{\link{series}}, for universal X-13 output extraction.
+#' @seealso \code{\link{plot.seas}}, for diagnostical plots.
+#' @seealso \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+#' 
+#' @references Vignette with a more detailed description: 
+#'   \url{http://www.seasonal.website/seasonal.html}
+#'   
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'   \url{http://www.seasonal.website/examples.html}
+#'   
+#'   Official X-13ARIMA-SEATS manual: 
+#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 #' 
 #' @export
 #' @examples
 #' \dontrun{
 #' m <- seas(AirPassengers, x11 = "")
+#'
+#' qs(m)
+#' AIC(m)
+#' BIC(m)
+#' nobs(m)
+#' logLik(m)
 #'
 #' # a list with all entries from udg
 #' udg(m)
@@ -79,7 +106,14 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
 
 
 
-
+#' @rdname udg
+#' @export
+qs <- function(x){
+  qs.var <- c("qsori", "qsorievadj", "qsrsd", "qssadj", "qssadjevadj", "qsirr",  "qsirrevadj", "qssori", "qssorievadj", "qssrsd", "qsssadj", "qsssadjevadj",  "qssirr", "qssirrevadj")
+  z <- t(udg(x, qs.var, fail = FALSE))
+  colnames(z) <- c("qs", "p-val")
+  z
+}
 
 
 #' @rdname udg

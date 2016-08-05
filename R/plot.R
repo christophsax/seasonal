@@ -25,7 +25,7 @@
 #' @return All plot functions return a plot as their side effect.
 #'   
 #' @seealso \code{\link{seas}}, for the main function.
-#' @seealso \code{\link{qs}}, for diagnostical statistics.
+#' @seealso \code{\link{udg}}, for diagnostical statistics.
 #'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://www.seasonal.website/seasonal.html}
@@ -36,7 +36,7 @@
 #'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 #'   
 #' @export
 #' @method plot seas

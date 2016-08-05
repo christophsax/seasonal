@@ -94,7 +94,7 @@
 #' @seealso \code{\link{inspect}}, to interactively inspect a seasonal 
 #'   adjustment model.
 #' @seealso \code{\link{plot.seas}}, for diagnostical plots.
-#' @seealso \code{\link{qs}}, for diagnostical statistics.
+#' @seealso \code{\link{udg}}, for diagnostical statistics.
 #'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://www.seasonal.website/seasonal.html}
@@ -103,7 +103,7 @@
 #'   \url{http://www.seasonal.website/examples.html}
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 #' @export
 #' @import datasets
 #' @import grDevices

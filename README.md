@@ -212,11 +212,16 @@ allows you to separate these specs from the basic model call:
     m <- seas(AirPassengers)
     series(m, "history.saestimates")
     series(m, "slidingspans.sfspans")
+
+The `udg` function provides access to a large number of diagnostical statistics:
+
+    udg(x, "x13mdl")
     
 If you are using the HTML version of X-13, the `out` function shows the content
 of the main output in the browser:
 
     out(m)
+
 
 ### Graphs
 

@@ -53,7 +53,7 @@ Vignette with a more detailed description:
   \url{http://www.seasonal.website/examples.html}
   
   Official X-13ARIMA-SEATS manual: 
-  \url{http://www.census.gov/ts/x13as/docX13AS.pdf}
+  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
 \code{\link{seas}} for the main function of seasonal.
