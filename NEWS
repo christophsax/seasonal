@@ -1,4 +1,4 @@
-1.3.0  2016-08-06
+1.3.0  2016-08-07
 --------------------------------------------------------------------------------
 
 new features
@@ -15,8 +15,6 @@ under the hood
   - statistics used by other functions (e.g., summary) are imported by udg()
   - 'lks' output of X-13 is not used and produced anymore, as the content can be
     accessed by udg()
-  - on windows, use / instead of \\ in tempdir name, to be consistent with 
-    file.path()
 
 documentation
   - updated documentation to include udg()
