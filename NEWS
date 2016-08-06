@@ -1,14 +1,14 @@
-1.2.1.12  2016-08-06
+1.3.0  2016-08-06
 --------------------------------------------------------------------------------
 
 new features
-  - udg(): utility function to extract properly type converted udg statistics
+  - udg(): utility function to extract type converted udg statistics
     e.g., M quality statistics of X-11
   - summary() can be customized, e.g, to include M quality statistics
   - methods for R generics: AIC(), BIC(), nobs(), logLik()
 
 deprecated
-  - non-html binaries: startup message to announce planned support drop
+  - non-html binaries: startup message to announce drop of support
   - arimamodel(): use the more general 'udg(x, "x13mdl")'
 
 under the hood

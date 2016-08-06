@@ -1,7 +1,8 @@
-on the \href{https://cran.r-project.org/package=x13binary}{x13binary}
-package to access pre-built binaries of X-13ARIMA-SEATS for all
-platforms. Many thanks to Dirk Eddelbuettel for the fantastic work on
-x13binary!
+\textbf{No separate binary download required anymore!} \emph{seasonal}
+now depends on the
+\href{https://cran.r-project.org/package=x13binary}{x13binary} package
+to access pre-built binaries of X-13ARIMA-SEATS for all platforms. Many
+thanks to Dirk Eddelbuettel for the fantastic work on x13binary!
 
 Installing seasonal \emph{and} the binaries is now as easy as:
 
@@ -17,6 +18,12 @@ the \href{http://www.census.gov/srd/www/x13as/}{United States Census
 Bureau}. X-13ARIMA-SEATS combines and extends the capabilities of the
 older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS
 (developed by the Bank of Spain).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{images/inspect.jpg}
+\caption{Graphical user interface for X-13}
+\end{figure}
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated
 procedures of \emph{seasonal} allow you to quickly produce good seasonal
@@ -56,14 +63,6 @@ packages, type to the R console:
 
 \begin{verbatim}
 install.packages("seasonal")
-\end{verbatim}
-
-This automatically installs \emph{x13binary}. If you are using an older
-version of R (\textless{} 3.2) on Windows, you may have to install
-\emph{seasonal} from source:
-
-\begin{verbatim}
-install.packages("seasonal", type = "source") 
 \end{verbatim}
 
 See the documentation of \texttt{?seasonal} if you want to set the path
@@ -268,8 +267,8 @@ series(m, c("forecast.forecasts", "d1"))
 \end{verbatim}
 
 You can use either the unique short names of X-13 (such as \texttt{d1}),
-or the the long names (such as \texttt{forecasts}). Because the long
-table names are not unique, they need to be combined with the spec name
+or the long names (such as \texttt{forecasts}). Because the long table
+names are not unique, they need to be combined with the spec name
 (\texttt{forecast}). See \texttt{?series} for a complete list of
 options.
 
@@ -290,6 +289,13 @@ call:
 m <- seas(AirPassengers)
 series(m, "history.saestimates")
 series(m, "slidingspans.sfspans")
+\end{verbatim}
+
+The \texttt{udg} function provides access to a large number of
+diagnostical statistics:
+
+\begin{verbatim}
+udg(x, "x13mdl")
 \end{verbatim}
 
 If you are using the HTML version of X-13, the \texttt{out} function
@@ -481,14 +487,14 @@ automated routine.
 dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
 
 # loop over dta
-ll <- lapply(dta, function(e) try(seas(e, x11 = "")))
+l1 <- lapply(dta, function(e) try(seas(e, x11 = "")))
 
 # list failing models
-is.err <- sapply(ll, class) == "try-error"
-ll[is.err]
+is.err <- sapply(l1, class) == "try-error"
+l1[is.err]
 
 # return final series of successful evaluations
-do.call(cbind, lapply(ll[!is.err], final))
+do.cal1(cbind, lapply(l1[!is.err], final))
 \end{verbatim}
 
 If you have several cores and want to speed things up, the process is
@@ -496,7 +502,7 @@ well suited for parallelization:
 
 \begin{verbatim}
 # a list with 100 time series
-largedta <- rep(list(AirPassengers), 100)
+l2 <- rep(list(AirPassengers), 100)
 
 library(parallel)  # this is part of a standard R installation
 \end{verbatim}
@@ -512,10 +518,10 @@ cl <- makeCluster(detectCores())
 clusterEvalQ(cl, library(seasonal))
 
 # export data to each node
-clusterExport(cl, varlist = "largedta")
+clusterExport(cl, varlist = "l2")
 
-# run in parallel (2.2s on a 8-core Macbook, vs 9.6s with standard lapply)
-parLapply(cl, largedta, function(e) try(seas(e, x11 = "")))
+# run in parallel (2.2s on a 4-core / 8-thread Macbook, vs 9.6s with standard lapply)
+parLapply(cl, l2, function(e) try(seas(e, x11 = "")))
 
 # finally, stop the cluster
 stopCluster(cl)
@@ -525,7 +531,7 @@ On Linux or OS-X, `forking' parallelization allows you to do the same in
 a single line:
 
 \begin{verbatim}
-mclapply(cl, largedta, function(e) try(seas(e, x11 = "")))
+mclapply(l2, function(e) try(seas(e, x11 = "")), mc.cores = detectCores())
 \end{verbatim}
 
 \hyperdef{}{import-x-13-models-and-series}{\section{Import X-13 models

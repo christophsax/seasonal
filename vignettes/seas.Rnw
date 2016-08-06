@@ -22,19 +22,6 @@
 \date{\today}
 \maketitle
 
-\noindent \textbf{No separate binary download required anymore!} \emph{seasonal}
-now depends on the
-\href{https://cran.r-project.org/package=x13binary}{x13binary} package
-to access pre-built binaries of X-13ARIMA-SEATS for all platforms. Many
-thanks to Dirk Eddelbuettel for the fantastic work on x13binary!
-
-Installing seasonal \emph{and} the binaries is now as easy as:
-
-\begin{verbatim}
-install.packages('seasonal')
-\end{verbatim}
-
-\section{Introduction}
 
 \input{README.tex}
 

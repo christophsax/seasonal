@@ -262,7 +262,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   # on windows, use / instead of \\, to be consistent with file.path()
-  wdir <- normalizePath(wdir, winslash = "/", mustWork = FALSE)
+  # wdir <- normalizePath(wdir, winslash = "/", mustWork = FALSE)
 
   dir.create(wdir)
   
