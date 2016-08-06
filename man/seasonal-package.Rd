@@ -6,12 +6,14 @@
 \alias{seasonal-package}
 \title{seasonal: R interface to X-13ARIMA-SEATS}
 \description{
-seasonal is an easy-to-use and (almost) full-featured 
-  R-interface to X-13ARIMA-SEATS, the newest seasonal adjustment software 
-  developed by the United States Census Bureau. X-13ARIMA-SEATS combines and 
-  extends the capabilities of the older X-12ARIMA (developed by the Census 
-  Bureau) and TRAMO-SEATS (developed by the Bank of Spain).
-  
+\pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the
+  seasonal adjustment software by the United States Census Bureau. It offers
+  full access to almost all options and outputs of X-13, including X-11 and
+  SEATS, automatic ARIMA model search, outlier detection and support for user
+  defined holiday variables, such as Chinese New Year or Indian Diwali. It
+  also includes a Shiny-based graphical user interface. Seasonal uses the X-13
+  binaries from the 'x13binary' package.
+
   The best way to start is to have a look at the vignette:
   
   \code{vignette("seas")}
@@ -34,7 +36,9 @@ surpress the message, use \code{\link{suppressPackageStartupMessages}}.
 Sometimes, you either cannot or don't want to rely on the binaries provided
 by \pkg{x13binary}:
 \itemize{
-\item because you are on an unsupported system, like Solaris.
+\item because you are on an unsupported system, like Solaris. If you manage 
+  to build X-13 on such a system, please let the developers of 
+  \pkg{x13binary} know.
 \item because you cannot run executable files in your R library folders, due 
 to corporate IT policy.
 \item because you are using your own Fortran compilation of X-13ARIMA-SEATS.

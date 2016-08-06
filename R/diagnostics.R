@@ -5,6 +5,11 @@
 #' 
 #' @param x  object of class \code{"seas"}
 #'   
+#' @return returns an object of class \code{"spclist"}, essentially a list that 
+#' contains the information that is sent to X-13ARIMA-SEATS. The corresponding 
+#' \code{print} method displays the content of the list as written to the 
+#' \code{.spc} file.
+#' 
 #' @seealso \code{\link{seas}} for the main function.
 #' @seealso \code{\link{series}}, for universal X-13 output extraction.
 #' @seealso \code{\link{plot.seas}}, for diagnostical plots.
@@ -35,7 +40,7 @@ spc <- function(x){
 
 #' Five Best ARIMA Models
 #'
-#' returns the five best models as chosen by the BIC criterion. It needs the
+#' Returns the five best models as chosen by the BIC criterion. It needs the
 #' \code{automdl} spec to be activated (default). If it is not activated, the
 #' function tries to re-evaluate the model with the \code{automdl} spec
 #' activated.
@@ -101,7 +106,7 @@ fivebestmdl <- function(x){
 
 #' Applied Transformation
 #' 
-#' returns the transform function that has been applied.
+#' Returns the transform function that has been applied.
 #' 
 #' @param x  object of class \code{"seas"}
 #'   

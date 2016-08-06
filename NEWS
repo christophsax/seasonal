@@ -1,10 +1,10 @@
-1.2.1.11  2016-08-05
+1.2.1.12  2016-08-06
 --------------------------------------------------------------------------------
 
 new features
   - udg(): utility function to extract properly type converted udg statistics
-    e.g., M quality statitistics of X-11
-  - summary() can be customized, e.g, to include M quality statitistics
+    e.g., M quality statistics of X-11
+  - summary() can be customized, e.g, to include M quality statistics
   - methods for R generics: AIC(), BIC(), nobs(), logLik()
 
 deprecated
@@ -12,10 +12,15 @@ deprecated
   - arimamodel(): use the more general 'udg(x, "x13mdl")'
 
 under the hood
-  - statistics read by other functions (e.g., summary) are read by udg()
-  - 'lks' output of X-13 is not produced anymore
+  - statistics used by other functions (e.g., summary) are imported by udg()
+  - 'lks' output of X-13 is not used and produced anymore, as the content can be
+    accessed by udg()
   - on windows, use / instead of \\ in tempdir name, to be consistent with 
     file.path()
+
+documentation
+  - updated documentation to include udg()
+  - various minor adjustments
 
 bug fixes
   - estimate.armacmatrix can now be imported

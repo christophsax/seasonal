@@ -10,7 +10,7 @@ fivebestmdl(x)
 \item{x}{object of class \code{"seas"}}
 }
 \description{
-returns the five best models as chosen by the BIC criterion. It needs the
+Returns the five best models as chosen by the BIC criterion. It needs the
 \code{automdl} spec to be activated (default). If it is not activated, the
 function tries to re-evaluate the model with the \code{automdl} spec
 activated.

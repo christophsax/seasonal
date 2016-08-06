@@ -10,7 +10,7 @@ transformfunction(x)
 \item{x}{object of class \code{"seas"}}
 }
 \description{
-returns the transform function that has been applied.
+Returns the transform function that has been applied.
 }
 \examples{
 \dontrun{

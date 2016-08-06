@@ -1,9 +1,9 @@
 #' Display X-13ARIMA-SEATS Output
 #' 
 #' The \code{out} function shows the full content of the X-13ARIMA-SEATS output.
-#' If you are using the HTML version of X-13 (recommended), the output is 
-#' displayed in the browser. If you are using the non-HTML version, the output 
-#' is shown in the console.
+#' If you are using the HTML version of X-13, the output is displayed in the 
+#' browser. If you want to use a specific statistic in R, the \code{\link{udg}} 
+#' function is preferable.
 #' 
 #' To keep the size of \code{"seas"} objects small, \code{seas} does not save 
 #' the output by default. Instead, \code{out} re-evaluates the model.
@@ -13,8 +13,8 @@
 #'   \code{\link{browseURL}} (ignored in the non-HTML version).
 #' @param line  starting line of the content (ignored in the HTML version).
 #' @param n  number of lines to show on a page (ignored in the HTML version).
-#' @param search   regular expression chracter string. If specified, the content
-#'   is searched for the first occurence (ignored in the HTML version).
+#' @param search   regular expression character string. If specified, the content
+#'   is searched for the first occurrence (ignored in the HTML version).
 #' @param ... additional spec-arguments options sent to X-13ARIMA-SEATS during 
 #'   re-evaluation. See \code{\link{seas}}.
 #'   
@@ -41,7 +41,7 @@
 #' out(m) 
 #' out(m, automdl.print = "autochoicemdl")
 #' 
-#' arguments ignored in the HTML version
+#' # arguments ignored in the HTML version
 #' out(m, search = "regARIMA model residuals")
 #' out(m, search = "Normality Statistics for regARIMA")
 #' }

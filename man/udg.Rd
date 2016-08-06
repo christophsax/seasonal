@@ -28,7 +28,8 @@ qs(x)
 stats are returned. This speeds up the call, as only a subset needs to be 
 type converted. Should be used for programming.}
 
-\item{simplify}{logical; should the result be simplified to a vector, if possible?}
+\item{simplify}{logical; should the result be simplified to a vector or 
+matrix, if possible?}
 
 \item{fail}{logical; if \code{TRUE}, an error is droped if an element of 
 \code{stats} is missing in \code{names(udg(x))}.}

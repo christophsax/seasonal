@@ -76,7 +76,7 @@ m <- seas(AirPassengers)
 summary(m)  
 
 ### user defined stats from the udg function 
-(experimental, see ?udg)
+# (experimental, see ?udg)
 
 # also show some M quality statistics for X11 in summary
 options(seas.stats = c("f3.m01", "f3.m02", "f3.m03", "f3.m04"))

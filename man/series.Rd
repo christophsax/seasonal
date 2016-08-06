@@ -25,8 +25,8 @@ depending on the table, either an object of class \code{"ts"} or
   \code{"data.frame"}.
 }
 \description{
-With the exception the composite spec, the \code{series} function imports all
-tables that can be saved in X-13ARIMA-SEATS.
+With the exception of the composite spec, the \code{series} function imports 
+all tables that can be saved in X-13ARIMA-SEATS.
 }
 \details{
 If the save argument is not specified in the model call, \code{series} 
@@ -266,9 +266,9 @@ spectrum(diff(log(AirPassengers)), method = "ar")
 
 # X-13ARIMA-SEATS pacf
 x13.pacf <- series(m, "identify.pacf")
-plot(x13.pacf[,1:2])
-lines(x13.pacf[,3])
-lines(-x13.pacf[,3])
+plot(x13.pacf[,1], t = "h")
+lines(x13.pacf[,2])
+lines(-x13.pacf[,2])
 # R equivalent: pacf from stats
 pacf(AirPassengers, lag.max = 35)
 }

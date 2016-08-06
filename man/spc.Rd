@@ -9,6 +9,12 @@ spc(x)
 \arguments{
 \item{x}{object of class \code{"seas"}}
 }
+\value{
+returns an object of class \code{"spclist"}, essentially a list that 
+contains the information that is sent to X-13ARIMA-SEATS. The corresponding 
+\code{print} method displays the content of the list as written to the 
+\code{.spc} file.
+}
 \description{
 Access the content of the \code{.spc} file that governs the behavior of 
   X-13ARIMA-SEATS.
