@@ -45,7 +45,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   }
   
   ### check validity of path
-  if (!file.exists(env.path)){
+  if (!dir.exists(env.path)){
     invalid.path.message <- paste0("Path '", env.path, "' specified but does not exists.")
     if (fail){
       message(invalid.path.message)
