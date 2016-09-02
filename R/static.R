@@ -73,6 +73,21 @@ static <- function(x, coef = FALSE, test = TRUE, verbose = FALSE, fail = FALSE){
 
   lc$transform.function = transformfunction(x)
 
+  # subsitute X-11 filters
+  if (!is.null(x$spc$x11)) {
+    if (is.null(lc$x11.trendma) || lc$x11.trendma == ""){
+      tma <- udg(x, "finaltrendma", fail = FALSE)
+      lc$x11.trendma <- as.numeric(unname(tma))
+    }
+    if (is.null(lc$x11.seasonalma) || lc$x11.seasonalma == ""){
+      sma <- udg(x, "sfmsr", fail = FALSE)
+      if (!is.null(sma)) sma <- paste0("s", sma)
+      lc$x11.seasonalma <- unname(sma)
+    }
+  }
+
+
+
   if (coef){
     if (!is.null(x$model$regression$b)) {
       lc$regression.b = c(add_f(x$model$regression$b))
