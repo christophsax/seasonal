@@ -4,19 +4,22 @@
 \alias{static}
 \title{Static Call of a seas Object}
 \usage{
-static(x, coef = FALSE, test = TRUE, verbose = FALSE, fail = FALSE)
+static(x, coef = FALSE, x11.filter = FALSE, test = TRUE, fail = FALSE)
 }
 \arguments{
 \item{x}{an object of class \code{seas}.}
 
-\item{coef}{logical, if \code{TRUE}, the coefficients are treated as fixed, 
+\item{coef}{logical. If \code{TRUE}, the coefficients are treated as fixed, 
 instead of beeing estimated.}
 
-\item{test}{logical. By default the static call is executed and compared to 
-the input call. If the final series is not identical, a warning is 
-returned. If \code{FALSE}, the option is disabled.}
+\item{x11.filter}{logical. X-11 only. if \code{TRUE}, the X-11 moving 
+averages will be fixed as well. This leads to different filters at
+different stages, and the resulting series can be are slightly different.
+If \code{test = TRUE}, this may cause a warning  message.}
 
-\item{verbose}{logical, if \code{TRUE}, droped and kept series are listed.}
+\item{test}{logical. By default the static call is executed and compared to 
+the input call. If the final series is not identical, a message is 
+returned. If \code{FALSE}, no test is performed (faster).}
 
 \item{fail}{logical, if \code{TRUE}, differences will cause an error. Ignored 
 if \code{test = FALSE}.}
@@ -26,16 +29,18 @@ Object of class \code{"call"}. Static call of an object of class
   \code{seas}. Can be copy/pasted into an R script.
 }
 \description{
-A static call is a static replication of a call. Automatic procedures are 
-substituted by the automatically chosen spec-argument options. The call can
-be copy/pasted to a script and used for further manipulations or future 
-evaluation of the same model.
+In a static call, automatic procedures are substituted by the spec-argument
+options that have been selcted by the automatic procedures.
 }
 \details{
+The call can be copy/pasted to a script and used for further manipulations or
+future evaluation of the same model.
+
 By default, the static call is tested. It is executed and compared to the 
 input call. If the final series is not identical, a message is returned.
 
-If \code{coef = TRUE}, the coefficients are fixed as well.
+If \code{coef = TRUE}, the coefficients are fixed as well. If 
+\code{x11.filter = TRUE}, the X-11 moving averages are fixed as well.
 }
 \examples{
 \dontrun{
@@ -43,6 +48,9 @@ If \code{coef = TRUE}, the coefficients are fixed as well.
 m <- seas(AirPassengers)
 static(m)
 static(m, test = FALSE)
+
+m <- seas(AirPassengers, x11 = "")
+static(m, x11.filter = TRUE)
 }
 }
 \references{
