@@ -87,6 +87,13 @@ import.spc <- function(file){
   ep <- expand_spclist_to_args(pp)
   ep <- rem_defaults_from_args(ep)
 
+  # prettyfy non-standard arima models
+  if (!is.null(ep$arima.model)){
+    ep$arima.model <- gsub(" *, *", " ", ep$arima.model)
+    ep$arima.model <- gsub("\\( ", "(", ep$arima.model)
+    ep$arima.model <- gsub(" \\)", ")", ep$arima.model)
+  }
+
   # add xtrans, xreg and x as series
   if (!is.null(xtransstr)) ep <- c(list(xtrans = quote(xtrans)), ep)
   if (!is.null(xregstr)) ep <- c(list(xreg = quote(xreg)), ep)
