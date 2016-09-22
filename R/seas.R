@@ -209,8 +209,9 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # save series name
   series.name <- deparse(substitute(x))
 
-  # remove quotes in series.name, they are not allowed in X-13as
+  # remove quotes and : in series.names
   series.name <- gsub('[\'\\"]', '', series.name)
+  series.name <- gsub(':', '_', series.name)
 
   # using the list argument instead of '...''
   if (is.null(list)){
