@@ -1,13 +1,16 @@
-1.3.1  2016-??-??
+1.3.2  2016-??-??
 --------------------------------------------------------------------------------
 
 enhancements
   - static() function has new argument 'x11.static'. If TRUE, the moving 
-    averages of X-11 are fixed as well. (Thanks to Brian Monsell)
+    averages of X-11 are fixed as well. 
+    (Thanks to Brian Monsell)
 
 bug fixes
-  - import.spc imports arima models with commas. E.g., (0, 1, 1). (Thanks to 
-    Brian Monsell)
+  - import.spc imports arima models with commas. E.g., (0, 1, 1). 
+    (Thanks to Brian Monsell)
+  - substitute colons in series name to avoid reading error. 
+    (Thanks to Bill Dunlap)
 
 
 
