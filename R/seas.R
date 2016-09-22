@@ -207,7 +207,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
   
   # save series name
-  series.name <- deparse(substitute(x))
+  series.name <- deparse(substitute(x))[1]
 
   # remove quotes and : in series.names
   series.name <- gsub('[\'\\"]', '', series.name)

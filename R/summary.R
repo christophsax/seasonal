@@ -94,7 +94,7 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
   z$stats <- stats
 
   z$nobs <- nobs(object)
-  z$aicc <- unname(udg(object, "aicc"))
+  z$aicc <- unname(udg(object, "aicc", fail = FALSE))
   z$bic <- BIC(object)
 
   class(z) <- "summary.seas"

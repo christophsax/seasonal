@@ -1,4 +1,4 @@
-1.3.2  2016-??-??
+1.3.3  2016-??-??
 --------------------------------------------------------------------------------
 
 enhancements
@@ -9,9 +9,10 @@ enhancements
 bug fixes
   - import.spc imports arima models with commas. E.g., (0, 1, 1). 
     (Thanks to Brian Monsell)
-  - substitute colons in series name to avoid reading error. 
-    (Thanks to Bill Dunlap)
-
+  - substitute colons in series name to avoid reading error.
+  - shorten long series names to avoid X-13 error.
+    (Both thanks to Bill Dunlap)
+  - missing udg element in summary no longer leads to an error.
 
 
 1.3.0  2016-08-07
