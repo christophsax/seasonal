@@ -314,14 +314,15 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
       user <- paste0("xreg", 1:NCOL(xreg))
       # user <- gsub("[\\(\\)]", "", colnames(xreg))
     }
-    if (!is.null(spc$regression)){
-      spc$regression$user <- user
-      spc$regression$file <- paste0("\"", xreg.file, "\"")
-      spc$regression$format <- "\"datevalue\""
-    } else if (!is.null(spc$x11regression)){
+
+    if (!is.null(spc$x11regression)){
       spc$x11regression$user <- user
       spc$x11regression$file <- paste0("\"", xreg.file, "\"")
       spc$x11regression$format <- "\"datevalue\""
+    } else {
+      spc$regression$user <- user
+      spc$regression$file <- paste0("\"", xreg.file, "\"")
+      spc$regression$format <- "\"datevalue\""
     }
   }
 
@@ -419,7 +420,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
   }
   
-  # browser()
   # read .est file
   z$est <- read_est(iofile)
 
