@@ -174,6 +174,29 @@ NULL
 NULL
 
 
+#' United States Unemployment
+#' 
+#' Monthly exports and imports of China (July 1983 to December 2013). 
+#' 
+#' In 100 mio. U.S. Dollar.
+#' 
+#' @docType data
+#' 
+#' @format Each time series is an object of class \code{"ts"}.
+#' 
+#' @source China Customs
+#' 
+#' @name exp
+#' @aliases imp
+#' @keywords datasets
+#' @examples
+#' 
+#' data(seasonal)
+#' imp
+#' exp
+NULL
+
+
 #' List of Available X-13ARIMA-SEATS Outputs
 #' 
 #' The data is used by several functions as a look-up table. Users

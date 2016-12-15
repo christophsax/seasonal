@@ -5,12 +5,14 @@
 \alias{print.import.spc}
 \title{Import X-13 \code{.spc} Files (experimental)}
 \usage{
-import.spc(file)
+import.spc(file, text = NULL)
 
 \method{print}{import.spc}(x, ...)
 }
 \arguments{
-\item{file}{character, name of the X-13 \code{.spc} file}
+\item{file}{character, path to the X-13 \code{.spc} file}
+
+\item{text}{character, alternatively, the content of a \code{.spc} file as a character string.}
 
 \item{x}{object of class \code{import.spc}}
 

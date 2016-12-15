@@ -1,3 +1,4 @@
+# remove with inspect()
 
 PrintSummarySeas <- function(x, digits = max(3, getOption("digits") - 3), 
                               signif.stars = getOption("show.signif.stars"), ...) {
