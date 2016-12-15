@@ -174,6 +174,27 @@ NULL
 NULL
 
 
+#' United States Unemployment Level
+#' 
+#' Thousands of Persons
+#' 
+#' @docType data
+#' 
+#' @format Each time series is an object of class \code{"ts"}.
+#' 
+#' @source U.S. Bureau of Labor Statistics, retrieved from FRED, Federal Reserve 
+#'   Bank of St. Louis; \url{https://fred.stlouisfed.org/series/LNU03000000}, 
+#'   December 14, 2016.
+#' 
+#' @name unemp
+#' @keywords datasets
+#' @examples
+#' 
+#' data(seasonal)
+#' unemp
+NULL
+
+
 #' List of Available X-13ARIMA-SEATS Outputs
 #' 
 #' The data is used by several functions as a look-up table. Users

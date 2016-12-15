@@ -6,7 +6,8 @@
 #' \code{.spc} file. The \code{print} method displays the calls in a way that 
 #' they can be copy-pasted into an R script.
 #' 
-#' @param file   character, name of the X-13 \code{.spc} file
+#' @param file   character, path to the X-13 \code{.spc} file
+#' @param text   character, alternatively, the content of a \code{.spc} file as a character string.
 #' @return returns an object of class \code{import.spc}, which is a list with the following (optional) objects of class \code{call}:
 #'   \item{x}{the call to retrieve the data for the input series} 
 #'   \item{xtrans}{the call to retrieve the data for the \code{xtrans} series (if required by the call)} 
@@ -18,7 +19,44 @@
 #' @examples
 #' 
 #' # importing the orginal X-13 example file
-#' import.spc(system.file("tests", "Testairline.spc", package="seasonal"))
+#' import.spc(text =
+#' '
+#'   series{
+#'     title="International Airline Passengers Data from Box and Jenkins"
+#'     start=1949.01
+#'     data=(
+#'     112 118 132 129 121 135 148 148 136 119 104 118
+#'     115 126 141 135 125 149 170 170 158 133 114 140
+#'     145 150 178 163 172 178 199 199 184 162 146 166
+#'     171 180 193 181 183 218 230 242 209 191 172 194
+#'     196 196 236 235 229 243 264 272 237 211 180 201
+#'     204 188 235 227 234 264 302 293 259 229 203 229
+#'     242 233 267 269 270 315 364 347 312 274 237 278
+#'     284 277 317 313 318 374 413 405 355 306 271 306
+#'     315 301 356 348 355 422 465 467 404 347 305 336
+#'     340 318 362 348 363 435 491 505 404 359 310 337
+#'     360 342 406 396 420 472 548 559 463 407 362 405
+#'     417 391 419 461 472 535 622 606 508 461 390 432)
+#'     span=(1952.01, )
+#'   }
+#'   spectrum{
+#'     savelog=peaks 
+#'   }
+#'   transform{
+#'     function=auto
+#'     savelog=autotransform  
+#'   }
+#'   regression{
+#'     aictest=(td easter)
+#'     savelog=aictest  
+#'   }
+#'   automdl{  
+#'     savelog=automodel  
+#'   }
+#'   outlier{ }
+#'   x11{}
+#' '
+#' )
 #' 
 #' \dontrun{
 #' 
@@ -42,7 +80,6 @@
 #' # - 'll$seas': a call to seas() which performs the seasonal adjustment in R
 #' str(ll)
 #'
-
 #' # to replicate the original X-13 operation, run all four calls in a series.
 #' # You can either copy/paste and run the print() output:
 #' ll
@@ -55,19 +92,25 @@
 #' ee <- lapply(ll, eval, envir = globalenv())
 #' ee$seas  # the 'seas' object, produced by the final call to seas()
 #' }
-import.spc <- function(file){
+import.spc <- function(file, text = NULL){
   
-  stopifnot(file.exists(file))
-
   z <- list()
 
-  txt <- readLines(file)
-  txt <- gsub("\\\\", "/", txt)  # window file names to unix
-  txt <- gsub("#.*$", "", txt) # remove comments
+  if (is.null(text)){
+    stopifnot(file.exists(file))
+    text <- readLines(file)
+  } else {
+    stopifnot(inherits(text, "character"))
+    text <- paste(text, collapse = "\n")
+    stopifnot(length(text) == 1)
+    text <- strsplit(text, split = "\n")[[1]]
+  }
+  text <- gsub("\\\\", "/", text)  # window file names to unix
+  text <- gsub("#.*$", "", text) # remove comments
 
   # keep everything lowercase, except filenames
-  pp.cap <- parse_spc(txt)
-  pp <- parse_spc(tolower(txt))
+  pp.cap <- parse_spc(text)
+  pp <- parse_spc(tolower(text))
   pp[['series']][['file']] <- pp.cap[['series']][['file']]
   pp[['transform']][['file']] <- pp.cap[['transform']][['file']]
   pp[['regression']][['file']] <- pp.cap[['regression']][['file']]
