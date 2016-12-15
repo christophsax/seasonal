@@ -174,26 +174,24 @@ NULL
 NULL
 
 
-#' United States Unemployment
+#' United States Unemployment Level
 #' 
-#' Monthly exports and imports of China (July 1983 to December 2013). 
-#' 
-#' In 100 mio. U.S. Dollar.
+#' Thousands of Persons
 #' 
 #' @docType data
 #' 
 #' @format Each time series is an object of class \code{"ts"}.
 #' 
-#' @source China Customs
+#' @source U.S. Bureau of Labor Statistics, retrieved from FRED, Federal Reserve 
+#'   Bank of St. Louis; \url{https://fred.stlouisfed.org/series/LNU03000000}, 
+#'   December 14, 2016.
 #' 
-#' @name exp
-#' @aliases imp
+#' @name unemp
 #' @keywords datasets
 #' @examples
 #' 
 #' data(seasonal)
-#' imp
-#' exp
+#' unemp
 NULL
 
 
