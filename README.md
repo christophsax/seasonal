@@ -246,10 +246,10 @@ click. Click several times to loop through different outlier types.
 ### Graphical User Interface
 
 The `view` function is a graphical tool for choosing a seasonal adjustment
-model, using the new *[seasonalview][seasonalview]* package, with the same 
+model, using the new [seasonalview][seasonalview] package, with the same 
 structure as the [demo website of
 seasonal][seasweb]. To install
-*[seasonalview][seasonalview]*, type:
+[seasonalview][seasonalview], type:
 
     install.packages("seasonalview")
 
@@ -432,7 +432,7 @@ especially grateful to Dirk Eddelbuettel for the fantastic work on the
 Please report bugs and suggestions on [Github][github] or send me an 
 [e-mail](mailto:christoph.sax@gmail.com). Thank you!
 
-[seasonalweb]: https://cran.r-project.org/package=seasonalweb "Graphical User Interface for Seasonal Adjustment"
+[seasonalview]: https://cran.r-project.org/package=seasonalview "Graphical User Interface for Seasonal Adjustment"
 
 [x13binary]: https://cran.r-project.org/package=x13binary "X-13ARIMA-SEATS binary for R"
 
