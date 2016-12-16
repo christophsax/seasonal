@@ -267,7 +267,7 @@ accordingly.
 Alternatively, the R-Call can be modified manually in the lower left panel.
 Press 'Run Call' to re-estimate the model and to adjust the options selectors,
 the output, and the summary. With the 'To Console' button, `view` is closed and
-an updated model returned to the \proglang{R} console. The 'Static' button
+an updated model returned to the R console. The 'Static' button
 substitutes automatic procedures by their corresponding static spec-argument
 options, in the same way as the `static` function.
 
@@ -275,7 +275,7 @@ The views in the upper right panel can be selected from the drop-down menu.
 
 The lower right panel shows the summary, including the same information as the
 `summary` method. The 'X-13 output' button opens the complete  output of
-\software{X-13} in a separate tab or window.
+X-13 in a separate tab or window.
 
 
 ### Chinese New Year, Indian Diwali and other customized holidays
