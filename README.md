@@ -9,9 +9,11 @@ R interface to X-13ARIMA-SEATS
 the newest seasonal adjustment software developed by the [United States Census
 Bureau][census]. X-13ARIMA-SEATS combines and extends the capabilities of the
 older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS (developed by
-the Bank of Spain). *seasonal* depends on the [x13binary][x13binary] package (by
+the Bank of Spain). 
+
+*seasonal* depends on the [x13binary][x13binary] package (by
 Dirk Eddelbuettel and Christoph Sax) to access pre-built binaries of 
-X-13ARIMA-SEATS for all platforms and does not require any manual installation.
+X-13ARIMA-SEATS for all platforms and **does not require any manual installation**.
 
 ![Graphical user interface for X-13](https://raw.githubusercontent.com/christophsax/seasonalview/master/img/seasonal.png)
 
