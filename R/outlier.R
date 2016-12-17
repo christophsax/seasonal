@@ -45,10 +45,12 @@ outlier <- function(x, full = FALSE){
     ol.time.R <- lapply(strsplit(ol.time, "\\."), 
                         function(el) {c(el[1], which(month.abb == el[2]))}
     )
-  } else if (frequency(z) == 4){
+  } else if (frequency(z) %in% c(4, 2)){
     ol.time.R <- lapply(strsplit(ol.time, "\\."), 
                         function(el) {c(el[1], (el[2]))}
     )
+  } else {
+    stop("Frequency not supported: ", frequency(z))
   }
   
   stopifnot(length(ol.time.R) == length(ol))
