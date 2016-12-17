@@ -1,4 +1,4 @@
-1.3.4  2016-??-??
+1.3.5  2016-??-??
 --------------------------------------------------------------------------------
 
 major changes
@@ -25,6 +25,7 @@ bug fixes
   - missing udg element in summary no longer leads to an error.
   - xreg specification ensures regression spec is used. 
     (Thanks to Jose Pavia)
+  - outlier plotted correctly for bi-annual data (SEATS only)
 
 minor changes
   - U.S. unemployment as example series (experimental)
