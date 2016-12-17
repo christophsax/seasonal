@@ -24,8 +24,10 @@ model; or \code{NULL}, if the \code{story} argument is supplied.
 \description{
 Interactively modify a \code{"seas"} object. The goal of \code{view} is 
 to summarize all relevant options, plots and statistics of a 
-seasonal adjustment model. The \code{view} function in the \pkg{seasonal} package 
-re-directs to the \code{\link[seasonalview]{view}} function in the \pkg{seasonalview} package.
+seasonal adjustment model. The \code{view} function in the \pkg{seasonal} 
+package imports the identical \code{\link[seasonalview]{view}} function from 
+the \pkg{seasonalview} package, so there is no need to explicitly load the 
+\pkg{seasonalview} package.
 }
 \details{
 Frequently used options can be modified using the drop down selectors in the

@@ -2,8 +2,10 @@
 #' 
 #' Interactively modify a \code{"seas"} object. The goal of \code{view} is 
 #' to summarize all relevant options, plots and statistics of a 
-#' seasonal adjustment model. The \code{view} function in the \pkg{seasonal} package 
-#' re-directs to the \code{\link[seasonalview]{view}} function in the \pkg{seasonalview} package.
+#' seasonal adjustment model. The \code{view} function in the \pkg{seasonal} 
+#' package imports the identical \code{\link[seasonalview]{view}} function from 
+#' the \pkg{seasonalview} package, so there is no need to explicitly load the 
+#' \pkg{seasonalview} package.
 #' 
 #' Frequently used options can be modified using the drop down selectors in the
 #' upper left box. Each change will result in a re-estimation of the seasonal
@@ -56,12 +58,20 @@
 #' m.upd <- view(m)  
 #' }
 #' @export
-view <- function(x = NULL, story = NULL, quiet = TRUE, ...){
-  z <- try(seasonalview::view, silent = TRUE)  # can it be found?
+view <- function(x = NULL, story = NULL, quiet = TRUE, ...){ 
+  z <- try(seasonalview::view, silent = TRUE)  # is seasonalview installed?
   if (inherits(z, "try-error")) {
-    stop("The 'seasonalview' package is needed to display \nthe graphical user interface. To install from CRAN, use:\n\n    install.packages(\"seasonalview\")", call. = FALSE)
+    stop("'seasonalview' required to run the graphical user interface.\n\nTo install from CRAN, use:\n\n    install.packages(\"seasonalview\")", call. = FALSE)
   }
-  seasonalview::view(x = x, story = story, quiet = quiet, ... = ...)
+
+  # temp workaround until next version of seasonalview is on CRAN 
+  # (current version allways picks frame 1, rather than the one of 
+  # seasonalview::view())
+  if (!is.null(x)) .model.passed.to.shiny <- x
+  if (!is.null(story)) .story.filename.passed.to.shiny <- story
+
+  seasonalview::view(x = x, story = story, quiet = quiet, ...)
 }
+
 
 
