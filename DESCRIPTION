@@ -1,8 +1,8 @@
 Package: seasonal
 Type: Package
 Title: R Interface to X-13-ARIMA-SEATS
-Version: 1.3.5
-Date: 2016-12-15
+Version: 1.3.6
+Date: 2016-12-17
 Author: Christoph Sax
 Maintainer: Christoph Sax <christoph.sax@gmail.com>
 Description: Easy-to-use interface to 'X-13-ARIMA-SEATS', the
