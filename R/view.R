@@ -56,12 +56,44 @@
 #' m.upd <- view(m)  
 #' }
 #' @export
-view <- function(x = NULL, story = NULL, quiet = TRUE, ...){
+view <- function(x = NULL, story = NULL, quiet = TRUE, ...){ 
+
   z <- try(seasonalview::view, silent = TRUE)  # can it be found?
   if (inherits(z, "try-error")) {
     stop("The 'seasonalview' package is needed to display \nthe graphical user interface. To install from CRAN, use:\n\n    install.packages(\"seasonalview\")", call. = FALSE)
   }
-  seasonalview::view(x = x, story = story, quiet = quiet, ... = ...)
+
+  if (!is.null(story)){
+
+    if (!grepl("\\.Rmd", story, ignore.case = TRUE)){
+      stop("File must have rmarkdown extension (.Rmd)")
+    }
+
+    # auto download from the internet
+    if (grepl("^http", story)){
+      tfile <- tempfile(fileext = ".Rmd")
+      download.file(story, tfile)
+      story <- tfile
+    }
+
+    .story.filename.passed.to.shiny <- normalizePath(story)
+
+    wd <- system.file("app", package = "seasonalview")
+    shiny::runApp(wd, quiet = quiet)
+    return(NULL)
+  } 
+
+  if (!inherits(x, "seas")){
+    stop("first argument must be of class 'seas'")
+  }
+
+  .model.passed.to.shiny <- x
+
+  cat("Press ESC (or Ctrl-C) to get back to the R session\n")
+
+  wd <- system.file("app", package = "seasonalview")
+  shiny::runApp(wd, quiet = quiet, ...)
 }
+
 
 
