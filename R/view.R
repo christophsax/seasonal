@@ -59,7 +59,7 @@
 view <- function(x = NULL, story = NULL, quiet = TRUE, ...){ 
   z <- try(seasonalview::view, silent = TRUE)  # is seasonalview installed?
   if (inherits(z, "try-error")) {
-    stop("The graphical user interface requires 'seasonalview'.\n\nTo install from CRAN, use:\n\n    install.packages(\"seasonalview\")", call. = FALSE)
+    stop("'seasonalview' required to run the graphical user interface.\n\nTo install from CRAN, use:\n\n    install.packages(\"seasonalview\")", call. = FALSE)
   }
   seasonalview::view(x = x, story = story, quiet = quiet, ...)
 }
