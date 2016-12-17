@@ -61,6 +61,13 @@ view <- function(x = NULL, story = NULL, quiet = TRUE, ...){
   if (inherits(z, "try-error")) {
     stop("'seasonalview' required to run the graphical user interface.\n\nTo install from CRAN, use:\n\n    install.packages(\"seasonalview\")", call. = FALSE)
   }
+
+  # temp workaround until next version of seasonalview is on CRAN 
+  # (current version allways picks frame 1, rather than the one of 
+  # seasonalview::view())
+  .story.filename.passed.to.shiny <- x
+  .model.passed.to.shiny <- story
+
   seasonalview::view(x = x, story = story, quiet = quiet, ...)
 }
 
