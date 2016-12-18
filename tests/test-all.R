@@ -7,6 +7,7 @@
 # - knit vignette
 # - r-devel test
 
+# travisdir <- "~/git/seasonal/travis"
 # These tests are more extensive and only need to run on travis, not on CRAN.
 
 seasonal::checkX13()

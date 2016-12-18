@@ -214,17 +214,19 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   series.name <- gsub('[\'\\"]', '', series.name)
   series.name <- gsub(':', '_', series.name)
 
+  env.cl <- sys.frame(-1)  # environment where seas was called
+
   # using the list argument instead of '...''
   if (is.null(list)){
     list <- list(...)
 
     # save call as list with evaluated arguments
     cl <- match.call(seas, z$call)
-    z$list <- lapply(as.list(cl)[-1], eval) 
+    z$list <- lapply(as.list(cl)[-1], eval, envir = env.cl) 
 
   } else {
     # save list with evaluated arguments
-    z$list <- lapply(list, eval)   
+    z$list <- lapply(list, eval, envir = env.cl)   
 
     if (!inherits(list, "list")){
       stop("the 'list' argument mus be of class 'list'")
