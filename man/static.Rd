@@ -4,7 +4,8 @@
 \alias{static}
 \title{Static Call of a seas Object}
 \usage{
-static(x, coef = FALSE, x11.filter = FALSE, test = TRUE, fail = FALSE)
+static(x, coef = FALSE, x11.filter = FALSE, test = TRUE, fail = FALSE,
+  eval = FALSE)
 }
 \arguments{
 \item{x}{an object of class \code{seas}.}
@@ -23,6 +24,8 @@ returned. If \code{FALSE}, no test is performed (faster).}
 
 \item{fail}{logical, if \code{TRUE}, differences will cause an error. Ignored 
 if \code{test = FALSE}.}
+
+\item{eval}{logical, should be call be evaluated.}
 }
 \value{
 Object of class \code{"call"}. Static call of an object of class
@@ -47,7 +50,8 @@ If \code{coef = TRUE}, the coefficients are fixed as well. If
 
 m <- seas(AirPassengers)
 static(m)
-static(m, test = FALSE)
+static(m, test = FALSE)  # much faster
+static(m, eval = TRUE)   # returns an object of class "seas"
 
 m <- seas(AirPassengers, x11 = "")
 static(m, x11.filter = TRUE)
