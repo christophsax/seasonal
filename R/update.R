@@ -8,9 +8,9 @@
 
 
 #' Update Method
-#' @param an object of class \code{"seas"}, usually, a result of a 
-#'                    call to \code{\link{seas}}.
-#' @param ... spec-arguments options sent to X-13ARIMA-SEATS (see seas) 
+#' @param object   an object of class \code{"seas"}, usually, a result of a 
+#'     call to \code{\link{seas}}.
+#' @param ...  spec-arguments options sent to X-13ARIMA-SEATS (see seas) 
 #' @export
 #' @importFrom stats update
 #' @method update seas
@@ -23,13 +23,14 @@ update.seas <- function(object, ...){
 }
 
 #' Predict Method
-#' @param an object of class \code{"seas"}, usually, a result of a 
+#' @param object   an object of class \code{"seas"}, usually, a result of a 
 #'                    call to \code{\link{seas}}.
-#' @param newdata an object of class \code{"ts"}
+#' @param newdata   an object of class \code{"ts"}
+#' @param ...   not used
 #' @export
 #' @importFrom stats predict
 #' @method predict seas
-predict.seas <- function(object, newdata){
+predict.seas <- function(object, newdata, ...){
   if (missing("newdata")) return(final(object))
   final(update(object, x = newdata))
 }

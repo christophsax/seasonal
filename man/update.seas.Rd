@@ -7,10 +7,10 @@
 \method{update}{seas}(object, ...)
 }
 \arguments{
-\item{...}{spec-arguments options sent to X-13ARIMA-SEATS (see seas)}
-
-\item{an}{object of class \code{"seas"}, usually, a result of a 
+\item{object}{an object of class \code{"seas"}, usually, a result of a 
 call to \code{\link{seas}}.}
+
+\item{...}{spec-arguments options sent to X-13ARIMA-SEATS (see seas)}
 }
 \description{
 Update Method

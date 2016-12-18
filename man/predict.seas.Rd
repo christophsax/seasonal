@@ -4,13 +4,15 @@
 \alias{predict.seas}
 \title{Predict Method}
 \usage{
-\method{predict}{seas}(object, newdata)
+\method{predict}{seas}(object, newdata, ...)
 }
 \arguments{
+\item{object}{an object of class \code{"seas"}, usually, a result of a 
+call to \code{\link{seas}}.}
+
 \item{newdata}{an object of class \code{"ts"}}
 
-\item{an}{object of class \code{"seas"}, usually, a result of a 
-call to \code{\link{seas}}.}
+\item{...}{not used}
 }
 \description{
 Predict Method
