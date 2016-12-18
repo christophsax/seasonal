@@ -195,9 +195,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
          regression.aictest = c("td", "easter"), outlier = "", 
          automdl = "", na.action = na.omit,
          out = FALSE, dir = NULL, ..., list = NULL){
-  
-  # setX13Path()
-  
+    
+  z <- list()  # output object
+  z$call <- match.call()
+
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
   
@@ -213,10 +214,20 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   series.name <- gsub('[\'\\"]', '', series.name)
   series.name <- gsub(':', '_', series.name)
 
+  env.cl <- sys.frame(-1)  # environment where seas was called
+
   # using the list argument instead of '...''
   if (is.null(list)){
     list <- list(...)
+
+    # save call as list with evaluated arguments
+    cl <- match.call(seas, z$call)
+    z$list <- lapply(as.list(cl)[-1], eval, envir = env.cl) 
+
   } else {
+    # save list with evaluated arguments
+    z$list <- lapply(list, eval, envir = env.cl)   
+
     if (!inherits(list, "list")){
       stop("the 'list' argument mus be of class 'list'")
     }
@@ -368,7 +379,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   ### Import from X13
-  z <- list()  # output object
   
   # check wether there is output at all.
   outfile <- if (getOption("htmlmode") == 1){
@@ -474,7 +484,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   z$x <- x
   z$spc <- spc
-  z$call <- match.call()
   z$wdir <- wdir
 
   # clean up

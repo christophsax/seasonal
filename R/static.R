@@ -24,6 +24,7 @@
 #'   returned. If \code{FALSE}, no test is performed (faster).
 #' @param fail logical, if \code{TRUE}, differences will cause an error. Ignored 
 #'   if \code{test = FALSE}.
+#' @param eval logical, should be call be evaluated.
 #' @return Object of class \code{"call"}. Static call of an object of class
 #'   \code{seas}. Can be copy/pasted into an R script.
 #'   
@@ -44,12 +45,14 @@
 #' 
 #' m <- seas(AirPassengers)
 #' static(m)
-#' static(m, test = FALSE)
+#' static(m, test = FALSE)  # much faster
+#' static(m, eval = TRUE)   # returns an object of class "seas"
 #' 
 #' m <- seas(AirPassengers, x11 = "")
 #' static(m, x11.filter = TRUE)
 #' }
-static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE, fail = FALSE){
+static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE, 
+                   fail = FALSE, eval = FALSE){
 
   if (!inherits(x, "seas")){
     stop("first argument must be of class 'seas'")
@@ -116,6 +119,10 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE, fail = FALS
     if (!isTRUE(test)){
       (if (fail) stop else message)(paste("Static series is different.", test))
     }
+  }
+
+  if (eval){
+    return(eval(z, envir = sys.frame(-1)))
   }
 
   z
