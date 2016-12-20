@@ -77,7 +77,7 @@ update.seas <- function(object, ..., evaluate = TRUE){
 #' predict(m)
 #' final(m)     # equivalent
 #' 
-#' # Use Dec. 59 model specification to estimate data up to Dec. 60
+#' # Use Dec. 59 model specification to estimate data up to Dec. 60
 #' predict(m, AirPassengers)
 #' }
 
