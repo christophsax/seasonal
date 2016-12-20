@@ -7,11 +7,11 @@ x13binary::checkX13binary()
 
 # examples from ?seas and ?series, without the graphs
 
-# don't let the tests fail on oldrel (remove if x13binary works on oldrel)
-r.version <- paste(R.Version()$major, R.Version()$minor, sep = ".")
-is.oldrel <- .Platform$OS.type == "windows" && (compareVersion(r.version, "3.1.3") < 1)
+# # don't let the tests fail on oldrel (remove if x13binary works on oldrel)
+# r.version <- paste(R.Version()$major, R.Version()$minor, sep = ".")
+# is.oldrel <- .Platform$OS.type == "windows" && (compareVersion(r.version, "3.1.3") < 1)
 
-if (x13binary::supportedPlatform() && !is.oldrel){
+if (x13binary::supportedPlatform()){
 
   library(seasonal)
   checkX13()
@@ -125,6 +125,8 @@ if (x13binary::supportedPlatform() && !is.oldrel){
   # X-13ARIMA-SEATS pacf
   x13.pacf <- series(m, "identify.pacf")
 
+  update(m, x11 = "")
+  update(m, x = sqrt(AirPassengers), x11 = "")
 
 }
 
