@@ -1,20 +1,22 @@
-1.3.5  2016-??-??
+1.3.9  2016-??-??
 --------------------------------------------------------------------------------
 
-major changes
+new features
   - seasonal now uses the graphical user interface from the new seaonalview 
-    package. To install from CRAN, use:
-
-    install.packages('seasonalview')
-
-    Use the 'view()' function instead of 'inspect'
+    package. To install from CRAN, use: install.packages('seasonalview')
+    Use the 'view()' function instead of 'inspect', which is deprecated and will be defunct soon.
 
 enhancements
+  - new update() method, updates a "seas" object.
+  - new predict() method, returns the final series of an (updated) "seas" 
+    object.
   - static() function has new argument 'x11.static'. If TRUE, moving averages 
     of X-11 are fixed as well. 
     (Thanks to Brian Monsell)
+  - static() function has new argument 'evaluate'. If TRUE, it returns an 
+    evaluated call, an object of class "seas".
   - import.spc() function has new argument 'text', to accept the content of an 
-    X-13 .spc file as a character string.
+    X-13 .spc file as a character vector.
 
 bug fixes
   - import.spc imports arima models with commas. E.g., (0, 1, 1). 

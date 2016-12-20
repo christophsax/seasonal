@@ -1,10 +1,11 @@
 #' Static Call of a seas Object
 #' 
-#' In a static call, automatic procedures are substituted by the spec-argument
-#' options that have been selcted by the automatic procedures.
+#' In a 'static' call, the default automatic procedures in the model call
+#' are substituted by the choices they made. 
 #' 
-#' The call can be copy/pasted to a script and used for further manipulations or
-#' future evaluation of the same model.
+#' If \code{evaluate = TRUE}, the call is evaluated. The call can be copy/pasted 
+#' to a script and used for further manipulations or future evaluation of the 
+#' same model.
 #' 
 #' By default, the static call is tested. It is executed and compared to the 
 #' input call. If the final series is not identical, a message is returned.
@@ -22,12 +23,12 @@
 #' @param test logical. By default the static call is executed and compared to 
 #'   the input call. If the final series is not identical, a message is 
 #'   returned. If \code{FALSE}, no test is performed (faster).
-#' @param fail logical, if \code{TRUE}, differences will cause an error. Ignored 
+#' @param fail logical. If \code{TRUE}, differences will cause an error. Ignored 
 #'   if \code{test = FALSE}.
-#' @param eval logical, should be call be evaluated.
-#' @return Object of class \code{"call"}. Static call of an object of class
-#'   \code{seas}. Can be copy/pasted into an R script.
-#'   
+#' @param evaluate logical. If \code{TRUE}, the call is evaluated.
+#' @return Object of class \code{"call"}. Or an object of class \code{"seas"} 
+#'   if \code{evaluate = TRUE}.
+#' @seealso \code{\link[stats]{getCall}} to extract the actual call.
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #'   
 #' @references Vignette with a more detailed description: 
@@ -44,15 +45,18 @@
 #' \dontrun{
 #' 
 #' m <- seas(AirPassengers)
-#' static(m)
-#' static(m, test = FALSE)  # much faster
-#' static(m, eval = TRUE)   # returns an object of class "seas"
+#' getCall(m)                   # default call
+#' static(m)                    # static call
+#' static(m, test = FALSE)      # much faster
+#' static(m, evaluate = TRUE)   # returns an object of class "seas"
 #' 
 #' m <- seas(AirPassengers, x11 = "")
-#' static(m, x11.filter = TRUE)
+#' 
+#' static(m, x11.filter = TRUE) # also fixes the X-11 filter (with a warning)
+#' static(m, coef = TRUE)       # also fixes the coefficients
 #' }
 static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE, 
-                   fail = FALSE, eval = FALSE){
+                   fail = FALSE, evaluate = FALSE){
 
   if (!inherits(x, "seas")){
     stop("first argument must be of class 'seas'")
@@ -121,8 +125,8 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
     }
   }
 
-  if (eval){
-    return(eval(z, envir = sys.frame(-1)))
+  if (evaluate){
+    return(eval(z, envir = parent.frame()))
   }
 
   z

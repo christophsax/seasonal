@@ -2,19 +2,42 @@
 % Please edit documentation in R/update.R
 \name{predict.seas}
 \alias{predict.seas}
-\title{Predict Method}
+\title{Seasonal Adjusted Series}
 \usage{
 \method{predict}{seas}(object, newdata, ...)
 }
 \arguments{
-\item{object}{an object of class \code{"seas"}, usually, a result of a 
-call to \code{\link{seas}}.}
+\item{object}{an object of class \code{"seas"}.}
 
-\item{newdata}{an object of class \code{"ts"}}
+\item{newdata}{an object of class \code{"ts"}. new data values for the 
+\code{x} argument in the \code{\link{seas}} function.}
 
-\item{...}{not used}
+\item{...}{further arguments, passed to \code{\link{update.seas}}, to 
+re-evaluate the model.}
+}
+\value{
+Object of class \code{"ts"}.
 }
 \description{
-Predict Method
+Returns the seasonally adjusted series of an
+(optionally re-evaluated) model of class \code{"seas"}. Without further
+arguments, this is equivalent to a call to the \code{\link{final}} function.
+}
+\details{
+With the \code{newdata} argument supplied, the \code{"seas"} object is re-
+evaluated, using the original model call. This is equivalent of calling 
+\code{final(update(m, x = newdata))}.
+}
+\examples{
+\dontrun{
+# Using data from Dec. 59 to estimate a model
+ap.short <- window(AirPassengers, end = c(1959, 12))
+m <- seas(ap.short)
+predict(m)
+final(m)     # equivalent
+
+# Use Dec. 59 model specification to estimate data up to Dec. 60
+predict(m, AirPassengers)
+}
 }
 

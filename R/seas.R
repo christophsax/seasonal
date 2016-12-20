@@ -5,7 +5,9 @@
 #' seasonal adjustment that works well in most circumstances. Via the \code{...}
 #' argument, it is possible to invoke almost all options that are available in
 #' X-13ARIMA-SEATS (see  details). The default options of \code{seas} are listed
-#' as explicit arguments and are  discussed in the arguments section.
+#' as explicit arguments and are  discussed in the arguments section. A
+#' full-featured graphical user interface can be accessed by the 
+#' \code{\link{view}} function.
 #' 
 #'  It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
 #' \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
@@ -50,7 +52,7 @@
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
 #'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values 
 #'   are substituted by -99999.
-#' @param out   logical, should the X-13ARIMA-SEATS standard output be saved in 
+#' @param out   logical. Should the X-13ARIMA-SEATS standard output be saved in 
 #'   the \code{"seas"} object? (this increases object size substantially, it is 
 #'   recommended to re-evaluate the model using the \code{\link{out}} function 
 #'   instead.)
@@ -86,16 +88,16 @@
 #'   
 #'   The \code{final} function returns the final adjusted series, the 
 #'   \code{plot} method shows a plot with the unadjusted and the adjusted 
-#'   series. \code{summary} gives an overview of the regARIMA model. 
-#'   
-#' @seealso \code{\link{static}}, to return the static call that is needed to 
-#'   replicate an automatic model
+#'   series. \code{summary} gives an overview of the regARIMA model. The 
+#'   \code{\link{udg}} function returns diagnostical statistics.
+#'  
+#' @seealso \code{\link{view}}, for accessing the graphical user interface.
+#' @seealso \code{\link{update.seas}}, to update an existing \code{"seas"} 
+#'   model.
+#' @seealso \code{\link{static}}, to return the 'static' call, with automated
+#'   procedures substituted by their choices.
 #' @seealso \code{\link{series}}, for universal X-13 table series import.
-#' @seealso \code{\link{out}}, for the import of X-13 text files
-#' @seealso \code{\link{inspect}}, to interactively inspect a seasonal 
-#'   adjustment model.
-#' @seealso \code{\link{plot.seas}}, for diagnostical plots.
-#' @seealso \code{\link{udg}}, for diagnostical statistics.
+#' @seealso \code{\link{out}}, to view the full X-13 diagnostical output.
 #'   
 #' @references Vignette with a more detailed description: 
 #'   \url{http://www.seasonal.website/seasonal.html}
@@ -214,7 +216,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   series.name <- gsub('[\'\\"]', '', series.name)
   series.name <- gsub(':', '_', series.name)
 
-  env.cl <- sys.frame(-1)  # environment where seas was called
+  # parent.frame() <- sys.frame(-1)  # environment where seas was called
 
   # using the list argument instead of '...''
   if (is.null(list)){
@@ -222,11 +224,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
     # save call as list with evaluated arguments
     cl <- match.call(seas, z$call)
-    z$list <- lapply(as.list(cl)[-1], eval, envir = env.cl) 
+    z$list <- lapply(as.list(cl)[-1], eval, envir = parent.frame()) 
 
   } else {
     # save list with evaluated arguments
-    z$list <- lapply(list, eval, envir = env.cl)   
+    z$list <- lapply(list, eval, envir = parent.frame())   
 
     if (!inherits(list, "list")){
       stop("the 'list' argument mus be of class 'list'")
@@ -252,7 +254,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     list <- list[!(names(list) %in% dl)]   
   }
   
-
   # check series
   if (!inherits(x, "ts")){
     stop("'x' argument is not a time series.")
