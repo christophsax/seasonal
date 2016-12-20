@@ -101,11 +101,11 @@ easily generated from the automatic model:
     static(m)
     static(m, coef = TRUE)  # also fixes the coefficients
     
-If you have *Shiny* installed, the `inspect` command offers an easy  way to
-analyze and modify a seasonal adjustment procedure (see the section below for
-details):
+If you have [seasonalview][seasonalview] installed, the `view` command offers an 
+easy way to analyze and modify a seasonal adjustment procedure (see the section 
+below for details):
 
-    inspect(m)
+    view(m)
 
 
 
@@ -171,6 +171,21 @@ As an alternative to the `...` argument, spec-arguments can  also be supplied as
 a named list. This is useful for programming:
 
     seas(list = list(x = AirPassengers, x11 = ""))
+
+Additionally, `"seas"` objects can be altered using the `update` method. It
+uses the same syntax as the `seas` function. The following example turns off
+trading day adjustment and switches the adjustment method to X-11:
+
+    update(m, regression.variables = "td", x11 = "")
+
+A common use of `update` involves the recomputing with an `x` argument containing new data:
+
+    update(m, x = unemp)
+
+Lastly, a `predict` method can be used to extract the final series from an
+updated call, using the familar `newdata` argument: 
+
+    predict(m, newdata = unemp)
 
 
 ### Output
@@ -317,40 +332,35 @@ There are two kind of seasonal adjustments in production use:
 This section shows how both tasks can be accomplished with *seasonal* and basic R.
 
 
-#### Storing calls and batch processing
+#### Storing models and batch processing
 
-`seas` calls are R objects of the standard class `"call"`. Like any R object,
-calls can be stored in a list. In order to extract the call of a `"seas"`
-object, you can access the `$call` element or extract the static call with
-`static()`. For example,
+Seasonal adjustment models can be stored (using `save`) and re-evaluated at a
+later date when new data becomes available.
 
-    # two different models for two different time series
-    m1 <- seas(fdeaths, x11 = "")
-    m2 <- seas(mdeaths, x11 = "")
+    ap.short <- window(AirPassengers, end = c(1959, 12))
+    m <- seas(ap.short)
 
-    l <- list()
-    l$c1 <- static(m1)  # static call (with automated procedures substituted)
-    l$c2 <- m2$call     # original call
+The `static` function comes
+particularly handy to save the specifics of a model (e.g., outliers, ARIMA
+model) for future use. Often, it is desirable to store the following 'static'
+version of the model where the default automatic procedures in the model call
+are substituted by the choices they made. For example, in the
+model above, the automated procedures decided to perform a logarithmic pre-
+transformation of the data, to use an (0 1 1)(0 1 1) ARIMA model, to use trading
+day correction and to add an additive outlier in May, 1951. The static function
+'hard-codes' these findings into the model call, so that these decisions would
+not be re-evaluated at a later date:
 
+    m.static <- static(m, evaluate = TRUE) 
 
-The list can be stored and re-evaluated if new data becomes available:
-
-    ll <- lapply(l, eval)
-
-
-which returns another list containing the re-evaluated `"seas"` objects. If you 
-want to extract the final series, use:
-
-    do.call(cbind, lapply(ll, final))
-
-
-Of course, you also can extract any other series, e.g.:
-
-    # seasonal component of an X11 adjustment, see ?series
-    do.call(cbind, lapply(ll, series, "d10"))
+Either the static or the automated model can be re-evaluated when new data
+becomes available:
+    
+    update(m, x = AirPassengers)
+    update(m.static, x = AirPassengers)
 
 
-#### Automated adjustment of multiple series
+#### Automated adjustment of large numbers of series
 
 X-13 can also be applied to a large number of series, using automated adjustment
 methods. This can be accomplished with a loop or an apply function. It is useful
