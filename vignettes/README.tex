@@ -1,15 +1,3 @@
-\textbf{No separate binary download required anymore!} \emph{seasonal}
-now depends on the
-\href{https://cran.r-project.org/package=x13binary}{x13binary} package
-to access pre-built binaries of X-13ARIMA-SEATS for all platforms. Many
-thanks to Dirk Eddelbuettel for the fantastic work on x13binary!
-
-Installing seasonal \emph{and} the binaries is now as easy as:
-
-\begin{verbatim}
-install.packages("seasonal")
-\end{verbatim}
-
 \section{Introduction}\label{introduction}
 
 \emph{seasonal} is an easy-to-use and full-featured R-interface to
@@ -19,9 +7,15 @@ Bureau}. X-13ARIMA-SEATS combines and extends the capabilities of the
 older X-12ARIMA (developed by the Census Bureau) and TRAMO-SEATS
 (developed by the Bank of Spain).
 
+\emph{seasonal} depends on the
+\href{https://cran.r-project.org/package=x13binary}{x13binary} package
+(by Dirk Eddelbuettel and Christoph Sax) to access pre-built binaries of
+X-13ARIMA-SEATS for all platforms and \textbf{does not require any
+manual installation}.
+
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/inspect.jpg}
+\includegraphics[width=\textwidth]{images/view.jpg}
 \caption{Graphical user interface for X-13}
 \end{figure}
 
@@ -45,10 +39,11 @@ where the examples from the official X-13ARIMA-SEATS
 \href{http://www.census.gov/ts/x13as/docX13ASHTML.pdf}{manual} are
 reproduced in R.
 
-\emph{seasonal} includes a \hyperref[inspect]{graphical user interface}
-that facitlitates the use of X-13 both for beginners and advanced users.
-The final sections of this vignette cover additional topics:
-\hyperref[chinese-new-ux5cux2520year-ux5cux2520indian-diwali-in-other-customized-holidays]{User
+\emph{seasonal} includes a \hyperref[graphical-user-interface]{graphical
+user interface} that facitlitates the use of X-13 both for beginners and
+advanced users. The final sections of this vignette cover additional
+topics:
+\hyperref[chinese-new-year-indian-diwali-and-other-customized-holidays]{User
 defined holidays}, such as Chinese New Year, the
 \hyperref[production-use]{use of seasonal for production}, and the
 \hyperref[import-x-13-models-and-series]{import of existing X-13 model
@@ -56,7 +51,7 @@ specs} to R.
 
 \hyperdef{}{installation}{\section{Installation}\label{installation}}
 
-Since version 1.2, \emph{seasonal} relies on the
+\emph{seasonal} relies on the
 \href{https://cran.r-project.org/package=x13binary}{x13binary} package
 to access prebuilt binaries of X-13ARIMA-SEATS. To install both
 packages, type to the R console:
@@ -345,48 +340,52 @@ outlier types.
 identify(m)
 \end{verbatim}
 
-\hyperdef{}{inspect}{\section{Inspect}\label{inspect}}
+\hyperdef{}{graphical-user-interface}{\section{Graphical User
+Interface}\label{graphical-user-interface}}
 
-The \texttt{inspect} function is a graphical tool for choosing a
-seasonal adjustment model, using
-\emph{\href{http://shiny.rstudio.com}{Shiny}}, with the same structure
-as the \href{http://www.seasonal.website}{demo website of seasonal}. To
-install the latest version of Shiny, type:
-
-\begin{verbatim}
-install.packages("shiny")
-\end{verbatim}
-
-The goal of \texttt{inspect} is to summarize all relevant options, plots
-and statistics that should be usually considered. \texttt{inspect} uses
-a \texttt{"seas"} object as its main argument:
+The \texttt{view} function is a graphical tool for choosing a seasonal
+adjustment model, using the new
+\href{https://cran.r-project.org/package=seasonalview}{seasonalview}
+package, with the same structure as the
+\href{http://www.seasonal.website}{demo website of seasonal}. To install
+\href{https://cran.r-project.org/package=seasonalview}{seasonalview},
+type:
 
 \begin{verbatim}
-inspect(m)
+install.packages("seasonalview")
 \end{verbatim}
 
-Frequently used options can be modified using the drop down selectors in
+The goal of \texttt{view} is to summarize all relevant options, plots
+and statistics that should be usually considered. \texttt{view} uses a
+\texttt{"seas"} object as its main argument:
+
+\begin{verbatim}
+view(m)
+\end{verbatim}
+
+Frequently used options can be modified using the drop-down selectors in
 the upper left panel. Each change will result in a re-estimation of the
 seasonal adjustment model. The R-call, the output and the summary are
 updated accordingly.
 
 Alternatively, the R-Call can be modified manually in the lower left
 panel. Press `Run Call' to re-estimate the model and to adjust the
-option selectors, the output, and the summary. With the `Close and
-Import' button, inspect is closed and the call is imported to R. The
-`static' button substitutes automatic procedures by the automatically
-chosen spec-argument options, in the same way as \texttt{static}.
+options selectors, the output, and the summary. With the `To Console'
+button, \texttt{view} is closed and an updated model returned to the R
+console. The `Static' button substitutes automatic procedures by their
+corresponding static spec-argument options, in the same way as the
+\texttt{static} function.
 
-The views in the upper right panel can be selected from the drop down
-menu. The views can also be customized (see \texttt{?inspect} for
-details)
+The views in the upper right panel can be selected from the drop-down
+menu.
 
-The lower right panel shows the summary, as descibed in the help page of
-\texttt{?summary.seas}. The `Full X-13 output' button opens the complete
-output of X-13 in a separate tab or window.
+The lower right panel shows the summary, including the same information
+as the \texttt{summary} method. The `X-13 output' button opens the
+complete output of X-13 in a separate tab or window.
 
-\section{Chinese New Year, Indian Diwali and other customized
-holidays}\label{chinese-new-year-indian-diwali-and-other-customized-holidays}
+\hyperdef{}{chinese-new-year-indian-diwali-and-other-customized-holidays}{\section{Chinese
+New Year, Indian Diwali and other customized
+holidays}\label{chinese-new-year-indian-diwali-and-other-customized-holidays}}
 
 seasonal includes \texttt{genhol}, a function that makes it easy to
 model user-defined holiday regression effects. \texttt{genhol} is an R

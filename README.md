@@ -31,10 +31,11 @@ replicate in basic R. Read the [Input](#input) and [Output](#output) sections
 and have a look at the [website of seasonal][examples], where the examples from
 the official X-13ARIMA-SEATS [manual][manual] are reproduced in R.
 
-*seasonal* includes a [graphical user interface](#inspect) that facitlitates the
+*seasonal* includes a [graphical user interface](#graphical-user-interface) that facitlitates the
 use of X-13 both for beginners and advanced users. The final sections of this
-vignette cover additional topics: [User defined holidays](#chinese-new- year-
-indian-diwali-in-other-customized-holidays), such as Chinese New Year, the [use
+vignette cover additional topics: 
+[User defined holidays](#chinese-new-year-indian-diwali-and-other-customized-holidays), 
+such as Chinese New Year, the [use
 of seasonal for production](#production-use), and the [import of existing X-13
 model specs](#import-x-13-models-and-series) to R.
 
