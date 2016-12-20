@@ -12,7 +12,8 @@
 
 \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php} 
 
-\url{http://india.gov.in/calendar}, with help from Pinaki Mukherjee
+Ministry of Statistics and Programme Implementation, with help from Pinaki 
+  Mukherjee
 }
 \description{
 Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in 
