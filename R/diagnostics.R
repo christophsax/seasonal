@@ -139,7 +139,7 @@ transformfunction <- function(x){
   
   if (x$spc$transform$`function` == "auto"){
     aictrans <- udg(x, 'aictrans', fail = FALSE)
-    if (is.null(aictrans)) aictrans <- ""  # to make grepl work
+    if (is.null(aictrans)) aictrans <- ""  # to make grepl work
     if (grepl("Log", aictrans)){
       z <- "log"
     } else {
