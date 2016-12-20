@@ -125,20 +125,8 @@ if (x13binary::supportedPlatform()){
   # X-13ARIMA-SEATS pacf
   x13.pacf <- series(m, "identify.pacf")
 
-  m <- seas(AirPassengers)
   update(m, x11 = "")
   update(m, x = sqrt(AirPassengers), x11 = "")
-
-  # 'update' can be also used with lapply (or mapply)
-
-  # a list of time series
-  dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
-
-  # use 'seas' via lapply
-  ll <- lapply(dta, seas, x11 = "")
-
-  # use 'update' via lapply
-  lapply(ll, update, arima.model = c(0, 1, 1, 0, 1, 1))
 
 }
 
