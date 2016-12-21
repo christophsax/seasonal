@@ -7,12 +7,13 @@
 \title{Seasonal Adjustment Plots}
 \usage{
 \method{plot}{seas}(x, outliers = TRUE, trend = FALSE,
-  main = "Original and Adjusted Series", transform = c("none", "PC", "PCY"),
-  ...)
+  main = "Original and Adjusted Series", xlab = "Time", ylab = "",
+  transform = c("none", "PC", "PCY"), ...)
 
-residplot(x, outliers = TRUE, main = "residuals of regARIMA", ...)
+residplot(x, outliers = TRUE, main = "residuals of regARIMA",
+  xlab = "Time", ylab = "", ...)
 
-\method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), ...)
+\method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), main, ...)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}, usually, a result of a call to 
@@ -23,6 +24,10 @@ residplot(x, outliers = TRUE, main = "residuals of regARIMA", ...)
 \item{trend}{logical, should the trend be drawn.}
 
 \item{main}{character string, title of the graph.}
+
+\item{xlab}{character string, title for the x axis.}
+
+\item{ylab}{character string, title for the y axis.}
 
 \item{transform}{character string, optionally transform the data to period to period  \code{"PC"} or year to year\code{"PCY"} percentage change rates.}
 

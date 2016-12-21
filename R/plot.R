@@ -19,6 +19,8 @@
 #' @param choice     character string, \code{"seasonal"} (default) or 
 #'   \code{"irregular"}.
 #' @param main    character string, title of the graph.
+#' @param xlab    character string, title for the x axis.
+#' @param ylab    character string, title for the y axis.
 #' @param transform   character string, optionally transform the data to period to period  \code{"PC"} or year to year\code{"PCY"} percentage change rates. 
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
@@ -63,7 +65,9 @@
 #' }
 plot.seas <- function(x, outliers = TRUE, trend = FALSE, 
                       main = "Original and Adjusted Series", 
-                      transform = c("none", "PC", "PCY"), ...){
+                      xlab = "Time", ylab = "", 
+                      transform = c("none", "PC", "PCY"), 
+                      ...){
 
   transform <- match.arg(transform)
 
@@ -90,13 +94,14 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
     }
   }
 
-
-  ts.plot(cbind(orignalx, finalx),
+  plot(cbind(orignalx, finalx),
           col = c("black", "red"), 
           lwd = c(1, 2),
-          main = main, ...
+          main = main, plot.type = "single", 
+          xlab = xlab, 
+          ylab = ylab, ...
   )
-  
+
   if (identical(trend, TRUE)){
     trendx <- x$data[, 'trend']
     if (transform == "PC") trendx <- (lag(trendx, -1) - trendx) / lag(trendx, -1)
@@ -115,14 +120,14 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
 
 #' @rdname plot.seas
 #' @export
-residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", ...){
+residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", 
+                      xlab = "Time", ylab = "", ...){
   if(is.null(resid(x))){
     stop("no residuals to plot")
   }
-  ts.plot(resid(x), ylab = "value",
-          main = main, ...
-  )
-  
+
+  plot(resid(x), main = main, ylab = ylab, xlab = xlab, plot.type = "single", ...)
+
   if (identical(outliers, TRUE)){
     ol.ts <- outlier(x)
     sym.ts <- ol.ts
@@ -137,22 +142,25 @@ residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", ...){
 #' @export
 #' @import stats
 #' @method monthplot seas
-monthplot.seas <- function(x, choice = c("seasonal", "irregular"), ...){
+monthplot.seas <- function(x, choice = c("seasonal", "irregular"), main, ...){
+
   choice <- match.arg(choice)
   if (choice == "seasonal"){
     if(!'seasonal' %in% colnames(x$data)){
       stop("model has no seasonal component")
     }
-
-    monthplot(x$data[,'seasonal'], ylab = "", lwd = 2, col = "red", main = "Seasonal Component, SI Ratio", ...)
+    monthplot(x$data[,'seasonal'], ylab = "", lwd = 2, col = "red", ...)
+    if (missing("main")) main <- "Seasonal Component, SI Ratio"
+    title(main = main)
     monthplot(siratio(x), col = "blue", type = "h", add = TRUE)
   }
   if (choice == "irregular"){
     if(!'irregular' %in% colnames(x$data)){
       stop("model has no irregular component")
     }
-
     monthplot(x$data[,'irregular'], ylab = "", main = "Irregular Component")
+    if (missing("main")) main <- "Irregular Component"
+    title(main = main)
   }
 }
 
