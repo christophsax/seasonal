@@ -139,8 +139,7 @@ NULL
 #' @format Time series of class \code{"ts"}.
 #' 
 #' @source Central Statistics Office of the Ministry of Statistics and Programme 
-#' Implementation 
-#' \url{http://mospi.nic.in/Mospi_New/upload/iip/table3_04_05.xls}, with help 
+#' Implementation, with help 
 #' from Pinaki Mukherjee
 #' 
 #' @name iip
