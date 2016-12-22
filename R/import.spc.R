@@ -1,4 +1,4 @@
-#' Import X-13 \code{.spc} Files (experimental)
+#' Import X-13 \code{.spc} Files
 #' 
 #' Utility function to import \code{.spc} files from X-13. It generates a list
 #' of calls to \code{seas} (and  \code{import.ts}) that can be run in R.
@@ -302,7 +302,7 @@ rem_defaults_from_args <- function(x) {
 }
 
 
-#' Import Time Series from X-13 Data Files (experimental)
+#' Import Time Series from X-13 Data Files
 #' 
 #' Utility function to read time series from X-13 data files. A call to
 #' \code{import.ts} is constructed and included in the output of

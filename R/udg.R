@@ -13,6 +13,8 @@
 #'   matrix, if possible?
 #' @param fail   logical; if \code{TRUE}, an error is droped if an element of 
 #'   \code{stats} is missing in \code{names(udg(x))}.
+#' @param data.frame   logical; if \code{TRUE}, the output is returned as a 
+#'   data.frame. This is useful for further processing (experimental).
 #' @param ...   further arguments (not used)
 #'   
 #' @return \code{udg} returns a named vector or list, containing the content of 
@@ -58,7 +60,7 @@
 #' udg(m)[c("f3.m01", "f3.m02", "qsori")]
 #' }
 #' @export
-udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
+udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE, data.frame = FALSE){
   stopifnot(inherits(x, "seas"))
 
   xx <- x$udg
@@ -105,9 +107,25 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
       z[is.char][is.long] <- ll
     }
   }
-  if (simplify) simplify2array(z) else z
-}
+  z <- if (simplify) simplify2array(z) else z
 
+  if (data.frame){
+    if (is.list(z)){
+      z.len <- vapply(z, length, 0)
+
+      if (length(unique(z.len)) > 1){
+        most.common <- as.integer(names(table(z.len)[1]))
+        message("Elements are of different length, only using elements of length ", most.common, ", which is the most common.")
+        z <- simplify2array(z[z.len == most.common])
+      } else {
+        z <- simplify2array(z)
+      }
+    }
+
+    z <- data.frame(key = names(z), value = unname(z), stringsAsFactors = FALSE)
+  }
+  z
+}
 
 
 #' @rdname udg

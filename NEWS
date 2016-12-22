@@ -1,4 +1,4 @@
-1.3.10  2016-??-??
+1.3.11  2016-??-??
 --------------------------------------------------------------------------------
 
 new features
@@ -7,9 +7,9 @@ new features
     Use the 'view()' function instead of 'inspect', which is deprecated and will be defunct soon.
 
 enhancements
-  - new update() method, updates a "seas" object.
+  - new update() method, updates a "seas" object, works with R generic.
   - new predict() method, returns the final series of an (updated) "seas" 
-    object.
+    object, works with R generic.
   - static() function has new argument 'x11.static'. If TRUE, moving averages 
     of X-11 are fixed as well. 
     (Thanks to Brian Monsell)
@@ -17,6 +17,9 @@ enhancements
     evaluated call, an object of class "seas".
   - import.spc() function has new argument 'text', to accept the content of an 
     X-13 .spc file as a character vector.
+  - udg() and summary.seas() gain an optional 'data.frame' argument, which 
+    returns their info as a data.frame. Useful for further processing.
+    (experimental)
 
 bug fixes
   - import.spc imports arima models with commas. E.g., (0, 1, 1). 
@@ -27,11 +30,12 @@ bug fixes
   - missing udg element in summary no longer leads to an error.
   - xreg specification ensures regression spec is used. 
     (Thanks to Jose Pavia)
-  - outlier plotted correctly for bi-annual data (SEATS only)
+  - outlier plotted correctly for bi-annual data (SEATS only).
 
 minor changes
-  - U.S. unemployment as example series (experimental)
-  - 'plot', 'residplot' and 'monthplot' are easier to customize
+  - U.S. unemployment as example series (experimental).
+  - 'plot', 'residplot' and 'monthplot' are easier to customize.
+  - import.spc() and import.ts() no longer experimental. They are here to stay.
 
 
 1.3.0  2016-08-07
