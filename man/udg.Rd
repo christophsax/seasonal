@@ -9,7 +9,7 @@
 \alias{udg}
 \title{Diagnostical Statistics}
 \usage{
-udg(x, stats = NULL, simplify = TRUE, fail = TRUE)
+udg(x, stats = NULL, simplify = TRUE, fail = TRUE, data.frame = FALSE)
 
 qs(x)
 
@@ -33,6 +33,9 @@ matrix, if possible?}
 
 \item{fail}{logical; if \code{TRUE}, an error is droped if an element of 
 \code{stats} is missing in \code{names(udg(x))}.}
+
+\item{data.frame}{logical; if \code{TRUE}, the output is returned as a 
+data.frame. This is useful for further processing (experimental).}
 
 \item{...}{further arguments (not used)}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.spc.R
 \name{import.ts}
 \alias{import.ts}
-\title{Import Time Series from X-13 Data Files (experimental)}
+\title{Import Time Series from X-13 Data Files}
 \usage{
 import.ts(file, format = "datevalue", start = NULL, frequency = NULL,
   name = NULL)

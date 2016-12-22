@@ -3,7 +3,7 @@
 \name{import.spc}
 \alias{import.spc}
 \alias{print.import.spc}
-\title{Import X-13 \code{.spc} Files (experimental)}
+\title{Import X-13 \code{.spc} Files}
 \usage{
 import.spc(file, text = NULL)
 
