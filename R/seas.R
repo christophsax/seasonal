@@ -115,8 +115,12 @@
 #' 
 #' @examples
 #' \dontrun{
+#' Basic call
 #' m <- seas(AirPassengers) 
 #' summary(m)
+#' 
+#' # Graphical user interface
+#' view(m)
 #' 
 #' # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
 #' # (consult the X-13ARIMA-SEATS manual for many more options and the list of
@@ -150,8 +154,12 @@
 #' static(m, test = FALSE)  # no testing (much faster)
 #' static(m, coef = TRUE)  # also fixes the coefficients
 #' 
+#' # updating an existing model
+#' update(m, x11 = "")
+#' 
 #' # specific extractor functions
 #' final(m) 
+#' predict(m)   # equivalent
 #' original(m) 
 #' resid(m) 
 #' coef(m)
@@ -188,8 +196,17 @@
 #' AirPassengersNA[20] <- NA 
 #' final(seas(AirPassengersNA, na.action = na.x13))
 #' 
-#' # inspect tool
-#' inspect(m)
+#' ## performing 'composite' adjustment
+#' m.direct <- seas(ldeaths, x11 = "")
+#' final.direct <- final(m.direct)
+#' m.indirect <- lapply(list(mdeaths, fdeaths), seas, x11 = "")
+#' 
+#'  # not very efficient, but keeps time series properties
+#' final.indirect <- Reduce(`+`, lapply(m.indirect, final)) 
+#' 
+#' ts.plot(cbind(final.indirect, final(m.direct)), col = 1:2)
+#' legend("topright", legend = c("disagregated", "aggregated"), lty = 1, col = 1:2)
+#' 
 #' }
 #' 
 seas <- function(x, xreg = NULL, xtrans = NULL, 
