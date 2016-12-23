@@ -4,7 +4,8 @@
 new features
   - seasonal now uses the graphical user interface from the new seaonalview 
     package. To install from CRAN, use: install.packages('seasonalview')
-    Use the 'view()' function instead of 'inspect', which is deprecated and will be defunct soon.
+    Use the 'view()' function instead of 'inspect', which is deprecated and will 
+    be defunct soon.
 
 enhancements
   - new update() method, updates a "seas" object, works with R generic.
@@ -39,7 +40,7 @@ minor changes
 
 documentation
   - reflect switch from inspect() to view()
-  - documentation of new functions
+  - documentation for update.seas() and predict.seas()
   - updated vignette
   - example on 'composite' in ?seas
 
