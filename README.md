@@ -142,7 +142,7 @@ For instance, example 1 in section 7.1 from the [manual][manual],
 translates to R in the following way:
 
     seas(AirPassengers,
-         x11 = ""),
+         x11 = "",
          arima.model = "(0 1 1)"
     )
     
@@ -178,14 +178,15 @@ trading day adjustment and switches the adjustment method to X-11:
 
     update(m, regression.variables = "td", x11 = "")
 
-A common use of `update` involves the recomputing with an `x` argument containing new data:
+A common use of `update` involves the recomputing with an `x` argument
+containing new data:
 
-    update(m, x = unemp)
+    update(m, x = sqrt(AirPassengers))
 
 Lastly, a `predict` method can be used to extract the final series from an
 updated call, using the familar `newdata` argument: 
 
-    predict(m, newdata = unemp)
+    predict(m, newdata = sqrt(AirPassengers))
 
 
 ### Output
@@ -202,7 +203,7 @@ Because the `forecast.save = "forecasts"` argument has not been specified in the
 model call, `series` re-evaluates the call with the 'forecast' spec enabled. It
 is also possible to return more than one output table at the same time:
 
-    series(m, c("forecast.forecasts", "d1"))
+    series(m, c("forecast.forecasts", "s12"))
    
 You can use either the unique short names of X-13 (such as `d1`), or the
 long names (such as `forecasts`). Because the long table names are not unique,
@@ -224,7 +225,7 @@ allows you to separate these specs from the basic model call:
 
 The `udg` function provides access to a large number of diagnostical statistics:
 
-    udg(x, "x13mdl")
+    udg(m, "x13mdl")
     
 If you are using the HTML version of X-13, the `out` function shows the content
 of the main output in the browser:
@@ -240,7 +241,6 @@ outliers. Optionally, it also draws the trend of the seasonal decomposition:
 
     m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
     plot(m)
-    plot(m, trend = TRUE)
 
 The `monthplot` function allows for a monthwise plot (or quarterwise, with the
 same function name) of the seasonal and the SI component:
@@ -311,10 +311,9 @@ In order to adjust Indian industrial production for Diwali effects, use, e.g.,:
     # cny, diwali, easter: dates of Chinese New Year, Indian Diwali and Easter
     
     seas(iip, 
-    x11 = "",
-    xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
-    regression.usertype = "holiday"
-    )
+         x11 = "",
+         xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
+         regression.usertype = "holiday")
 
 For more examples, including Chinese New Year and complex pre- and post-holiday
 adjustments, see `?genhol`.
@@ -380,7 +379,7 @@ different automated routine.
     l1[is.err]
 
     # return final series of successful evaluations
-    do.cal1(cbind, lapply(l1[!is.err], final))
+    do.call(cbind, lapply(l1[!is.err], final))
 
 
 If you have several cores and want to speed things up, the process is well
