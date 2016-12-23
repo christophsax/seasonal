@@ -134,12 +134,14 @@ static(m)
 static(m, coef = TRUE)  # also fixes the coefficients
 \end{verbatim}
 
-If you have \emph{Shiny} installed, the \texttt{inspect} command offers
-an easy way to analyze and modify a seasonal adjustment procedure (see
-the section below for details):
+If you have
+\href{https://cran.r-project.org/package=seasonalview}{seasonalview}
+installed, the \texttt{view} command offers an easy way to analyze and
+modify a seasonal adjustment procedure (see the section below for
+details):
 
 \begin{verbatim}
-inspect(m)
+view(m)
 \end{verbatim}
 
 \hyperdef{}{input}{\section{Input}\label{input}}
@@ -186,7 +188,7 @@ translates to R in the following way:
 
 \begin{verbatim}
 seas(AirPassengers,
-     x11 = ""),
+     x11 = "",
      arima.model = "(0 1 1)"
 )
 \end{verbatim}
@@ -239,6 +241,30 @@ be supplied as a named list. This is useful for programming:
 seas(list = list(x = AirPassengers, x11 = ""))
 \end{verbatim}
 
+Additionally, \texttt{"seas"} objects can be altered using the
+\texttt{update} method. It uses the same syntax as the \texttt{seas}
+function. The following example turns off trading day adjustment and
+switches the adjustment method to X-11:
+
+\begin{verbatim}
+update(m, regression.variables = "td", x11 = "")
+\end{verbatim}
+
+A common use of \texttt{update} involves the recomputing with an
+\texttt{x} argument containing new data:
+
+\begin{verbatim}
+update(m, x = sqrt(AirPassengers))
+\end{verbatim}
+
+Lastly, a \texttt{predict} method can be used to extract the final
+series from an updated call, using the familar \texttt{newdata}
+argument:
+
+\begin{verbatim}
+predict(m, newdata = sqrt(AirPassengers))
+\end{verbatim}
+
 \hyperdef{}{output}{\section{Output}\label{output}}
 
 \emph{seasonal} has a flexible mechanism to read data from
@@ -258,7 +284,7 @@ the `forecast' spec enabled. It is also possible to return more than one
 output table at the same time:
 
 \begin{verbatim}
-series(m, c("forecast.forecasts", "d1"))
+series(m, c("forecast.forecasts", "s12"))
 \end{verbatim}
 
 You can use either the unique short names of X-13 (such as \texttt{d1}),
@@ -290,7 +316,7 @@ The \texttt{udg} function provides access to a large number of
 diagnostical statistics:
 
 \begin{verbatim}
-udg(x, "x13mdl")
+udg(m, "x13mdl")
 \end{verbatim}
 
 If you are using the HTML version of X-13, the \texttt{out} function
@@ -310,7 +336,6 @@ seasonal decomposition:
 \begin{verbatim}
 m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
 plot(m)
-plot(m, trend = TRUE)
 \end{verbatim}
 
 The \texttt{monthplot} function allows for a monthwise plot (or
@@ -403,10 +428,9 @@ e.g.,:
 # cny, diwali, easter: dates of Chinese New Year, Indian Diwali and Easter
 
 seas(iip, 
-x11 = "",
-xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
-regression.usertype = "holiday"
-)
+     x11 = "",
+     xreg = genhol(diwali, start = 0, end = 0, center = "calendar"), 
+     regression.usertype = "holiday")
 \end{verbatim}
 
 For more examples, including Chinese New Year and complex pre- and
@@ -432,46 +456,42 @@ production use:
 This section shows how both tasks can be accomplished with
 \emph{seasonal} and basic R.
 
-\subsection{Storing calls and batch
-processing}\label{storing-calls-and-batch-processing}
+\subsection{Storing models and batch
+processing}\label{storing-models-and-batch-processing}
 
-\texttt{seas} calls are R objects of the standard class \texttt{"call"}.
-Like any R object, calls can be stored in a list. In order to extract
-the call of a \texttt{"seas"} object, you can access the \texttt{\$call}
-element or extract the static call with \texttt{static()}. For example,
+Seasonal adjustment models can be stored (using \texttt{save}) and
+re-evaluated at a later date when new data becomes available.
 
 \begin{verbatim}
-# two different models for two different time series
-m1 <- seas(fdeaths, x11 = "")
-m2 <- seas(mdeaths, x11 = "")
-
-l <- list()
-l$c1 <- static(m1)  # static call (with automated procedures substituted)
-l$c2 <- m2$call     # original call
+ap.short <- window(AirPassengers, end = c(1959, 12))
+m <- seas(ap.short)
 \end{verbatim}
 
-The list can be stored and re-evaluated if new data becomes available:
+The \texttt{static} function comes particularly handy to save the
+specifics of a model (e.g., outliers, ARIMA model) for future use.
+Often, it is desirable to store the following `static' version of the
+model where the default automatic procedures in the model call are
+substituted by the choices they made. For example, in the model above,
+the automated procedures decided to perform a logarithmic pre-
+transformation of the data, to use an (0 1 1)(0 1 1) ARIMA model, to use
+trading day correction and to add an additive outlier in May, 1951. The
+static function `hard-codes' these findings into the model call, so that
+these decisions would not be re-evaluated at a later date:
 
 \begin{verbatim}
-ll <- lapply(l, eval)
+m.static <- static(m, evaluate = TRUE) 
 \end{verbatim}
 
-which returns another list containing the re-evaluated \texttt{"seas"}
-objects. If you want to extract the final series, use:
+Either the static or the automated model can be re-evaluated when new
+data becomes available:
 
 \begin{verbatim}
-do.call(cbind, lapply(ll, final))
+update(m, x = AirPassengers)
+update(m.static, x = AirPassengers)
 \end{verbatim}
 
-Of course, you also can extract any other series, e.g.:
-
-\begin{verbatim}
-# seasonal component of an X11 adjustment, see ?series
-do.call(cbind, lapply(ll, series, "d10"))
-\end{verbatim}
-
-\subsection{Automated adjustment of multiple
-series}\label{automated-adjustment-of-multiple-series}
+\subsection{Automated adjustment of large numbers of
+series}\label{automated-adjustment-of-large-numbers-of-series}
 
 X-13 can also be applied to a large number of series, using automated
 adjustment methods. This can be accomplished with a loop or an apply
@@ -493,7 +513,7 @@ is.err <- sapply(l1, class) == "try-error"
 l1[is.err]
 
 # return final series of successful evaluations
-do.cal1(cbind, lapply(l1[!is.err], final))
+do.call(cbind, lapply(l1[!is.err], final))
 \end{verbatim}
 
 If you have several cores and want to speed things up, the process is
