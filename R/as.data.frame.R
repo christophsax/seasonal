@@ -30,7 +30,7 @@
 #' as.data.frame(summary(m))
 #' }
 as.data.frame.seas <- function(x, ...){
-  data.frame(date = Date_ts(m$data), m$data) 
+  data.frame(date = Date_ts(x$data), x$data) 
 }
 
 # get 'Date' from a 'ts' object
