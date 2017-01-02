@@ -11,6 +11,7 @@
 #' 
 #' @param x      an object of class \code{"seas"}, \code{"udg"} or \code{"summary.seas"}, usually, a result of a 
 #'                    call to the functions with the same name.
+#' @param ...    unused.
 #' 
 #' @return a \code{data.frame} without row names. 
 #' @method as.data.frame seas

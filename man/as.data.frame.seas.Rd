@@ -15,6 +15,8 @@
 \arguments{
 \item{x}{an object of class \code{"seas"}, \code{"udg"} or \code{"summary.seas"}, usually, a result of a 
 call to the functions with the same name.}
+
+\item{...}{unused.}
 }
 \value{
 a \code{data.frame} without row names.
