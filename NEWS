@@ -1,3 +1,11 @@
+1.4.1  2017-??-??
+--------------------------------------------------------------------------------
+
+  - as.data.frame methods for objects of class "seas", "udg" and "summary.seas" 
+    (still experimental, the experimental 'data.frame' argument from the 
+    previous version is now obsolete).
+
+
 1.4.0  2016-12-23
 --------------------------------------------------------------------------------
 

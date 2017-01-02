@@ -5,8 +5,7 @@
 \alias{summary.seas}
 \title{Summary of a X13-ARIMA-SEATS seasonal adjustment}
 \usage{
-\method{summary}{seas}(object, stats = getOption("seas.stats"),
-  data.frame = FALSE, ...)
+\method{summary}{seas}(object, stats = getOption("seas.stats"), ...)
 
 \method{print}{summary.seas}(x, digits = max(3, getOption("digits") - 3),
   signif.stars = getOption("show.signif.stars"), ...)
@@ -19,9 +18,6 @@ call to \code{\link{seas}}.}
 function. For a list of all possible values, see the \code{\link{udg}} 
 function. If a value is not present, it will be ignored. Values can be 
 specified via \code{options}. See examples.}
-
-\item{data.frame}{logical; if \code{TRUE}, the output is returned as a 
-data.frame. This is useful for further processing (experimental).}
 
 \item{x}{an object of class \code{"summary.seas"}, usually, a result 
 of a call to \code{summary.seas}.}
