@@ -37,6 +37,8 @@
 #' @param signif.stars logical. If \code{TRUE}, 'significance stars' are printed 
 #'                    for each coefficient.
 #' @param \dots       further arguments passed to or from other methods.
+#' @param data.frame   logical; if \code{TRUE}, the output is returned as a 
+#'   data.frame. This is useful for further processing (experimental).
 #' @return \code{summary.seas} returns a list containing the summary statistics 
 #'   included in \code{object}, and computes the following additional 
 #'   statistics:
@@ -69,7 +71,7 @@
 #' }
 #' @method summary seas
 #' @export
-summary.seas <- function(object, stats = getOption("seas.stats"), ...){
+summary.seas <- function(object, stats = getOption("seas.stats"), data.frame = FALSE, ...){
   # build output on top of the input
   z <- object
   
@@ -95,6 +97,15 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
   z$nobs <- nobs(object)
   z$aicc <- unname(udg(object, "aicc", fail = FALSE))
   z$bic <- BIC(object)
+
+  if (data.frame){
+    if (is.null(z$coefficients)) return(NULL)
+    df <- as.data.frame(z$coefficients)
+    colnames(df) <- c("estimate", "std.error", "statistic", "p.value")
+    rownames(df) <- NULL
+    z <- data.frame(term = rownames(z$coefficients), df, stringsAsFactors = FALSE)
+    return(z)
+  }
 
   class(z) <- "summary.seas"
   z
