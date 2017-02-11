@@ -35,9 +35,6 @@ matrix, if possible?}
 \code{stats} is missing in \code{names(udg(x))}.}
 
 \item{...}{further arguments (not used)}
-
-\item{data.frame}{logical; if \code{TRUE}, the output is returned as a 
-data.frame. This is useful for further processing (experimental).}
 }
 \value{
 \code{qs} returns the QS statistics for seasonality of input and

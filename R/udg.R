@@ -13,8 +13,6 @@
 #'   matrix, if possible?
 #' @param fail   logical; if \code{TRUE}, an error is droped if an element of 
 #'   \code{stats} is missing in \code{names(udg(x))}.
-#' @param data.frame   logical; if \code{TRUE}, the output is returned as a 
-#'   data.frame. This is useful for further processing (experimental).
 #' @param ...   further arguments (not used)
 #' @return  \code{qs} returns the QS statistics for seasonality of input and
 #'   output series and the corresponding p-values.
