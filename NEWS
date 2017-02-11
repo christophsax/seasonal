@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
 
 defunct
-  - inspect(), use view() instead
+  - inspect(), use view() instead. Shiny app code removed from package.
 
 
 1.4.0  2016-12-23
