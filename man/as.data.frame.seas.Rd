@@ -2,8 +2,8 @@
 % Please edit documentation in R/as.data.frame.R
 \name{as.data.frame.seas}
 \alias{as.data.frame.seas}
-\alias{as.data.frame.summary.seas}
 \alias{as.data.frame.udg}
+\alias{as.data.frame.summary.seas}
 \title{Coerce Output to \code{data.frame}}
 \usage{
 \method{as.data.frame}{seas}(x, ...)
@@ -46,4 +46,3 @@ as.data.frame(m)
 as.data.frame(summary(m))
 }
 }
-
