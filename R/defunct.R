@@ -41,10 +41,12 @@ arimamodel <- function(x){
 #' }
 #' @export
 inspect <- function(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...){ 
+
+  # print(deparse(substitute(x)))
   msg <- 
-"This function is defunct. The 'seasonal' packages now uses the 
-graphical user interface from the 'seasonalview' package. 
-Please use instead: \n\n    view(x)"
+paste0("This function is defunct. 'seasonal' now uses the 
+graphical user interface from the 'seasonalview' package. \n
+Please use instead: \n\n    view(", deparse(substitute(x)), ")")
   .Defunct(new = "", msg = msg)
 
 }
