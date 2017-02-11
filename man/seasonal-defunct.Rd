@@ -2,24 +2,46 @@
 % Please edit documentation in R/defunct.R
 \name{arimamodel}
 \alias{arimamodel}
+\alias{inspect}
 \title{Defunct Functions}
 \usage{
 arimamodel(x)
+
+inspect(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...)
 }
 \arguments{
-\item{x}{object of class \code{"seas"}}
+\item{x}{an object of class \code{"seas"}.}
+
+\item{fun}{a function or a list of functions (see details)}
+
+\item{check.version}{logical, should the version of shiny be checked}
+
+\item{quiet}{logical, if \code{TRUE} (default), error messages from calls in 
+inspect are not shown in the console}
+
+\item{...}{further arguments, passed on to 
+\code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of 
+version 0.8 can be still used that way)}
 }
 \description{
 The \code{arimamodel} functions is defunct now. Use 
 the more univeral \code{\link{udg}} function.
+
+The \code{inspect} functions is defunct now. Use 
+the extended \code{\link{view}} function instead.
 }
 \examples{
 \dontrun{
 m <- seas(AirPassengers)
 udg(x, "x13mdl")
 }
+\dontrun{
+m <- seas(AirPassengers)
+view(m)
+}
 }
 \seealso{
 \code{\link{udg}}, for universal access to X-13 statistics
-}
 
+\code{\link{view}}, for an extended graphical user interface.
+}

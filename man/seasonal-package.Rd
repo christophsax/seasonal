@@ -2,8 +2,8 @@
 % Please edit documentation in R/seasonal-package.R
 \docType{package}
 \name{seasonal-package}
-\alias{seasonal}
 \alias{seasonal-package}
+\alias{seasonal}
 \title{seasonal: R interface to X-13ARIMA-SEATS}
 \description{
 \pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the
@@ -72,12 +72,12 @@ written you may have to edit \code{.Rprofile} manually. (Or add a second,
 overwriting line to it.) For other ways to set an environmental variable
 permanently in R, see \code{\link{Startup}}.
 }
-\author{
-Christoph Sax \email{christoph.sax@gmail.com}
-}
+
 \seealso{
 \code{\link{seas}} for the core function and more information on
   package usage.
 }
+\author{
+Christoph Sax \email{christoph.sax@gmail.com}
+}
 \keyword{package}
-

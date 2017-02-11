@@ -25,4 +25,3 @@ x <- seas(AirPassengers)
 outlier(x)
 }
 }
-

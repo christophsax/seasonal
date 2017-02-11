@@ -26,4 +26,3 @@ seas(AirPassengersNA, na.action = na.x13)
 }
 
 }
-

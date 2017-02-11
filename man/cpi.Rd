@@ -19,4 +19,3 @@ data(seasonal)
 cpi
 }
 \keyword{datasets}
-

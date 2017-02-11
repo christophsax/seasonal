@@ -2,8 +2,8 @@
 % Please edit documentation in R/seasonal-package.R
 \docType{data}
 \name{SPECS}
-\alias{INSPDATA}
 \alias{SPECS}
+\alias{INSPDATA}
 \title{List of Available X-13ARIMA-SEATS Outputs}
 \format{An object of class \code{"data.frame"}}
 \source{
@@ -18,4 +18,3 @@ Official X-13ARIMA-SEATS manual:
   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \keyword{datasets}
-

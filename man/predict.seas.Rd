@@ -40,4 +40,3 @@ final(m)     # equivalent
 predict(m, AirPassengers)
 }
 }
-

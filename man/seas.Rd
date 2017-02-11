@@ -236,4 +236,3 @@ Vignette with a more detailed description:
 
 \code{\link{out}}, to view the full X-13 diagnostical output.
 }
-

@@ -15,7 +15,7 @@ the Bank of Spain).
 Dirk Eddelbuettel and Christoph Sax) to access pre-built binaries of 
 X-13ARIMA-SEATS for all platforms and **does not require any manual installation**.
 
-![Graphical user interface for X-13](https://raw.githubusercontent.com/christophsax/seasonal/master/vignettes/images/view.jpg)
+<img src="https://raw.githubusercontent.com/christophsax/seasonalview/master/img/seasonal.png" width="70%"/>
 
 If you are new to seasonal adjustment or X-13ARIMA-SEATS, the automated
 procedures of *seasonal* allow you to quickly produce good seasonal adjustments

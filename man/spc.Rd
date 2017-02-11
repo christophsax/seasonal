@@ -45,4 +45,3 @@ Vignette with a more detailed description:
 
 \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
 }
-

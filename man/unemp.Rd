@@ -19,4 +19,3 @@ data(seasonal)
 unemp
 }
 \keyword{datasets}
-
