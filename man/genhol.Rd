@@ -172,4 +172,3 @@ United States Census Bureau, Notes on centering holiday
 \seealso{
 \code{\link{seas}} for the main function of seasonal.
 }
-

@@ -2,10 +2,10 @@
 % Please edit documentation in R/extractors.R
 \name{final}
 \alias{final}
-\alias{irregular}
 \alias{original}
-\alias{residuals.seas}
 \alias{trend}
+\alias{irregular}
+\alias{residuals.seas}
 \title{Time Series of a Seasonal Adjustment Model}
 \usage{
 final(object)
@@ -71,4 +71,3 @@ Vignette with a more detailed description:
 
 \code{\link{series}}, for universal X-13 output extraction.
 }
-

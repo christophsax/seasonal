@@ -286,4 +286,3 @@ Vignette with a more detailed description:
 \seealso{
 \code{\link{seas}} for the main function.
 }
-

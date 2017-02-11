@@ -27,4 +27,3 @@ ESC. Click several times to loop through different outlier types.
  identify(m)
 }
 }
-

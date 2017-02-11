@@ -2,9 +2,9 @@
 % Please edit documentation in R/seasonal-package.R
 \docType{data}
 \name{easter}
+\alias{easter}
 \alias{cny}
 \alias{diwali}
-\alias{easter}
 \title{Dates of Chinese New Year, Indian Diwali and Easter}
 \format{Objects of class \code{"Date"}.}
 \source{
@@ -27,4 +27,3 @@ diwali
 easter
 }
 \keyword{datasets}
-
