@@ -24,4 +24,3 @@ data(seasonal)
 iip
 }
 \keyword{datasets}
-

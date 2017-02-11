@@ -53,4 +53,3 @@ lapply(ll, update, arima.model = c(0, 1, 1, 0, 1, 1))
 \code{\link{static}}, to return the (optionally evaluated) static 
   call of a \code{"seas"} object.
 }
-

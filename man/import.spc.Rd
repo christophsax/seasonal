@@ -114,4 +114,3 @@ ee$seas  # the 'seas' object, produced by the final call to seas()
 
 \code{\link{seas}} for the main function of seasonal.
 }
-

@@ -44,4 +44,3 @@ import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
 
 \code{\link{seas}} for the main function of seasonal.
 }
-
