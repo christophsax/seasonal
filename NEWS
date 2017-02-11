@@ -4,6 +4,12 @@
 defunct
   - inspect(), use view() instead. Shiny app code removed from package.
 
+enhancements
+  - as.data.frame() methods to coerce output of seas, summary.seas() and udg() 
+    to a data.frame. Useful for further processing (experimental). Replaces the 
+    experimental 'data.frame' argument in summary.seas() and udg() from the last 
+    version.
+
 
 1.4.0  2016-12-23
 --------------------------------------------------------------------------------

@@ -29,8 +29,8 @@ call to the functions, and is now obsolete. The present approach seems
 cleaner, but still consider it as \strong{experimental}.)
 }
 \details{
-The data.frames produced by these functions follow the nameing conventions
-proposed by the broom package, but do not rely on the package otherwise.
+The data.frames produced by these functions follow the naming conventions
+from the 'broom' package, but do not depend on it otherwise.
 }
 \examples{
 \dontrun{

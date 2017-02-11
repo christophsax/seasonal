@@ -21,8 +21,6 @@ specified via \code{options}. See examples.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 
-\item{\dots}{further arguments passed to or from other methods.}
-
 \item{x}{an object of class \code{"summary.seas"}, usually, a result 
 of a call to \code{summary.seas}.}
 

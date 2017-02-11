@@ -6,8 +6,8 @@
 #' call to the functions, and is now obsolete. The present approach seems
 #' cleaner, but still consider it as \strong{experimental}.)
 #' 
-#' The data.frames produced by these functions follow the nameing conventions
-#' proposed by the broom package, but do not rely on the package otherwise.
+#' The data.frames produced by these functions follow the naming conventions
+#' from the 'broom' package, but do not depend on it otherwise.
 #' 
 #' @param x      an object of class \code{"seas"}, \code{"udg"} or \code{"summary.seas"}, usually, a result of a 
 #'                    call to the functions with the same name.
