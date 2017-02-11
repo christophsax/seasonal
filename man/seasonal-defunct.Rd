@@ -10,7 +10,7 @@ arimamodel(x)
 inspect(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...)
 }
 \arguments{
-\item{x}{object of class \code{"seas"}}
+\item{x}{an object of class \code{"seas"}.}
 
 \item{fun}{a function or a list of functions (see details)}
 
@@ -22,8 +22,6 @@ inspect are not shown in the console}
 \item{...}{further arguments, passed on to 
 \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of 
 version 0.8 can be still used that way)}
-
-\item{x}{an object of class \code{"seas"}.}
 }
 \description{
 The \code{arimamodel} functions is defunct now. Use 

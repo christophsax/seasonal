@@ -2,7 +2,6 @@
 #' 
 #' The \code{arimamodel} functions is defunct now. Use 
 #' the more univeral \code{\link{udg}} function.
-#' @param x object of class \code{"seas"}
 #' @rdname seasonal-defunct
 #' @seealso \code{\link{udg}}, for universal access to X-13 statistics
 #' @examples
