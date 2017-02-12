@@ -104,7 +104,7 @@ udg <- function(x, stats = NULL, simplify = TRUE, fail = TRUE){
   }
   z <- if (simplify) simplify2array(z) else z
 
-  class(z) <- c("udg", class(z))
+  # class(z) <- c("udg", class(z))
 
   z
 }
