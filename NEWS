@@ -2,8 +2,8 @@
 --------------------------------------------------------------------------------
 
 bug fix
-  - removing 'udg' classification as.data.frame() method from udg() output, as 
-    it messes up with several function
+  - removing 'udg' classification and as.data.frame() method from udg() output, 
+    because it messes up with several other functions.
 
 
 1.5.0  2017-02-12
