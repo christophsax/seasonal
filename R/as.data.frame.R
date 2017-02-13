@@ -10,7 +10,7 @@
 #' The data.frames produced by these functions follow the naming conventions
 #' from the 'broom' package, but do not depend on it otherwise.
 #' 
-#' @param x  an object of class \code{"seas"}, \code{"udg"} or
+#' @param x  an object of class \code{"seas"} or
 #'   \code{"summary.seas"}, usually, the result of a call to the functions
 #'   with the same name.
 #' @param ...    unused.
@@ -21,9 +21,6 @@
 #' @examples
 #' \dontrun{
 #' m <- seas(AirPassengers, x11 = "")
-#' 
-#' # a data.frame containing the M-statistics
-#' as.data.frame(udg(m, paste0("f3.m", formatC(1:10, width=2, flag="0"))))
 #' 
 #' # a data.frame containing data
 #' as.data.frame(m)
@@ -50,23 +47,23 @@ Date_ts <- function(x){
   z
 }
 
-#' @method as.data.frame udg
-#' @rdname as.data.frame.seas
-#' @export
-as.data.frame.udg <- function(x, ...){
-  if (is.list(x)){
-    x.len <- vapply(x, length, 0)
+# #' @method as.data.frame udg
+# #' @rdname as.data.frame.seas
+# #' @export
+# as.data.frame.udg <- function(x, ...){
+#   if (is.list(x)){
+#     x.len <- vapply(x, length, 0)
 
-    if (length(unique(x.len)) > 1){
-      most.common <- as.integer(names(table(x.len)[1]))
-      message("Elements are of different length, only using elements of length ", most.common, ", which is the most common.")
-      x <- simplify2array(x[x.len == most.common])
-    } else {
-      x <- simplify2array(x)
-    }
-  }
-  data.frame(key = names(x), value = unclass(unname(x)), stringsAsFactors = FALSE)
-}
+#     if (length(unique(x.len)) > 1){
+#       most.common <- as.integer(names(table(x.len)[1]))
+#       message("Elements are of different length, only using elements of length ", most.common, ", which is the most common.")
+#       x <- simplify2array(x[x.len == most.common])
+#     } else {
+#       x <- simplify2array(x)
+#     }
+#   }
+#   data.frame(key = names(x), value = unclass(unname(x)), stringsAsFactors = FALSE)
+# }
 
 #' @method as.data.frame summary.seas
 #' @rdname as.data.frame.seas
