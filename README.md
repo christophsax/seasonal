@@ -2,6 +2,7 @@ R interface to X-13ARIMA-SEATS
 ------------------------------
 
 [![Build Status](https://travis-ci.org/christophsax/seasonal.svg?branch=master)](https://travis-ci.org/christophsax/seasonal) [![Build status](https://ci.appveyor.com/api/projects/status/y64skjd1g29t2gab?svg=true)](https://ci.appveyor.com/project/christophsax/seasonal)
+[![Downloads](http://cranlogs.r-pkg.org/badges/seasonal)](http://cran.r-project.org/package=seasonal)
 
 ### Introduction
 
