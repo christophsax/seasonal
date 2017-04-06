@@ -130,6 +130,8 @@ import.spc <- function(file, text = NULL){
   ep <- expand_spclist_to_args(pp)
   ep <- rem_defaults_from_args(ep)
 
+
+
   # prettyfy non-standard arima models
   if (!is.null(ep$arima.model)){
     ep$arima.model <- gsub(" *, *", " ", ep$arima.model)
@@ -284,8 +286,10 @@ rem_defaults_from_args <- function(x) {
   dx <- d[names(xd)]
   z[names(xd)] <- Map(setdiff, xd, dx)
 
-  z[lapply(z, length) == 0] <- NULL
-
+  # remove 'NULL' entries produced by the routines above, but not the ones that
+  # are explicitly specified in x
+  explicit.null <- sapply(x, is.null)
+  z[lapply(z, length) == 0 & (!explicit.null)] <- NULL
 
   # set these non-present specs to NULL
   if (!any(grepl("^automdl", names(x)))) {z['automdl'] <- list(NULL)}
