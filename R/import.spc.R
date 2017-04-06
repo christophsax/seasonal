@@ -288,8 +288,13 @@ rem_defaults_from_args <- function(x) {
 
   # remove 'NULL' entries produced by the routines above, but not the ones that
   # are explicitly specified in x
-  explicit.null <- sapply(x, is.null)
-  z[lapply(z, length) == 0 & (!explicit.null)] <- NULL
+
+  is.zerolength <- lapply(z, length) == 0
+  is.explicitnull <- vapply(x, is.null, TRUE)
+  names.non.explicit.zero <- setdiff(names(is.zerolength)[is.zerolength], 
+                                  names(is.explicitnull)[is.explicitnull])
+
+  z[names(z) %in% names.non.explicit.zero] <- NULL
 
   # set these non-present specs to NULL
   if (!any(grepl("^automdl", names(x)))) {z['automdl'] <- list(NULL)}
