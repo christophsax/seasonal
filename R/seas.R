@@ -408,8 +408,8 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     stop("no output has been generated")
   }
 
-  # add all series that have been produced and are specified in SERIES_SUFFIX
-  file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[2]]))
+  # add all series that have been produced and are specified in SERIES_SUFFIX  
+  file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[length(x)]]))
   is.series <- file.suffix %in% SERIES_SUFFIX
 
   series.list <- lapply(file.path(wdir, flist[is.series]), read_series, 

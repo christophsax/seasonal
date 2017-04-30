@@ -1,3 +1,17 @@
+1.5.1.2 2017-04-30
+--------------------------------------------------------------------------------
+
+bug fix
+  - fix to deal with new file in build 1.1.39
+  - import.spc(): fixed parsing of explicitly specified NULL entries
+    E.g., regression{aictest=()} results in now regression.aictest = NULL
+    (https://github.com/christophsax/seasonal/issues/202)
+  - series(), out(): fix if model was updated using update()
+    (https://github.com/christophsax/seasonal/issues/191)
+  - some X-13 notes were not shown in summary
+    (https://github.com/christophsax/seasonal/issues/200)
+
+
 1.5.1  2017-02-12
 --------------------------------------------------------------------------------
 

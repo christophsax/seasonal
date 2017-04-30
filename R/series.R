@@ -317,8 +317,10 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
           activated <- c(activated, spec.i)
         }
       }
+
+      # additional options that are required to produce a series
       requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
-      if (length(requires.i) > 0){
+      if (!identical(requires.i, "")){
         requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
         reeval.dots <- c(reeval.dots, requires.list)
         j <- length(reeval.dots) + 1
@@ -335,7 +337,11 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     }
     
     if (length(reeval.dots) > 0){
-      x <- reeval(x, reeval.dots, out = FALSE)
+      # this is the same as in update.seas()
+      ml <- x$list
+      # overwrite args in existing list
+      ml <- ml[!names(ml) %in% names(reeval.dots)]
+      x <- seas(list = c(ml, reeval.dots))
     }
   }
 

@@ -7,6 +7,7 @@ detect_error <- function(err, htmlmode = getOption("htmlmode")){
   # err  character vector, content of output file
   #
   # returns an object of class x13messages which can be printed
+
   ParseInfoHtml <- function(openl){
     # find next closing tag
     clt <- grep("</p>", err)
@@ -65,7 +66,7 @@ detect_error <- function(err, htmlmode = getOption("htmlmode")){
   # do not show this meaningless warning 
   # (its caused by default activation of spectrum)
   z$warning <- z$warning[!grepl("Spectrums are only generated for monthly series.", z$warning)]
-  z$note <- sapply(grep("note:", err), ParseInfo)
+  z$note <- sapply(grep("note:", err, ignore.case = TRUE), ParseInfo)
   z
 }
 
