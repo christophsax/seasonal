@@ -569,6 +569,7 @@ run_x13 <- function(file, out){
   # error message on non-zero failing
   if (!is.null(attr(msg, "status"))){
     if (attr(msg, "status") > 0){
+      msg <- system(paste(x13.bin, file, flags), intern = TRUE, ignore.stderr = FALSE)
       stop("X-13 has returned a non-zero exist status, which means that the current spec file cannot be processed for an unknown reason.", call. = FALSE)
     }
   }
