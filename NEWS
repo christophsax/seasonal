@@ -4,7 +4,7 @@
 enhancements
 
   - A second, more verbose run afte a non-zero exit, to detect Fortran run time
-    errors ()
+    errors (https://github.com/christophsax/seasonal/issues/194)
 
 bug fix
   - fix to deal with new file in build 1.1.39
@@ -15,6 +15,8 @@ bug fix
     (https://github.com/christophsax/seasonal/issues/191)
   - some X-13 notes were not shown in summary
     (https://github.com/christophsax/seasonal/issues/200)
+  - static parsing error with change of regime
+    (https://github.com/christophsax/seasonal/issues/205)
 
 
 1.5.1  2017-02-12
