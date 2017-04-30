@@ -22,4 +22,4 @@ License: GPL-3
 URL: http://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal
 LazyData: true
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1

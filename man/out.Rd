@@ -4,33 +4,24 @@
 \alias{out}
 \title{Display X-13ARIMA-SEATS Output}
 \usage{
-out(x, browser = getOption("browser"), line = 1, n = 100, search = NULL,
-  ...)
+out(x, browser = getOption("browser"), ...)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}.}
 
 \item{browser}{browser to be used, passed on to 
-\code{\link{browseURL}} (ignored in the non-HTML version).}
-
-\item{line}{starting line of the content (ignored in the HTML version).}
-
-\item{n}{number of lines to show on a page (ignored in the HTML version).}
-
-\item{search}{regular expression character string. If specified, the content
-is searched for the first occurrence (ignored in the HTML version).}
+\code{\link{browseURL}}.}
 
 \item{...}{additional spec-arguments options sent to X-13ARIMA-SEATS during 
-re-evaluation. See \code{\link{seas}}.}
+re-evaluation, passed to \code{\link{update}}.}
 }
 \value{
 displays the output as a side effect.
 }
 \description{
-The \code{out} function shows the full content of the X-13ARIMA-SEATS output.
-If you are using the HTML version of X-13, the output is displayed in the 
-browser. If you want to use a specific statistic in R, the \code{\link{udg}} 
-function is preferable.
+The \code{out} function shows the full content of the X-13ARIMA-SEATS output 
+in the browser. If you want to use a specific statistic in R, the 
+\code{\link{udg}} function is preferable.
 }
 \details{
 To keep the size of \code{"seas"} objects small, \code{seas} does not save 
@@ -41,11 +32,9 @@ the output by default. Instead, \code{out} re-evaluates the model.
 \dontrun{
 m <- seas(AirPassengers) 
 out(m) 
+# customizing the output with additional elements
 out(m, automdl.print = "autochoicemdl")
 
-# arguments ignored in the HTML version
-out(m, search = "regARIMA model residuals")
-out(m, search = "Normality Statistics for regARIMA")
 }
 }
 \references{
