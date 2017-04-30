@@ -452,7 +452,22 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   z$est <- read_est(iofile)
 
   # read .mdl file
-  z$model <- try(parse_spc(readLines(paste0(iofile, ".mdl"))), silent = TRUE) 
+
+  mdl <- readLines(paste0(iofile, ".mdl"))
+
+  # Workaround: in the .mdl output, full regime changes are returned weiredly. 
+  # E.g.
+  # variables=(
+  #  td/ for before 1955.Jan/
+  # )
+  is.r.change <- grepl("//?[ A-Za-z]", mdl)
+  rch0 <- mdl[is.r.change]  
+  rch <- gsub("//[ A-Za-z].+ ", "//", rch0)
+  rch <- gsub("/[ A-Za-z].+ ", "/", rch0)
+  mdl[is.r.change] <- rch
+  z$model <- try(parse_spc(mdl), silent = TRUE) 
+
+  is.r.change <- grepl("//?[ A-Za-z]", mdl)
 
   # fails for very complicated models, but is needed only for static()
   if (inherits(z$model, "try-error")){
