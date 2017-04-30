@@ -26,7 +26,7 @@ ll <- lapply(r, function(e) try(test_static(e), silent = TRUE))
 
 failing <- which(sapply(ll, class) == "try-error")
 
-if (length(failing[!failing %in% c(47L, 52L, 53L, 60L, 98L)]) > 0){
+if (length(failing[!failing %in% c(47L, 53L, 59L, 60L, 98L)]) > 0){
   stop("failing cases: ", paste(failing, collapse = ", "))
 }
 
@@ -47,6 +47,20 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L, 98L)]) > 0){
 # static(m)
 # # Static series is different. Mean relative difference: 2.02737e-05
 
+# r[60]
+# m <- seas(AirPassengers,
+#      transform.function = "log",
+#      regression.variables = c("ao1957.jan", "ls1959.jan", "ls1959.mar", 
+#                             "ls1960.jan", "td"),
+#      regression.b = c("-0.7946f", "-0.8739f", "0.6773f", "-0.6850f", 
+#                       "0.0209", "-0.0107", "-0.0022", "0.0018", "-0.0088", 
+#                       "-0.0074"),
+#      regression.aictest = NULL,
+#      arima.model =  "(0 1 2)(0 1 1)", 
+#      x11 = ""
+#      )
+# static(m, test = F)
+# static(m, test = TRUE)
 
 # complicated outliers are not read correctly from the mdl file
 
@@ -60,14 +74,16 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L, 98L)]) > 0){
 #      )
 # static(m, test = F)
 
-# # r[52]
+# # r[59]
 # m <- seas(AirPassengers,
-#      transform.function = "log",
-#      regression.variables = c("td/1952.dec/", "seasonal/1952.dec/"),
-#      arima.model = "(0 1 1)",
-#      x11 = "",
-#      dir = "~/tmp"
-#      )
+#      transform.function = "none",
+#      xreg = cbind(ser1, ser2, ser3),
+#      regression.usertype = "ao",
+#      regression.variables = c("const", "td", "ao1956.oct", "ls1951.dec",
+#                               "easter[8]", "seasonal"),
+#      arima.model = c(2, 1, 0),
+#      x11.appendfcst = "yes", dir = "~/Desktop"
+# )
 # static(m, test = F)
 
 # # r[53]
@@ -80,19 +96,7 @@ if (length(failing[!failing %in% c(47L, 52L, 53L, 60L, 98L)]) > 0){
 #      )
 # static(m, test = F)
 
-# # r[60]
-# m <- seas(AirPassengers,
-#      transform.function = "log",
-#      regression.variables = c("ao1957.jan", "ls1959.jan", "ls1959.mar", 
-#                             "ls1960.jan", "td"),
-#      regression.b = c("-0.7946f", "-0.8739f", "0.6773f", "-0.6850f", 
-#                       "0.0209", "-0.0107", "-0.0022", "0.0018", "-0.0088", 
-#                       "-0.0074"),
-#      regression.aictest = NULL,
-#      arima.model =  "(0 1 2)(0 1 1)", 
-#      x11 = ""
-#      )
-# static(m, test = F)
+
 
 
 

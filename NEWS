@@ -1,6 +1,11 @@
 1.5.1.2 2017-04-30
 --------------------------------------------------------------------------------
 
+enhancements
+
+  - A second, more verbose run afte a non-zero exit, to detect Fortran run time
+    errors ()
+
 bug fix
   - fix to deal with new file in build 1.1.39
   - import.spc(): fixed parsing of explicitly specified NULL entries
