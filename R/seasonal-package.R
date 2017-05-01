@@ -1,13 +1,13 @@
 #' seasonal: R interface to X-13ARIMA-SEATS
 #' 
 #' @description 
-#'   \pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the
-#'   seasonal adjustment software by the United States Census Bureau. It offers
-#'   full access to almost all options and outputs of X-13, including X-11 and
-#'   SEATS, automatic ARIMA model search, outlier detection and support for user
-#'   defined holiday variables, such as Chinese New Year or Indian Diwali. It
-#'   also includes a Shiny-based graphical user interface. Seasonal uses the X-13
-#'   binaries from the 'x13binary' package.
+#'   \pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the seasonal 
+#'   adjustment software by the US Census Bureau. It offers full access to
+#'   almost all options and outputs of X-13, including X-11 and SEATS, automatic
+#'   ARIMA model search, outlier detection and support for user defined holiday
+#'   variables, such as Chinese New Year or Indian Diwali. A graphical user
+#'   interface can be used through the \pkg{seasonalview} package. Uses the
+#'   X-13-binaries from the \pkg{x13binary} package.
 #'
 #'   The best way to start is to have a look at the vignette:
 #'   
