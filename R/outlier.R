@@ -22,12 +22,12 @@ outlier <- function(x, full = FALSE){
   ol <- x$model$regression$variables[grepl("\\.", x$model$regression$variables)]
   ol <- ol[!grepl("\\/", ol)]
 
-  z <- final(x)
-  z[1:length(z)] <- NA
+  z0 <- final(x)
+  z0[] <- NA
   
   # if there are no outlier, return a time series with NAs
   if (length(ol) == 0){
-    return(z)
+    return(z0)
   }
   
   stopifnot(inherits(ol, "character"))
@@ -41,29 +41,31 @@ outlier <- function(x, full = FALSE){
     ol.time[is.range] <- gsub("-.+$", "", ol.time[is.range])
   }
   
-  if (frequency(z) == 12){
+  if (frequency(z0) == 12){
     ol.time.R <- lapply(strsplit(ol.time, "\\."), 
                         function(el) {c(el[1], which(month.abb == el[2]))}
     )
-  } else if (frequency(z) %in% c(4, 2)){
+  } else if (frequency(z0) %in% c(4, 2)){
     ol.time.R <- lapply(strsplit(ol.time, "\\."), 
                         function(el) {c(el[1], (el[2]))}
     )
   } else {
-    stop("Frequency not supported: ", frequency(z))
+    stop("Frequency not supported: ", frequency(z0))
   }
-  
+
   stopifnot(length(ol.time.R) == length(ol))
 
-  for (i in 1:length(ol.time.R)){
-    if (!full){
-      window(z, start = as.numeric(ol.time.R[[i]]), 
-             end = as.numeric(ol.time.R[[i]])) <- toupper(ol.type[i])
-    } else {
-      window(z, start = as.numeric(ol.time.R[[i]]), 
-             end = as.numeric(ol.time.R[[i]])) <- ol[i]
-    }
-  }
-  
+  # shoiuld only the type of the outlier be shown?
+  if (!full) ol <- toupper(ol.type)
+
+  ol.time.R <- lapply(ol.time.R, as.numeric)
+  ol.ts <- Map(function(value, time.stamp) {
+                      ts(value, start = time.stamp, frequency = frequency(z0))
+                    }, 
+                    value = as.list(ol),
+                    time.stamp = ol.time.R)
+
+  z <- window(do.call(ts.union, ol.ts), 
+              start = start(z0), end = end(z0), extend = TRUE)
   z
 }
