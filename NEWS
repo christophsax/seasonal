@@ -3,12 +3,12 @@
 
 enhancements
 
-  - A second, more verbose run afte a non-zero exit, to detect Fortran run time
+  - A second, more verbose run after a non-zero exit, to detect Fortran run time
     errors (https://github.com/christophsax/seasonal/issues/194)
 
 bug fix
-  - fix to deal with new file in build 1.1.39
-  - outlier(): fix for an issue in R 3.4.0
+  - deal with new file in build 1.1.39 (macOS)
+  - outlier(): workaround for problem with byte compiler in R 3.4.0
     https://github.com/christophsax/seasonal/issues/209
   - import.spc(): fixed parsing of explicitly specified NULL entries
     E.g., regression{aictest=()} results in now regression.aictest = NULL
