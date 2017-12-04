@@ -62,7 +62,7 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
     stop("first argument must be of class 'seas'")
   }
   
-  lc <- as.list(x$call)  
+  lc <- x$list
 
   if ("list" %in% names(lc)){
     stop("static does not work with the 'list' argument in seas")
@@ -114,11 +114,9 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
     }
   }
 
-  z <- as.call(lc)
-  
   if (test){
     # testing the static call
-    x.static <- eval(z, envir = globalenv())
+    x.static <- seas(list = lc)
     test <- (all.equal(log(final(x.static)), log(final(x)), tolerance = 1e-05))
     if (!isTRUE(test)){
       (if (fail) stop else message)(paste("Static series is different.", test))
@@ -126,8 +124,14 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
   }
 
   if (evaluate){
-    return(eval(z, envir = parent.frame()))
+    return(seas(list = lc))
   }
+
+  # prepare call, using same series names as orginal call
+  z <- as.call(c(quote(seas), lc))
+  z0 <- x$call
+  is.ser <- intersect(c("x", "xreg", "xtrans"), names(z0))
+  z[is.ser] <- z0[is.ser]
 
   z
 }
