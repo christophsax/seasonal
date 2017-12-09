@@ -9,6 +9,9 @@ minor changes
 bug fix
   - fix dates for Chinese New Year in 2015 and 2017
     (https://github.com/christophsax/seasonal/issues/219)
+  - outlier(): reverted workaround for problem with byte compiler in R 3.4.0, 
+    which has been fixed in R. Fixes incomplete outliers in view().
+    (https://github.com/christophsax/seasonal/issues/211)
 
 
 1.6.1  2017-05-02
