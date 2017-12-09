@@ -6,7 +6,9 @@ minor changes
   - like update(), static now uses m$list, rather than m$call. This makes it 
     usable in lapply.
 
-
+bug fix
+  - fix dates for Chinese New Year in 2015 and 2017
+    (https://github.com/christophsax/seasonal/issues/219)
 
 
 1.6.1  2017-05-02
