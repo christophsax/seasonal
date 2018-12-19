@@ -3,12 +3,12 @@
 
 minor changes
 
-  - like update(), static now uses m$list, rather than m$call. This makes it 
+  - like update(), static now uses m$list, rather than m$call. This makes it
     usable in lapply or other functions.
 
 bug fix
   - fix dates for Chinese New Year in 2015 and 2017 (#219)
-  - outlier(): reverted workaround for problem with byte compiler in R 3.4.0, 
+  - outlier(): reverted workaround for problem with byte compiler in R 3.4.0,
     which has been fixed in R. Fixes incomplete outliers in view() and bug
     in identify. (#211, #212)
 
@@ -40,7 +40,7 @@ bug fix
 --------------------------------------------------------------------------------
 
 bug fix
-  - removing 'udg' classification and as.data.frame() method from udg() output, 
+  - removing 'udg' classification and as.data.frame() method from udg() output,
     because it messes up with several other functions.
 
 
@@ -48,13 +48,13 @@ bug fix
 --------------------------------------------------------------------------------
 
 defunct
-  - inspect() is defunct, use view() instead. Shiny application code removed 
+  - inspect() is defunct, use view() instead. Shiny application code removed
     from package.
 
 enhancements
-  - as.data.frame() methods to coerce output of seas, summary.seas() and udg() 
-    to a data.frame. Useful for further processing (experimental). Replaces the 
-    experimental 'data.frame' argument in summary.seas() and udg() from the last 
+  - as.data.frame() methods to coerce output of seas, summary.seas() and udg()
+    to a data.frame. Useful for further processing (experimental). Replaces the
+    experimental 'data.frame' argument in summary.seas() and udg() from the last
     version.
 
 
@@ -62,34 +62,34 @@ enhancements
 --------------------------------------------------------------------------------
 
 new features
-  - seasonal now uses the graphical user interface from the new seaonalview 
+  - seasonal now uses the graphical user interface from the new seaonalview
     package. To install from CRAN, use: install.packages('seasonalview')
-    Use the 'view()' function instead of 'inspect', which is deprecated and will 
+    Use the 'view()' function instead of 'inspect', which is deprecated and will
     be defunct soon.
 
 enhancements
   - new update() method, updates a "seas" object, works with R generic.
-  - new predict() method, returns the final series of an (updated) "seas" 
+  - new predict() method, returns the final series of an (updated) "seas"
     object, works with R generic.
-  - static() function has new argument 'x11.static'. If TRUE, moving averages 
-    of X-11 are fixed as well. 
+  - static() function has new argument 'x11.static'. If TRUE, moving averages
+    of X-11 are fixed as well.
     (Thanks to Brian Monsell)
-  - static() function has new argument 'evaluate'. If TRUE, it returns an 
+  - static() function has new argument 'evaluate'. If TRUE, it returns an
     evaluated call, an object of class "seas".
-  - import.spc() function has new argument 'text', to accept the content of an 
+  - import.spc() function has new argument 'text', to accept the content of an
     X-13 .spc file as a character vector.
-  - udg() and summary.seas() gain an optional 'data.frame' argument, which 
+  - udg() and summary.seas() gain an optional 'data.frame' argument, which
     returns their info as a data.frame. Useful for further processing.
     (experimental)
 
 bug fixes
-  - import.spc imports arima models with commas. E.g., (0, 1, 1). 
+  - import.spc imports arima models with commas. E.g., (0, 1, 1).
     (Thanks to Brian Monsell)
   - substitute colons in series name to avoid reading error.
   - shorten long series names to avoid X-13 error.
     (Both thanks to Bill Dunlap)
   - missing udg element in summary no longer leads to an error.
-  - xreg specification ensures regression spec is used. 
+  - xreg specification ensures regression spec is used.
     (Thanks to Jose Pavia)
   - outlier plotted correctly for bi-annual data (SEATS only).
 
@@ -133,7 +133,7 @@ bug fixes
   - minor fixes in inspect()
     (https://github.com/christophsax/seasonal/issues/162)
   - range outliers (e.g. TL) show up in plot.seas() with start date, rather
-    than causing an error. 
+    than causing an error.
     (https://github.com/christophsax/seasonal/issues/163)
 
 
@@ -141,7 +141,7 @@ bug fixes
 --------------------------------------------------------------------------------
 
 bug fixes
-  - If the startup check of x13binary has failed, this prevented seasonal from   
+  - If the startup check of x13binary has failed, this prevented seasonal from
     beeing loaded and installed. Now the startup check tells you what to do in
     such a case. This affects, e.g., Windows computers with library location set
     to an UNC path. (https://github.com/x13org/x13binary/issues/30)
@@ -153,7 +153,7 @@ bug fixes
 --------------------------------------------------------------------------------
 
 major changes
-  - No separate binary download required anymore! seasonal now depends on the 
+  - No separate binary download required anymore! seasonal now depends on the
     x13binary package to access pre-built binaries of X-13ARIMA-SEATS for all
     platforms. Many thanks to Dirk Eddelbuettel for the fantastic work on
     x13binary!
@@ -175,9 +175,9 @@ documentation
 bug fixes
   - fix for rare convergence error messages
   - annual series are now recognized
-  - 'inspect' call evaluated in global env. This solves an issue with series 
+  - 'inspect' call evaluated in global env. This solves an issue with series
     that had the same name as primitive functions (e.g., 'prod')
-  - seas can be imported and used without loading the namespace 
+  - seas can be imported and used without loading the namespace
     (e.g. seasonal::seas())
   - plot.seas: fixed wrong sign in transfom = "PC" and "PCY"
 
@@ -202,17 +202,17 @@ documentation
 --------------------------------------------------------------------------------
 
 new features
-  - experimental import.spc, to read existing .spc files into R. 
+  - experimental import.spc, to read existing .spc files into R.
     Thanks, Brian Monsell.
   - experimental import.ts, to read existing X-13 data files into R.
   - with 'seats = NULL', seasonal adjustment can be completly turned of, to use
     X-13 for other purposes than seasonal adjustment.
 
 enhancements
-  - within-session parallelization: the temporary location name of the X13 run 
+  - within-session parallelization: the temporary location name of the X13 run
     now changes each time, which makes the function suitable for within-session
-    parallelization (e.g., with mclapply). Cluster parallelization using 
-    parlApply works as before and is recommended on Windows machines. 
+    parallelization (e.g., with mclapply). Cluster parallelization using
+    parlApply works as before and is recommended on Windows machines.
     Thanks, Vidur Dhanda.
   - automated testing of all wiki examples on travis
   - error messages in inspect are html formatted
@@ -230,7 +230,7 @@ bug fixes
 --------------------------------------------------------------------------------
 
 enhancements
-  - completely redesigned inspect() graphical user interface, with the look and 
+  - completely redesigned inspect() graphical user interface, with the look and
     feel of the demo website: www.seasonal.website
   - support for the new X13 version 1.1 build 19 (released April 2, 2015)
 
@@ -279,21 +279,21 @@ defunct
 --------------------------------------------------------------------------------
 
 new features
-  - support for the HTML version of X-13. The 'out' function displays the output 
+  - support for the HTML version of X-13. The 'out' function displays the output
     of X-13 in the browser.
-  - The 'inspect' function is based on Shiny and can be used without RStudio. It 
-    offers access to all series that can be produced by X-13, as well as access 
+  - The 'inspect' function is based on Shiny and can be used without RStudio. It
+    offers access to all series that can be produced by X-13, as well as access
     to the HTML output of X-13.
 
 enhancements
-  - empty specs can be specified as empty strings. This is more intuitive than 
-    the previously employed empty lists (which are still working). Empty 
+  - empty specs can be specified as empty strings. This is more intuitive than
+    the previously employed empty lists (which are still working). Empty
     strings are also used as defaults and in the documentation.
   - improved parsing of X-13 messages.
   - documentation improvements.
 
 under the hood
-  - flags are used when calling X-13. This makes some early g77 compilations for 
+  - flags are used when calling X-13. This makes some early g77 compilations for
     OS-X unusable.
   - use of the .udg file to extract summary statistics.
   - support for HTML and non-HTML versions of X-13.
@@ -302,9 +302,9 @@ bug fixes
   - numerical specification of arima.model led to wrong seasonal part.
   - restrict start year > 999, to avoid some millenium bugs.
   - si-ratio was wrongly extracted if no trend was estimated
-  - 'series' drops an error if the requested series is not compatible with the 
-    adjustment method, rather than adjusting the method. E.g., if x11.trend is 
-    requested from a seats model, an error will be returned, rather than 
+  - 'series' drops an error if the requested series is not compatible with the
+    adjustment method, rather than adjusting the method. E.g., if x11.trend is
+    requested from a seats model, an error will be returned, rather than
     switching the adjustment to x11. The old behavior was confusing.
 
 
@@ -321,7 +321,7 @@ new features
 --------------------------------------------------------------------------------
 
 new features
-  - 'series' function, which allows the import of all tables produced by X-13 
+  - 'series' function, which allows the import of all tables produced by X-13
     (except composite spec)
 
 enhancements
@@ -334,7 +334,7 @@ enhancements
   - more flexible arima model specification (numeric vectors also allowed)
 
 deprecated
-  - the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is 
+  - the functionality of 'slidingspans', 'revisions' and 'regressioneffects' is
     now part of the new 'series' function. The old functions are deprecated.
 
 code improvements
