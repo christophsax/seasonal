@@ -13,7 +13,8 @@
 residplot(x, outliers = TRUE, main = "residuals of regARIMA",
   xlab = "Time", ylab = "", ...)
 
-\method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), main, ...)
+\method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), main,
+  ...)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}, usually, a result of a call to 
