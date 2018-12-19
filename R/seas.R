@@ -1,14 +1,14 @@
 #' Seasonal Adjustment with X-13ARIMA-SEATS
-#' 
+#'
 #' Main function of the seasonal package. With the default options,
 #' \code{seas} calls the  automatic procedures of X-13ARIMA-SEATS to perform a
 #' seasonal adjustment that works well in most circumstances. Via the \code{...}
 #' argument, it is possible to invoke almost all options that are available in
 #' X-13ARIMA-SEATS (see  details). The default options of \code{seas} are listed
 #' as explicit arguments and are  discussed in the arguments section. A
-#' full-featured graphical user interface can be accessed by the 
+#' full-featured graphical user interface can be accessed by the
 #' \code{\link{view}} function.
-#' 
+#'
 #'  It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
 #' \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
 #' \emph{arguments}, and each spec optionally contains some arguments. In
@@ -16,112 +16,112 @@
 #' argument by a dot (\code{.}) (see examples). Alternatvily, spec-argument
 #' combinations can be supplied as a named list, which is useful for
 #' programming.
-#' 
+#'
 #' Similarily, the \code{\link{series}} function can be used to read almost all
 #' series from X-13ARIMA-SEATS. The \code{\link{udg}} function provides access
 #' to a large number of diagnostical statistics.
-#' 
-#' For a more extensive description, consider the vignette or the wiki page, 
-#' which contains replications of almost all examples from the official 
+#'
+#' For a more extensive description, consider the vignette or the wiki page,
+#' which contains replications of almost all examples from the official
 #' X-13ARIMA-SEATS manual.
-#' 
+#'
 #' @param x   object of class \code{"ts"}: time series to seasonaly adjust.
-#' @param xreg   (optional) object of class \code{"ts"}: one or several user 
-#'   defined exogenous variables for regARIMA modelling, can be used both with 
+#' @param xreg   (optional) object of class \code{"ts"}: one or several user
+#'   defined exogenous variables for regARIMA modelling, can be used both with
 #'   \code{regression} or \code{x11regression}.
-#' @param xtrans   (optional) object of class \code{"ts"}: one or two user 
-#'   defined exogenous variables for the \code{transform} spec. Can be specifed 
+#' @param xtrans   (optional) object of class \code{"ts"}: one or two user
+#'   defined exogenous variables for the \code{transform} spec. Can be specifed
 #'   together with \code{xreg}.
-#' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"} 
+#' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"}
 #'   (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
 #'   an alternative model is used (a message is returned). If \code{noadmiss =
-#'   "no"}, no approximation is done. If the seats spec is removed 
+#'   "no"}, no approximation is done. If the seats spec is removed
 #'   (\code{seats = NULL}), no seasonal adjustment is performed.
-#' @param transform.function   spec \code{transform} with argument 
+#' @param transform.function   spec \code{transform} with argument
 #'   \code{function = "auto"} (default). Automatic log transformation detection.
-#'   Set equal to \code{"none"}, \code{"log"} or any value that is allowed by 
+#'   Set equal to \code{"none"}, \code{"log"} or any value that is allowed by
 #'   X-13 to turn it off.
-#' @param regression.aictest   spec \code{regression} with argument 
+#' @param regression.aictest   spec \code{regression} with argument
 #'   \code{aictest = c("td", "easter")} (default). AIC test for trading days and
 #'   Easter effects. Set equal to \code{NULL} to turn it off.
-#' @param outlier   spec \code{outlier} without arguments (default). Automatic 
+#' @param outlier   spec \code{outlier} without arguments (default). Automatic
 #'   oulier detection. Set equal to \code{NULL} to turn it off.
-#' @param automdl   spec \code{automdl} without arguments (default). Automatic 
+#' @param automdl   spec \code{automdl} without arguments (default). Automatic
 #'   model search with the automdl spec. Set equal to \code{NULL} to turn it off.
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
-#'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values 
+#'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values
 #'   are substituted by -99999.
-#' @param out   logical. Should the X-13ARIMA-SEATS standard output be saved in 
-#'   the \code{"seas"} object? (this increases object size substantially, it is 
-#'   recommended to re-evaluate the model using the \code{\link{out}} function 
+#' @param out   logical. Should the X-13ARIMA-SEATS standard output be saved in
+#'   the \code{"seas"} object? (this increases object size substantially, it is
+#'   recommended to re-evaluate the model using the \code{\link{out}} function
 #'   instead.)
-#' @param dir   character string with a user defined file path. If specified, 
-#'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for 
+#' @param dir   character string with a user defined file path. If specified,
+#'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 #'   debugging.
-#' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see 
+#' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see
 #'   details).
 #' @param list  a named list with additional spec-arguments options. This is an
 #'   alternative to the \code{...} argument. It is useful for programming.
 #'
 #' @return returns an object of class \code{"seas"}, essentially a list with the
-#'   following components: 
-#'   \item{series}{a list containing the output tables of X-13. To be accessed 
-#'   by the \code{series} function.} 
-#'   \item{data}{seasonally adjusted data, the 
-#'   raw data, the trend component, the irregular component and the seasonal 
-#'   component (deprecated).} 
-#'   \item{err}{warning messages from X-13ARIMA-SEATS} 
-#'   \item{udg}{content of the \code{.udg} output file} 
-#'   \item{est}{content of the \code{.est} output file} 
-#'   \item{model}{list with the model specification, 
-#'   similar to \code{"spc"}. It typically contains \code{"regression"}, which 
-#'   contains the regressors and parameter estimates, and \code{"arima"}, which 
-#'   contains the ARIMA specification and the parameter estimates.} 
-#'   \item{fivebestmdl}{Best Five ARIMA Models (unparsed)} 
+#'   following components:
+#'   \item{series}{a list containing the output tables of X-13. To be accessed
+#'   by the \code{series} function.}
+#'   \item{data}{seasonally adjusted data, the
+#'   raw data, the trend component, the irregular component and the seasonal
+#'   component (deprecated).}
+#'   \item{err}{warning messages from X-13ARIMA-SEATS}
+#'   \item{udg}{content of the \code{.udg} output file}
+#'   \item{est}{content of the \code{.est} output file}
+#'   \item{model}{list with the model specification,
+#'   similar to \code{"spc"}. It typically contains \code{"regression"}, which
+#'   contains the regressors and parameter estimates, and \code{"arima"}, which
+#'   contains the ARIMA specification and the parameter estimates.}
+#'   \item{fivebestmdl}{Best Five ARIMA Models (unparsed)}
 #'   \item{x}{input series}
 #'   \item{spc}{object of class \code{"spclist"}, a list containing the content of the \code{.spc} file that is
-#'   used by X-13ARIMA-SEATS. Each spec is on the first level, each 
-#'   argument is on the second level.} 
+#'   used by X-13ARIMA-SEATS. Each spec is on the first level, each
+#'   argument is on the second level.}
 #'   \item{call}{function call}
 #'   \item{wdir}{temporary directory in which X-13ARIMA-SEATS has been run}
-#'   
-#'   The \code{final} function returns the final adjusted series, the 
-#'   \code{plot} method shows a plot with the unadjusted and the adjusted 
-#'   series. \code{summary} gives an overview of the regARIMA model. The 
+#'
+#'   The \code{final} function returns the final adjusted series, the
+#'   \code{plot} method shows a plot with the unadjusted and the adjusted
+#'   series. \code{summary} gives an overview of the regARIMA model. The
 #'   \code{\link{udg}} function returns diagnostical statistics.
-#'  
+#'
 #' @seealso \code{\link{view}}, for accessing the graphical user interface.
-#' @seealso \code{\link{update.seas}}, to update an existing \code{"seas"} 
+#' @seealso \code{\link{update.seas}}, to update an existing \code{"seas"}
 #'   model.
 #' @seealso \code{\link{static}}, to return the 'static' call, with automated
 #'   procedures substituted by their choices.
 #' @seealso \code{\link{series}}, for universal X-13 table series import.
 #' @seealso \code{\link{out}}, to view the full X-13 diagnostical output.
-#'   
-#' @references Vignette with a more detailed description: 
+#'
+#' @references Vignette with a more detailed description:
 #'   \url{http://www.seasonal.website/seasonal.html}
-#'   
-#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   \url{http://www.seasonal.website/examples.html}
-#'   
-#'   Official X-13ARIMA-SEATS manual: 
+#'
+#'   Official X-13ARIMA-SEATS manual:
 #'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 #' @export
 #' @import datasets
 #' @import grDevices
 #' @import graphics
 #' @import utils
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' Basic call
-#' m <- seas(AirPassengers) 
+#' m <- seas(AirPassengers)
 #' summary(m)
-#' 
+#'
 #' # Graphical user interface
 #' view(m)
-#' 
+#'
 #' # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
 #' # (consult the X-13ARIMA-SEATS manual for many more options and the list of
 #' # R examples for more examples)
@@ -143,89 +143,89 @@
 #' seas(AirPassengers, regression.variables = c("td1coef", "easter[1]"))
 #' seas(AirPassengers, arima.model = c(0, 1, 1, 0, 1, 1))
 #' seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)")     # equivalent
-#' 
+#'
 #' # turn off the automatic procedures
-#' seas(AirPassengers, regression.variables = c("td1coef", "easter[1]", 
-#' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL, 
+#' seas(AirPassengers, regression.variables = c("td1coef", "easter[1]",
+#' "ao1951.May"), arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
 #' outlier = NULL, transform.function = "log")
-#' 
+#'
 #' # static replication of 'm <- seas(AirPassengers)'
 #' static(m)  # this also tests the equivalence of the static call
 #' static(m, test = FALSE)  # no testing (much faster)
 #' static(m, coef = TRUE)  # also fixes the coefficients
-#' 
+#'
 #' # updating an existing model
 #' update(m, x11 = "")
-#' 
+#'
 #' # specific extractor functions
-#' final(m) 
+#' final(m)
 #' predict(m)   # equivalent
-#' original(m) 
-#' resid(m) 
+#' original(m)
+#' resid(m)
 #' coef(m)
 #' fivebestmdl(m)
 #' out(m)                  # the X-13 .out file (see ?out, for details)
 #' spc(m)                  # the .spc input file to X-13 (for debugging)
-#' 
+#'
 #' # universal extractor function for any X-13ARIMA-SEATS output (see ?series)
 #' series(m, "forecast.forecasts")
-#' 
+#'
 #' # copying the output of X-13 to a user defined directory
 #' seas(AirPassengers, dir = "~/mydir")
-#' 
+#'
 #' # user defined regressors (see ?genhol for more examples)
 #' # a temporary level shift in R base
 #' tls <- ts(0, start = 1949, end = 1965, freq = 12)
 #' window(tls, start = c(1955, 1), end = c(1957, 12)) <- 1
 #' seas(AirPassengers, xreg = tls, outlier = NULL)
 #' # identical to a X-13ARIMA-SEATS specification of the the level shift
-#' seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"), 
+#' seas(AirPassengers, regression.variables = c("tl1955.01-1957.12"),
 #'      outlier = NULL)
-#' 
+#'
 #' # forecasting an annual series without seasonal adjustment
 #' m <- seas(airmiles, seats = NULL, regression.aictest = NULL)
 #' series(m, "forecast.forecasts")
-#' 
+#'
 #' # NA handling
 #' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 #' final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
 #' final(seas(AirPassengersNA, na.action = na.exclude)) # NA in final series
 #' # final(seas(AirPassengersNA, na.action = na.fail))    # fails
-#' 
+#'
 #' # NA handling by X-13 (works with internal NAs)
-#' AirPassengersNA[20] <- NA 
+#' AirPassengersNA[20] <- NA
 #' final(seas(AirPassengersNA, na.action = na.x13))
-#' 
+#'
 #' ## performing 'composite' adjustment
 #' m.direct <- seas(ldeaths, x11 = "")
 #' final.direct <- final(m.direct)
 #' m.indirect <- lapply(list(mdeaths, fdeaths), seas, x11 = "")
-#' 
+#'
 #'  # not very efficient, but keeps time series properties
-#' final.indirect <- Reduce(`+`, lapply(m.indirect, final)) 
-#' 
+#' final.indirect <- Reduce(`+`, lapply(m.indirect, final))
+#'
 #' ts.plot(cbind(final.indirect, final(m.direct)), col = 1:2)
 #' legend("topright", legend = c("disagregated", "aggregated"), lty = 1, col = 1:2)
-#' 
+#'
 #' }
-#' 
-seas <- function(x, xreg = NULL, xtrans = NULL, 
-         seats.noadmiss = "yes", transform.function = "auto", 
-         regression.aictest = c("td", "easter"), outlier = "", 
+#'
+seas <- function(x, xreg = NULL, xtrans = NULL,
+         seats.noadmiss = "yes", transform.function = "auto",
+         regression.aictest = c("td", "easter"), outlier = "",
          automdl = "", na.action = na.omit,
          out = FALSE, dir = NULL, ..., list = NULL){
-    
+
   z <- list()  # output object
   z$call <- match.call()
 
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
-  
+
   # lookup table for output specification
-  SPECS <- NULL 
+  SPECS <- NULL
   data(specs, envir = environment(), package = "seasonal")  # avoid side effects
   SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
-  
+
   # save series name
   series.name <- deparse(substitute(x))[1]
 
@@ -241,11 +241,11 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
     # save call as list with evaluated arguments
     cl <- match.call(seas, z$call)
-    z$list <- lapply(as.list(cl)[-1], eval, envir = parent.frame()) 
+    z$list <- lapply(as.list(cl)[-1], eval, envir = parent.frame())
 
   } else {
     # save list with evaluated arguments
-    z$list <- lapply(list, eval, envir = parent.frame())   
+    z$list <- lapply(list, eval, envir = parent.frame())
 
     if (!inherits(list, "list")){
       stop("the 'list' argument mus be of class 'list'")
@@ -268,14 +268,14 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
       series.name <- "ser"
     }
     # remove defaults from list
-    list <- list[!(names(list) %in% dl)]   
+    list <- list[!(names(list) %in% dl)]
   }
-  
+
   # check series
   if (!inherits(x, "ts")){
     stop("'x' argument is not a time series.")
   }
-  
+
   if (start(x)[1] <= 1000){
     stop("start year of 'x' must be > 999.")
   }
@@ -283,7 +283,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   # na action
   x.na <- na.action(x)
-  
+
   # temporary working dir and filenames
   pat <- if (out) "x13out" else "x13"
   wdir <- tempfile(pattern = pat)
@@ -292,17 +292,17 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   dir.create(wdir)
-  
-  # file names for 
+
+  # file names for
   iofile <- file.path(wdir, "iofile")      # inputs and outputs (w/o suffix)
   datafile <- file.path(wdir, "data.dta")  # series to adjust
   # user defined variables
-  xreg.file <- file.path(wdir, "xreg.dta")  
-  xtrans.file <- file.path(wdir, "xtrans.dta")       
+  xreg.file <- file.path(wdir, "xreg.dta")
+  xtrans.file <- file.path(wdir, "xtrans.dta")
 
   ### write data
   write_ts_dat(x.na, file = datafile)
-  
+
   ### construct spclist (spclist fully describes the .spc file)
   spc <- list()
   class(spc) <- c("spclist", "list")
@@ -312,17 +312,17 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   spc$series$file <- paste0("\"", datafile, "\"")
   spc$series$format <- "\"datevalue\""
   spc$series$period <- frequency(x)
-  
+
   # add the default options
   spc$transform$`function` <- transform.function
   spc$regression$aictest <- regression.aictest
   spc$seats$noadmiss <- seats.noadmiss
-  
+
   spc <- mod_spclist(spc, list = list(outlier = outlier, automdl = automdl))
-  
+
   # add user defined options
   spc <- mod_spclist(spc, list = list)
-  
+
   # remove double entries, adjust outputs
   spc <- consist_spclist(spc)
 
@@ -375,7 +375,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     spc$transform$file <- paste0("\"", xtrans.file, "\"")
     spc$transform$format <- "\"datevalue\""
   }
-  
+
 
 
   ### write spc
@@ -384,9 +384,9 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   ### Run X13, either with full output or not
   run_x13(iofile, out)
-  
+
   flist <- list.files(wdir) # all files produced by X-13
-  
+
   ### Save output files if 'dir' is specified
   if (!is.null(dir)){
     if (!file.exists(dir)){
@@ -397,7 +397,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   }
 
   ### Import from X13
-  
+
   # check wether there is output at all.
   outfile <- if (getOption("htmlmode") == 1){
     paste(iofile, ".html", sep = "")
@@ -408,15 +408,15 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     stop("no output has been generated")
   }
 
-  # add all series that have been produced and are specified in SERIES_SUFFIX  
+  # add all series that have been produced and are specified in SERIES_SUFFIX
   file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[length(x)]]))
   is.series <- file.suffix %in% SERIES_SUFFIX
 
-  series.list <- lapply(file.path(wdir, flist[is.series]), read_series, 
+  series.list <- lapply(file.path(wdir, flist[is.series]), read_series,
                         frequency = frequency(x))
   names(series.list) <- file.suffix[is.series]
   z$series <- series.list
-  
+
   # data tables (names depend on method, thus a separate call is needed)
   if (!is.null(spc$seats)){
     z$data <- read_data(method = "seats", file = iofile, frequency(x))
@@ -428,13 +428,13 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   # errors/warnings
   z$err <- read_err(iofile)
-  
+
   if (is.null(z$data)){
     drop_x13messages(z$err)
   } else {
     drop_x13messages(z$err, "Series has been generated, but X-13 returned an error\n\n", msgfun = warnings)
   }
-  
+
   if (is.null(z$data) && any(c("x11", "seats") %in% names(spc))){
     drop_x13messages(z$err, msg = "X-13 has run but produced no data\n\n", ontype = "all")
   }
@@ -447,7 +447,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   if (getOption("htmlmode") != 1){
     z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
   }
-  
+
   # read .est file
   z$est <- read_est(iofile)
 
@@ -455,17 +455,17 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
   mdl <- readLines(paste0(iofile, ".mdl"))
 
-  # Workaround: in the .mdl output, full regime changes are returned weiredly. 
+  # Workaround: in the .mdl output, full regime changes are returned weiredly.
   # E.g.
   # variables=(
   #  td/ for before 1955.Jan/
   # )
   is.r.change <- grepl("//?[ A-Za-z]", mdl)
-  rch0 <- mdl[is.r.change]  
+  rch0 <- mdl[is.r.change]
   rch <- gsub("//[ A-Za-z].+ ", "//", rch0)
   rch <- gsub("/[ A-Za-z].+ ", "/", rch0)
   mdl[is.r.change] <- rch
-  z$model <- try(parse_spc(mdl), silent = TRUE) 
+  z$model <- try(parse_spc(mdl), silent = TRUE)
 
   is.r.change <- grepl("//?[ A-Za-z]", mdl)
 
@@ -478,7 +478,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   outtxt <-  readLines(outfile, encoding = "UTF-8")
 
   # always keep fivebestmdl
-  z$fivebestmdl <- detect_fivebestmdl(outtxt)  
+  z$fivebestmdl <- detect_fivebestmdl(outtxt)
 
   ### Checks
 
@@ -510,7 +510,7 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   if (!is.null(attr(x.na, "na.action"))){
     z$na.action <- attr(x.na, "na.action")
   }
-  
+
   if (out){
     z$out <-  outtxt
   }
@@ -530,13 +530,13 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
 
 run_x13 <- function(file, out){
   # run X-13ARIMA-SEATS platform dependently
-  # 
+  #
   # file  character, full filename w/o suffix
   #
   # run X-13 as a side effect
   #
   # required by seas
-  
+
   env.path <- Sys.getenv("X13_PATH")
   # -n no tables
   # -s store additional output (.udg file)
