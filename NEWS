@@ -14,7 +14,8 @@ bug fix
   - fix error in summary when no seasonal adjustment is requested (#226)
 
 documentation
-  - Article in Journal of Statistical Software as vignette
+  - article in Journal of Statistical Software as vignette
+  - README.md providing a short overview of the package
   - citation refering to publication in Journal of Statistical Software
 
 
