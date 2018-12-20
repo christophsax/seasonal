@@ -33,6 +33,8 @@ demo website (at \url{http://www.seasonal.website}) supports interactive
 modeling of custom data. A graphical user interface in the
 \pkg{seasonalview} package offers the same functionality locally.
 X-13 can handle monthly, quarterly or bi-annual time series.
+
+This is a version of our article in the \emph{Journal of Statistical Software} \citep{jss}.
 }
 \Keywords{seasonal adjustment, time series, X-13ARIMA-SEATS, \proglang{R}}
 \Plainkeywords{seasonal adjustment, time series, X-13ARIMA-SEATS, R} %% without formatting
