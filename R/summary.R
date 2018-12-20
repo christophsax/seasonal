@@ -89,7 +89,11 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
 
   z$resid <- residuals(object)
   z$transform.function <- transformfunction(object)
-  z$qsv <- qs(object)[c('qssadj'), ]
+  z$qsv <- if ('qssadj' %in% rownames(qs(object))) {
+    qs(object)[c('qssadj'), ]
+  } else {
+    qs(object)[c('qssori'), ]
+  }
   z$stats <- stats
 
   z$nobs <- nobs(object)
