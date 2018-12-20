@@ -1,29 +1,934 @@
-\documentclass[a4paper, 10pt]{article}
-%\VignetteIndexEntry{Introduction to seasonal: R interface to X-13ARIMA-SEATS}
+\documentclass[nojss]{jss}
+%\VignetteIndexEntry{Seasonal Adjustment by X-13ARIMA-SEATS}
 
-\usepackage{natbib}
-\usepackage{graphics}
-\usepackage{color}
 \usepackage{amsmath}
-\usepackage[utf8]{inputenc}
-\usepackage{fullpage}
-\usepackage[colorlinks = true]{hyperref}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% almost as usual
+\author{
+Christoph Sax\\University of Basel \And Dirk Eddelbuettel\\University of Illinois at Urbana-Champaign
+}
+\title{Seasonal Adjustment by X-13ARIMA-SEATS in \proglang{R}}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Christoph Sax, Dirk Eddelbuettel} %% comma-separated
+\Plaintitle{Seasonal Adjustment by X-13ARIMA-SEATS in R} %% without formatting
+\Shorttitle{Seasonal Adjustment by X-13} %% a short title (if necessary)
+
+%% an abstract and keywords
+\Abstract{
+\pkg{seasonal} is a powerful interface between \proglang{R} and
+X-13ARIMA-SEATS, the seasonal adjustment software developed
+by the United States Census Bureau. It offers access to almost all
+features of X-13, including seasonal adjustment via the
+X-11 and SEATS approaches, automatic ARIMA model
+search, outlier detection, and support for user-defined holiday
+variables such as the Chinese New Year or Indian Diwali. The required
+X-13 binaries are provided by the \pkg{x13binary} package,
+which facilitates a fully-automatic installation on most platforms. A
+demo website (at \url{http://www.seasonal.website}) supports interactive
+modeling of custom data. A graphical user interface in the
+\pkg{seasonalview} package offers the same functionality locally.
+X-13 can handle monthly, quarterly or bi-annual time series.
+}
+\Keywords{seasonal adjustment, time series, X-13ARIMA-SEATS, \proglang{R}}
+\Plainkeywords{seasonal adjustment, time series, X-13ARIMA-SEATS, R} %% without formatting
+%% at least one keyword must be supplied
+
+%% publication information
+%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{2012-06-04}
+%% \Acceptdate{2012-06-04}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Christoph Sax\\
+  University of Basel\\
+  Peter Merian-Weg 6, Basel, Switzerland\\
+  E-mail: \email{christoph.sax@gmail.com}\\
+  URL: \url{http://www.christophsax.com}\\~\\
+  Dirk Eddelbuettel\\
+  University of Illinois at Urbana-Champaign\\
+  725 S Wright St, Chicago, USA\\
+  E-mail: \email{edd@debian.org}\\
+  URL: \url{http://dirk.eddelbuettel.com}\\~\\
+}
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/512/507-7103
+%% Fax: +43/512/507-2851
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \begin{document}
 
+%% include your article here, just as usual
+%% Note that you should use the \pkg{}, \proglang{} and \code{} commands.
+
+% \section[About Java]{About \proglang{Java}}
+%% Note: If there is markup in \(sub)section, then it has to be escape as above.
+
+\section{Introduction}\label{introduction}
+
+Many time series exhibit a regular seasonal pattern over the year. US
+unemployment, for example, is usually higher from January to March, and
+again in June and July. Similarly, retail sales tend to peak with the
+Christmas season.
+
+To model the underlying structure of these series, any regular
+(seasonal) patterns are estimated and removed from the data. For example, to see if
+the economy is moving out of a recession during certain months, one
+wants the labor market data be free from such seasonal effects. Seasonal adjustment decomposes a time series into a trend, a seasonal and an irregular component and removes the seasonal component from the data.
+
+In official statistics, seasonal adjustment has a long tradition. The
+original X-11 software was developed by the US Census
+Bureau in the 1960s, and later improved by Statistics Canada \citep{dagum80}. Subsequent software packages by the US Census Bureau were called X-12-ARIMA \citep{findley98} and
+X-13ARIMA-SEATS (or X-13, for short) \citep{monsell07}. Today, X-11
+is still used as a name for filter-based seasonal adjustment methods
+within X\nobreakdash-13. Meanwhile, TRAMO-SEATS,
+developed by the Bank of Spain \citep{caporello01}, offers an alternative model-based
+approach to seasonal adjustment.
+
+\begin{figure}
+\begin{center}
+   \includegraphics{Figures/website.png}
+   \caption{The website \url{http://www.seasonal.website} gives a full-featured preview of the modeling facilities of \pkg{seasonal}, including the possibility to upload and adjust time series. \label{fig:website}}
+\end{center}
+\end{figure}
+
+In its most recent version, X-13 offers these two seasonal adjustment methods in a single command-line tool, written in \proglang{Fortran}. The National Bank of Belgium has created
+an alternative \proglang{Java}-based implementation called
+JDemetra+ \citep{eurostat17} which is also widely deployed by
+statistical agencies. One of either the TRAMO-SEATS or X-11 method of seasonal adjustment is
+used by almost all (government) statistical offices throughout the
+world.
+
+\proglang{R} \citep{rcore16} offers several possibilities to perform
+seasonal adjustment in the \pkg{stats} package included with
+\proglang{R}. The \code{decompose} function uses filtering to split a
+time series into a trend, a seasonal and an
+irregular component. An alternative method is \code{stl}, which
+uses local regressions (and has some extensions offered by the
+\pkg{stlplus} package by \citet{hafen16}). While both methods allow a
+multiplicative or an additive decomposition, these methods are somewhat
+limited in modeling actual data series.
+
+The programs used by statistical offices provide an extensive toolbox to
+deal with many advanced (and more irregular) aspects of seasonality,
+such as trading day adjustments, moving holiday adjustments or automated
+outlier detection.
+
+To access these features, the \pkg{x12} package \citep{kowarik14}
+interfaces to the older X-12-ARIMA binaries, and can also be
+used with parts of X-13. Like \pkg{seasonal} \citep{seasonal}, it now depends on
+\pkg{x13binary} \citep{x13binary} to provide the binaries. \pkg{x12} hard-codes its available
+options, which offers limited to no extensibility beyond these
+pre-programmed options.
+
+The \pkg{seasonal} package addresses these shortcomings. Options are
+translated dynamically into X-13 spec files, which allows the
+interface to easily evolve with future developments of
+X\nobreakdash-13. \pkg{seasonal} depends on the
+\pkg{x13binary} package which provides the
+binaries of X-13, and removes the need for any manual
+installation or local compilation from the \proglang{Fortran} sources.
+This makes it easy for other CRAN packages such as \pkg{ggseas} \citep{ellis16} or \pkg{gunsales} \citep{aisch16} to depend
+on it. Finally, the syntax of \pkg{seasonal} is as \proglang{R}-like as possible;
+using it should not feel different from using \proglang{R}'s built-in
+functions.
+
+Users new to seasonal adjustment or X-13 should benefit from
+the automated procedures of \pkg{seasonal}, which enables them to
+quickly produce reasonably good seasonal adjustments of time series. On
+the other hand, users already familiar with X-13 may benefit
+from the flexible input and output structure of the package. It permits
+use of (almost) all of the several hundred of possible arguments to
+X-13, and can import (almost) all of the nearly two hundred
+output series that can be generated by X-13.
+
+The package contains several tools to make seasonal adjustment easier as
+for example a function for easy construction of moving holiday
+regressors such as Chinese New Year or Indian Diwali. It also offers the
+capability to import existing X-13 model specs from the
+command-line tool to \proglang{R}. The \pkg{seasonalview} \citep{seasonalview}
+package, a powerful graphical user interface based on \pkg{shiny} \citep{shiny16},
+facilitates the use of X-13 both for beginners and advanced
+users.
+
+This article does not provide a general overview of seasonal adjustment
+as there are many good introductions to the topic; e.g., \citet{findley05} or
+\citet{ladiray12} for X\nobreakdash-11, or \citet{dagum16} for SEATS (signal extraction in ARIMA time series).
+A very good introduction from a
+practitioner's viewpoint is provided by \citet{ONS07}.
+The canonical reference for X-13 is the official manual by
+the \citet{census17}, which describes all available options and
+outputs in detail, and which will be referenced frequently in this
+article and in the documentation of the package.
+
+Last but not least, to try out X-13 and \pkg{seasonal}
+without installing any software locally, a full-featured website (at
+\url{http://www.seasonal.website}) allows uploading and modeling of
+time-series interactively, making use of the complete feature set of
+\pkg{seasonal}. Figure~\ref{fig:website} shows a screenshot of the
+website.
+
+The rest of the paper is organized as follows. An introductory example
+provides overall motivation in the following section. Input and Output
+formats are discussed in Sections~\ref{input} and \ref{output}. Section
+\ref{graphs} gives an overview of the different graphics choices, before
+Section~\ref{graphical-user-interface} introduces the graphical user
+interface. The creation of customized holiday variables, the use of
+X-13 and \pkg{seasonal} in larger-scale production settings,
+and the (scripted) import of X-13 model and series
+specifications are discussed in Sections~\ref{customized-holidays} to
+\ref{import-x-13-models-and-series}. Section
+\ref{deployment-via-x13binary} reviews the automated deployment by the
+\pkg{x13binary} package. Section~\ref{conclusions} concludes.
+
+\section{An introductory example}\label{an-introductory-example}
+
+As \pkg{seasonal} relies (and depends) on the \pkg{x13binary} package to
+access prebuilt binaries of X-13, installing it from CRAN is
+as easy as installing any other \proglang{R} package:
+
+\begin{CodeInput}
+R> install.packages("seasonal")
+\end{CodeInput}
+
+A discussion of the aspects related to automated deployment of the
+X-13 binary is provided in Section
+\ref{deployment-via-x13binary}.
+
+The \code{seas} function provides the core functionality of the
+package. By default, \code{seas} calls the automatic procedures of
+X-13 to perform a seasonal adjustment that works well in most
+circumstances:
+
+\begin{CodeInput}
+R> library("seasonal")
+R> m <- seas(unemp)
+\end{CodeInput}
+
+The first argument of \code{seas} is a time series of class
+\code{"ts"}. The \code{unemp} example series measures US unemployment and is included in \pkg{seasonal}. The function returns an object of class \code{"seas"}
+that contains the necessary information on the adjustment performed on
+this time series.
 
 
-\title{\textbf{seasonal}: R interface to X-13ARIMA-SEATS}
+\begin{figure}
 
-\author{Christoph Sax}
+{\centering \includegraphics{Figures/plot}
 
-\date{\today}
-\maketitle
+}
+
+\caption{Seasonal adjustment of US unemployment, using the defaults of \pkg{seasonal}. The result is close but not identical to the official seasonally adjusted series. \label{fig:plot}}
+\end{figure}
 
 
-\input{README.tex}
+There are several functions and methods for \code{"seas"} objects. The
+\code{final} function returns the adjusted series. The \code{plot}
+method shows a plot with the unadjusted and the adjusted series (see
+Figure~\ref{fig:plot} for an example). The \code{summary} method
+displays an overview of the model, very similar to the one produced by
+\proglang{R}'s \code{lm} function:
+
+
+\begin{CodeOutput}
+Call:
+seas(x = unemp)
+
+Coefficients:
+                  Estimate Std. Error z value Pr(>|z|)
+AR-Nonseasonal-01   0.9436     0.0344    27.4   <2e-16 ***
+MA-Nonseasonal-01   0.8254     0.0565    14.6   <2e-16 ***
+MA-Seasonal-12      0.8507     0.0336    25.3   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+SEATS adj.  ARIMA: (1 1 1)(0 1 1)  Obs.: 323  Transform: none
+AICc: 4.32e+03, BIC: 4.34e+03  QS (no seasonality in final):   0
+Box-Ljung (no autocorr.):   22   Shapiro (normality): 0.995
+\end{CodeOutput}
+
+
+By default, a call to \code{seas} also invokes the following automatic
+procedures of X-13:
+
+\begin{itemize}
+\item
+  Transformation selection (log / no log);
+\item
+  Detection of trading day and Easter effects;
+\item
+  Outlier detection;
+\item
+  ARIMA model search.
+\end{itemize}
+
+In the example above, X-13 opts to perform no
+pre-transformation, does not adjust for weekday or Easter effects,
+detects no outliers and models the series by a
+\code{(1\ 1\ 1)(0\ 1\ 1)} seasonal ARIMA (autoregressive integrated moving average) model. This can be seen from the summary output: There are no coefficients for Easter or outliers, and the ARIMA specification and the transformation are shown at the bottom. By default,
+\code{seas} calls the SEATS adjustment procedure (which decomposes the
+ARIMA model). To perform the alternative X-11 adjustment
+procedure\footnote{The X-11 method is also used by the US Bureau of
+  Labor Statistics (BLS), in order to calculate official seasonally
+  adjusted unemployment numbers. The numbers obtained in the examples
+  above will not match the BLS numbers, for various reasons. One reason
+  is that the BLS is adjusting unemployment by industry, before
+  aggregating them. The BLS also applies a more sophisticated modeling
+  of trading days and outliers. For details, see \citet{bls16}.}, the
+following option can be used (see the next section for details on how to
+use arbitrary options with X-13):
+
+\begin{CodeInput}
+R> seas(unemp, x11 = "")
+\end{CodeInput}
+
+Instead of relying on automated X-13 procedures, inputs may
+be entered `statically', as in this example:
+
+\begin{CodeInput}
+R> seas(x = unemp,
++       arima.model = "(1 1 1)(0 1 1)",
++       regression.aictest = NULL,
++       outlier = NULL,
++       transform.function = "none"
++       )
+\end{CodeInput}
+
+Here, the specification of the `arima.model` overrides and turns off the automated model selection. AIC testing of the regressors, outlier detection and transformation are disabled. The next section describes the handling of mutually exclusive inputs in more detail.
+
+The \code{static} function substitutes all automated procedures by
+their static equivalents. The call above can be generated easily from
+our initial, fully automated model:
+
+\begin{CodeInput}
+R> static(m)
+\end{CodeInput}
+
+With the \pkg{seasonalview} package installed, the \code{view} command
+offers an easy way to analyze and modify a seasonal adjustment
+procedure, in the same way as it is possible on the website at
+\url{http://www.seasonal.website}:
+
+\begin{CodeInput}
+R> view(m)
+\end{CodeInput}
+
+and is discussed further below.
+
+\section{Input}\label{input}
+
+The X-13 software has several hundred options, and is capable
+of producing almost two hundred different output series. In order to
+keep the program code concise and to prepare for future developments of
+X-13, \pkg{seasonal} passes these arguments directly to
+X-13, rather than hard-coding them as \proglang{R} arguments.
+
+As for the input, it is possible to use almost\footnote{The only
+  exception is the `composite' spec, which is at odds with the
+  univariate syntax of \code{seas} but is straightforward to replicate
+  in basic R. For an example, see \code{help("seas")}.} the complete
+syntax of X-13 via the \code{...} argument in the
+\code{seas} function. The input of X-13 is organized in
+\emph{specs} and \emph{arguments}, with each spec optionally containing
+some arguments (in the X-13 sense). These spec-argument
+combinations can be added to \code{seas} by separating the spec and
+the argument by a dot (\code{.}). For example, in order to set the
+`variables' argument of the `regression' spec equal to \code{td} and
+\code{ls2009.11}, and turn off the default `aictest' argument, the
+input to \code{seas} can be specified as follows:
+
+\begin{CodeInput}
+R> seas(unemp,
++       regression.variables = c("td", "ls2009.11"),
++       regression.aictest = NULL
++       )
+\end{CodeInput}
+
+Note that \proglang{R} vectors may be used as an input. If a spec is
+added without any arguments (in the X-13 sense), the spec
+should be set equal to an empty string. Several defaults of
+\code{seas} are empty strings, such as the default
+\code{seats\ =\ ""} (see \code{help(seas)} for details). Note the
+difference between \code{""} (meaning the spec is enabled but has no
+arguments, in the X-13 sense) and \code{NULL} (meaning the
+spec is disabled).
+
+It is possible to manipulate almost all inputs to X-13 in
+that way. Chapter 7 of the X\nobreakdash-13 manual (US
+Census Bureau 2016) describes all available spec-argument combinations
+in detail. The comprehensive list of examples available at
+\url{http://www.seasonal.website/examples.html} offers numerous
+illustrations about the mapping of both functionality and syntax
+between X-13 and \pkg{seasonal}.
+
+For instance, the first example in Section 7.2 from the X-13
+manual \citep{census17},
+
+\begin{CodeInput}
+series      { title = "Monthly sales"
+              start = 1976.jan
+              file = "ussales.dat"
+            }
+regression  { variables = (td seasonal) }
+automdl     {   }
+estimate    {   }
+x11         {   }
+\end{CodeInput}
+
+can be computed in R as follows (using a dataset from \proglang{R} for
+simplicity):
+
+\begin{CodeInput}
+R> seas(AirPassengers,
++       x11 = "",
++       regression.variables = c("td", "seasonal"),
++       regression.aictest = NULL
++       )
+\end{CodeInput}
+
+\code{seas} takes care of the `series' spec, and no input beside the
+time series has to be provided. As \code{seas} uses the SEATS
+procedure by default, the use of X-11 has to be specified explicitly.
+When the `x11' spec is added as an input (as above), the mutually
+exclusive default `seats' spec is automatically disabled. \code{automdl} and \code{estimate} are used by default. With
+\code{regression.variables}, an additional spec-argument is added to the input, which includes trading day and stable seasonal regression effects. Because \code{seas} performs an AIC test on the regression variables by default, it is disabled by setting \code{regression.aictest = NULL}.
+
+There are some mutually exclusive specs in X-13. If more than
+one mutually exclusive spec is included in \code{seas}, specs are
+overwritten according the following priority rules:
+
+\begin{itemize}
+
+\item
+  Model selection:
+
+  \begin{enumerate}
+
+  \item
+    \code{arima},
+  \item
+    \code{pickmdl},
+  \item
+    \code{automdl} (default).
+  \end{enumerate}
+\item
+  Adjustment procedure:
+
+  \begin{enumerate}
+
+  \item
+    \code{x11},
+  \item
+    \code{seats} (default).
+  \end{enumerate}
+\end{itemize}
+
+This is why the default SEATS procedure in the introductory example was
+overwritten by the specification of \code{x11\ =\ ""}. For details on
+the differences between these methods, consider the manual of
+X-13 \citep{census17}.
+
+\code{seas} also accepts additional time series as external regressors
+or transformation variables via the \code{xreg} and \code{xtrans}
+arguments. The following example includes an external regressor for a
+level shift outlier from November 2009 to end of the series:
+
+\begin{CodeInput}
+R> lshift <- ts(-1, start = c(1990, 1), end = c(2019, 11), freq = 12)
+R> window(lshift, start = c(2009, 11)) <- 0
+R> seas(unemp, xreg = lshift, outlier = NULL)
+\end{CodeInput}
+
+This can be used to replicate the built-in outlier adjustment of
+X-13:
+
+\begin{CodeInput}
+R> seas(unemp, regression.variables = "ls2009.11", outlier = NULL)
+\end{CodeInput}
+
+As an alternative to the \code{...} argument, spec-arguments can also
+be supplied as a named list which is particularly useful for
+non-interactive / programming use:
+
+\begin{CodeInput}
+R> seas(list = list(x = unemp, x11 = ""))
+\end{CodeInput}
+
+Additionally, \code{"seas"} objects can be altered using the
+\code{update} function method. It uses the same syntax as the \code{seas}
+function. The following example changes the ARIMA model and switches the adjustment method to X-11:
+
+\begin{CodeInput}
+R> update(m, arima.model = "(0 1 1)(0 1 1)", x11 = "")
+\end{CodeInput}
+
+
+A common use of \code{update} involves recomputing with new data. Using new data with an existing specification can be done using the update function::
+
+\begin{CodeInput}
+R> update(m, x = unemp)
+\end{CodeInput}
+
+Alternatively, if only the final seasonally adjusted series is required, the \code{predict} function method can be used with the familiar \code{newdata} argument:
+
+\begin{CodeInput}
+R> predict(m, newdata = unemp)
+\end{CodeInput}
+
+\section{Output}\label{output}
+
+Comparable to the processing of input arguments, \pkg{seasonal} has a
+flexible, non hard-coded mechanism to extract data from X-13.
+With the \code{series} function, it is possible to import almost all
+output that can be generated. For example, the following command returns
+the forecasts of the ARIMA model as a \code{"ts"} time series:
+
+\begin{CodeInput}
+R> m <- seas(unemp)
+R> series(m, "forecast.forecasts")
+\end{CodeInput}
+
+X-13 requires the desired output to be specified in the
+input. Because the \code{forecast.save\ =\ "forecasts"} argument has
+not been specified in the model call, \code{series}
+\emph{re-evaluates} the call with the `forecast' spec enabled. It is
+also possible to return more than one output table at the same time:
+
+\begin{CodeInput}
+R> series(m, c("forecast.forecasts", "s12"))
+\end{CodeInput}
+
+The user can use either the unique short names of X-13 (such
+as \code{s12}, designating the final trend component from SEATS), or the long names (such as \code{forecasts}, designating the forecasts of the ARIMA model).
+Because the long table names are not unique, they need to be combined
+with the spec name (\code{forecast}). See \code{help(series)} for a
+list of all available options.
+
+Note that re-evaluation doubles the overall computation time, as
+X-13 has to run twice. To only run once and to speed it up, the model call should include the output explicitly in non-interactive use:
+
+\begin{CodeInput}
+R> m.save <- seas(unemp, forecast.save = "forecasts")
+R> series(m.save, "forecast.forecasts")
+\end{CodeInput}
+
+Some specs such as `slidingspans' and `history' can result in
+time-consuming computations. In interactive use, the re-evaluation feature is
+especially useful, as it allows to separate the time-consuming diagnostic
+computations from the fast basic model call:
+
+\begin{CodeInput}
+R> m <- seas(unemp)
+R> series(m, "history.saestimates")
+R> series(m, "slidingspans.sfspans")
+\end{CodeInput}
+
+The \code{out} function shows the content of the main X-13
+output in the browser, which gives access to every detail of the
+estimation.
+
+\begin{CodeInput}
+R> out(m)
+\end{CodeInput}
+
+In order to process statistics in \proglang{R}, the \code{udg}
+function (which stands for \emph{unified diagnostic file}) gives a
+flexible access to all statistics from X-13:
+
+\begin{CodeInput}
+R> udg(m)
+\end{CodeInput}
+
+There are also wrappers that implement methods for the standard model
+diagnostics in \proglang{R}: \code{AIC}, \code{BIC},
+\code{logLik}, \code{nobs}.
+
+\section{Graphs}\label{graphs}
+
+Several graphical tools are available to analyze a \code{"seas"}
+object. The main \code{plot} method draws the seasonally adjusted and
+unadjusted series (as shown in Figure~\ref{fig:plot}). If outliers were detected, these will also be indicated. The \code{monthplot} method produces a monthwise plot
+(or quarterwise, with the same misleading name as the generic
+\proglang{R} function) of the seasonal and the SI component:
+
+\begin{CodeInput}
+R> monthplot(m)
+\end{CodeInput}
+
+An example of an output from \code{monthplot} is given in Figure~\ref{fig:monthplot}.
+
+
+\begin{figure}
+
+{\centering \includegraphics{Figures/monthplot}
+
+}
+
+\caption{The \code{monthplot} output shows the seasonal and seasonal-irregular (SI) component of US unemployment for each month. The SI-component shows the detrended observations as the combined seasonal and irregular component. The straight line shows the average seasonal component over the whole sample period. US unemployment is usually higher from January to March, and again in June and July -- the winter peak got weaker, the summer peak got more accentuated over time. \label{fig:monthplot}}
+\end{figure}
+
+
+Also, many standard \proglang{R} functions can be used to analyze a
+\code{"seas"} object:
+
+\begin{CodeInput}
+R> pacf(resid(m))
+R> spectrum(resid(m))
+R> plot(density(resid(m)))
+R> qqnorm(resid(m))
+\end{CodeInput}
+
+The \code{identify} method can be used to interactively select (or
+unselect) outliers by pointing and clicking; clicking several times on
+an outlier permits to loop through different outlier types:
+
+\begin{CodeInput}
+R> identify(m)
+\end{CodeInput}
+
+\section{Graphical user interface}\label{graphical-user-interface}
+
+The \pkg{seasonalview} package provides a graphical interface for
+choosing a seasonal adjustment model using \pkg{shiny} \citep{shiny16}. It provides the identical look and feel as the demo website at
+\url{http://www.seasonal.website}. To install the latest version of
+\pkg{seasonalview}, use:
+
+\begin{CodeInput}
+R> install.packages("seasonalview")
+\end{CodeInput}
+
+The goal of the \code{view} function is to summarize all relevant
+options, plots and statistics that form part of the seasonal adjustment
+process. \code{view} uses a \code{"seas"} object as its main
+argument and returns an updated \code{"seas"} object. Figure~\ref{fig:view} depicts a screenshot of the \code{view} function in
+action.
+
+\begin{CodeInput}
+R> view(m)
+\end{CodeInput}
+
+\begin{figure}
+\begin{center}
+   \includegraphics{Figures/seasonal.png}
+   \caption{The \code{view} function calls a graphical user interface that allows an interactive manipulation of most options of X-13. \label{fig:view}}
+\end{center}
+\end{figure}
+
+Frequently-used options can be modified using the drop-down selectors in
+the upper-left panel. Each change will result in a re-estimation of the
+seasonal adjustment model. The \proglang{R}-Call, the output and the summary are
+updated accordingly.
+
+Alternatively, the \proglang{R}-Call can be modified manually in the lower left
+panel. Press `Run Call' to re-estimate the model and to adjust the
+options selectors, the output, and the summary. With the `To Console'
+button, \code{view} is closed and an updated model is returned to the
+\proglang{R} console. The `Static' button substitutes automatic
+procedures by their corresponding static spec-argument options, in the
+same way as the \code{static} function. Users familiar with
+X-13 can also inspect and modify the X-13-Call, which can be
+accessed by the tab next to the \proglang{R}-Call. This also serves as a learning
+tool for users familiar with \pkg{seasonal} but not with X-13,
+and vice versa.
+
+The views in the upper right panel can be selected from the drop-down
+menu.
+
+The lower right panel shows the summary, including the same information
+as the \code{summary} function method applied to a \code{"seas"} object. The `X-13 output' button opens the
+complete output of X-13 in a separate tab or window.
+
+\section{Customized holidays}\label{customized-holidays}
+
+\pkg{seasonal} includes \code{genhol}, a function that makes it easy
+to model user-defined holiday regression effects, such as the Chinese
+New Year, Indian Diwali or complex pre- and post-holiday adjustments for
+Easter. \code{genhol} is an \proglang{R} replacement for the equally
+named software by the Census Bureau. The function uses an object of
+class \code{"Date"} as its first argument, which specifies the
+occurrence of the holiday, and returns a time series that can be used as
+a regressor.
+
+Dates for some major moving holidays are included in the package
+(\code{easter} (Easter), \code{cny} (Chinese New Year), \code{diwali} (Indian Diwali)) and can be used with
+\code{genhol}. For example, in order to adjust Indian industrial
+production for Diwali effects, use:
+
+\begin{CodeInput}
+R> seas(iip,
++       x11 = "",
++       xreg = genhol(diwali, start = 0, end = 0, center = "calendar"),
++       regression.usertype = "holiday"
++       )
+\end{CodeInput}
+
+\code{iip} is an example series and included in the package. Several examples, which cover Chinese New Year and complex pre- and
+post-holiday adjustments for Easter, are provided in the help page which
+can be accessed from \proglang{R} via \code{help("genhol")}.
+
+\section{Large-scale production use}\label{large-scale-production-use}
+
+While \pkg{seasonal} offers a fast and convenient way to adjust a single
+time series in \proglang{R}, it is equally well suited for processing
+large numbers of time series. Two kinds of seasonal adjustments are often used
+in a large-scale production environment:
+
+\begin{enumerate}
+
+\item
+  a recurring application of a given adjustment model to a time series;
+\item
+  an automated adjustment to a large number of time series.
+\end{enumerate}
+
+This section shows how both tasks can be accomplished with
+\pkg{seasonal} and basic \proglang{R}.
+
+\subsection{Storing calls and batch
+processing}\label{storing-calls-and-batch-processing}
+
+Seasonal adjustment models can be stored (using \code{save}) and
+re-evaluated at a later date when new data becomes available. Here, the
+\code{unemp} example series is shortened by one month, so that the
+following represents a model estimation with data available up to
+October 2016:
+
+\begin{CodeInput}
+R> unemp.oct16 <- window(unemp, end = c(2016, 10))
+R> m.oct16 <- seas(unemp.oct16)
+\end{CodeInput}
+
+The \code{static} function has been introduced in the introductory
+example. It is particularly useful to save the specifics of a model
+(e.g., outliers, ARIMA specification) for future use. For example, in
+the model above, the automated procedures decided to use an (1 1 2)(0 1
+1) ARIMA specification and to perform no pre-transfomation or weekday or
+Easter adjustments. The static function `hard-codes' these findings into
+the model call, so that these decisions would not be re-evaluated at a
+later date:
+
+\begin{CodeInput}
+R> m.oct16.static <- static(m.oct16, evaluate = TRUE)
+\end{CodeInput}
+
+With \code{evaluate = TRUE}, \code{static} returns an object of class
+\code{"seas"}, rather than just the call. Using data up to October 2016, the
+automated model, \code{m.oct16}, produces the same results as the static model,
+\code{m.oct16.static}. By default, evaluating the static model still re-estimates the ARIMA model parameters and the X-11 filters (if applicable). To avoid
+re-estimation, the arguments \code{coef} and \code{x11.filter} can be set to
+\code{TRUE}.
+
+Both models can be re-evaluated when new data becomes available. Here,
+the \code{update} function is used to update the existing models with
+the full \code{unemp} series, which ranges up to November 2016:
+
+\begin{CodeInput}
+R> update(m.oct16, x = unemp)
+R> update(m.oct16.static, x = unemp)
+\end{CodeInput}
+
+There is a crucial difference between these models at this later date:
+while the automated model search has opted for an (1 1 2)(0 1 1) ARIMA
+specification in October, it opts for an (1 1 1)(0 1 1) model in
+November, as has been demonstrated in the introductory example. By
+hard-coding the ARIMA specification into the call, it is ensured that
+the ARIMA model (and the other specifications of the model) do not change
+from month to month. Alternatively, in some production settings, it may
+be useful to copy the static call to a script, and re-run it when new
+data becomes available.
+
+
+\subsection{Automated adjustment of multiple
+series}\label{automated-adjustment-of-multiple-series}
+
+X-13 can also be applied programmatically to a large number
+of series using automated adjustment methods. This can be accomplished
+with a loop or one of the \code{*apply} functions in \proglang{R}. A
+good pattern of ``defensive programming'' is to wrap the call to
+\code{seas} in a \code{try} statement. Should an error occur, it
+will be trapped and not lead to a break in the execution. One needs to
+develop an error handling strategy for these cases. Possibilities for
+handling such error messages when processing one or more series are to
+either drop them, use them without adjustment or switch to a different
+automated routine.
+
+For example, time series can be collected in a \code{list} and looped
+over, using \code{lapply}:
+
+\begin{CodeInput}
+R> dta <- list(fdeaths = fdeaths, mdeaths = mdeaths)
+R> ll <- lapply(dta, function(e) try(seas(e, x11 = "")))
+\end{CodeInput}
+
+Failing models can be listed as follows:
+
+\begin{CodeInput}
+R> is.err <- sapply(ll, class) == "try-error"
+R> ll[is.err]
+\end{CodeInput}
+
+The following returns final series of successful evaluations:
+
+\begin{CodeInput}
+R> do.call(cbind, lapply(ll[!is.err], final))
+\end{CodeInput}
+
+To speed up the adjustment of multiple series, this process above is
+well suited for parallelization. The vignette, which can be accessed via
+\code{vignette("seasonal")}, provides an example.
+
+In many production settings, it is preferable to store the static model and
+re-evaluate with new data at a later point. This can be achieved as follows:
+
+\begin{CodeInput}
+R> ll.static <- lapply(ll, static, evaluate = TRUE)
+R> Map(predict, ll.static, newdata = dta)
+\end{CodeInput}
+
+
+\section{Import X-13 models and series}\label{import-x-13-models-and-series}
+
+Users of the X-13 command-line tool have two utility
+functions to import existing \code{.spc} files and data. The
+\code{import.spc} function will construct the corresponding call to
+\code{seas} and the calls for importing the data from an existing
+X-13 \code{.spc} file.
+
+For example, the following example imports the \code{Testairline.spc}
+file that is shipped with X-13 (and also included in
+\pkg{seasonal}):
+
+\begin{CodeInput}
+R> import.spc(system.file("tests", "Testairline.spc", package="seasonal"))
+\end{CodeInput}
+
+If data is stored outside the \code{.spc} file (as it usually will
+be), the calls will make use of the \code{import.ts} function to import the data referenced in the \code{.spc} file as \proglang{R} time series. An
+example is given in the documentation (see \code{help("import.ts")}).
+
+\section[Deployment via x13binary]{Deployment via \pkg{x13binary}}\label{deployment-via-x13binary}
+
+X-13 has a long and proud history of use and deployment by
+countless users, including many governmental statistical
+agencies as discussed above. During most of the several decades of
+widespread use, analysts deploying X-13 had to
+\emph{manually} download the corresponding program from the Census
+website. (Or rely on their IT department to do it for them.)
+
+The rise of \proglang{R} to pre-eminence as a statistical environment
+has highlighted how useful and important automated deployment via
+package repositories is. Thousands of packages are available, and can be
+installed via a simple command, function call or click of a button. This
+triggers either a download of a prebuilt binary version in the case of
+the Windows and macOS operating systems, or the download and automated
+installation from source for machines running Unix or Linux.
+
+Early use of \pkg{seasonal}, however, relied on the standard
+installation procedure devised by US Census for X-13. Users
+either had to download a binary pre-built for a number of operating
+systems, or build a binary from the supplied \proglang{Fortran} source
+code. After that first manual step, a second step was required to
+communicate the presence, and location, of the binary to the package
+using it, in this case \pkg{seasonal}. This process was both overly manual,
+error-prone and platform-dependent. But it was not for lack of a
+suitable license. Works by the US Government are generally in the public
+domain and can be re-distributed. So a better solution was always
+conceivable.
+
+The \pkg{x13binary} package \citep{x13binary} addresses this
+need by utilizing the tried-and-tested CRAN package mechanism. By being
+set-up as a package, two entry points for customizations are available:
+build-time, and run-time. At package build-time, the script
+\code{configure} determines the type of operating system it is being
+used on, and acts accordingly to provide either a binary, or creates one
+via compilations. At run-time when the package is loaded, it provides
+several convenience functions to assess the validity of its
+X-13 installation, or to communicate the path of the binary to
+other packages requiring it---as for example \pkg{seasonal}.
+
+The \pkg{x13binary} relies on another external resource to provide it
+with ``always accessible'' sources or binaries in a structured form. The
+\pkg{x13prebuilt} repository \citep{x13prebuilt} provides this
+in the form of statically compiled binaries for
+Linux and macOS, as well as a zip archive with a Windows binary.
+\pkg{x13binary} is set up to utilize these files and automatically place
+them in the expected location for the respective operating system and
+variant. Taken together, packages \pkg{x13binary} and \pkg{x13prebuilt}
+ensure that users executing the step recommended in the introductory
+section
+
+\begin{CodeInput}
+R> install.packages("seasonal")
+\end{CodeInput}
+
+will be provided with a fully functional installation including
+X-13 without any manual invention. Thanks to the \proglang{R} package
+system, \pkg{seasonal} can depend on \pkg{x13binary} which by utilizing
+\pkg{x13prebuilt} will ensure a correct and complete installation ready
+to be deployed for seasonal adjustment.
+
+If the binaries cannot be downloaded (e.g., because of a
+firewall), it is still possible to manually download the binaries and tell
+\pkg{seasonal} where to find them. \code{help("seasonal")} provides additional
+details on this. Updating \pkg{x13binary} follows the schedule of the US
+Census Bureau, which usually updates once a year. Version numbers of
+\pkg{x13binary} are aligned with version numbers of the Census Bureau, and older
+versions can be easily installed from the CRAN archives.
+
+\section{Conclusions}\label{conclusions}
+
+X-13ARIMA-SEATS is a very powerful tool for seasonal
+adjustment. It is used by numerous statistical offices around the world.
+\pkg{seasonal} brings the full functionality of X-13 to
+\proglang{R}. This considerably lowers the barrier to increased use of
+these powerful seasonal adjustment methods given the widespread and ever
+increasing popularity of \proglang{R}.
+
+The \pkg{seasonal} package is designed so that the use of its principal
+function \code{seas} feels very similar to key modeling functions of
+\proglang{R} such as the ubiquitous \code{lm} method. Data structures
+in the \pkg{seasonal} package interact seamlessly with the built-in time
+series objects for \proglang{R} which makes it easy to construct custom
+regressors or holiday variables. The input and output facilities are
+flexible enough to support the full functionality of X-13 and
+permit easy adoption to future versions. In addition, the
+\pkg{seasonalview} package adds a graphical user interface which
+simplifies the manipulation of seasonal adjustment models. The
+\pkg{x13binary} package automates dependency resolution and installation of the required binaries
+via the time-tested \proglang{R} package system, and allows
+other packages to extend \pkg{seasonal}.
+
+\section*{Acknowledgments}\label{acknowledgments}
+
+\pkg{seasonal} was originally developed for use at the Swiss State
+Secretariat of Economic Affairs. It has been greatly improved over time
+thanks to suggestions and support from Matthias Bannert, Freya Beamish,
+Vidur Dhanda, Alain Galli, Ronald Indergand, Preetha Kalambaden, Stefan
+Leist, James Livsey, Pinaki Mukherjee, Bruno Parnisari, five anonymous reviewers
+and many others.
+The related work on the \pkg{x13binary} package facilitated (automated)
+deployment thanks to the \proglang{R} package system, CRAN as
+well as GitHub for the \pkg{x13prebuilt} repository. Help and support by
+Brian Monsell and the United States Census Bureau is gratefully
+acknowledged as is, of course, their seasonal adjustment software.
+
+% \bibliographystyle{jss}
+\bibliography{jss3006}
 
 
 \end{document}
