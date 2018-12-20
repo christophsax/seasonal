@@ -1,0 +1,18 @@
+bibentry(bibtype = "Article",
+  title        = "Seasonal Adjustment by {X-13ARIMA-SEATS} in {R}",
+  author       = c(person(given = "Christoph",
+                          family = "Sax",
+                          email = "christoph.sax@gmail.com"),
+                   person(given = "Dirk",
+                          family = "Eddelbuettel",
+                          email = "edd@debian.org")),
+  journal      = "Journal of Statistical Software",
+  year         = "2018",
+  volume       = "87",
+  number       = "11",
+  pages        = "1--17",
+  doi          = "10.18637/jss.v087.i11",
+
+  header       = "To cite X-13ARIMA-SEATS/seasonal in publications use:"
+)
+

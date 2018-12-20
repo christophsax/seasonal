@@ -6,16 +6,16 @@
 \title{Industrial Production of India}
 \format{Time series of class \code{"ts"}.}
 \source{
-Central Statistics Office of the Ministry of Statistics and Programme 
-Implementation, with help 
+Central Statistics Office of the Ministry of Statistics and Programme
+Implementation, with help
 from Pinaki Mukherjee
 }
 \description{
 Industrial Production of India (IIP).
 }
 \details{
-Index value. IIP is used for measuring the performance overall industrial 
-sector of the Indian economy. IIP is compiled by using data from 16 source 
+Index value. IIP is used for measuring the performance overall industrial
+sector of the Indian economy. IIP is compiled by using data from 16 source
 agencies.
 }
 \examples{

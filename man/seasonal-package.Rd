@@ -6,7 +6,7 @@
 \alias{seasonal}
 \title{seasonal: R interface to X-13ARIMA-SEATS}
 \description{
-\pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the seasonal 
+\pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the seasonal
   adjustment software by the US Census Bureau. It offers full access to
   almost all options and outputs of X-13, including X-11 and SEATS, automatic
   ARIMA model search, outlier detection and support for user defined holiday
@@ -15,7 +15,7 @@
   X-13-binaries from the \pkg{x13binary} package.
 
   The best way to start is to have a look at the vignette:
-  
+
   \code{vignette("seas")}
 }
 \section{Installation}{
@@ -36,10 +36,10 @@ surpress the message, use \code{\link{suppressPackageStartupMessages}}.
 Sometimes, you either cannot or don't want to rely on the binaries provided
 by \pkg{x13binary}:
 \itemize{
-\item because you are on an unsupported system, like Solaris. If you manage 
-  to build X-13 on such a system, please let the developers of 
+\item because you are on an unsupported system, like Solaris. If you manage
+  to build X-13 on such a system, please let the developers of
   \pkg{x13binary} know.
-\item because you cannot run executable files in your R library folders, due 
+\item because you cannot run executable files in your R library folders, due
 to corporate IT policy.
 \item because you are using your own Fortran compilation of X-13ARIMA-SEATS.
 }
@@ -61,7 +61,7 @@ adding the Sys.setenv line to one of your \code{.Rprofile} files. The easiest
 is to use the one located in your home directory, which can be written
 directly from R:
 
-\code{write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', 
+\code{write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")',
       file = "~/.Rprofile", append = TRUE)}
 
 If the file does not exist (by default), it will be created. Make sure that
@@ -73,6 +73,11 @@ overwriting line to it.) For other ways to set an environmental variable
 permanently in R, see \code{\link{Startup}}.
 }
 
+\references{
+Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
+  in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
+  10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+}
 \seealso{
 \code{\link{seas}} for the core function and more information on
   package usage.

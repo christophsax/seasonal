@@ -11,34 +11,34 @@
   signif.stars = getOption("show.signif.stars"), ...)
 }
 \arguments{
-\item{object}{an object of class \code{"seas"}, usually, a result of a 
+\item{object}{an object of class \code{"seas"}, usually, a result of a
 call to \code{\link{seas}}.}
 
 \item{stats}{(experimental) character vector, additional stat to be shown in the \code{summary} output.
-function. For a list of all possible values, see the \code{\link{udg}} 
-function. If a value is not present, it will be ignored. Values can be 
+function. For a list of all possible values, see the \code{\link{udg}}
+function. If a value is not present, it will be ignored. Values can be
 specified via \code{options}. See examples.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 
-\item{x}{an object of class \code{"summary.seas"}, usually, a result 
+\item{x}{an object of class \code{"summary.seas"}, usually, a result
 of a call to \code{summary.seas}.}
 
 \item{digits}{the number of significant digits to use when printing.}
 
-\item{signif.stars}{logical. If \code{TRUE}, 'significance stars' are printed 
+\item{signif.stars}{logical. If \code{TRUE}, 'significance stars' are printed
 for each coefficient.}
 }
 \value{
-\code{summary.seas} returns a list containing the summary statistics 
-  included in \code{object}, and computes the following additional 
+\code{summary.seas} returns a list containing the summary statistics
+  included in \code{object}, and computes the following additional
   statistics:
-  
-  \item{coefficients}{a named matrix containing coefficients, standard 
+
+  \item{coefficients}{a named matrix containing coefficients, standard
   deviations, t-values and p-values}
-  
+
   \item{transform}{character string with the type of intial transformation}
-  
+
   The \code{print} method prints the summary output in a similar way as the
   method for \code{"lm"}.
 }
@@ -62,20 +62,20 @@ rejected. QS statistics for more series (e.g., the original series) can be
 extracted with \code{\link{qs}}.}
 \item{Box-Ljung}{test for residual autocorrelation; null hypothesis: no
 autocorrelation in residuals; signif. codes are shown if the null hypothesis
-is rejected. The test statistic is the result of 
+is rejected. The test statistic is the result of
 \code{Box.test(resid(m), lag = 24, type = "Ljung")}}
 \item{Shapiro}{test for normality of the residuals; null hypothesis: normal
 distribution of the residuals; signif. codes are shown if the null
-hypothesis is rejected. The test statistic is the result of 
+hypothesis is rejected. The test statistic is the result of
 \code{shapiro.test(resid(m))}}
 }
 }
 \examples{
 \dontrun{
 m <- seas(AirPassengers)
-summary(m)  
+summary(m)
 
-### user defined stats from the udg function 
+### user defined stats from the udg function
 # (experimental, see ?udg)
 
 # also show some M quality statistics for X11 in summary

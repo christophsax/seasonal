@@ -6,9 +6,7 @@
 \title{Consumer Price Index of Switzerland}
 \format{Time series of class \code{"ts"}.}
 \source{
-Federal Statistical Office, Switzerland 
-\url{http://www.bfs.admin.ch/bfs/portal/de/index/themen/05/02/blank/key/basis_aktuell.html} 
-(cc-d-05.02.12)
+Federal Statistical Office, Switzerland
 }
 \description{
 Monthly consumer price index of Switzerland. Base year is 1993.
