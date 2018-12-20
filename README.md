@@ -95,8 +95,7 @@ Sax C, Eddelbuettel D (2018). “Seasonal Adjustment by X-13ARIMA-SEATS
 in R.” _Journal of Statistical Software_, *87*(11), 1-17. doi:
 10.18637/jss.v087.i11 (URL: http://doi.org/10.18637/jss.v087.i11).
 
-Please report bugs and suggestions on [Github][github] or send me an
-[e-mail](mailto:christoph.sax@gmail.com). Thank you!
+Please report bugs and suggestions on [Github][github]. Thank you!
 
 [seasonalview]: https://cran.r-project.org/package=seasonalview "Graphical User Interface for Seasonal Adjustment"
 
