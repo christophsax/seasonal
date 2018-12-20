@@ -89,8 +89,6 @@ NULL
 #' @format Time series of class \code{"ts"}.
 #'
 #' @source Federal Statistical Office, Switzerland
-#' \url{http://www.bfs.admin.ch/bfs/portal/de/index/themen/05/02/blank/key/basis_aktuell.html}
-#' (cc-d-05.02.12)
 #'
 #' @name cpi
 #' @keywords datasets
