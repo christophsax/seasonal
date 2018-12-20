@@ -11,7 +11,7 @@ x13binary::checkX13binary()
 # r.version <- paste(R.Version()$major, R.Version()$minor, sep = ".")
 # is.oldrel <- .Platform$OS.type == "windows" && (compareVersion(r.version, "3.1.3") < 1)
 
-if (x13binary::supportedPlatform()){
+if (x13binary::supportedPlatform() & Sys.info()["sysname"] != "Darwin"){
 
   library(seasonal)
   checkX13()
