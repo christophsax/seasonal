@@ -99,8 +99,13 @@
 #' @seealso \code{\link{series}}, for universal X-13 table series import.
 #' @seealso \code{\link{out}}, to view the full X-13 diagnostical output.
 #'
-#' @references Vignette with a more detailed description:
-#'   \url{http://www.seasonal.website/seasonal.html}
+#' @references
+#'   Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
+#'   in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
+#'   10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+#'
+#'   On-Line Interface to seasonal
+#'   \url{http://www.seasonal.website}
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   \url{http://www.seasonal.website/examples.html}

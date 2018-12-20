@@ -64,6 +64,11 @@
 #' overwriting line to it.) For other ways to set an environmental variable
 #' permanently in R, see \code{\link{Startup}}.
 #'
+#' @references
+#'   Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
+#'   in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
+#'   10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+#'
 #' @name seasonal-package
 #' @aliases seasonal
 #' @docType package
