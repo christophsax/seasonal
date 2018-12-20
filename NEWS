@@ -1,4 +1,4 @@
-1.6.1.2  2017-12-09
+1.7.0  2018-12-19
 --------------------------------------------------------------------------------
 
 minor changes
@@ -11,6 +11,10 @@ bug fix
   - outlier(): reverted workaround for problem with byte compiler in R 3.4.0,
     which has been fixed in R. Fixes incomplete outliers in view() and bug
     in identify. (#211, #212)
+
+documentation
+  - Article in Journal of Statistical Software as vignette
+  - citation refering to publication in Journal of Statistical Software
 
 
 1.6.1  2017-05-02
