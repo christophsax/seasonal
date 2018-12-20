@@ -8,7 +8,7 @@ R interface to X-13ARIMA-SEATS
 the newest seasonal adjustment software developed by the [United States Census
 Bureau][census].
 
-<img src="https://raw.githubusercontent.com/christophsax/seasonal/master/vignettes/Figures/seasonal.png" width="55%"/>
+<img src="https://raw.githubusercontent.com/christophsax/seasonal/master/vignettes/Figures/website.png" width="55%"/>
 
 ### Installation
 
