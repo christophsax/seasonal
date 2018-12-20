@@ -14,7 +14,7 @@ Bureau][census].
 
 *seasonal* depends on the [x13binary][x13binary] package to access pre-built
 binaries of X-13ARIMA-SEATS on all platforms and does not require any manual
-installation. To install both packages, type to the R console:
+installation. To install both packages:
 
     install.packages("seasonal")
 
@@ -34,8 +34,8 @@ vignette:
 
 ### Input
 
-In *seasonal*, it is possible to use almost the complete syntax of X-13ARIMA-
-SEATS. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec
+In *seasonal*, it is possible to use almost the complete syntax of
+X-13ARIMA-SEATS. The X-13ARIMA-SEATS syntax uses *specs* and *arguments*, with each spec
 optionally containing some arguments. These spec-argument combinations can be
 added to `seas` by separating the spec and the argument by a dot (`.`). For
 example, in order to set the 'variables' argument of the 'regression' spec equal
@@ -83,10 +83,10 @@ argument:
 
     view(m)
 
-### License and Credits
+### License
 
-*seasonal* is free and open source, licensed under GPL-3. It requires the X
--13ARIMA-SEATS software by the U.S. Census Bureau, which is open source and
+*seasonal* is free and open source, licensed under GPL-3. It requires the
+X-13ARIMA-SEATS software by the U.S. Census Bureau, which is open source and
 freely available under the terms of its own [license][license].
 
 To cite seasonal in publications use:

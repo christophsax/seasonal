@@ -55,13 +55,13 @@ This is a version of our article in the \emph{Journal of Statistical Software} \
   Christoph Sax\\
   University of Basel\\
   Peter Merian-Weg 6, Basel, Switzerland\\
-  ORCID: \href{https://orcid.org/0000-0002-7192-7044}{0000-0002-7192-7044}
+  ORCID: \href{https://orcid.org/0000-0002-7192-7044}{0000-0002-7192-7044}\\
   E-mail: \email{christoph.sax@gmail.com}\\
   URL: \url{http://www.christophsax.com}\\~\\
   Dirk Eddelbuettel\\
   University of Illinois at Urbana-Champaign\\
   725 S Wright St, Chicago, USA\\
-  ORCID: \href{https://orcid.org/0000-0001-6419-907X}{0000-0001-6419-907X}
+  ORCID: \href{https://orcid.org/0000-0001-6419-907X}{0000-0001-6419-907X}\\
   E-mail: \email{edd@debian.org}\\
   URL: \url{http://dirk.eddelbuettel.com}\\~\\
 }
