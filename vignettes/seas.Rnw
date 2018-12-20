@@ -107,7 +107,7 @@ approach to seasonal adjustment.
 
 \begin{figure}
 \begin{center}
-   \includegraphics{Figures/website.png}
+   \includegraphics{Figures/website.jpg}
    \caption{The website \url{http://www.seasonal.website} gives a full-featured preview of the modeling facilities of \pkg{seasonal}, including the possibility to upload and adjust time series. \label{fig:website}}
 \end{center}
 \end{figure}
@@ -628,7 +628,7 @@ R> view(m)
 
 \begin{figure}
 \begin{center}
-   \includegraphics{Figures/seasonal.png}
+   \includegraphics{Figures/seasonal.jpg}
    \caption{The \code{view} function calls a graphical user interface that allows an interactive manipulation of most options of X-13. \label{fig:view}}
 \end{center}
 \end{figure}
