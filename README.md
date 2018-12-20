@@ -8,7 +8,7 @@ R interface to X-13ARIMA-SEATS
 the newest seasonal adjustment software developed by the [United States Census
 Bureau][census].
 
-<img src="https://raw.githubusercontent.com/christophsax/seasonal/master/vignettes/Figures/website.jpg" width="55%"/>
+<img src="https://raw.githubusercontent.com/christophsax/seasonal/master/vignettes/Figures/website.jpg" width="65%"/>
 
 ### Installation
 
@@ -62,7 +62,7 @@ forecasts of the ARIMA model as a `"ts"` time series:
 
 There are several graphical tools to analyze a `seas` model. The main plot
 function draws the seasonally adjusted and unadjusted series, as well as the
-outliers. Optionally, it also draws the trend of the seasonal decomposition:
+outliers:
 
     m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
     plot(m)
@@ -71,7 +71,7 @@ outliers. Optionally, it also draws the trend of the seasonal decomposition:
 ### Graphical User Interface
 
 The `view` function is a graphical tool for choosing a seasonal adjustment
-model, using the new [seasonalview][seasonalview] package, with the same
+model, using the [seasonalview][seasonalview] package, with the same
 structure as the [demo website of seasonal][seasweb]. To install
 [seasonalview][seasonalview], type:
 
