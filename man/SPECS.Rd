@@ -14,7 +14,7 @@ The data is used by several functions as a look-up table. Users
 should consider the table in \code{\link{series}} or in the official manual.
 }
 \references{
-Official X-13ARIMA-SEATS manual: 
+Official X-13ARIMA-SEATS manual:
   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \keyword{datasets}

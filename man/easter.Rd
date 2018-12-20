@@ -8,15 +8,15 @@
 \title{Dates of Chinese New Year, Indian Diwali and Easter}
 \format{Objects of class \code{"Date"}.}
 \source{
-\url{http://www.census.gov/srd/www/genhol/genhol_downloads.html} 
+\url{http://www.census.gov/srd/www/genhol/genhol_downloads.html}
 
-\url{http://www.chinesenewyears.info/chinese-new-year-calendar.php} 
+\url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
 
-Ministry of Statistics and Programme Implementation, with help from Pinaki 
+Ministry of Statistics and Programme Implementation, with help from Pinaki
   Mukherjee
 }
 \description{
-Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in 
+Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in
 \code{\link{genhol}}.
 }
 \examples{
