@@ -1,6 +1,6 @@
 read_data <- function(method = "seats", file, frequency){
   # read and parse the main data series
-  # 
+  #
   # method  "seats" or "x11", series are in different files, depending on mehtod
   # file  full path without file ending
   #
@@ -27,7 +27,7 @@ read_data <- function(method = "seats", file, frequency){
   } else {
     final <- seasonaladj
   }
-  
+
   # remove NULL elements, because cbind cannot handle them
   ll <- list(final = final, seasonal = seasonal, seasonaladj = seasonaladj, trend = trend, irregular = irregular, adjustfac = adjustfac)
   lll <- ll[!unlist(lapply(ll, is.null))]
@@ -37,11 +37,11 @@ read_data <- function(method = "seats", file, frequency){
 
 read_series <- function(file, frequency = NULL){
   # Read data from a particular X13-ARIMA-SEATS file
-  # 
+  #
   # file  full path including file ending
   #
   # return a "ts" object, NULL if no file is present
-  
+
   if (!file.exists(file)){
     return(NULL)
   }
@@ -68,10 +68,10 @@ read_series <- function(file, frequency = NULL){
     return(z)
   }
 
-  dta <- do.call("cbind", lapply(dta.raw[-1, ], type.convert))
+  dta <- do.call("cbind", lapply(dta.raw[-1, ], type.convert, as.is = FALSE))
   tt <- as.numeric(dta[, 1])
   dd <- dta[, -1, drop = FALSE]
-    
+
   rownames(dd) <- NULL
 
   if (nchar(tt[1]) == 6){  # time series
@@ -81,14 +81,14 @@ read_series <- function(file, frequency = NULL){
     if (is.null(frequency)){
       frequency <- length(unique(as.numeric(per)))
     }
-    
+
     if (dim(dd)[2] == 1L){
       dd <- c(dd)
     }
     time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
     z <- ts(dd, start = time[1], frequency = frequency)
     z[z==-999] <- NA   # usual NA code
-    
+
   } else if (grepl("^[12]\\d\\d\\d$", tt[1])){  # annual time series
     z <- ts(dd, start = tt[1], frequency = 1)
     z[z==-999] <- NA   # usual NA code
