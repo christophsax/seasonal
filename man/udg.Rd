@@ -24,14 +24,14 @@ qs(x)
 \arguments{
 \item{x, object}{an object of class \code{"seas"}.}
 
-\item{stats}{character vector; if specified, only a subset of the available 
-stats are returned. This speeds up the call, as only a subset needs to be 
+\item{stats}{character vector; if specified, only a subset of the available
+stats are returned. This speeds up the call, as only a subset needs to be
 type converted. Should be used for programming.}
 
-\item{simplify}{logical; should the result be simplified to a vector or 
+\item{simplify}{logical; should the result be simplified to a vector or
 matrix, if possible?}
 
-\item{fail}{logical; if \code{TRUE}, an error is droped if an element of 
+\item{fail}{logical; if \code{TRUE}, an error is droped if an element of
 \code{stats} is missing in \code{names(udg(x))}.}
 
 \item{...}{further arguments (not used)}
@@ -40,13 +40,13 @@ matrix, if possible?}
 \code{qs} returns the QS statistics for seasonality of input and
   output series and the corresponding p-values.
 
-\code{AIC}, \code{BIC}, \code{nobs} and \code{logLik} return the 
+\code{AIC}, \code{BIC}, \code{nobs} and \code{logLik} return the
   corresponding statistics.
 }
 \description{
 The \code{udg} function provides access to a large number of diagnostical
-statistics. The \code{qs} function and the \code{AIC}, \code{BIC} and 
-\code{logLik} methods are  wrappers that use \code{udg} to access some 
+statistics. The \code{qs} function and the \code{AIC}, \code{BIC} and
+\code{logLik} methods are  wrappers that use \code{udg} to access some
 specific diagnostical statistics.
 }
 \examples{
@@ -71,13 +71,13 @@ udg(m)[c("f3.m01", "f3.m02", "qsori")]
 }
 }
 \references{
-Vignette with a more detailed description: 
+Vignette with a more detailed description:
   \url{http://www.seasonal.website/seasonal.html}
-  
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+
+  Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
   \url{http://www.seasonal.website/examples.html}
-  
-  Official X-13ARIMA-SEATS manual: 
+
+  Official X-13ARIMA-SEATS manual:
   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
