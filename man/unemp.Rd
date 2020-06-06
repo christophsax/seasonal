@@ -4,7 +4,9 @@
 \name{unemp}
 \alias{unemp}
 \title{United States Unemployment Level}
-\format{Each time series is an object of class \code{"ts"}.}
+\format{
+Each time series is an object of class \code{"ts"}.
+}
 \source{
 U.S. Bureau of Labor Statistics, retrieved from FRED, Federal Reserve
   Bank of St. Louis; \url{https://fred.stlouisfed.org/series/LNU03000000},

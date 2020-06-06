@@ -7,8 +7,12 @@
 \usage{
 \method{summary}{seas}(object, stats = getOption("seas.stats"), ...)
 
-\method{print}{summary.seas}(x, digits = max(3, getOption("digits") - 3),
-  signif.stars = getOption("show.signif.stars"), ...)
+\method{print}{summary.seas}(
+  x,
+  digits = max(3, getOption("digits") - 3),
+  signif.stars = getOption("show.signif.stars"),
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class \code{"seas"}, usually, a result of a

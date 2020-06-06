@@ -5,7 +5,9 @@
 \alias{SPECS}
 \alias{INSPDATA}
 \title{List of Available X-13ARIMA-SEATS Outputs}
-\format{An object of class \code{"data.frame"}}
+\format{
+An object of class \code{"data.frame"}
+}
 \source{
 United States Census Bureau
 }

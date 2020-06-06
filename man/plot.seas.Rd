@@ -6,15 +6,27 @@
 \alias{monthplot.seas}
 \title{Seasonal Adjustment Plots}
 \usage{
-\method{plot}{seas}(x, outliers = TRUE, trend = FALSE,
-  main = "Original and Adjusted Series", xlab = "Time", ylab = "",
-  transform = c("none", "PC", "PCY"), ...)
+\method{plot}{seas}(
+  x,
+  outliers = TRUE,
+  trend = FALSE,
+  main = "Original and Adjusted Series",
+  xlab = "Time",
+  ylab = "",
+  transform = c("none", "PC", "PCY"),
+  ...
+)
 
-residplot(x, outliers = TRUE, main = "residuals of regARIMA",
-  xlab = "Time", ylab = "", ...)
+residplot(
+  x,
+  outliers = TRUE,
+  main = "residuals of regARIMA",
+  xlab = "Time",
+  ylab = "",
+  ...
+)
 
-\method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), main,
-  ...)
+\method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), main, ...)
 }
 \arguments{
 \item{x}{an object of class \code{"seas"}, usually, a result of a call to 

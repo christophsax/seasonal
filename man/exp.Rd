@@ -5,7 +5,9 @@
 \alias{exp}
 \alias{imp}
 \title{Exports and Imports of China}
-\format{Each time series is an object of class \code{"ts"}.}
+\format{
+Each time series is an object of class \code{"ts"}.
+}
 \source{
 China Customs
 }

@@ -4,8 +4,14 @@
 \alias{static}
 \title{Static Call of a seas Object}
 \usage{
-static(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
-  fail = FALSE, evaluate = FALSE)
+static(
+  x,
+  coef = FALSE,
+  x11.filter = FALSE,
+  test = TRUE,
+  fail = FALSE,
+  evaluate = FALSE
+)
 }
 \arguments{
 \item{x}{an object of class \code{seas}.}

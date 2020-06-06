@@ -4,10 +4,21 @@
 \alias{seas}
 \title{Seasonal Adjustment with X-13ARIMA-SEATS}
 \usage{
-seas(x, xreg = NULL, xtrans = NULL, seats.noadmiss = "yes",
-  transform.function = "auto", regression.aictest = c("td", "easter"),
-  outlier = "", automdl = "", na.action = na.omit, out = FALSE,
-  dir = NULL, ..., list = NULL)
+seas(
+  x,
+  xreg = NULL,
+  xtrans = NULL,
+  seats.noadmiss = "yes",
+  transform.function = "auto",
+  regression.aictest = c("td", "easter"),
+  outlier = "",
+  automdl = "",
+  na.action = na.omit,
+  out = FALSE,
+  dir = NULL,
+  ...,
+  list = NULL
+)
 }
 \arguments{
 \item{x}{object of class \code{"ts"}: time series to seasonaly adjust.}

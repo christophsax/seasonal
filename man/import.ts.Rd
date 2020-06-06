@@ -4,8 +4,13 @@
 \alias{import.ts}
 \title{Import Time Series from X-13 Data Files}
 \usage{
-import.ts(file, format = "datevalue", start = NULL, frequency = NULL,
-  name = NULL)
+import.ts(
+  file,
+  format = "datevalue",
+  start = NULL,
+  frequency = NULL,
+  name = NULL
+)
 }
 \arguments{
 \item{file}{character, name of the X-13 file which the data are to be read from}

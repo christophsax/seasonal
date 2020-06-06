@@ -4,7 +4,9 @@
 \name{cpi}
 \alias{cpi}
 \title{Consumer Price Index of Switzerland}
-\format{Time series of class \code{"ts"}.}
+\format{
+Time series of class \code{"ts"}.
+}
 \source{
 Federal Statistical Office, Switzerland
 }
