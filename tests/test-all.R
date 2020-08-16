@@ -11,7 +11,7 @@ seasonal::checkX13()
 x13binary::checkX13binary()
 
 if (Sys.getenv("TRAVIS") != ""){
-  travisdir <- file.path(Sys.getenv("TRAVIS_BUILD_DIR"), "travis")
+  travisdir <- file.path(Sys.getenv("TRAVIS_BUILD_DIR", "."), "travis")
   source(file.path(travisdir, "settings.R"))
   source(file.path(travisdir, "test-import.R"))
   source(file.path(travisdir, "test-numerical.R"))
