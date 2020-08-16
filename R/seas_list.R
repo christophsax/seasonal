@@ -17,7 +17,7 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
   spc <- x13_prepare(list = list, na.action = na.action, iofile = iofile)
 
   # run X13, either with full output or not
-  run_x13(file = iofile, out = out)
+  x13_run(file = iofile, out = out)
 
   z <- x13_import(iofile, x = list[['x']], na.action = na.action, include_out = out)
 

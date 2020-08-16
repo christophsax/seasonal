@@ -1,4 +1,4 @@
-run_x13 <- function(file, out){
+x13_run <- function(file, out){
   # run X-13ARIMA-SEATS platform dependently
   #
   # file  character, full filename w/o suffix
