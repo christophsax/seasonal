@@ -223,37 +223,40 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
 
-  if (!is.null(list) && !inherits(list, "list")){
-    stop("the 'list' argument mus be of class 'list'")
-  }
-  if (length(names(list)) != length(list)){
-    stop("all spec.argument combinations in 'list' must be named")
-  }
-
-  # save series name
-  series.name <- deparse(substitute(x))[1]
-  series.name <- gsub('[\'\\"]', '', series.name)
-  series.name <- gsub(':', '_', series.name)
-
-  list_dots <- list(...)
-  common_names <- intersect(names(list_dots), names(list))
-  if (length(common_names) > 0) {
-    stop(
-      "some spec args are specified in '...' and in 'list': ",
-      paste(common_names, collapse = ", "),
-      call. = FALSE
+  if (FALSE) {
+    # FIXME if multi
+    z <- seas_multi(
+      x = x,
+      xreg = NULL,
+      xtrans = NULL,
+      seats.noadmiss = "yes",
+      transform.function = "auto",
+      regression.aictest = c("td", "easter"),
+      outlier = "",
+      automdl = "",
+      na.action = na.omit,
+      out = FALSE,
+      dir = NULL,
+      list_dots = list(...),
+      list = list
     )
+
+    return(z)
   }
 
-  use_if_not_in_list <- c(
-    "x", "xreg", "xtrans", "seats.noadmiss", "transform.function",
-    "regression.aictest", "outlier", "automdl"
-  )
-  not_in_list <- setdiff(use_if_not_in_list, names(list))
-  list_not_in_list <- mget(not_in_list)
 
-  # order matters, e.g., list(outlier = "", outlier.critical = 3)
-  list_combined <- c(list_not_in_list, list, list_dots)
+  list_combined <- enrich_list(
+    list = list,
+    list_dots = list(...),
+    x = x,
+    xreg = xreg,
+    xtrans = xtrans,
+    seats.noadmiss = seats.noadmiss,
+    transform.function = transform.function,
+    regression.aictest = regression.aictest,
+    outlier = outlier,
+    automdl = automdl
+  )
 
   seas_list(
     list = list_combined,
@@ -261,6 +264,6 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
     out = out,
     dir = dir,
     call = match.call(),
-    series.name = series.name
+    series.name = deparse(substitute(x))[1]
   )
 }

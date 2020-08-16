@@ -1,5 +1,5 @@
 # import seas object of a processed iofile
-x13_import <- function(iofile, x, na.action, include_out = FALSE) {
+x13_import <- function(iofile, x, na.action, out = FALSE) {
 
   frequency_x <- frequency(x)
 
@@ -131,7 +131,7 @@ x13_import <- function(iofile, x, na.action, include_out = FALSE) {
     z$na.action <- attr(x.na, "na.action")
   }
 
-  if (include_out){
+  if (out){
     z$out <-  outtxt
   }
 

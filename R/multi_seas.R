@@ -1,67 +1,76 @@
-multi_seas <- function(x, xreg = NULL, xtrans = NULL,
+seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
          seats.noadmiss = "yes", transform.function = "auto",
          regression.aictest = c("td", "easter"), outlier = "",
          automdl = "", na.action = na.omit,
-         out = FALSE, dir = NULL, ..., list = NULL){
+         out = FALSE, dir = NULL, list_dots, list = NULL){
+
+  # x <- cbind(a = AirPassengers, b = mdeaths)
+  # x <- NULL
 
 
+  # list <- list(list(x11 = ""), list(x11 = ""))
+  # list <- list(x11 = "")
+  # list <- NULL
 
-  # x <- cbind(a = AirPassengers, b = AirPassengers)
+  series.names <- valid_names(colnames(x))
 
-  # # multiple series, one spec
-  # seas(x, x11 = "")
+  # expand x
+  xs <- lapply(seq(ncol(x)), function(i) x[, i])
 
-  # # alternatively, using list =
-  # seas(x, list = list(x11 = ""))
-
-
-  # seas(x, list = list(list(x11 = ""), list(x11 = ""))
-
-
-  # seas(list = list(list(x = AirPassengers = x11 = ""), list(x = AirPassengers, x11 = ""))
-
-
-  # intial checks
-  checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
-
-  if (!is.null(list) && !inherits(list, "list")){
-    stop("the 'list' argument mus be of class 'list'")
-  }
-  if (length(names(list)) != length(list)){
-    stop("all spec.argument combinations in 'list' must be named")
+  if (is.null(list)) list <- list()
+  # expand lists
+  if (all(sapply(list, inherits, "list")) && length(list) == length(xs)) {
+    # one list for each series
+    lists <- list
+  } else {
+    # one list for all series
+    lists <- rep(list(list), length(xs))
   }
 
-  # save series name
-  series.name <- deparse(substitute(x))[1]
-  series.name <- gsub('[\'\\"]', '', series.name)
-  series.name <- gsub(':', '_', series.name)
-
-  list_dots <- list(...)
-  common_names <- intersect(names(list_dots), names(list))
-  if (length(common_names) > 0) {
-    stop(
-      "some spec args are specified in '...' and in 'list': ",
-      paste(common_names, collapse = ", "),
-      call. = FALSE
-    )
-  }
-
-  use_if_not_in_list <- c(
-    "x", "xreg", "xtrans", "seats.noadmiss", "transform.function",
-    "regression.aictest", "outlier", "automdl"
+  lists_combined <- Map(
+    function(list, x) {
+      enrich_list(
+        list = list,
+        list_dots = list_dots,
+        x = x,
+        xreg = xreg,
+        xtrans = xtrans,
+        seats.noadmiss = seats.noadmiss,
+        transform.function = transform.function,
+        regression.aictest = regression.aictest,
+        outlier = outlier,
+        automdl = automdl
+      )
+    },
+    list = lists,
+    x = xs
   )
-  not_in_list <- setdiff(use_if_not_in_list, names(list))
-  list_not_in_list <- mget(not_in_list)
 
-  # order matters, e.g., list(outlier = "", outlier.critical = 3)
-  list_combined <- c(list_not_in_list, list, list_dots)
 
-  seas_list(
-    list = list_combined,
-    na.action = na.omit,
-    out = out,
-    dir = dir,
-    call = match.call(),
-    series.name = series.name
+  wdir <- wdir_create()
+  iofiles <- file.path(wdir, series.names)
+
+
+  # write specs
+  spcs <- Map(
+    function(list, iofile) {
+      x13_prepare(list = list, na.action = na.action, iofile = iofile)
+    },
+    list = lists_combined,
+    iofile = iofiles
   )
+
+  # batchmode = c("R")
+  lapply(iofiles, x13_run, out = FALSE)
+
+  zs <- Map(
+    function(iofile, x) {
+      x13_import(iofile = iofile, x = x, na.action = na.action, out = out)
+    },
+    iofile = iofiles,
+    x = xs
+  )
+
+  zs
+
 }

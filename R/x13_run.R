@@ -59,6 +59,8 @@ x13_run <- function(file, out){
     }
   }
 
+  invisible(TRUE)
+
 }
 
 
