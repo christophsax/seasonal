@@ -18,4 +18,5 @@ if (Sys.getenv("TRAVIS") != ""){
   source(file.path(travisdir, "test-static.R"))
   source(file.path(travisdir, "test-update.R"))
   source(file.path(travisdir, "test-two-way-parsing.R"))
+  source(file.path(travisdir, "test-multi.R"))
 }
