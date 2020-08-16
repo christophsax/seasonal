@@ -214,7 +214,7 @@
 #'
 #' }
 #'
-seas <- function(x, xreg = NULL, xtrans = NULL,
+seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
          seats.noadmiss = "yes", transform.function = "auto",
          regression.aictest = c("td", "easter"), outlier = "",
          automdl = "", na.action = na.omit,
@@ -223,7 +223,15 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
 
-  if (FALSE) {
+
+  # multi mode
+  multi_x <- !is.null(x) && NCOL(x) > 1
+  multi_list <-
+    !is.null(list) &&
+    all(sapply(list, inherits, "list")) &&
+    length(list) > 1
+
+  if (multi_x || multi_list) {
     # FIXME if multi
     z <- seas_multi(
       x = x,
@@ -240,11 +248,10 @@ seas <- function(x, xreg = NULL, xtrans = NULL,
       list_dots = list(...),
       list = list
     )
-
     return(z)
   }
 
-
+  # standard run
   list_combined <- enrich_list(
     list = list,
     list_dots = list(...),

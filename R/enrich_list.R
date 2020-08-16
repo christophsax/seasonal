@@ -32,6 +32,9 @@ enrich_list <- function(list,
     "x", "xreg", "xtrans", "seats.noadmiss", "transform.function",
     "regression.aictest", "outlier", "automdl"
   )
+
+  if (is.null(x)) use_if_not_in_list <- use_if_not_in_list[-1]
+
   not_in_list <- setdiff(use_if_not_in_list, names(list))
   list_not_in_list <- mget(not_in_list)
 

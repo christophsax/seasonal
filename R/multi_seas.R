@@ -12,19 +12,26 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
   # list <- list(x11 = "")
   # list <- NULL
 
-  series.names <- valid_names(colnames(x))
-
-  # expand x
-  xs <- lapply(seq(ncol(x)), function(i) x[, i])
+  if (is.null(x)) {
+    # x specified in lists
+    n_series <- length(list)
+    series.names <- paste0("ser_", seq(n_series))
+    xs <- lapply(seq(n_series), function(i) NULL)
+  } else {
+    # x specified explicitly
+    n_series <- ncol(x)
+    series.names <- valid_names(colnames(x))
+    xs <- lapply(seq(n_series), function(i) x[, i])
+  }
 
   if (is.null(list)) list <- list()
   # expand lists
-  if (all(sapply(list, inherits, "list")) && length(list) == length(xs)) {
+  if (all(sapply(list, inherits, "list")) && length(list) == n_series) {
     # one list for each series
     lists <- list
   } else {
     # one list for all series
-    lists <- rep(list(list), length(xs))
+    lists <- rep(list(list), n_series)
   }
 
   lists_combined <- Map(
@@ -46,10 +53,8 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     x = xs
   )
 
-
   wdir <- wdir_create()
   iofiles <- file.path(wdir, series.names)
-
 
   # write specs
   spcs <- Map(
@@ -64,13 +69,14 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
   lapply(iofiles, x13_run, out = FALSE)
 
   zs <- Map(
-    function(iofile, x) {
-      x13_import(iofile = iofile, x = x, na.action = na.action, out = out)
+    function(iofile, list) {
+      x13_import(iofile = iofile, x = list$x, na.action = na.action, out = out)
     },
     iofile = iofiles,
-    x = xs
+    list = lists_combined
   )
 
+  names(zs) <- NULL
   zs
 
 }
