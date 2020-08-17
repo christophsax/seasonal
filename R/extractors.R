@@ -1,44 +1,44 @@
 #' Time Series of a Seasonal Adjustment Model
-#' 
+#'
 #' Functions to extract the main time series from a \code{"seas"} object. For
 #' universal import of X-13ARIMA-SEATS tables, use the \code{\link{series}}
 #' function.
-#' 
-#' These functions support R default NA handling. If \code{na.action = 
-#' na.exclude} is specified in the call to \code{seas}, the time series will 
+#'
+#' These functions support R default NA handling. If \code{na.action =
+#' na.exclude} is specified in the call to \code{seas}, the time series will
 #' also contain NAs.
-#' 
+#'
 #' @param object  an object of class \code{"seas"}.
 #' @param ...  not used. For compatibility with the generic.
-#'   
+#'
 #' @return returns a \code{"ts"} object, depending on the function.
-#'   
+#'
 #' @seealso \code{\link{seas}} for the main function of seasonal.
 #' @seealso \code{\link{series}}, for universal X-13 output extraction.
-#'   
-#' @references Vignette with a more detailed description: 
+#'
+#' @references Vignette with a more detailed description:
 #'   \url{http://www.seasonal.website/seasonal.html}
-#'   
-#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   \url{http://www.seasonal.website/examples.html}
-#'   
-#'   
-#'   
-#'   Official X-13ARIMA-SEATS manual: 
+#'
+#'
+#'
+#'   Official X-13ARIMA-SEATS manual:
 #'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
-#'   
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' m <- seas(AirPassengers)
-#' 
+#'
 #' final(m)
 #' original(m)
 #' irregular(m)
 #' trend(m)
-#' 
+#'
 #' # NA handling
 #' AirPassengersNA <- window(AirPassengers, end = 1962, extend = TRUE)
 #' final(seas(AirPassengersNA, na.action = na.omit))    # no NA in final series
@@ -48,25 +48,37 @@
 #' }
 #' @export
 final <- function(object){
+  if (!inherits(object, "seas") && is.list(object)) {
+    return(do.call(cbind, lapply(object, extract_w_na_action, name = 'final')))
+  }
   extract_w_na_action(object, 'final')
-  
+
 }
 
 #' @rdname final
 #' @export
 original <- function(object){
+  if (!inherits(object, "seas") && is.list(object)) {
+    return(do.call(cbind, lapply(object, function(e) e$x)))
+  }
   object$x
 }
 
 #' @rdname final
 #' @export
 trend <- function(object){
+  if (!inherits(object, "seas") && is.list(object)) {
+    return(do.call(cbind, lapply(object, extract_w_na_action, name = 'trend')))
+  }
   extract_w_na_action(object, 'trend')
 }
 
 #' @rdname final
 #' @export
 irregular <- function(object){
+  if (!inherits(object, "seas") && is.list(object)) {
+    return(do.call(cbind, lapply(object, extract_w_na_action, name = 'irregular')))
+  }
   extract_w_na_action(object, 'irregular')
 }
 
@@ -83,9 +95,9 @@ extract_w_na_action <- function(x, name){
   # extract a data series and applies na_action according to the attribute
   #
   # x "seas" object
-  # 
+  #
   # returns a "ts" object
-  # 
+  #
   # used by: time series extractor functions
   #
   if (is.null(x$data)) return (NULL)

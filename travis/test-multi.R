@@ -9,9 +9,27 @@ seas(x = mdta, x11 = "")
 
 # R multimode
 seas(x = mdta, x11 = "", multimode = "R")
+seas(x = mdta, x11 = "", multimode = "x13")
+
+# Open question: which default to use - speed vs stability, ease of debugging
 
 # series as a list
-seas(x = list(a = AirPassengers, b = AirPassengers), x11 = "")
+m <- seas(x = list(a = mdeaths, b = AirPassengers), x11 = "", list = list(list(), list(outlier.critical = 3)))
+
+m_a <- seas(mdeaths, x11 = "")
+m_b <- seas(AirPassengers, x11 = "", outlier.critical = 3)
+
+stopifnot(all.equal(final(m$a), final(m_a)))
+stopifnot(all.equal(final(m$b), final(m_b)))
+
+stopifnot(all.equal(original(m$a), original(m_a)))
+stopifnot(all.equal(original(m$b), original(m_b)))
+
+stopifnot(all.equal(trend(m$a), trend(m_a)))
+stopifnot(all.equal(trend(m$b), trend(m_b)))
+
+stopifnot(all.equal(irregular(m$a), irregular(m_a)))
+stopifnot(all.equal(irregular(m$b), irregular(m_b)))
 
 # use with tsbox
 # seas(x = tsbox::ts_tslist(tsbox::ts_c(mdeaths, fdeaths)), x11 = "")
@@ -80,5 +98,18 @@ m <- seas(
     list()
   )
 )
+
+
+# extractor functions ----------------------------------------------------------
+
+m <- seas(x = mdta, x11 = "")
+
+final(m)
+
+original(m)
+
+trend(m)
+
+irregular(m)
 
 
