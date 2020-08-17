@@ -48,6 +48,10 @@
 #'   oulier detection. Set equal to \code{NULL} to turn it off.
 #' @param automdl   spec \code{automdl} without arguments (default). Automatic
 #'   model search with the automdl spec. Set equal to \code{NULL} to turn it off.
+#' @param composite   spec \code{composite}. A named list with spec-arguments
+#'   for the aggregation of multiple series. Also requries
+#'   \code{series.comtype = "add"} or similar. Set equal to \code{NULL} to turn
+#'   it off (default).
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
 #'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values
@@ -59,6 +63,9 @@
 #' @param dir   character string with a user defined file path. If specified,
 #'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 #'   debugging.
+#' @param multimode   one of \code{"x13"} or \code{"R"}. When multiple series
+#'   are suppied, should they be processed in a single call (\code{"x13"}) or
+#'   processed individually (\code{"R"}).
 #' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see
 #'   details).
 #' @param list  a named list with additional spec-arguments options. This is an
@@ -202,398 +209,72 @@
 #' final(seas(AirPassengersNA, na.action = na.x13))
 #'
 #' ## performing 'composite' adjustment
-#' m.direct <- seas(ldeaths, x11 = "")
-#' final.direct <- final(m.direct)
-#' m.indirect <- lapply(list(mdeaths, fdeaths), seas, x11 = "")
-#'
-#'  # not very efficient, but keeps time series properties
-#' final.indirect <- Reduce(`+`, lapply(m.indirect, final))
-#'
-#' ts.plot(cbind(final.indirect, final(m.direct)), col = 1:2)
-#' legend("topright", legend = c("disagregated", "aggregated"), lty = 1, col = 1:2)
-#'
+#' seas(
+#'   cbind(mdeaths, fdeaths),
+#'   composite = list(),
+#'   series.comptype = "add"
+#' )
 #' }
 #'
-seas <- function(x, xreg = NULL, xtrans = NULL,
+seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
          seats.noadmiss = "yes", transform.function = "auto",
          regression.aictest = c("td", "easter"), outlier = "",
-         automdl = "", na.action = na.omit,
-         out = FALSE, dir = NULL, ..., list = NULL){
-
-  z <- list()  # output object
-  z$call <- match.call()
+         automdl = "", composite = NULL, na.action = na.omit,
+         out = FALSE, dir = NULL, multimode = c("x13", "R"), ..., list = NULL){
 
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
 
-  # lookup table for output specification
-  SPECS <- NULL
-  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
-  SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
 
-  # save series name
-  series.name <- deparse(substitute(x))[1]
+  # multi mode
+  multi_x <- (!is.null(x) && NCOL(x) > 1) || is.list(x)
+  multi_list <-
+    !is.null(list) &&
+    all(sapply(list, inherits, "list")) &&
+    length(list) > 1
 
-  # remove quotes and : in series.names
-  series.name <- gsub('[\'\\"]', '', series.name)
-  series.name <- gsub(':', '_', series.name)
-
-  # parent.frame() <- sys.frame(-1)  # environment where seas was called
-
-  # using the list argument instead of '...''
-  if (is.null(list)){
-    list <- list(...)
-
-    # save call as list with evaluated arguments
-    cl <- match.call(seas, z$call)
-    z$list <- lapply(as.list(cl)[-1], eval, envir = parent.frame())
-
-  } else {
-    # save list with evaluated arguments
-    z$list <- lapply(list, eval, envir = parent.frame())
-
-    if (!inherits(list, "list")){
-      stop("the 'list' argument mus be of class 'list'")
-    }
-    if (length(names(list)) != length(list)){
-      stop("all spec.argument combinations in 'list' must be named")
-    }
-    # overwrite defaults if specified in the list
-    dl <- names(list)[names(list) %in% names(formals(seas))]
-    for (dli in dl){
-      assign(dli, list[[dli]])
-    }
-    if ("list" %in% dl){
-      stop("no 'list' argument inside the 'list' argument allowed")
-    }
-    if (length(list(...) > 0)){
-      warning("if 'list' is specified, spec.argument combinations delivered to '...' are ignored.")
-    }
-    if ("x" %in% dl){
-      series.name <- "ser"
-    }
-    # remove defaults from list
-    list <- list[!(names(list) %in% dl)]
+  if (multi_x || multi_list) {
+    z <- seas_multi(
+      x = x,
+      xreg = xreg,
+      xtrans = xtrans,
+      seats.noadmiss = seats.noadmiss,
+      transform.function = transform.function,
+      regression.aictest = regression.aictest,
+      outlier = outlier,
+      automdl = automdl,
+      composite = composite,
+      na.action = na.action,
+      out = out,
+      dir = dir,
+      list_dots = list(...),
+      multimode = multimode,
+      list = list,
+      call = match.call()
+    )
+    return(z)
   }
 
-  # check series
-  if (!inherits(x, "ts")){
-    stop("'x' argument is not a time series.")
-  }
+  # standard run
+  list_combined <- enrich_list(
+    list = list,
+    list_dots = list(...),
+    x = x,
+    xreg = xreg,
+    xtrans = xtrans,
+    seats.noadmiss = seats.noadmiss,
+    transform.function = transform.function,
+    regression.aictest = regression.aictest,
+    outlier = outlier,
+    automdl = automdl
+  )
 
-  if (start(x)[1] <= 1000){
-    stop("start year of 'x' must be > 999.")
-  }
-
-
-  # na action
-  x.na <- na.action(x)
-
-  # temporary working dir and filenames
-  pat <- if (out) "x13out" else "x13"
-  wdir <- tempfile(pattern = pat)
-  while (file.exists(wdir)) {
-    wdir <- tempfile(pattern = pat)
-  }
-
-  dir.create(wdir)
-
-  # file names for
-  iofile <- file.path(wdir, "iofile")      # inputs and outputs (w/o suffix)
-  datafile <- file.path(wdir, "data.dta")  # series to adjust
-  # user defined variables
-  xreg.file <- file.path(wdir, "xreg.dta")
-  xtrans.file <- file.path(wdir, "xtrans.dta")
-
-  ### write data
-  write_ts_dat(x.na, file = datafile)
-
-  ### construct spclist (spclist fully describes the .spc file)
-  spc <- list()
-  class(spc) <- c("spclist", "list")
-
-  # add data series
-  spc$series$title <- paste0("\"", series.name, "\"")
-  spc$series$file <- paste0("\"", datafile, "\"")
-  spc$series$format <- "\"datevalue\""
-  spc$series$period <- frequency(x)
-
-  # add the default options
-  spc$transform$`function` <- transform.function
-  spc$regression$aictest <- regression.aictest
-  spc$seats$noadmiss <- seats.noadmiss
-
-  spc <- mod_spclist(spc, list = list(outlier = outlier, automdl = automdl))
-
-  # add user defined options
-  spc <- mod_spclist(spc, list = list)
-
-  # remove double entries, adjust outputs
-  spc <- consist_spclist(spc)
-
-  ### user defined regressors
-  if (!is.null(xreg)){
-    if (frequency(xreg) != frequency(x)){
-      stop('xreg and x must be of the same frequency.')
-    }
-    write_ts_dat(na.action(xreg), file = xreg.file)
-    # user names either from input (single "ts"), or from colnames ("mts)
-    if (is.null(dim(xreg))){
-      if (inherits(substitute(xreg), "name")){
-        user <- deparse(substitute(xreg))
-      } else {
-        user <- "xreg"
-      }
-    } else {
-      user <- paste0("xreg", 1:NCOL(xreg))
-      # user <- gsub("[\\(\\)]", "", colnames(xreg))
-    }
-
-    if (!is.null(spc$x11regression)){
-      spc$x11regression$user <- user
-      spc$x11regression$file <- paste0("\"", xreg.file, "\"")
-      spc$x11regression$format <- "\"datevalue\""
-    } else {
-      spc$regression$user <- user
-      spc$regression$file <- paste0("\"", xreg.file, "\"")
-      spc$regression$format <- "\"datevalue\""
-    }
-  }
-
-  if (!is.null(xtrans)){
-    if (frequency(xtrans) != frequency(x)){
-      stop('xtrans and x must be of the same frequency.')
-    }
-    write_ts_dat(na.action(xtrans), file = xtrans.file)
-    # user names either from input (single "ts"), or from colnames ("mts)
-    if (is.null(dim(xtrans))){
-      if (inherits(substitute(xtrans), "name")){
-        name <- deparse(substitute(xtrans))
-      } else {
-        name <- "xtrans"
-      }
-    } else {
-      name <- paste0("xtrans", 1:NCOL(xtrans))
-      # name <- gsub("[\\(\\)]", "", colnames(xtrans))
-    }
-    spc$transform$name = name
-    spc$transform$file <- paste0("\"", xtrans.file, "\"")
-    spc$transform$format <- "\"datevalue\""
-  }
-
-
-
-  ### write spc
-  spctxt <- deparse_spclist(spc)
-  writeLines(spctxt, con = paste0(iofile, ".spc"))
-
-  ### Run X13, either with full output or not
-  run_x13(iofile, out)
-
-  flist <- list.files(wdir) # all files produced by X-13
-
-  ### Save output files if 'dir' is specified
-  if (!is.null(dir)){
-    if (!file.exists(dir)){
-      dir.create(dir)
-    }
-    file.copy(file.path(wdir, flist), dir, overwrite = TRUE)
-    message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
-  }
-
-  ### Import from X13
-
-  # check wether there is output at all.
-  outfile <- if (getOption("htmlmode") == 1){
-    paste(iofile, ".html", sep = "")
-  } else {
-    paste(iofile, ".out", sep = "")
-  }
-  if (!file.exists(outfile)){
-    stop("no output has been generated")
-  }
-
-  # add all series that have been produced and are specified in SERIES_SUFFIX
-  file.suffix <- unlist(lapply(strsplit(flist, "\\."), function(x) x[[length(x)]]))
-  is.series <- file.suffix %in% SERIES_SUFFIX
-
-  series.list <- lapply(file.path(wdir, flist[is.series]), read_series,
-                        frequency = frequency(x))
-  names(series.list) <- file.suffix[is.series]
-  z$series <- series.list
-
-  # data tables (names depend on method, thus a separate call is needed)
-  if (!is.null(spc$seats)){
-    z$data <- read_data(method = "seats", file = iofile, frequency(x))
-  } else if (!is.null(spc$x11)){
-    z$data <- read_data(method = "x11", file = iofile, frequency(x))
-  } else {
-    z$data <- NULL
-  }
-
-  # errors/warnings
-  z$err <- read_err(iofile)
-
-  if (is.null(z$data)){
-    drop_x13messages(z$err)
-  } else {
-    drop_x13messages(z$err, "Series has been generated, but X-13 returned an error\n\n", msgfun = warnings)
-  }
-
-  if (is.null(z$data) && any(c("x11", "seats") %in% names(spc))){
-    drop_x13messages(z$err, msg = "X-13 has run but produced no data\n\n", ontype = "all")
-  }
-
-
-  # read .udg file
-  z$udg <- read_udg(iofile)
-
-  # read .log file
-  if (getOption("htmlmode") != 1){
-    z$log <-  readLines(paste0(iofile, ".log"), encoding = "UTF-8")
-  }
-
-  # read .est file
-  z$est <- read_est(iofile)
-
-  # read .mdl file
-
-  mdl <- readLines(paste0(iofile, ".mdl"))
-
-  # Workaround: in the .mdl output, full regime changes are returned weiredly.
-  # E.g.
-  # variables=(
-  #  td/ for before 1955.Jan/
-  # )
-  is.r.change <- grepl("//?[ A-Za-z]", mdl)
-  rch0 <- mdl[is.r.change]
-  rch <- gsub("//[ A-Za-z].+ ", "//", rch0)
-  rch <- gsub("/[ A-Za-z].+ ", "/", rch0)
-  mdl[is.r.change] <- rch
-  z$model <- try(parse_spc(mdl), silent = TRUE)
-
-  is.r.change <- grepl("//?[ A-Za-z]", mdl)
-
-  # fails for very complicated models, but is needed only for static()
-  if (inherits(z$model, "try-error")){
-    z$model <- NULL
-  }
-
-  # read .out file (will be returned only if out = TRUE)
-  outtxt <-  readLines(outfile, encoding = "UTF-8")
-
-  # always keep fivebestmdl
-  z$fivebestmdl <- detect_fivebestmdl(outtxt)
-
-  ### Checks
-
-  # check if model choosen by seats is identical
-  if (any(grepl("Model used for SEATS decomposition is different", z$err))){
-    message(paste("Model used in SEATS is different:", z$udg['seatsmdl']))
-  }
-
-
-
-  # check if freq detection in read_series has worked
-  if (!is.null(z$data)){
-    ff <- frequency(z$data)
-  } else if (length(series.list) > 0){
-    ff <- unique(sapply(series.list[sapply(series.list, is.ts)], frequency))
-  } else {
-    ff <- NULL
-  }
-
-  if (!is.null(ff)){
-    if (!as.numeric(z$udg['freq']) %in% ff){
-      msg <- paste0("Frequency of imported data (", ff, ") is not equal to frequency of detected by X-13 (", as.numeric(z$udg['freq']), "). X-13 retured the addital messages: \n\n")
-      drop_x13messages(z$err, msg = msg, ontype = "all")
-    }
-  }
-
-
-  ### final additions to output
-  if (!is.null(attr(x.na, "na.action"))){
-    z$na.action <- attr(x.na, "na.action")
-  }
-
-  if (out){
-    z$out <-  outtxt
-  }
-
-  z$x <- x
-  z$spc <- spc
-  z$wdir <- wdir
-
-  # clean up
-  if (!out){
-    unlink(wdir, recursive = TRUE)
-  }
-
-  class(z) <- "seas"
-  z
+  seas_list(
+    list = list_combined,
+    na.action = na.action,
+    out = out,
+    dir = dir,
+    call = match.call(),
+    series.name = deparse(substitute(x))[1]
+  )
 }
-
-run_x13 <- function(file, out){
-  # run X-13ARIMA-SEATS platform dependently
-  #
-  # file  character, full filename w/o suffix
-  #
-  # run X-13 as a side effect
-  #
-  # required by seas
-
-  env.path <- Sys.getenv("X13_PATH")
-  # -n no tables
-  # -s store additional output (.udg file)
-  flags <- if (out) {"-s"} else {"-n -s"}
-  if (.Platform$OS.type == "windows"){
-    if (getOption("htmlmode") == 1){
-      x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe"), "\"")
-    } else {
-      x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
-    }
-    # change wd on win as X-13 writes `fort.6` to it
-    owd <- getwd()
-    on.exit(setwd(owd))
-    setwd(dirname(file))
-
-    msg <- shell(paste(x13.bin, file, flags), intern = TRUE)
-  } else {
-    if (getOption("htmlmode") == 1){
-      # ignore case on unix to avoid problems with different binary names
-      fl <- list.files(env.path)
-      x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
-    } else {
-      x13.bin <- file.path(env.path, "x13as")
-    }
-    msg <- system(paste(x13.bin, file, flags), intern = TRUE, ignore.stderr = TRUE)
-
-  }
-  # error message if output contains the word ERROR
-  if (inherits(msg, "character")){
-    if (any(grepl("ERROR", msg))){
-      if (file.exists(paste0(file, ".err"))){
-        if (any(grepl("iofile_err", msg))){
-          # read from separate file
-          err <- read_err(file)
-          drop_x13messages(err)
-        } else {
-          # fall back: parse message
-          err <- detect_error(msg, htmlmode = 0)
-          drop_x13messages(err)
-        }
-      }
-    }
-  }
-
-  # error message on non-zero failing
-  if (!is.null(attr(msg, "status"))){
-    if (attr(msg, "status") > 0){
-      msg <- system(paste(x13.bin, file, flags), intern = TRUE, ignore.stderr = FALSE)
-      stop("X-13 has returned a non-zero exist status, which means that the current spec file cannot be processed for an unknown reason.", call. = FALSE)
-    }
-  }
-
-}
-
-

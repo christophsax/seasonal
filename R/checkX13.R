@@ -1,26 +1,26 @@
 #' Check Installation of X-13ARIMA-SEATS
-#' 
-#' Check the installation of the binary executables of X-13ARIMA-SEATS. See 
-#' \code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if 
-#' you intend to use your own binaries. 
-#' 
-#' @param fail  logical, whether an error should interrupt the process. If 
+#'
+#' Check the installation of the binary executables of X-13ARIMA-SEATS. See
+#' \code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if
+#' you intend to use your own binaries.
+#'
+#' @param fail  logical, whether an error should interrupt the process. If
 #'   \code{FALSE}, a message is returned.
 #' @param fullcheck  logical, whether a full test should be performed. Runs
 #'   \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the
 #'   working of the binaries. Returns a message.
-#' @param htmlcheck  logical, whether the presence of the the HTML version of 
+#' @param htmlcheck  logical, whether the presence of the the HTML version of
 #'   X-13 should be checked.
 #' @examples
 #' \dontrun{
 #' old.path <- Sys.getenv("X13_PATH")
 #' Sys.setenv(X13_PATH = "")  # its broken now
 #' checkX13()
-#' 
+#'
 #' Sys.setenv(X13_PATH = old.path)  # fix it (provided it worked in the first place)
 #' checkX13()
 #' }
-#' 
+#'
 #' @export
 checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
@@ -43,7 +43,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       return(invisible(NULL))
     }
   }
-  
+
   ### check validity of path
   if (!file.exists(env.path)){
     invalid.path.message <- paste0("Path '", env.path, "' specified but does not exists.")
@@ -55,10 +55,10 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       return(invisible(NULL))
     }
   }
-  
-  ### check existence of binaries 
+
+  ### check existence of binaries
   # platform dependent binaries
-  if (.Platform$OS.type == "windows"){    
+  if (.Platform$OS.type == "windows"){
     x13.bin <- file.path(env.path, "x13as.exe")
     x13.bin.html <- file.path(env.path, "x13ashtml.exe")
   } else {
@@ -73,7 +73,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     }
   }
   no.file.message <- paste("Binary executable file", x13.bin, "or", x13.bin.html, "not found.\nSee ?seasonal for details.\n")
-  
+
   if (!(file.exists(x13.bin) | file.exists(x13.bin.html))){
     if (fail){
       message(no.file.message)
@@ -83,14 +83,14 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       return(invisible(NULL))
     }
   }
-  
+
   ### set html mode
   if (file.exists(file.path(x13.bin.html))){
     options(htmlmode = 1)
   } else {
     options(htmlmode = 0)
   }
-  
+
   ### full working test
   if (fullcheck){
     has.failed <- FALSE
@@ -122,7 +122,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     file.remove(list.files(wdir, full.names = TRUE))
     testfile <- system.file("tests", "Testairline.spc", package="seasonal")
     file.copy(testfile, wdir)
-    try(run_x13(file.path(wdir, "Testairline"), out = TRUE), silent = TRUE)
+    try(x13_run(file.path(wdir, "Testairline"), out = TRUE), silent = TRUE)
 
     if (file.exists(file.path(wdir, "Testairline.out")) | file.exists(file.path(wdir, "Testairline.html"))){
       message("  - command line test run successful")
@@ -131,9 +131,9 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       }
     } else {
       message("\nError : X-13 command line test run failed. To debug, try running the binary file directly in the terminal. Try using it with Testairline.spc which is part of the program package by the Census Office.")
-      if (.Platform$OS.type != "windows"){  
+      if (.Platform$OS.type != "windows"){
         message("Perhaps it is not executable; you can make it executable with 'chmod +x ", x13.bin, "', using the terminal.")
-      }  
+      }
       has.failed <- TRUE
     }
 
@@ -157,7 +157,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       message("Congratulations! 'seasonal' should work fine!")
     }
   }
-  
+
   ### check HTML mode
   if (htmlcheck){
     if ((getOption("htmlmode") == 0)){
@@ -172,6 +172,6 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
       }
     }
   }
-  
+
 }
 

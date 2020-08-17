@@ -7,19 +7,19 @@
 checkX13(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE)
 }
 \arguments{
-\item{fail}{logical, whether an error should interrupt the process. If 
+\item{fail}{logical, whether an error should interrupt the process. If
 \code{FALSE}, a message is returned.}
 
 \item{fullcheck}{logical, whether a full test should be performed. Runs
 \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the
 working of the binaries. Returns a message.}
 
-\item{htmlcheck}{logical, whether the presence of the the HTML version of 
+\item{htmlcheck}{logical, whether the presence of the the HTML version of
 X-13 should be checked.}
 }
 \description{
-Check the installation of the binary executables of X-13ARIMA-SEATS. See 
-\code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if 
+Check the installation of the binary executables of X-13ARIMA-SEATS. See
+\code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if
 you intend to use your own binaries.
 }
 \examples{

@@ -128,5 +128,15 @@ if (x13binary::supportedPlatform() & Sys.info()["sysname"] != "Darwin"){
   update(m, x11 = "")
   update(m, x = sqrt(AirPassengers), x11 = "")
 
+  ### multi seas
+  # series as a list
+  m <- seas(x = list(a = mdeaths, b = AirPassengers), x11 = "", list = list(list(), list(outlier.critical = 3)))
+
+  m_a <- seas(mdeaths, x11 = "")
+  m_b <- seas(AirPassengers, x11 = "", outlier.critical = 3)
+
+  stopifnot(all.equal(final(m$a), final(m_a)))
+  stopifnot(all.equal(final(m$b), final(m_b)))
+
 }
 
