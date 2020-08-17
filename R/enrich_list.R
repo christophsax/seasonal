@@ -11,13 +11,11 @@ enrich_list <- function(list,
                         ) {
 
   if (!is.null(list) && !inherits(list, "list")){
-    stop("the 'list' argument mus be of class 'list'")
+    stop("the 'list' argument mus be of class 'list'", call. = FALSE)
   }
-  if (length(names(list)) != length(list)){
-    stop("all spec.argument combinations in 'list' must be named")
+  if ((length(names(list)) != length(list)) || any(names(list) == "")){
+    stop("all spec.argument combinations in 'list' must be named", call. = FALSE)
   }
-
-  # FIXME stop if x and list(x = ) provided
 
   common_names <- intersect(names(list_dots), names(list))
   if (length(common_names) > 0) {

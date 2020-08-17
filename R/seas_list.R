@@ -1,13 +1,6 @@
 seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
                       call = "dummycall", series.name = "x"){
 
-  if (!inherits(list, "list")){
-    stop("the 'list' argument mus be of class 'list'")
-  }
-  if (length(names(list)) != length(list)){
-    stop("all spec.argument combinations in 'list' must be named")
-  }
-
   # wdir and file name
   id <- "iofile"
   wdir <- wdir_create()
