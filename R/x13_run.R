@@ -1,4 +1,4 @@
-x13_run <- function(file, out){
+x13_run <- function(file, out, meta = FALSE){
   # run X-13ARIMA-SEATS platform dependently
   #
   # file  character, full filename w/o suffix
@@ -8,9 +8,11 @@ x13_run <- function(file, out){
   # required by seas
 
   env.path <- Sys.getenv("X13_PATH")
-  # -n no tables
+  # -n output suppression (no out file)
   # -s store additional output (.udg file)
-  flags <- if (out) {"-s"} else {"-n -s"}
+  # -m use metafile
+  flags <- if (out) "-s" else "-n -s"
+  m_flag <- if (meta) "-m" else ""
   if (.Platform$OS.type == "windows"){
     if (getOption("htmlmode") == 1){
       x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe"), "\"")
@@ -22,7 +24,7 @@ x13_run <- function(file, out){
     on.exit(setwd(owd))
     setwd(dirname(file))
 
-    msg <- shell(paste(x13.bin, file, flags), intern = TRUE)
+    msg <- shell(paste(x13.bin, m_flag, file, flags), intern = TRUE)
   } else {
     if (getOption("htmlmode") == 1){
       # ignore case on unix to avoid problems with different binary names
@@ -31,7 +33,7 @@ x13_run <- function(file, out){
     } else {
       x13.bin <- file.path(env.path, "x13as")
     }
-    msg <- system(paste(x13.bin, file, flags), intern = TRUE, ignore.stderr = TRUE)
+    msg <- system(paste(x13.bin, m_flag, file, flags), intern = TRUE, ignore.stderr = TRUE)
 
   }
   # error message if output contains the word ERROR

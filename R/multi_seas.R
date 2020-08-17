@@ -47,8 +47,24 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     iofile = iofiles
   )
 
-  # batchmode = c("R")
-  lapply(iofiles, x13_run, out = FALSE)
+  # browseURL(wdir)
+
+  # --- multimode = c("R")
+
+  # lapply(iofiles, x13_run, out = FALSE)
+
+  # --- multimode = c("x13")
+
+  # meta data file
+  writeLines(paste0(iofiles, ".dta"), file.path(wdir, "metafile.dta"))
+
+  # meta file
+  writeLines(iofiles, file.path(wdir, "metafile.mta"))
+
+  x13_run(file = file.path(wdir, "metafile"), out = FALSE, meta = TRUE)
+
+
+
 
   zs <- Map(
     function(iofile, list) {
