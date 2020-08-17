@@ -102,7 +102,7 @@ m <- seas(
 
 # extractor functions ----------------------------------------------------------
 
-m <- seas(x = mdta, x11 = "")
+m <- seas(x = cbind(mdeaths, fdeaths), x11 = "")
 
 final(m)
 
