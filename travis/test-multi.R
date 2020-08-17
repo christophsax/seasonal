@@ -7,7 +7,14 @@ mdta <- cbind(a = AirPassengers, b = AirPassengers)
 # multiple series, one spec
 seas(x = mdta, x11 = "")
 
+# R multimode
 seas(x = mdta, x11 = "", multimode = "R")
+
+# series as a list
+seas(x = list(a = AirPassengers, b = AirPassengers), x11 = "")
+
+# use with tsbox
+# seas(x = tsbox::ts_tslist(tsbox::ts_c(mdeaths, fdeaths)), x11 = "")
 
 
 # alternatively, using list =

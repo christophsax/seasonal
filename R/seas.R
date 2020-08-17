@@ -225,7 +225,7 @@ seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
 
 
   # multi mode
-  multi_x <- !is.null(x) && NCOL(x) > 1
+  multi_x <- (!is.null(x) && NCOL(x) > 1) || is.list(x)
   multi_list <-
     !is.null(list) &&
     all(sapply(list, inherits, "list")) &&
