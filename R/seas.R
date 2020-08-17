@@ -217,8 +217,8 @@
 seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
          seats.noadmiss = "yes", transform.function = "auto",
          regression.aictest = c("td", "easter"), outlier = "",
-         automdl = "", na.action = na.omit,
-         out = FALSE, dir = NULL, ..., list = NULL){
+         automdl = "", composite = NULL, na.action = na.omit,
+         out = FALSE, dir = NULL, multimode = c("x13", "R"), ..., list = NULL){
 
   # intial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
@@ -232,20 +232,21 @@ seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
     length(list) > 1
 
   if (multi_x || multi_list) {
-    # FIXME if multi
     z <- seas_multi(
       x = x,
-      xreg = NULL,
-      xtrans = NULL,
-      seats.noadmiss = "yes",
-      transform.function = "auto",
-      regression.aictest = c("td", "easter"),
-      outlier = "",
-      automdl = "",
+      xreg = xreg,
+      xtrans = xtrans,
+      seats.noadmiss = seats.noadmiss,
+      transform.function = transform.function,
+      regression.aictest = regression.aictest,
+      outlier = outlier,
+      automdl = automdl,
+      composite = composite,
       na.action = na.omit,
-      out = FALSE,
-      dir = NULL,
+      out = out,
+      dir = dir,
       list_dots = list(...),
+      multimode = multimode,
       list = list
     )
     return(z)

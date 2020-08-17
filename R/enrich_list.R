@@ -41,4 +41,5 @@ enrich_list <- function(list,
   # order matters, e.g., list(outlier = "", outlier.critical = 3)
   list_combined <- c(list_not_in_list, list, list_dots)
 
+  list_combined
 }

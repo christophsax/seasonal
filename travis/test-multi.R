@@ -7,6 +7,9 @@ mdta <- cbind(a = AirPassengers, b = AirPassengers)
 # multiple series, one spec
 seas(x = mdta, x11 = "")
 
+seas(x = mdta, x11 = "", multimode = "R")
+
+
 # alternatively, using list =
 seas(x = mdta, list = list(x11 = ""))
 
@@ -39,4 +42,36 @@ seas(
     list(x = AirPassengers)
   )
 )
+
+
+# composite spec ---------------------------------------------------------------
+
+# same spec for all series
+m <- seas(
+  cbind(mdeaths, fdeaths),
+  composite = list(),           # adding an empty composite will use the seas() defaults for the indirect adjustment
+  series.comptype = "add"       # may be added automatically if composite is not NULL
+)
+
+m <- seas(
+  cbind(mdeaths, fdeaths),
+  series.comptype = "add",
+  composite = list(x11 = ""),   # use x11 for indirect adjustment
+)
+
+
+# different spec for all series
+m <- seas(
+  cbind(mdeaths, fdeaths),
+  series.comptype = "add",
+  composite = list(
+    regression.aictest = NULL,
+    x11.seasonalma = "s3x9"
+  ),
+  list = list(
+    list(x11 = ""),
+    list()
+  )
+)
+
 

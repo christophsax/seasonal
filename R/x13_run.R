@@ -33,8 +33,14 @@ x13_run <- function(file, out, meta = FALSE){
     } else {
       x13.bin <- file.path(env.path, "x13as")
     }
-    msg <- system(paste(x13.bin, m_flag, file, flags), intern = TRUE, ignore.stderr = TRUE)
+    # change wd in meta mode, as it wirtes `fort.14` to it
+    if (meta) {
+      owd <- getwd()
+      on.exit(setwd(owd))
+      setwd(dirname(file))
+    }
 
+    msg <- system(paste(x13.bin, m_flag, file, flags), intern = TRUE, ignore.stderr = TRUE)
   }
   # error message if output contains the word ERROR
   if (inherits(msg, "character")){

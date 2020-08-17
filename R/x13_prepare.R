@@ -1,21 +1,7 @@
-x13_prepare <- function(list, na.action = na.omit, iofile) {
-
-  x <- list[['x']]
-  xreg <- list[['xreg']]
-  xtrans <- list[['xtrans']]
+x13_prepare <- function(list, na.action = na.omit, iofile, composite = FALSE) {
 
   # # save list with evaluated arguments  WHY???
   # list <- lapply(list, eval, envir = parent.frame())
-
-  if (!inherits(x, "ts")){
-    stop("'x' argument is not a time series.")
-  }
-  if (start(x)[1] <= 1000){
-    stop("start year of 'x' must be > 999.")
-  }
-
-  # na action
-  x.na <- na.action(x)
 
   # derived file names
   datafile <- paste0(iofile, ".dta")
@@ -23,18 +9,30 @@ x13_prepare <- function(list, na.action = na.omit, iofile) {
   xtrans.file <- paste0(iofile, "_xtrans.dta")
   series.name <- basename(iofile)
 
-  ### write data
-  write_ts_dat(x.na, file = datafile)
-
-  ### construct spclist (spclist fully describes the .spc file)
+  # construct spclist (spclist fully describes the .spc file)
   spc <- list()
   class(spc) <- c("spclist", "list")
 
-  # add data series
-  spc$series$title <- paste0("\"", series.name, "\"")
-  spc$series$file <- paste0("\"", datafile, "\"")
-  spc$series$format <- "\"datevalue\""
-  spc$series$period <- frequency(x)
+  if (!composite) {
+    x <- list[['x']]
+
+    if (!inherits(x, "ts")){
+      stop("'x' argument is not a time series.")
+    }
+    if (start(x)[1] <= 1000){
+      stop("start year of 'x' must be > 999.")
+    }
+
+    x.na <- na.action(x)
+    write_ts_dat(x.na, file = datafile)
+
+    spc$series$title <- paste0("\"", series.name, "\"")
+    spc$series$file <- paste0("\"", datafile, "\"")
+    spc$series$format <- "\"datevalue\""
+    spc$series$period <- frequency(x)
+  } else {
+    spc$composite$title <- paste0("\"", series.name, "\"")
+  }
 
   # add user defined options
   non_x13_args <- c("x", "xtrans", "xreg")
@@ -42,6 +40,10 @@ x13_prepare <- function(list, na.action = na.omit, iofile) {
 
   # remove double entries, adjust outputs
   spc <- consist_spclist(spc)
+
+
+  xreg <- list[['xreg']]
+  xtrans <- list[['xtrans']]
 
   ### user defined regressors
   if (!is.null(xreg)){

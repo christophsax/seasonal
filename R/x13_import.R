@@ -1,7 +1,7 @@
 # import seas object of a processed iofile
-x13_import <- function(iofile, x, na.action, out = FALSE) {
+x13_import <- function(iofile, x = NULL, na.action, out = FALSE) {
 
-  frequency_x <- frequency(x)
+  frequency_x <- if (is.null(x)) NULL else frequency(x)
 
   z <- list()
 

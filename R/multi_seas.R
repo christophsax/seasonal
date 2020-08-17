@@ -1,15 +1,25 @@
 seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
          seats.noadmiss = "yes", transform.function = "auto",
          regression.aictest = c("td", "easter"), outlier = "",
-         automdl = "", na.action = na.omit,
-         out = FALSE, dir = NULL, list_dots, list = NULL){
+         automdl = "", composite = NULL,
+         na.action = na.omit,
+         out = FALSE, dir = NULL, multimode = c("x13", "R"), list_dots, list = NULL){
 
-  # x <- cbind(a = AirPassengers, b = mdeaths)
-  # x <- NULL
+  multimode <- match.arg(multimode)
 
-  # list <- list(list(x11 = ""), list(x11 = ""))
-  # list <- list(x11 = "")
-  # list <- NULL
+  if (!is.null(composite)) {
+    composite <- enrich_list(
+      list = composite,
+      x = NULL,
+      xreg = xreg,
+      xtrans = xtrans,
+      seats.noadmiss = seats.noadmiss,
+      transform.function = transform.function,
+      regression.aictest = regression.aictest,
+      outlier = outlier,
+      automdl = automdl
+    )
+  }
 
   al <- align_x_list(x, list)
   series.names <- al$series.names
@@ -47,23 +57,27 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     iofile = iofiles
   )
 
-  # browseURL(wdir)
+  if (!is.null(composite)) {
+    iofile_composite <- file.path(wdir, "composite")
+    x13_prepare(
+      list = composite, na.action = na.action,
+      iofile = file.path(wdir, "composite"), composite = TRUE
+    )
+  } else {
+    iofile_composite <- NULL
+  }
 
-  # --- multimode = c("R")
+  if (multimode == "R") {
+    if (!is.null(composite)) stop("composite requires: multimode = \"x13\"")
+    lapply(iofiles, x13_run, out = FALSE)
 
-  # lapply(iofiles, x13_run, out = FALSE)
+  } else if (multimode == "x13") {
+    writeLines(c(iofiles, iofile_composite), file.path(wdir, "metafile.mta"))
+    x13_run(file = file.path(wdir, "metafile"), out = TRUE, meta = TRUE)
 
-  # --- multimode = c("x13")
-
-  # meta data file
-  writeLines(paste0(iofiles, ".dta"), file.path(wdir, "metafile.dta"))
-
-  # meta file
-  writeLines(iofiles, file.path(wdir, "metafile.mta"))
-
-  x13_run(file = file.path(wdir, "metafile"), out = FALSE, meta = TRUE)
-
-
+  } else {
+    "invalid"
+  }
 
 
   zs <- Map(
@@ -75,6 +89,12 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
   )
 
   names(zs) <- NULL
+  zs
+
+  if (!is.null(composite)) {
+    zs$composite <- x13_import(iofile = iofile_composite, x = lists_combined[[1]]$x, na.action = na.action, out = out)
+  }
+
   zs
 
 }
