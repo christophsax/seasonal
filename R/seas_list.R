@@ -1,4 +1,3 @@
-#' A cleaner version of seas that only works with list. Goal is to call it form seas()
 seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
                       call = "dummycall", series.name = "x"){
 

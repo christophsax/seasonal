@@ -48,6 +48,10 @@
 #'   oulier detection. Set equal to \code{NULL} to turn it off.
 #' @param automdl   spec \code{automdl} without arguments (default). Automatic
 #'   model search with the automdl spec. Set equal to \code{NULL} to turn it off.
+#' @param composite   spec \code{composite}. A named list with spec-arguments
+#'   for the aggregation of multiple series. Also requries
+#'   \code{series.comtype = "add"} or similar. Set equal to \code{NULL} to turn
+#'   it off (default).
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
 #'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values
@@ -59,6 +63,9 @@
 #' @param dir   character string with a user defined file path. If specified,
 #'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 #'   debugging.
+#' @param multimode   one of \code{"x13"} or \code{"R"}. When multiple series
+#'   are suppied, should they be processed in a single call (\code{"x13"}) or
+#'   processed individually (\code{"R"}).
 #' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see
 #'   details).
 #' @param list  a named list with additional spec-arguments options. This is an
@@ -202,16 +209,11 @@
 #' final(seas(AirPassengersNA, na.action = na.x13))
 #'
 #' ## performing 'composite' adjustment
-#' m.direct <- seas(ldeaths, x11 = "")
-#' final.direct <- final(m.direct)
-#' m.indirect <- lapply(list(mdeaths, fdeaths), seas, x11 = "")
-#'
-#'  # not very efficient, but keeps time series properties
-#' final.indirect <- Reduce(`+`, lapply(m.indirect, final))
-#'
-#' ts.plot(cbind(final.indirect, final(m.direct)), col = 1:2)
-#' legend("topright", legend = c("disagregated", "aggregated"), lty = 1, col = 1:2)
-#'
+#' seas(
+#'   cbind(mdeaths, fdeaths),
+#'   composite = list(),
+#'   series.comptype = "add"
+#' )
 #' }
 #'
 seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
