@@ -22,7 +22,8 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
   z <- x13_import(iofile, x = list[['x']], na.action = na.action, out = out)
 
   z$call <- call
-  z$list <- list
+  # save list with evaluated arguments, so they can be used to rerun
+  z$list <- lapply(list, eval, envir = parent.frame())
   z$x <- list[['x']]
   z$spc <- spc
 

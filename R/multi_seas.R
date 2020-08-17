@@ -3,7 +3,9 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
          regression.aictest = c("td", "easter"), outlier = "",
          automdl = "", composite = NULL,
          na.action = na.omit,
-         out = FALSE, dir = NULL, multimode = c("x13", "R"), list_dots, list = NULL){
+         out = FALSE, dir = NULL, multimode = c("x13", "R"), list_dots,
+         list = NULL,
+         call = NULL){
 
   multimode <- match.arg(multimode)
 
@@ -59,7 +61,7 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
 
   if (!is.null(composite)) {
     iofile_composite <- file.path(wdir, "composite")
-    x13_prepare(
+    spc_composite <- x13_prepare(
       list = composite, na.action = na.action,
       iofile = file.path(wdir, "composite"), composite = TRUE
     )
@@ -88,11 +90,36 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     list = lists_combined
   )
 
-  names(zs) <- NULL
-  zs
+  names(zs) <- series.names
+
+  # add missing elements to output
+
+  add_element_to_each <- function(l, el, name) {
+    lapply(l, function(li) {li[[name]] <- el; li})
+  }
+
+  add_elements_to_each <- function(l, els, name) {
+    Map(function(li, el) {li[[name]] <- el; li}, li = l, el = els)
+  }
+
+  # z$call
+  zs <- add_element_to_each(zs, call, "call")
+
+  # z$list
+  lists_combined_eval <- lapply(lists_combined, function(e) lapply(e, eval, envir = parent.frame()))
+  zs <- add_elements_to_each(zs, lists_combined_eval, "list")
+
+  # z$x
+  zs <- add_elements_to_each(zs, xs, "x")
+
+  # z$spc
+  zs <- add_elements_to_each(zs, spcs, "spc")
 
   if (!is.null(composite)) {
     zs$composite <- x13_import(iofile = iofile_composite, x = lists_combined[[1]]$x, na.action = na.action, out = out)
+    zs$composite$call <- call
+    zs$composite$list <- composite
+    zs$composite$spc <- spc_composite
   }
 
   zs

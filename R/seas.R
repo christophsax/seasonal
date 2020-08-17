@@ -247,7 +247,8 @@ seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
       dir = dir,
       list_dots = list(...),
       multimode = multimode,
-      list = list
+      list = list,
+      call = match.call()
     )
     return(z)
   }
