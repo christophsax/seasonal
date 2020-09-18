@@ -15,7 +15,7 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
 
   z$call <- call
   # save list with evaluated arguments, so they can be used to rerun
-  z$list <- lapply(list, eval, envir = parent.frame())
+  z$list <- rm_defaults(lapply(list, eval, envir = parent.frame()))
   z$x <- list[['x']]
   z$spc <- spc
 
@@ -34,3 +34,22 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
 
   z
 }
+
+rm_defaults <- function(ll) {
+  defaults <- list(
+    xreg = NULL,
+    xtrans = NULL,
+    seats.noadmiss = "yes",
+    transform.function = "auto",
+    regression.aictest = c("td", "easter"),
+    outlier = "",
+    automdl = ""
+  )
+
+  cn <- intersect(names(ll), names(defaults))
+  common <- cn[unlist(Map(identical, ll[cn], defaults[cn]))]
+
+  ll[setdiff(names(ll), common)]
+}
+
+
