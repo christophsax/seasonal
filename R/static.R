@@ -133,8 +133,23 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
   is.ser <- intersect(c("x", "xreg", "xtrans"), names(z0))
   z[is.ser] <- z0[is.ser]
 
-  z
+  message(pretty_call(z))
+
+  invisible(z)
 }
+
+pretty_call <- function(z) {
+  l <- as.list(z)
+  args <- unlist(unname(Map(paste, names(l[-1]), lapply(l[-1], deparse), sep = " = ")))
+  args_indented <- paste0("  ", args)
+  paste(
+    paste0(as.character(l[[1]]), "("),  # open
+    paste(args_indented, collapse = ",\n"),
+    ")",                                # close
+    sep = "\n"
+  )
+}
+
 
 
 
