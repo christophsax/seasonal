@@ -140,7 +140,8 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
 
 pretty_call <- function(z) {
   l <- as.list(z)
-  args <- unlist(unname(Map(paste, names(l[-1]), lapply(l[-1], deparse), sep = " = ")))
+  deparse2 <- function(e) paste(deparse(e, width.cutoff = 500), collapse = " ")
+  args <- unlist(unname(Map(paste, names(l[-1]), lapply(l[-1], deparse2), sep = " = ")))
   args_indented <- paste0("  ", args)
   paste(
     paste0(as.character(l[[1]]), "("),  # open
