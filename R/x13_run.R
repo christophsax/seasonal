@@ -55,6 +55,10 @@ x13_run <- function(file, out, meta = FALSE){
           err <- detect_error(msg, htmlmode = 0)
           drop_x13messages(err)
         }
+      } else {
+        # another fall back: parse message
+        err <- detect_error(msg, htmlmode = 0)
+        drop_x13messages(err)
       }
     }
   }
