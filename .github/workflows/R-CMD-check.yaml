@@ -67,6 +67,7 @@ jobs:
 
       - name: Install tex packages
         run: |
+          remotes::install_cran("tinytex")
           tinytex::tlmgr_install("ae")
         shell: Rscript {0}
 
