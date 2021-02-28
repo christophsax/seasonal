@@ -11,14 +11,14 @@ x13binary::checkX13binary()
 # r.version <- paste(R.Version()$major, R.Version()$minor, sep = ".")
 # is.oldrel <- .Platform$OS.type == "windows" && (compareVersion(r.version, "3.1.3") < 1)
 
-if (!x13binary::supportedPlatform()) skip()
+if (!x13binary::supportedPlatform()) skip("platform not supported")
 
 test_that("Baisc examples of seasonal work through", {
   expect_null(checkX13())
 })
 
 
-test_that("Baisc examples of seasonal work through", {
+test_that("Basic examples of seasonal work through", {
 
   m <- seas(AirPassengers)
   summary(m)
@@ -69,7 +69,7 @@ test_that("Baisc examples of seasonal work through", {
   expect_s3_class(series(m, "forecast.forecasts"), "ts")
 
   # copying the output of X-13 to a user defined directory
-  seas(AirPassengers, dir = ".")
+  expect_s3_class(seas(AirPassengers, dir = tempdir()), "seas")
 
   # user defined regressors (see ?genhol for more examples)
   # a temporary level shift in R base
@@ -98,13 +98,13 @@ test_that("Baisc examples of seasonal work through", {
   series(m, "fct")  # re-evaluate with the forecast spec activated
 
   # more than one series
-  series(m, c("rsd", "fct"))
+  expect_s3_class(series(m, c("rsd", "fct")), "ts")
 
   m <- seas(AirPassengers, forecast.save = "fct")
   series(m, "fct") # no re-evaluation (much faster!)
 
   # using long names
-  series(m, "forecast.forecasts")
+  expect_s3_class(series(m, "forecast.forecasts"), "ts")
 
   # history spec (takes )
   # series(m, "history.trendestimates")

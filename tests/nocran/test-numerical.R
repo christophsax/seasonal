@@ -24,7 +24,7 @@ s.final <- final(z[ff == 6][[1]])
 
 # save(m.final, q.final, s.final, file = file.path(travisdir, "examples/test0.90.0.RData"))
 bench <- new.env()
-load(file.path(travisdir, "examples/test0.90.9.RData"), envir = bench)
+load(file.path(nocran_tests, "examples/test0.90.9.RData"), envir = bench)
 
 stopifnot(all.equal(m.final, bench$m.final))
 stopifnot(all.equal(q.final, bench$q.final))
