@@ -6,3 +6,4 @@
 ^appveyor\.yml$
 build.R
 travis
+^\.github$

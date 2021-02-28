@@ -1,11 +1,11 @@
 1.8.0  2021-03-??
 --------------------------------------------------------------------------------
 
-enhancements
-  - static() prints a prettier call
-
 new features
   - support for multiple time series and the composite spec
+
+enhancements
+  - static() prints a prettier output
 
 bug fix
   - as.data.frame() fix date conversion for freqency 4, 2 (#256)
