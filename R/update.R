@@ -1,22 +1,22 @@
 #' Update and Re-evaluate a Seasonal Adjustment Model
 #' 
-#' Method to update and re-evaluate an object of class \code{"seas"}. 
+#' Method to update and re-evaluate an object of class `"seas"`. 
 #' 
-#' Contrary to the default method of \code{\link{update}}, the  \code{"seas"}
+#' Contrary to the default method of [update()], the  `"seas"`
 #' method uses the evaluated call, rather than the actual call for re-
 #' evaluation. This means you can savely use it in other functions, which 
-#' is usuful with \code{\link{lapply}} and friends (see examples.)
+#' is usuful with [lapply()] and friends (see examples.)
 #' 
-#' @param object   an object of class \code{"seas"}, usually, a result of a 
-#'     call to \code{\link{seas}}.
+#' @param object   an object of class `"seas"`, usually, a result of a 
+#'     call to [seas()].
 #' @param ...  spec-argument options sent to X-13 (with the same 
-#'   syntax as in \code{\link{seas}}) 
-#' @param evaluate logical. If \code{TRUE}, the call is evaluated.
-#' @return Object of class \code{"seas"}. Or an object of class \code{"call"} 
-#'   if \code{evaluate = FALSE}.
-#' @seealso \code{\link{seas}} for the main function.
-#' @seealso \code{\link{static}}, to return the (optionally evaluated) static 
-#'   call of a \code{"seas"} object.
+#'   syntax as in [seas()]) 
+#' @param evaluate logical. If `TRUE`, the call is evaluated.
+#' @return Object of class `"seas"`. Or an object of class `"call"` 
+#'   if `evaluate = FALSE`.
+#' @seealso [seas()] for the main function.
+#' @seealso [static()], to return the (optionally evaluated) static 
+#'   call of a `"seas"` object.
 #' @export
 #' @importFrom stats update
 #' @method update seas
@@ -53,19 +53,19 @@ update.seas <- function(object, ..., evaluate = TRUE){
 #' Seasonal Adjusted Series  
 #' 
 #' Returns the seasonally adjusted series of an
-#' (optionally re-evaluated) model of class \code{"seas"}. Without further
-#' arguments, this is equivalent to a call to the \code{\link{final}} function.
+#' (optionally re-evaluated) model of class `"seas"`. Without further
+#' arguments, this is equivalent to a call to the [final()] function.
 #' 
-#' With the \code{newdata} argument supplied, the \code{"seas"} object is re-
+#' With the `newdata` argument supplied, the `"seas"` object is re-
 #' evaluated, using the original model call. This is equivalent of calling 
-#' \code{final(update(m, x = newdata))}.
+#' `final(update(m, x = newdata))`.
 #' 
-#' @param object   an object of class \code{"seas"}.
-#' @param newdata   an object of class \code{"ts"}. new data values for the 
-#'   \code{x} argument in the \code{\link{seas}} function.
-#' @param ...   further arguments, passed to \code{\link{update.seas}}, to 
+#' @param object   an object of class `"seas"`.
+#' @param newdata   an object of class `"ts"`. new data values for the 
+#'   `x` argument in the [seas()] function.
+#' @param ...   further arguments, passed to [update.seas()], to 
 #'   re-evaluate the model.
-#' @return Object of class \code{"ts"}.
+#' @return Object of class `"ts"`.
 #' @export
 #' @importFrom stats predict
 #' @method predict seas

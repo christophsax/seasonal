@@ -7,8 +7,8 @@
 genhol(x, start = 0, end = 0, frequency = 12, center = "none")
 }
 \arguments{
-\item{x}{a vector of class \code{"\link{Date}"}, containing the occurences
-of the holiday. It can be generated with \code{\link{as.Date}}.}
+\item{x}{a vector of class \code{"Date"}, containing the occurences
+of the holiday. It can be generated with \code{\link[=as.Date]{as.Date()}}.}
 
 \item{start}{integer, shifts the start point of the holiday. Use negative
 values if \code{start} is before the specified date.}
@@ -25,19 +25,18 @@ Ramadan. See references: Notes on centering holiday.}
 }
 \value{
 an object of class \code{"ts"} that can be used as a user defined
-  variable in \code{\link{seas}}.
+variable in \code{\link[=seas]{seas()}}.
 }
 \description{
 A replacement for the genhol software by the U.S. Census Bureau, a utility
 that uses the same procedure as X-12-ARIMA to create regressors for the U. S.
-holidays of Easter, Labor Day, and Thanksgiving. \bold{This is a replacement
+holidays of Easter, Labor Day, and Thanksgiving. \strong{This is a replacement
 written in R, the U.S. Census Bureau software is not needed.}
 }
 \details{
 The resulting time series can be used as a user defined variable in
-\code{\link{seas}}. Usually, you want the holiday effect to be removed from
-the final series, so you need to specify \code{regression.usertype =
-"holiday"}. (The default is to include user defined variables in the final
+\code{\link[=seas]{seas()}}. Usually, you want the holiday effect to be removed from
+the final series, so you need to specify \code{regression.usertype = "holiday"}. (The default is to include user defined variables in the final
 series.)
 }
 \examples{
@@ -167,8 +166,8 @@ summary(seas(AirPassengers, regression.variables = c("easter[1]"),
 }
 \references{
 United States Census Bureau, Notes on centering holiday
-  regressors: \url{https://www.census.gov/srd/www/genhol/genhol_center.html}
+regressors: \url{https://www.census.gov/srd/www/genhol/genhol_center.html}
 }
 \seealso{
-\code{\link{seas}} for the main function of seasonal.
+\code{\link[=seas]{seas()}} for the main function of seasonal.
 }

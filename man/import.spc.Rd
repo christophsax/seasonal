@@ -20,16 +20,16 @@ import.spc(file, text = NULL)
 }
 \value{
 returns an object of class \code{import.spc}, which is a list with the following (optional) objects of class \code{call}:
-  \item{x}{the call to retrieve the data for the input series} 
-  \item{xtrans}{the call to retrieve the data for the \code{xtrans} series (if required by the call)} 
-  \item{xreg}{the call to retrieve the data for the \code{xreg} series (if required by the call)} 
-  \item{seas}{the call to \code{\link{seas}}}
+\item{x}{the call to retrieve the data for the input series}
+\item{xtrans}{the call to retrieve the data for the \code{xtrans} series (if required by the call)}
+\item{xreg}{the call to retrieve the data for the \code{xreg} series (if required by the call)}
+\item{seas}{the call to \code{\link[=seas]{seas()}}}
 }
 \description{
 Utility function to import \code{.spc} files from X-13. It generates a list
 of calls to \code{seas} (and  \code{import.ts}) that can be run in R.
 Evaluating these calls should perform the same X-13 procedure as the original
-\code{.spc} file. The \code{print} method displays the calls in a way that 
+\code{.spc} file. The \code{print} method displays the calls in a way that
 they can be copy-pasted into an R script.
 }
 \examples{
@@ -110,7 +110,7 @@ ee$seas  # the 'seas' object, produced by the final call to seas()
 }
 }
 \seealso{
-\code{\link{import.ts}}, for importing X-13 data files.
+\code{\link[=import.ts]{import.ts()}}, for importing X-13 data files.
 
-\code{\link{seas}} for the main function of seasonal.
+\code{\link[=seas]{seas()}} for the main function of seasonal.
 }

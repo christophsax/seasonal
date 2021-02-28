@@ -9,22 +9,22 @@ out(x, browser = getOption("browser"), ...)
 \arguments{
 \item{x}{an object of class \code{"seas"}.}
 
-\item{browser}{browser to be used, passed on to 
-\code{\link{browseURL}}.}
+\item{browser}{browser to be used, passed on to
+\code{\link[=browseURL]{browseURL()}}.}
 
-\item{...}{additional spec-arguments options sent to X-13ARIMA-SEATS during 
-re-evaluation, passed to \code{\link{update}}.}
+\item{...}{additional spec-arguments options sent to X-13ARIMA-SEATS during
+re-evaluation, passed to \code{\link[=update]{update()}}.}
 }
 \value{
 displays the output as a side effect.
 }
 \description{
-The \code{out} function shows the full content of the X-13ARIMA-SEATS output 
-in the browser. If you want to use a specific statistic in R, the 
-\code{\link{udg}} function is preferable.
+The \code{out} function shows the full content of the X-13ARIMA-SEATS output
+in the browser. If you want to use a specific statistic in R, the
+\code{\link[=udg]{udg()}} function is preferable.
 }
 \details{
-To keep the size of \code{"seas"} objects small, \code{seas} does not save 
+To keep the size of \code{"seas"} objects small, \code{seas} does not save
 the output by default. Instead, \code{out} re-evaluates the model.
 }
 \examples{
@@ -38,16 +38,15 @@ out(m, automdl.print = "autochoicemdl")
 }
 }
 \references{
-Vignette with a more detailed description: 
-  \url{http://www.seasonal.website/seasonal.html}
-  
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-  \url{http://www.seasonal.website/examples.html}
-  
-  
-  Official X-13ARIMA-SEATS manual: 
-  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+Vignette with a more detailed description:
+\url{http://www.seasonal.website/seasonal.html}
+
+Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
+\url{http://www.seasonal.website/examples.html}
+
+Official X-13ARIMA-SEATS manual:
+\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
-\code{\link{seas}} for the main function of seasonal.
+\code{\link[=seas]{seas()}} for the main function of seasonal.
 }

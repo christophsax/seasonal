@@ -1,13 +1,13 @@
 #' Check Installation of X-13ARIMA-SEATS
 #'
 #' Check the installation of the binary executables of X-13ARIMA-SEATS. See
-#' \code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if
+#' [seasonal()] for details on how to set `X13_PATH` manually if
 #' you intend to use your own binaries.
 #'
 #' @param fail  logical, whether an error should interrupt the process. If
-#'   \code{FALSE}, a message is returned.
+#'   `FALSE`, a message is returned.
 #' @param fullcheck  logical, whether a full test should be performed. Runs
-#'   \code{Testairline.spc} (which is shiped with X-13ARIMA-SEATS) to test the
+#'   `Testairline.spc` (which is shiped with X-13ARIMA-SEATS) to test the
 #'   working of the binaries. Returns a message.
 #' @param htmlcheck  logical, whether the presence of the the HTML version of
 #'   X-13 should be checked.

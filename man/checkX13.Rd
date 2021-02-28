@@ -19,7 +19,7 @@ X-13 should be checked.}
 }
 \description{
 Check the installation of the binary executables of X-13ARIMA-SEATS. See
-\code{\link{seasonal}} for details on how to set \code{X13_PATH} manually if
+\code{\link[=seasonal]{seasonal()}} for details on how to set \code{X13_PATH} manually if
 you intend to use your own binaries.
 }
 \examples{

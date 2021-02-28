@@ -7,16 +7,16 @@
 \title{seasonal: R interface to X-13ARIMA-SEATS}
 \description{
 \pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the seasonal
-  adjustment software by the US Census Bureau. It offers full access to
-  almost all options and outputs of X-13, including X-11 and SEATS, automatic
-  ARIMA model search, outlier detection and support for user defined holiday
-  variables, such as Chinese New Year or Indian Diwali. A graphical user
-  interface can be used through the \pkg{seasonalview} package. Uses the
-  X-13-binaries from the \pkg{x13binary} package.
+adjustment software by the US Census Bureau. It offers full access to
+almost all options and outputs of X-13, including X-11 and SEATS, automatic
+ARIMA model search, outlier detection and support for user defined holiday
+variables, such as Chinese New Year or Indian Diwali. A graphical user
+interface can be used through the \pkg{seasonalview} package. Uses the
+X-13-binaries from the \pkg{x13binary} package.
 
-  The best way to start is to have a look at the vignette:
+The best way to start is to have a look at the vignette:
 
-  \code{vignette("seas")}
+\code{vignette("seas")}
 }
 \section{Installation}{
 
@@ -24,10 +24,10 @@ Seasonal depends on the \pkg{x13binary} package, which downloads and installs
 the X-13 binaries. To install both packages, simply type to the R
 console:
 
-  \code{install.packages("seasonal")}
+\code{install.packages("seasonal")}
 
 A startup message is given if the path to X-13 is specified manually. To
-surpress the message, use \code{\link{suppressPackageStartupMessages}}.
+surpress the message, use \code{\link[=suppressPackageStartupMessages]{suppressPackageStartupMessages()}}.
 }
 
 \section{Setting the X-13 path manually}{
@@ -37,8 +37,8 @@ Sometimes, you either cannot or don't want to rely on the binaries provided
 by \pkg{x13binary}:
 \itemize{
 \item because you are on an unsupported system, like Solaris. If you manage
-  to build X-13 on such a system, please let the developers of
-  \pkg{x13binary} know.
+to build X-13 on such a system, please let the developers of
+\pkg{x13binary} know.
 \item because you cannot run executable files in your R library folders, due
 to corporate IT policy.
 \item because you are using your own Fortran compilation of X-13ARIMA-SEATS.
@@ -61,8 +61,7 @@ adding the Sys.setenv line to one of your \code{.Rprofile} files. The easiest
 is to use the one located in your home directory, which can be written
 directly from R:
 
-\code{write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")',
-      file = "~/.Rprofile", append = TRUE)}
+\code{write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")', file = "~/.Rprofile", append = TRUE)}
 
 If the file does not exist (by default), it will be created. Make sure that
 you get the quotes right: double quotes around your directory, single quotes
@@ -70,17 +69,17 @@ around the whole \code{Sys.setenv} line, such that R understands your string.
 Check first that the the \code{Sys.setenv} line works correctly; once it is
 written you may have to edit \code{.Rprofile} manually. (Or add a second,
 overwriting line to it.) For other ways to set an environmental variable
-permanently in R, see \code{\link{Startup}}.
+permanently in R, see \code{\link[=Startup]{Startup()}}.
 }
 
 \references{
 Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
-  in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
-  10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
+10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
 }
 \seealso{
-\code{\link{seas}} for the core function and more information on
-  package usage.
+\code{\link[=seas]{seas()}} for the core function and more information on
+package usage.
 }
 \author{
 Christoph Sax \email{christoph.sax@gmail.com}

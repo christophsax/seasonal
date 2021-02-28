@@ -3,42 +3,42 @@
 #' In a 'static' call, the default automatic procedures in the model call
 #' are substituted by the choices they made.
 #'
-#' If \code{evaluate = TRUE}, the call is evaluated. The call can be copy/pasted
+#' If `evaluate = TRUE`, the call is evaluated. The call can be copy/pasted
 #' to a script and used for further manipulations or future evaluation of the
 #' same model.
 #'
 #' By default, the static call is tested. It is executed and compared to the
 #' input call. If the final series is not identical, a message is returned.
 #'
-#' If \code{coef = TRUE}, the coefficients are fixed as well. If
-#' \code{x11.filter = TRUE}, the X-11 moving averages are fixed as well.
+#' If `coef = TRUE`, the coefficients are fixed as well. If
+#' `x11.filter = TRUE`, the X-11 moving averages are fixed as well.
 #'
-#' @param x an object of class \code{seas}.
-#' @param coef  logical. If \code{TRUE}, the coefficients are treated as fixed,
+#' @param x an object of class `seas`.
+#' @param coef  logical. If `TRUE`, the coefficients are treated as fixed,
 #'   instead of beeing estimated.
-#' @param x11.filter logical. X-11 only. if \code{TRUE}, the X-11 moving
+#' @param x11.filter logical. X-11 only. if `TRUE`, the X-11 moving
 #'   averages will be fixed as well. This leads to different filters at
 #'   different stages, and the resulting series can be are slightly different.
-#'   If \code{test = TRUE}, this may cause a warning  message.
+#'   If `test = TRUE`, this may cause a warning  message.
 #' @param test logical. By default the static call is executed and compared to
 #'   the input call. If the final series is not identical, a message is
-#'   returned. If \code{FALSE}, no test is performed (faster).
-#' @param fail logical. If \code{TRUE}, differences will cause an error. Ignored
-#'   if \code{test = FALSE}.
-#' @param evaluate logical. If \code{TRUE}, the call is evaluated.
-#' @return Object of class \code{"call"}. Or an object of class \code{"seas"}
-#'   if \code{evaluate = TRUE}.
-#' @seealso \code{\link[stats]{getCall}} to extract the actual call.
-#' @seealso \code{\link{seas}} for the main function of seasonal.
+#'   returned. If `FALSE`, no test is performed (faster).
+#' @param fail logical. If `TRUE`, differences will cause an error. Ignored
+#'   if `test = FALSE`.
+#' @param evaluate logical. If `TRUE`, the call is evaluated.
+#' @return Object of class `"call"`. Or an object of class `"seas"`
+#'   if `evaluate = TRUE`.
+#' @seealso [stats::getCall()] to extract the actual call.
+#' @seealso [seas()] for the main function of seasonal.
 #'
 #' @references Vignette with a more detailed description:
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'
 #'   Official X-13ARIMA-SEATS manual:
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'
 #' @export
 #' @examples

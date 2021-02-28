@@ -1,9 +1,9 @@
 #' Handle Missing Values by X-13
 #' 
 #' Utility function to substitute NA values by -99999. Useful as a value for the
-#' \code{na.action} argument in \code{\link{seas}}.
+#' `na.action` argument in [seas()].
 #' 
-#' @param x an object of class \code{"ts"}
+#' @param x an object of class `"ts"`
 #' 
 #' @return a time series, with NA values substituted by -99999.
 #' 

@@ -35,12 +35,11 @@ together with \code{xreg}.}
 
 \item{seats.noadmiss}{spec 'seats' with argument \code{noadmiss = "yes"}
 (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
-an alternative model is used (a message is returned). If \code{noadmiss =
-"no"}, no approximation is done. If the seats spec is removed
+an alternative model is used (a message is returned). If \code{noadmiss = "no"}, no approximation is done. If the seats spec is removed
 (\code{seats = NULL}), no seasonal adjustment is performed.}
 
 \item{transform.function}{spec \code{transform} with argument
-\code{function = "auto"} (default). Automatic log transformation detection.
+\verb{function = "auto"} (default). Automatic log transformation detection.
 Set equal to \code{"none"}, \code{"log"} or any value that is allowed by
 X-13 to turn it off.}
 
@@ -66,7 +65,7 @@ are substituted by -99999.}
 
 \item{out}{logical. Should the X-13ARIMA-SEATS standard output be saved in
 the \code{"seas"} object? (this increases object size substantially, it is
-recommended to re-evaluate the model using the \code{\link{out}} function
+recommended to re-evaluate the model using the \code{\link[=out]{out()}} function
 instead.)}
 
 \item{dir}{character string with a user defined file path. If specified,
@@ -85,31 +84,31 @@ alternative to the \code{...} argument. It is useful for programming.}
 }
 \value{
 returns an object of class \code{"seas"}, essentially a list with the
-  following components:
-  \item{series}{a list containing the output tables of X-13. To be accessed
-  by the \code{series} function.}
-  \item{data}{seasonally adjusted data, the
-  raw data, the trend component, the irregular component and the seasonal
-  component (deprecated).}
-  \item{err}{warning messages from X-13ARIMA-SEATS}
-  \item{udg}{content of the \code{.udg} output file}
-  \item{est}{content of the \code{.est} output file}
-  \item{model}{list with the model specification,
-  similar to \code{"spc"}. It typically contains \code{"regression"}, which
-  contains the regressors and parameter estimates, and \code{"arima"}, which
-  contains the ARIMA specification and the parameter estimates.}
-  \item{fivebestmdl}{Best Five ARIMA Models (unparsed)}
-  \item{x}{input series}
-  \item{spc}{object of class \code{"spclist"}, a list containing the content of the \code{.spc} file that is
-  used by X-13ARIMA-SEATS. Each spec is on the first level, each
-  argument is on the second level.}
-  \item{call}{function call}
-  \item{wdir}{temporary directory in which X-13ARIMA-SEATS has been run}
+following components:
+\item{series}{a list containing the output tables of X-13. To be accessed
+by the \code{series} function.}
+\item{data}{seasonally adjusted data, the
+raw data, the trend component, the irregular component and the seasonal
+component (deprecated).}
+\item{err}{warning messages from X-13ARIMA-SEATS}
+\item{udg}{content of the \code{.udg} output file}
+\item{est}{content of the \code{.est} output file}
+\item{model}{list with the model specification,
+similar to \code{"spc"}. It typically contains \code{"regression"}, which
+contains the regressors and parameter estimates, and \code{"arima"}, which
+contains the ARIMA specification and the parameter estimates.}
+\item{fivebestmdl}{Best Five ARIMA Models (unparsed)}
+\item{x}{input series}
+\item{spc}{object of class \code{"spclist"}, a list containing the content of the \code{.spc} file that is
+used by X-13ARIMA-SEATS. Each spec is on the first level, each
+argument is on the second level.}
+\item{call}{function call}
+\item{wdir}{temporary directory in which X-13ARIMA-SEATS has been run}
 
-  The \code{final} function returns the final adjusted series, the
-  \code{plot} method shows a plot with the unadjusted and the adjusted
-  series. \code{summary} gives an overview of the regARIMA model. The
-  \code{\link{udg}} function returns diagnostical statistics.
+The \code{final} function returns the final adjusted series, the
+\code{plot} method shows a plot with the unadjusted and the adjusted
+series. \code{summary} gives an overview of the regARIMA model. The
+\code{\link[=udg]{udg()}} function returns diagnostical statistics.
 }
 \description{
 Main function of the seasonal package. With the default options,
@@ -119,7 +118,7 @@ argument, it is possible to invoke almost all options that are available in
 X-13ARIMA-SEATS (see  details). The default options of \code{seas} are listed
 as explicit arguments and are  discussed in the arguments section. A
 full-featured graphical user interface can be accessed by the
-\code{\link{view}} function.
+\code{\link[=view]{view()}} function.
 }
 \details{
 It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
@@ -130,8 +129,8 @@ argument by a dot (\code{.}) (see examples). Alternatvily, spec-argument
 combinations can be supplied as a named list, which is useful for
 programming.
 
-Similarily, the \code{\link{series}} function can be used to read almost all
-series from X-13ARIMA-SEATS. The \code{\link{udg}} function provides access
+Similarily, the \code{\link[=series]{series()}} function can be used to read almost all
+series from X-13ARIMA-SEATS. The \code{\link[=udg]{udg()}} function provides access
 to a large number of diagnostical statistics.
 
 For a more extensive description, consider the vignette or the wiki page,
@@ -232,28 +231,28 @@ seas(
 }
 \references{
 Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
-  in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
-  10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
+10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
 
-  On-Line Interface to seasonal
-  \url{http://www.seasonal.website}
+On-Line Interface to seasonal
+\url{http://www.seasonal.website}
 
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-  \url{http://www.seasonal.website/examples.html}
+Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
+\url{http://www.seasonal.website/examples.html}
 
-  Official X-13ARIMA-SEATS manual:
-  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+Official X-13ARIMA-SEATS manual:
+\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
-\code{\link{view}}, for accessing the graphical user interface.
+\code{\link[=view]{view()}}, for accessing the graphical user interface.
 
-\code{\link{update.seas}}, to update an existing \code{"seas"}
-  model.
+\code{\link[=update.seas]{update.seas()}}, to update an existing \code{"seas"}
+model.
 
-\code{\link{static}}, to return the 'static' call, with automated
-  procedures substituted by their choices.
+\code{\link[=static]{static()}}, to return the 'static' call, with automated
+procedures substituted by their choices.
 
-\code{\link{series}}, for universal X-13 table series import.
+\code{\link[=series]{series()}}, for universal X-13 table series import.
 
-\code{\link{out}}, to view the full X-13 diagnostical output.
+\code{\link[=out]{out()}}, to view the full X-13 diagnostical output.
 }

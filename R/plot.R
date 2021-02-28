@@ -1,44 +1,44 @@
 #' Seasonal Adjustment Plots
 #' 
-#' Functions to graphically analyze a \code{"seas"} object. 
+#' Functions to graphically analyze a `"seas"` object. 
 #' 
-#' \code{plot} calls the plot method for class \code{"seas"}. It plots the 
+#' `plot` calls the plot method for class `"seas"`. It plots the 
 #' adjusted and unadjusted series, as well as the outliers. Optionally draws the
 #' trend series.
 #' 
-#' \code{residplot} plots the residuals and the outliers.
+#' `residplot` plots the residuals and the outliers.
 #' 
-#' \code{monthplot} calls the monthplot method for class \code{"seas"}. It plot 
-#' the seasonal and SI component periodwise. Despite its name, \code{monthplot}
+#' `monthplot` calls the monthplot method for class `"seas"`. It plot 
+#' the seasonal and SI component periodwise. Despite its name, `monthplot`
 #' can be used for series of all frequencies.
 #' 
-#' @param x  an object of class \code{"seas"}, usually, a result of a call to 
-#'   \code{\link{seas}}.
+#' @param x  an object of class `"seas"`, usually, a result of a call to 
+#'   [seas()].
 #' @param outliers   logical, should the oultiers be drawn.
 #' @param trend      logical, should the trend be drawn.
-#' @param choice     character string, \code{"seasonal"} (default) or 
-#'   \code{"irregular"}.
+#' @param choice     character string, `"seasonal"` (default) or 
+#'   `"irregular"`.
 #' @param main    character string, title of the graph.
 #' @param xlab    character string, title for the x axis.
 #' @param ylab    character string, title for the y axis.
-#' @param transform   character string, optionally transform the data to period to period  \code{"PC"} or year to year\code{"PCY"} percentage change rates. 
+#' @param transform   character string, optionally transform the data to period to period  `"PC"` or year to year`"PCY"` percentage change rates. 
 #' @param \dots   further arguments passed to the plotting functions.
 #'   
 #' @return All plot functions return a plot as their side effect.
 #'   
-#' @seealso \code{\link{seas}}, for the main function.
-#' @seealso \code{\link{udg}}, for diagnostical statistics.
+#' @seealso [seas()], for the main function.
+#' @seealso [udg()], for diagnostical statistics.
 #'   
 #' @references Vignette with a more detailed description: 
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'   
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'   
 #'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'   
 #' @export
 #' @method plot seas

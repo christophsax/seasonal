@@ -29,8 +29,8 @@ residplot(
 \method{monthplot}{seas}(x, choice = c("seasonal", "irregular"), main, ...)
 }
 \arguments{
-\item{x}{an object of class \code{"seas"}, usually, a result of a call to 
-\code{\link{seas}}.}
+\item{x}{an object of class \code{"seas"}, usually, a result of a call to
+\code{\link[=seas]{seas()}}.}
 
 \item{outliers}{logical, should the oultiers be drawn.}
 
@@ -46,7 +46,7 @@ residplot(
 
 \item{\dots}{further arguments passed to the plotting functions.}
 
-\item{choice}{character string, \code{"seasonal"} (default) or 
+\item{choice}{character string, \code{"seasonal"} (default) or
 \code{"irregular"}.}
 }
 \value{
@@ -56,13 +56,13 @@ All plot functions return a plot as their side effect.
 Functions to graphically analyze a \code{"seas"} object.
 }
 \details{
-\code{plot} calls the plot method for class \code{"seas"}. It plots the 
+\code{plot} calls the plot method for class \code{"seas"}. It plots the
 adjusted and unadjusted series, as well as the outliers. Optionally draws the
 trend series.
 
 \code{residplot} plots the residuals and the outliers.
 
-\code{monthplot} calls the monthplot method for class \code{"seas"}. It plot 
+\code{monthplot} calls the monthplot method for class \code{"seas"}. It plot
 the seasonal and SI component periodwise. Despite its name, \code{monthplot}
 can be used for series of all frequencies.
 }
@@ -88,19 +88,17 @@ qqnorm(resid(m))
 }
 }
 \references{
-Vignette with a more detailed description: 
-  \url{http://www.seasonal.website/seasonal.html}
-  
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-  \url{http://www.seasonal.website/examples.html}
-  
-  
-  
-  Official X-13ARIMA-SEATS manual: 
-  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+Vignette with a more detailed description:
+\url{http://www.seasonal.website/seasonal.html}
+
+Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
+\url{http://www.seasonal.website/examples.html}
+
+Official X-13ARIMA-SEATS manual:
+\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
-\code{\link{seas}}, for the main function.
+\code{\link[=seas]{seas()}}, for the main function.
 
-\code{\link{udg}}, for diagnostical statistics.
+\code{\link[=udg]{udg()}}, for diagnostical statistics.
 }

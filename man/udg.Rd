@@ -38,10 +38,10 @@ matrix, if possible?}
 }
 \value{
 \code{qs} returns the QS statistics for seasonality of input and
-  output series and the corresponding p-values.
+output series and the corresponding p-values.
 
 \code{AIC}, \code{BIC}, \code{nobs} and \code{logLik} return the
-  corresponding statistics.
+corresponding statistics.
 }
 \description{
 The \code{udg} function provides access to a large number of diagnostical
@@ -72,20 +72,20 @@ udg(m)[c("f3.m01", "f3.m02", "qsori")]
 }
 \references{
 Vignette with a more detailed description:
-  \url{http://www.seasonal.website/seasonal.html}
+\url{http://www.seasonal.website/seasonal.html}
 
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-  \url{http://www.seasonal.website/examples.html}
+Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
+\url{http://www.seasonal.website/examples.html}
 
-  Official X-13ARIMA-SEATS manual:
-  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+Official X-13ARIMA-SEATS manual:
+\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
-\code{\link{seas}} for the main function.
+\code{\link[=seas]{seas()}} for the main function.
 
-\code{\link{series}}, for universal X-13 output extraction.
+\code{\link[=series]{series()}}, for universal X-13 output extraction.
 
-\code{\link{plot.seas}}, for diagnostical plots.
+\code{\link[=plot.seas]{plot.seas()}}, for diagnostical plots.
 
-\code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+\code{\link[=out]{out()}}, for accessing the full output of X-13ARIMA-SEATS.
 }

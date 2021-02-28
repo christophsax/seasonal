@@ -16,16 +16,16 @@ import.ts(
 \item{file}{character, name of the X-13 file which the data are to be read from}
 
 \item{format}{a valid X-13 file format as described in 7.15 of the
-X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"}, 
+X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"},
 \code{"freecomma"}, \code{"x13save"}, \code{"tramo"} or an X-11 or Fortran format.}
 
 \item{start}{vector of length 2, time of the first observation (only for
 formats \code{"free"} and \code{"freecomma"} and the Fortran formats.)}
 
-\item{frequency}{the number of observations per unit of time (only for 
+\item{frequency}{the number of observations per unit of time (only for
 formats \code{"free"}, \code{"freecomma"} and the X-11 or Fortran formats.)}
 
-\item{name}{(X-11 formats only) name of the series, to select from a 
+\item{name}{(X-11 formats only) name of the series, to select from a
 file with multiple time series. Omit if you want to read all time series from an X-11 format file.}
 }
 \value{
@@ -34,7 +34,7 @@ an object of class \code{ts} or \code{mts}
 \description{
 Utility function to read time series from X-13 data files. A call to
 \code{import.ts} is constructed and included in the output of
-\code{\link{import.spc}}.
+\code{\link[=import.spc]{import.spc()}}.
 }
 \examples{
 \dontrun{
@@ -45,7 +45,7 @@ import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
 }
 }
 \seealso{
-\code{\link{import.spc}}, for importing X-13 \code{.spc} files.
+\code{\link[=import.spc]{import.spc()}}, for importing X-13 \code{.spc} files.
 
-\code{\link{seas}} for the main function of seasonal.
+\code{\link[=seas]{seas()}} for the main function of seasonal.
 }

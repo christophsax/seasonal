@@ -3,11 +3,11 @@
 #' Select or deselect outliers by point and click. To quit and return the call, press
 #' ESC. Click several times to loop through different outlier types.
 #' 
-#' @param x      an object of class \code{"seas"}.
+#' @param x      an object of class `"seas"`.
 #' @param type   character vector, types of outlier to loop through.
 #' @param ...    unused, for compatibility with the generic function.
 #'   
-#' @return an object of class \code{"seas"}, containing the static call of the
+#' @return an object of class `"seas"`, containing the static call of the
 #'   selected model.
 #'   
 #' @export

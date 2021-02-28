@@ -2,33 +2,33 @@
 #'
 #' A replacement for the genhol software by the U.S. Census Bureau, a utility
 #' that uses the same procedure as X-12-ARIMA to create regressors for the U. S.
-#' holidays of Easter, Labor Day, and Thanksgiving. \bold{This is a replacement
-#' written in R, the U.S. Census Bureau software is not needed.}
+#' holidays of Easter, Labor Day, and Thanksgiving. **This is a replacement
+#' written in R, the U.S. Census Bureau software is not needed.**
 #'
 #' The resulting time series can be used as a user defined variable in
-#' \code{\link{seas}}. Usually, you want the holiday effect to be removed from
-#' the final series, so you need to specify \code{regression.usertype =
-#' "holiday"}. (The default is to include user defined variables in the final
+#' [seas()]. Usually, you want the holiday effect to be removed from
+#' the final series, so you need to specify `regression.usertype =
+#' "holiday"`. (The default is to include user defined variables in the final
 #' series.)
 #'
-#' @param x  a vector of class \code{"\link{Date}"}, containing the occurences
-#'   of the holiday. It can be generated with \code{\link{as.Date}}.
+#' @param x  a vector of class `"Date"`, containing the occurences
+#'   of the holiday. It can be generated with [as.Date()].
 #' @param start   integer, shifts the start point of the holiday. Use negative
-#'   values if \code{start} is before the specified date.
+#'   values if `start` is before the specified date.
 #' @param end   integer, shifts end point of the holiday. Use negative values if
-#'   \code{end} is before the specified date.
+#'   `end` is before the specified date.
 #' @param frequency  integer, frequency of the resulting series
-#' @param center   character string. Either \code{"calendar"}, \code{"mean"} or
-#'   \code{"none"} (default). Centering avoids a bias in the resultign series.
-#'   Use \code{"calendar"} for Easter or Chinese New Year, \code{"mean"} for
+#' @param center   character string. Either `"calendar"`, `"mean"` or
+#'   `"none"` (default). Centering avoids a bias in the resultign series.
+#'   Use `"calendar"` for Easter or Chinese New Year, `"mean"` for
 #'   Ramadan. See references: Notes on centering holiday.
-#' @return an object of class \code{"ts"} that can be used as a user defined
-#'   variable in \code{\link{seas}}.
+#' @return an object of class `"ts"` that can be used as a user defined
+#'   variable in [seas()].
 #'
-#' @seealso \code{\link{seas}} for the main function of seasonal.
+#' @seealso [seas()] for the main function of seasonal.
 #'
 #' @references United States Census Bureau, Notes on centering holiday
-#'   regressors: \url{https://www.census.gov/srd/www/genhol/genhol_center.html}
+#'   regressors: <https://www.census.gov/srd/www/genhol/genhol_center.html>
 #'
 #' @export
 #' @examples

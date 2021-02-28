@@ -10,14 +10,14 @@ spc(x)
 \item{x}{object of class \code{"seas"}}
 }
 \value{
-returns an object of class \code{"spclist"}, essentially a list that 
-contains the information that is sent to X-13ARIMA-SEATS. The corresponding 
-\code{print} method displays the content of the list as written to the 
+returns an object of class \code{"spclist"}, essentially a list that
+contains the information that is sent to X-13ARIMA-SEATS. The corresponding
+\code{print} method displays the content of the list as written to the
 \code{.spc} file.
 }
 \description{
-Access the content of the \code{.spc} file that governs the behavior of 
-  X-13ARIMA-SEATS.
+Access the content of the \code{.spc} file that governs the behavior of
+X-13ARIMA-SEATS.
 }
 \examples{
 \dontrun{
@@ -27,21 +27,21 @@ spc(m)
 }
 }
 \references{
-Vignette with a more detailed description: 
-  \url{http://www.seasonal.website/seasonal.html}
-  
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-  \url{http://www.seasonal.website/examples.html}
-  
-  Official X-13ARIMA-SEATS manual: 
-  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+Vignette with a more detailed description:
+\url{http://www.seasonal.website/seasonal.html}
+
+Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
+\url{http://www.seasonal.website/examples.html}
+
+Official X-13ARIMA-SEATS manual:
+\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
-\code{\link{seas}} for the main function.
+\code{\link[=seas]{seas()}} for the main function.
 
-\code{\link{series}}, for universal X-13 output extraction.
+\code{\link[=series]{series()}}, for universal X-13 output extraction.
 
-\code{\link{plot.seas}}, for diagnostical plots.
+\code{\link[=plot.seas]{plot.seas()}}, for diagnostical plots.
 
-\code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+\code{\link[=out]{out()}}, for accessing the full output of X-13ARIMA-SEATS.
 }

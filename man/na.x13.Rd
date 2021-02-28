@@ -14,7 +14,7 @@ a time series, with NA values substituted by -99999.
 }
 \description{
 Utility function to substitute NA values by -99999. Useful as a value for the
-\code{na.action} argument in \code{\link{seas}}.
+\code{na.action} argument in \code{\link[=seas]{seas()}}.
 }
 \examples{
 \dontrun{

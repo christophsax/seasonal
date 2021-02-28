@@ -15,7 +15,7 @@
 }
 \value{
 an object of class \code{"seas"}, containing the static call of the
-  selected model.
+selected model.
 }
 \description{
 Select or deselect outliers by point and click. To quit and return the call, press

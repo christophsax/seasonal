@@ -16,10 +16,10 @@
 }
 \arguments{
 \item{object}{an object of class \code{"seas"}, usually, a result of a
-call to \code{\link{seas}}.}
+call to \code{\link[=seas]{seas()}}.}
 
 \item{stats}{(experimental) character vector, additional stat to be shown in the \code{summary} output.
-function. For a list of all possible values, see the \code{\link{udg}}
+function. For a list of all possible values, see the \code{\link[=udg]{udg()}}
 function. If a value is not present, it will be ignored. Values can be
 specified via \code{options}. See examples.}
 
@@ -35,16 +35,16 @@ for each coefficient.}
 }
 \value{
 \code{summary.seas} returns a list containing the summary statistics
-  included in \code{object}, and computes the following additional
-  statistics:
+included in \code{object}, and computes the following additional
+statistics:
 
-  \item{coefficients}{a named matrix containing coefficients, standard
-  deviations, t-values and p-values}
+\item{coefficients}{a named matrix containing coefficients, standard
+deviations, t-values and p-values}
 
-  \item{transform}{character string with the type of intial transformation}
+\item{transform}{character string with the type of intial transformation}
 
-  The \code{print} method prints the summary output in a similar way as the
-  method for \code{"lm"}.
+The \code{print} method prints the summary output in a similar way as the
+method for \code{"lm"}.
 }
 \description{
 Like the corresponding method for \code{"lm"} objects, the method for
@@ -63,7 +63,7 @@ The lower part of the output shows additional information on the estimation:
 \item{QS}{test for seasonality in the final series; null hypothesis: no
 seasonality in final; signif. codes are shown if the null hypothesis is
 rejected. QS statistics for more series (e.g., the original series) can be
-extracted with \code{\link{qs}}.}
+extracted with \code{\link[=qs]{qs()}}.}
 \item{Box-Ljung}{test for residual autocorrelation; null hypothesis: no
 autocorrelation in residuals; signif. codes are shown if the null hypothesis
 is rejected. The test statistic is the result of

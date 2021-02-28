@@ -1,9 +1,9 @@
 #' Import X-13ARIMA-SEATS Output Tables
 #' 
-#' With the exception of the composite spec, the \code{series} function imports 
+#' With the exception of the composite spec, the `series` function imports 
 #' all tables that can be saved in X-13ARIMA-SEATS.
 #' 
-#' If the save argument is not specified in the model call, \code{series} 
+#' If the save argument is not specified in the model call, `series` 
 #' re-evaluates the call with the corresponding specs enabled (also returning a 
 #' message). Note that re-evaluation doubles the overall computational time. If 
 #' you want to accelerate the procedure, you have to be explicit about the 
@@ -12,7 +12,7 @@
 #' List of all importable tables from X-13ARIMA-SEATS:
 #' 
 #' \tabular{lll}{
-#' \bold{spec} \tab \bold{long name} \tab \bold{short name} \cr 
+#' **spec** \tab **long name** \tab **short name** \cr 
 #' check \tab check.acf \tab acf \cr 
 #' check \tab check.acfsquared \tab ac2 \cr 
 #' check \tab check.pacf \tab pcf \cr 
@@ -199,29 +199,29 @@
 #' }
 #' 
 #' 
-#' @param x  an object of class \code{"seas"}.
+#' @param x  an object of class `"seas"`.
 #' @param series  character vector, short or long names of an X-13ARIMA-SEATS 
 #'   table. If a long name is specified, it needs to be combined with the spec 
 #'   name and separated by a dot (it is not unique, otherwise. See list below.). More than one 
 #'   series can be specified (see examples).
-#' @param reeval logical, if \code{TRUE}, the model is re-evaluated with the 
+#' @param reeval logical, if `TRUE`, the model is re-evaluated with the 
 #'   corresponding specs enabled.
-#' @param verbose logical, if \code{TRUE}, a message is returned if a spec is added
+#' @param verbose logical, if `TRUE`, a message is returned if a spec is added
 #'   during reevaluation.
 #'   
-#' @return depending on the table, either an object of class \code{"ts"} or
-#'   \code{"data.frame"}.
+#' @return depending on the table, either an object of class `"ts"` or
+#'   `"data.frame"`.
 #'    
-#' @seealso \code{\link{seas}} for the main function.
+#' @seealso [seas()] for the main function.
 #'   
 #' @references Vignette with a more detailed description: 
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'   
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'   
 #' @export
 #' 

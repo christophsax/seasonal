@@ -1,28 +1,28 @@
-#' \code{.spc} File Content
+#' `.spc` File Content
 #' 
-#' Access the content of the \code{.spc} file that governs the behavior of 
+#' Access the content of the `.spc` file that governs the behavior of 
 #'   X-13ARIMA-SEATS.
 #' 
-#' @param x  object of class \code{"seas"}
+#' @param x  object of class `"seas"`
 #'   
-#' @return returns an object of class \code{"spclist"}, essentially a list that 
+#' @return returns an object of class `"spclist"`, essentially a list that 
 #' contains the information that is sent to X-13ARIMA-SEATS. The corresponding 
-#' \code{print} method displays the content of the list as written to the 
-#' \code{.spc} file.
+#' `print` method displays the content of the list as written to the 
+#' `.spc` file.
 #' 
-#' @seealso \code{\link{seas}} for the main function.
-#' @seealso \code{\link{series}}, for universal X-13 output extraction.
-#' @seealso \code{\link{plot.seas}}, for diagnostical plots.
-#' @seealso \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+#' @seealso [seas()] for the main function.
+#' @seealso [series()], for universal X-13 output extraction.
+#' @seealso [plot.seas()], for diagnostical plots.
+#' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
 #' 
 #' @references Vignette with a more detailed description: 
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'   
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'   
 #' @examples
 #' \dontrun{
@@ -41,25 +41,25 @@ spc <- function(x){
 #' Five Best ARIMA Models
 #'
 #' Returns the five best models as chosen by the BIC criterion. It needs the
-#' \code{automdl} spec to be activated (default). If it is not activated, the
-#' function tries to re-evaluate the model with the \code{automdl} spec
+#' `automdl` spec to be activated (default). If it is not activated, the
+#' function tries to re-evaluate the model with the `automdl` spec
 #' activated.
 #' 
-#' @param x  object of class \code{"seas"}
+#' @param x  object of class `"seas"`
 #'   
-#' @seealso \code{\link{seas}} for the main function.
-#' @seealso \code{\link{series}}, for universal X-13 output extraction.
-#' @seealso \code{\link{plot.seas}}, for diagnostical plots.
-#' @seealso \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+#' @seealso [seas()] for the main function.
+#' @seealso [series()], for universal X-13 output extraction.
+#' @seealso [plot.seas()], for diagnostical plots.
+#' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
 #' 
 #' @references Vignette with a more detailed description: 
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'   
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'   
 #' @examples
 #' \dontrun{
@@ -108,21 +108,21 @@ fivebestmdl <- function(x){
 #' 
 #' Returns the transform function that has been applied.
 #' 
-#' @param x  object of class \code{"seas"}
+#' @param x  object of class `"seas"`
 #'   
-#' @seealso \code{\link{seas}} for the main function.
-#' @seealso \code{\link{series}}, for universal X-13 output extraction.
-#' @seealso \code{\link{plot.seas}}, for diagnostical plots.
-#' @seealso \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+#' @seealso [seas()] for the main function.
+#' @seealso [series()], for universal X-13 output extraction.
+#' @seealso [plot.seas()], for diagnostical plots.
+#' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
 #' 
 #' @references Vignette with a more detailed description: 
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'   
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'   
 #' @examples
 #' \dontrun{

@@ -1,31 +1,31 @@
 #' Display X-13ARIMA-SEATS Output
 #' 
-#' The \code{out} function shows the full content of the X-13ARIMA-SEATS output 
+#' The `out` function shows the full content of the X-13ARIMA-SEATS output 
 #' in the browser. If you want to use a specific statistic in R, the 
-#' \code{\link{udg}} function is preferable.
+#' [udg()] function is preferable.
 #' 
-#' To keep the size of \code{"seas"} objects small, \code{seas} does not save 
-#' the output by default. Instead, \code{out} re-evaluates the model.
+#' To keep the size of `"seas"` objects small, `seas` does not save 
+#' the output by default. Instead, `out` re-evaluates the model.
 #' 
-#' @param x an object of class \code{"seas"}.
+#' @param x an object of class `"seas"`.
 #' @param browser browser to be used, passed on to 
-#'   \code{\link{browseURL}}.
+#'   [browseURL()].
 #' @param ... additional spec-arguments options sent to X-13ARIMA-SEATS during 
-#'   re-evaluation, passed to \code{\link{update}}.
+#'   re-evaluation, passed to [update()].
 #'   
 #' @return displays the output as a side effect.
 #'   
-#' @seealso \code{\link{seas}} for the main function of seasonal.
+#' @seealso [seas()] for the main function of seasonal.
 #'   
 #' @references Vignette with a more detailed description: 
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'   
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'   
 #'   
 #'   Official X-13ARIMA-SEATS manual: 
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'   
 #' @export
 #' 

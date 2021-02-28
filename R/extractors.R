@@ -1,31 +1,31 @@
 #' Time Series of a Seasonal Adjustment Model
 #'
-#' Functions to extract the main time series from a \code{"seas"} object. For
-#' universal import of X-13ARIMA-SEATS tables, use the \code{\link{series}}
+#' Functions to extract the main time series from a `"seas"` object. For
+#' universal import of X-13ARIMA-SEATS tables, use the [series()]
 #' function.
 #'
-#' These functions support R default NA handling. If \code{na.action =
-#' na.exclude} is specified in the call to \code{seas}, the time series will
+#' These functions support R default NA handling. If `na.action =
+#' na.exclude` is specified in the call to `seas`, the time series will
 #' also contain NAs.
 #'
-#' @param object  an object of class \code{"seas"}.
+#' @param object  an object of class `"seas"`.
 #' @param ...  not used. For compatibility with the generic.
 #'
-#' @return returns a \code{"ts"} object, depending on the function.
+#' @return returns a `"ts"` object, depending on the function.
 #'
-#' @seealso \code{\link{seas}} for the main function of seasonal.
-#' @seealso \code{\link{series}}, for universal X-13 output extraction.
+#' @seealso [seas()] for the main function of seasonal.
+#' @seealso [series()], for universal X-13 output extraction.
 #'
 #' @references Vignette with a more detailed description:
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'
 #'
 #'
 #'   Official X-13ARIMA-SEATS manual:
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'
 #' @export
 #'

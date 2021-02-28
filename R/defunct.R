@@ -1,9 +1,9 @@
 #' Defunct Functions
 #' 
-#' The \code{arimamodel} functions is defunct now. Use 
-#' the more univeral \code{\link{udg}} function.
+#' The `arimamodel` functions is defunct now. Use 
+#' the more univeral [udg()] function.
 #' @rdname seasonal-defunct
-#' @seealso \code{\link{udg}}, for universal access to X-13 statistics
+#' @seealso [udg()], for universal access to X-13 statistics
 #' @examples
 #' \dontrun{
 #' m <- seas(AirPassengers)
@@ -21,18 +21,18 @@ arimamodel <- function(x){
 
 #' Defunct Functions
 #' 
-#' The \code{inspect} functions is defunct now. Use 
-#' the extended \code{\link{view}} function instead.
-#' @param x an object of class \code{"seas"}. 
+#' The `inspect` functions is defunct now. Use 
+#' the extended [view()] function instead.
+#' @param x an object of class `"seas"`. 
 #' @param fun a function or a list of functions (see details)
 #' @param check.version logical, should the version of shiny be checked
-#' @param quiet logical, if \code{TRUE} (default), error messages from calls in 
+#' @param quiet logical, if `TRUE` (default), error messages from calls in 
 #'   inspect are not shown in the console
 #' @param ... further arguments, passed on to 
-#'   \code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of 
+#'   [shiny::runApp()]. (The `launch.browser` argument of 
 #'   version 0.8 can be still used that way)
 #' @rdname seasonal-defunct
-#' @seealso \code{\link{view}}, for an extended graphical user interface.
+#' @seealso [view()], for an extended graphical user interface.
 #' @examples
 #' \dontrun{
 #' m <- seas(AirPassengers)

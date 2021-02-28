@@ -1,11 +1,11 @@
 #' Outlier Time series
 #' 
-#' Returns an object of class \code{"ts"} that contains the names of the
+#' Returns an object of class `"ts"` that contains the names of the
 #' outliers.
 #' 
-#' @param x      an object of class \code{"seas"}.
+#' @param x      an object of class `"seas"`.
 #' @param full   logical, should the full label of the outlier be shown? If
-#'   \code{FALSE}, only the type of the outlier is shown.
+#'   `FALSE`, only the type of the outlier is shown.
 #'   
 #' @return character string time series with outliers.
 #'   

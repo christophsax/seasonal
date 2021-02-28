@@ -1,21 +1,21 @@
-#' Import X-13 \code{.spc} Files
+#' Import X-13 `.spc` Files
 #' 
-#' Utility function to import \code{.spc} files from X-13. It generates a list
-#' of calls to \code{seas} (and  \code{import.ts}) that can be run in R.
+#' Utility function to import `.spc` files from X-13. It generates a list
+#' of calls to `seas` (and  `import.ts`) that can be run in R.
 #' Evaluating these calls should perform the same X-13 procedure as the original
-#' \code{.spc} file. The \code{print} method displays the calls in a way that 
+#' `.spc` file. The `print` method displays the calls in a way that 
 #' they can be copy-pasted into an R script.
 #' 
-#' @param file   character, path to the X-13 \code{.spc} file
-#' @param text   character, alternatively, the content of a \code{.spc} file as a character string.
-#' @return returns an object of class \code{import.spc}, which is a list with the following (optional) objects of class \code{call}:
+#' @param file   character, path to the X-13 `.spc` file
+#' @param text   character, alternatively, the content of a `.spc` file as a character string.
+#' @return returns an object of class `import.spc`, which is a list with the following (optional) objects of class `call`:
 #'   \item{x}{the call to retrieve the data for the input series} 
-#'   \item{xtrans}{the call to retrieve the data for the \code{xtrans} series (if required by the call)} 
-#'   \item{xreg}{the call to retrieve the data for the \code{xreg} series (if required by the call)} 
-#'   \item{seas}{the call to \code{\link{seas}}}
+#'   \item{xtrans}{the call to retrieve the data for the `xtrans` series (if required by the call)} 
+#'   \item{xreg}{the call to retrieve the data for the `xreg` series (if required by the call)} 
+#'   \item{seas}{the call to [seas()]}
 #' @export
-#' @seealso \code{\link{import.ts}}, for importing X-13 data files.
-#' @seealso \code{\link{seas}} for the main function of seasonal.
+#' @seealso [import.ts()], for importing X-13 data files.
+#' @seealso [seas()] for the main function of seasonal.
 #' @examples
 #' 
 #' # importing the orginal X-13 example file
@@ -158,7 +158,7 @@ import.spc <- function(file, text = NULL){
 #' @export
 #' @rdname import.spc
 #' @method print import.spc
-#' @param x    object of class \code{import.spc}
+#' @param x    object of class `import.spc`
 #' @param ... further arguments, not used
 print.import.spc <- function(x, ...){
 
@@ -314,23 +314,23 @@ rem_defaults_from_args <- function(x) {
 #' Import Time Series from X-13 Data Files
 #' 
 #' Utility function to read time series from X-13 data files. A call to
-#' \code{import.ts} is constructed and included in the output of
-#' \code{\link{import.spc}}.
+#' `import.ts` is constructed and included in the output of
+#' [import.spc()].
 #' 
 #' @param file character, name of the X-13 file which the data are to be read from
 #' @param format a valid X-13 file format as described in 7.15 of the
-#'  X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"}, 
-#'  \code{"freecomma"}, \code{"x13save"}, \code{"tramo"} or an X-11 or Fortran format.
+#'  X-13 manual: `"datevalue"`, `"datevaluecomma"`, `"free"`, 
+#'  `"freecomma"`, `"x13save"`, `"tramo"` or an X-11 or Fortran format.
 #' @param start vector of length 2, time of the first observation (only for
-#'   formats \code{"free"} and \code{"freecomma"} and the Fortran formats.)
+#'   formats `"free"` and `"freecomma"` and the Fortran formats.)
 #' @param frequency  the number of observations per unit of time (only for 
-#'   formats \code{"free"}, \code{"freecomma"} and the X-11 or Fortran formats.)
+#'   formats `"free"`, `"freecomma"` and the X-11 or Fortran formats.)
 #' @param name  (X-11 formats only) name of the series, to select from a 
 #'   file with multiple time series. Omit if you want to read all time series from an X-11 format file.
 #' @export
-#' @return an object of class \code{ts} or \code{mts}
-#' @seealso \code{\link{import.spc}}, for importing X-13 \code{.spc} files.
-#' @seealso \code{\link{seas}} for the main function of seasonal.
+#' @return an object of class `ts` or `mts`
+#' @seealso [import.spc()], for importing X-13 `.spc` files.
+#' @seealso [seas()] for the main function of seasonal.
 
 #' @examples
 #' \dontrun{

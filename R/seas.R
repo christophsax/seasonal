@@ -1,124 +1,124 @@
 #' Seasonal Adjustment with X-13ARIMA-SEATS
 #'
 #' Main function of the seasonal package. With the default options,
-#' \code{seas} calls the  automatic procedures of X-13ARIMA-SEATS to perform a
-#' seasonal adjustment that works well in most circumstances. Via the \code{...}
+#' `seas` calls the  automatic procedures of X-13ARIMA-SEATS to perform a
+#' seasonal adjustment that works well in most circumstances. Via the `...`
 #' argument, it is possible to invoke almost all options that are available in
-#' X-13ARIMA-SEATS (see  details). The default options of \code{seas} are listed
+#' X-13ARIMA-SEATS (see  details). The default options of `seas` are listed
 #' as explicit arguments and are  discussed in the arguments section. A
 #' full-featured graphical user interface can be accessed by the
-#' \code{\link{view}} function.
+#' [view()] function.
 #'
 #'  It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
-#' \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
-#' \emph{arguments}, and each spec optionally contains some arguments. In
-#' \code{seas}, an additional spec-argument can be added by separating spec and
-#' argument by a dot (\code{.}) (see examples). Alternatvily, spec-argument
+#' `...` argument. The syntax of X-13ARIMA-SEATS uses *specs* and
+#' *arguments*, and each spec optionally contains some arguments. In
+#' `seas`, an additional spec-argument can be added by separating spec and
+#' argument by a dot (`.`) (see examples). Alternatvily, spec-argument
 #' combinations can be supplied as a named list, which is useful for
 #' programming.
 #'
-#' Similarily, the \code{\link{series}} function can be used to read almost all
-#' series from X-13ARIMA-SEATS. The \code{\link{udg}} function provides access
+#' Similarily, the [series()] function can be used to read almost all
+#' series from X-13ARIMA-SEATS. The [udg()] function provides access
 #' to a large number of diagnostical statistics.
 #'
 #' For a more extensive description, consider the vignette or the wiki page,
 #' which contains replications of almost all examples from the official
 #' X-13ARIMA-SEATS manual.
 #'
-#' @param x   object of class \code{"ts"}: time series to seasonaly adjust.
-#' @param xreg   (optional) object of class \code{"ts"}: one or several user
+#' @param x   object of class `"ts"`: time series to seasonaly adjust.
+#' @param xreg   (optional) object of class `"ts"`: one or several user
 #'   defined exogenous variables for regARIMA modelling, can be used both with
-#'   \code{regression} or \code{x11regression}.
-#' @param xtrans   (optional) object of class \code{"ts"}: one or two user
-#'   defined exogenous variables for the \code{transform} spec. Can be specifed
-#'   together with \code{xreg}.
-#' @param seats.noadmiss   spec 'seats' with argument \code{noadmiss = "yes"}
+#'   `regression` or `x11regression`.
+#' @param xtrans   (optional) object of class `"ts"`: one or two user
+#'   defined exogenous variables for the `transform` spec. Can be specifed
+#'   together with `xreg`.
+#' @param seats.noadmiss   spec 'seats' with argument `noadmiss = "yes"`
 #'   (default). Seasonal adjustment by SEATS, if SEATS decomposition is invalid,
-#'   an alternative model is used (a message is returned). If \code{noadmiss =
-#'   "no"}, no approximation is done. If the seats spec is removed
-#'   (\code{seats = NULL}), no seasonal adjustment is performed.
-#' @param transform.function   spec \code{transform} with argument
-#'   \code{function = "auto"} (default). Automatic log transformation detection.
-#'   Set equal to \code{"none"}, \code{"log"} or any value that is allowed by
+#'   an alternative model is used (a message is returned). If `noadmiss =
+#'   "no"`, no approximation is done. If the seats spec is removed
+#'   (`seats = NULL`), no seasonal adjustment is performed.
+#' @param transform.function   spec `transform` with argument
+#'   `function = "auto"` (default). Automatic log transformation detection.
+#'   Set equal to `"none"`, `"log"` or any value that is allowed by
 #'   X-13 to turn it off.
-#' @param regression.aictest   spec \code{regression} with argument
-#'   \code{aictest = c("td", "easter")} (default). AIC test for trading days and
-#'   Easter effects. Set equal to \code{NULL} to turn it off.
-#' @param outlier   spec \code{outlier} without arguments (default). Automatic
-#'   oulier detection. Set equal to \code{NULL} to turn it off.
-#' @param automdl   spec \code{automdl} without arguments (default). Automatic
-#'   model search with the automdl spec. Set equal to \code{NULL} to turn it off.
-#' @param composite   spec \code{composite}. A named list with spec-arguments
+#' @param regression.aictest   spec `regression` with argument
+#'   `aictest = c("td", "easter")` (default). AIC test for trading days and
+#'   Easter effects. Set equal to `NULL` to turn it off.
+#' @param outlier   spec `outlier` without arguments (default). Automatic
+#'   oulier detection. Set equal to `NULL` to turn it off.
+#' @param automdl   spec `automdl` without arguments (default). Automatic
+#'   model search with the automdl spec. Set equal to `NULL` to turn it off.
+#' @param composite   spec `composite`. A named list with spec-arguments
 #'   for the aggregation of multiple series. Also requries
-#'   \code{series.comtype = "add"} or similar. Set equal to \code{NULL} to turn
+#'   `series.comtype = "add"` or similar. Set equal to `NULL` to turn
 #'   it off (default).
 #' @param na.action  a function which indicates what should happen when the data
-#'   contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
-#'   If \code{na.action = na.x13}, NA handling is done by X-13, i.e. NA values
+#'   contain NAs. `na.omit` (default), `na.exclude` or `na.fail`.
+#'   If `na.action = na.x13`, NA handling is done by X-13, i.e. NA values
 #'   are substituted by -99999.
 #' @param out   logical. Should the X-13ARIMA-SEATS standard output be saved in
-#'   the \code{"seas"} object? (this increases object size substantially, it is
-#'   recommended to re-evaluate the model using the \code{\link{out}} function
+#'   the `"seas"` object? (this increases object size substantially, it is
+#'   recommended to re-evaluate the model using the [out()] function
 #'   instead.)
 #' @param dir   character string with a user defined file path. If specified,
 #'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 #'   debugging.
-#' @param multimode   one of \code{"x13"} or \code{"R"}. When multiple series
-#'   are suppied, should they be processed in a single call (\code{"x13"}) or
-#'   processed individually (\code{"R"}).
+#' @param multimode   one of `"x13"` or `"R"`. When multiple series
+#'   are suppied, should they be processed in a single call (`"x13"`) or
+#'   processed individually (`"R"`).
 #' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see
 #'   details).
 #' @param list  a named list with additional spec-arguments options. This is an
-#'   alternative to the \code{...} argument. It is useful for programming.
+#'   alternative to the `...` argument. It is useful for programming.
 #'
-#' @return returns an object of class \code{"seas"}, essentially a list with the
+#' @return returns an object of class `"seas"`, essentially a list with the
 #'   following components:
 #'   \item{series}{a list containing the output tables of X-13. To be accessed
-#'   by the \code{series} function.}
+#'   by the `series` function.}
 #'   \item{data}{seasonally adjusted data, the
 #'   raw data, the trend component, the irregular component and the seasonal
 #'   component (deprecated).}
 #'   \item{err}{warning messages from X-13ARIMA-SEATS}
-#'   \item{udg}{content of the \code{.udg} output file}
-#'   \item{est}{content of the \code{.est} output file}
+#'   \item{udg}{content of the `.udg` output file}
+#'   \item{est}{content of the `.est` output file}
 #'   \item{model}{list with the model specification,
-#'   similar to \code{"spc"}. It typically contains \code{"regression"}, which
-#'   contains the regressors and parameter estimates, and \code{"arima"}, which
+#'   similar to `"spc"`. It typically contains `"regression"`, which
+#'   contains the regressors and parameter estimates, and `"arima"`, which
 #'   contains the ARIMA specification and the parameter estimates.}
 #'   \item{fivebestmdl}{Best Five ARIMA Models (unparsed)}
 #'   \item{x}{input series}
-#'   \item{spc}{object of class \code{"spclist"}, a list containing the content of the \code{.spc} file that is
+#'   \item{spc}{object of class `"spclist"`, a list containing the content of the `.spc` file that is
 #'   used by X-13ARIMA-SEATS. Each spec is on the first level, each
 #'   argument is on the second level.}
 #'   \item{call}{function call}
 #'   \item{wdir}{temporary directory in which X-13ARIMA-SEATS has been run}
 #'
-#'   The \code{final} function returns the final adjusted series, the
-#'   \code{plot} method shows a plot with the unadjusted and the adjusted
-#'   series. \code{summary} gives an overview of the regARIMA model. The
-#'   \code{\link{udg}} function returns diagnostical statistics.
+#'   The `final` function returns the final adjusted series, the
+#'   `plot` method shows a plot with the unadjusted and the adjusted
+#'   series. `summary` gives an overview of the regARIMA model. The
+#'   [udg()] function returns diagnostical statistics.
 #'
-#' @seealso \code{\link{view}}, for accessing the graphical user interface.
-#' @seealso \code{\link{update.seas}}, to update an existing \code{"seas"}
+#' @seealso [view()], for accessing the graphical user interface.
+#' @seealso [update.seas()], to update an existing `"seas"`
 #'   model.
-#' @seealso \code{\link{static}}, to return the 'static' call, with automated
+#' @seealso [static()], to return the 'static' call, with automated
 #'   procedures substituted by their choices.
-#' @seealso \code{\link{series}}, for universal X-13 table series import.
-#' @seealso \code{\link{out}}, to view the full X-13 diagnostical output.
+#' @seealso [series()], for universal X-13 table series import.
+#' @seealso [out()], to view the full X-13 diagnostical output.
 #'
 #' @references
 #'   Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
-#'   in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
-#'   10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+#'   in R." *Journal of Statistical Software*, *87*(11), 1-17. doi:
+#'   10.18637/jss.v087.i11 (<http://doi.org/10.18637/jss.v087.i11>).
 #'
 #'   On-Line Interface to seasonal
-#'   \url{http://www.seasonal.website}
+#'   <http://www.seasonal.website>
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'
 #'   Official X-13ARIMA-SEATS manual:
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #' @export
 #' @import datasets
 #' @import grDevices

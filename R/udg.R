@@ -1,37 +1,37 @@
 #' Diagnostical Statistics
 #'
-#' The \code{udg} function provides access to a large number of diagnostical
-#' statistics. The \code{qs} function and the \code{AIC}, \code{BIC} and
-#' \code{logLik} methods are  wrappers that use \code{udg} to access some
+#' The `udg` function provides access to a large number of diagnostical
+#' statistics. The `qs` function and the `AIC`, `BIC` and
+#' `logLik` methods are  wrappers that use `udg` to access some
 #' specific diagnostical statistics.
 #'
-#' @param x,object  an object of class \code{"seas"}.
+#' @param x,object  an object of class `"seas"`.
 #' @param stats  character vector; if specified, only a subset of the available
 #'   stats are returned. This speeds up the call, as only a subset needs to be
 #'   type converted. Should be used for programming.
 #' @param simplify  logical; should the result be simplified to a vector or
 #'   matrix, if possible?
-#' @param fail   logical; if \code{TRUE}, an error is droped if an element of
-#'   \code{stats} is missing in \code{names(udg(x))}.
+#' @param fail   logical; if `TRUE`, an error is droped if an element of
+#'   `stats` is missing in `names(udg(x))`.
 #' @param ...   further arguments (not used)
-#' @return  \code{qs} returns the QS statistics for seasonality of input and
+#' @return  `qs` returns the QS statistics for seasonality of input and
 #'   output series and the corresponding p-values.
-#' @return  \code{AIC}, \code{BIC}, \code{nobs} and \code{logLik} return the
+#' @return  `AIC`, `BIC`, `nobs` and `logLik` return the
 #'   corresponding statistics.
 #'
-#' @seealso \code{\link{seas}} for the main function.
-#' @seealso \code{\link{series}}, for universal X-13 output extraction.
-#' @seealso \code{\link{plot.seas}}, for diagnostical plots.
-#' @seealso \code{\link{out}}, for accessing the full output of X-13ARIMA-SEATS.
+#' @seealso [seas()] for the main function.
+#' @seealso [series()], for universal X-13 output extraction.
+#' @seealso [plot.seas()], for diagnostical plots.
+#' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
 #'
 #' @references Vignette with a more detailed description:
-#'   \url{http://www.seasonal.website/seasonal.html}
+#'   <http://www.seasonal.website/seasonal.html>
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-#'   \url{http://www.seasonal.website/examples.html}
+#'   <http://www.seasonal.website/examples.html>
 #'
 #'   Official X-13ARIMA-SEATS manual:
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'
 #' @export
 #' @examples

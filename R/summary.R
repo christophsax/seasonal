@@ -1,7 +1,7 @@
 #' Summary of a X13-ARIMA-SEATS seasonal adjustment
 #'
-#' Like the corresponding method for \code{"lm"} objects, the method for
-#' \code{"seas"} objects returns the estimated coefficients, its standard errors,
+#' Like the corresponding method for `"lm"` objects, the method for
+#' `"seas"` objects returns the estimated coefficients, its standard errors,
 #' z-statistics and corresponding (two-sided) p-values. Coefficients are returned
 #' both for the exogenous regressors and the coefficients of the ARIMA model.
 #'
@@ -15,30 +15,30 @@
 #' \item{QS}{test for seasonality in the final series; null hypothesis: no
 #' seasonality in final; signif. codes are shown if the null hypothesis is
 #' rejected. QS statistics for more series (e.g., the original series) can be
-#' extracted with \code{\link{qs}}.}
+#' extracted with [qs()].}
 #' \item{Box-Ljung}{test for residual autocorrelation; null hypothesis: no
 #' autocorrelation in residuals; signif. codes are shown if the null hypothesis
 #' is rejected. The test statistic is the result of
-#' \code{Box.test(resid(m), lag = 24, type = "Ljung")}}
+#' `Box.test(resid(m), lag = 24, type = "Ljung")`}
 #' \item{Shapiro}{test for normality of the residuals; null hypothesis: normal
 #' distribution of the residuals; signif. codes are shown if the null
 #' hypothesis is rejected. The test statistic is the result of
-#' \code{shapiro.test(resid(m))}}
+#' `shapiro.test(resid(m))`}
 #' }
-#' @param object      an object of class \code{"seas"}, usually, a result of a
-#'                    call to \code{\link{seas}}.
-#' @param stats  (experimental) character vector, additional stat to be shown in the \code{summary} output.
-#'   function. For a list of all possible values, see the \code{\link{udg}}
+#' @param object      an object of class `"seas"`, usually, a result of a
+#'                    call to [seas()].
+#' @param stats  (experimental) character vector, additional stat to be shown in the `summary` output.
+#'   function. For a list of all possible values, see the [udg()]
 #'   function. If a value is not present, it will be ignored. Values can be
-#'   specified via \code{options}. See examples.
-#' @param x           an object of class \code{"summary.seas"}, usually, a result
-#'                    of a call to \code{summary.seas}.
+#'   specified via `options`. See examples.
+#' @param x           an object of class `"summary.seas"`, usually, a result
+#'                    of a call to `summary.seas`.
 #' @param digits      the number of significant digits to use when printing.
-#' @param signif.stars logical. If \code{TRUE}, 'significance stars' are printed
+#' @param signif.stars logical. If `TRUE`, 'significance stars' are printed
 #'                    for each coefficient.
 #' @param \dots       further arguments passed to or from other methods.
-#' @return \code{summary.seas} returns a list containing the summary statistics
-#'   included in \code{object}, and computes the following additional
+#' @return `summary.seas` returns a list containing the summary statistics
+#'   included in `object`, and computes the following additional
 #'   statistics:
 #'
 #'   \item{coefficients}{a named matrix containing coefficients, standard
@@ -46,8 +46,8 @@
 #'
 #'   \item{transform}{character string with the type of intial transformation}
 #'
-#'   The \code{print} method prints the summary output in a similar way as the
-#'   method for \code{"lm"}.
+#'   The `print` method prints the summary output in a similar way as the
+#'   method for `"lm"`.
 #'
 #' @examples
 #' \dontrun{

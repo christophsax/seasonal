@@ -16,19 +16,19 @@ inspect(x, fun = NULL, check.version = TRUE, quiet = TRUE, ...)
 
 \item{check.version}{logical, should the version of shiny be checked}
 
-\item{quiet}{logical, if \code{TRUE} (default), error messages from calls in 
+\item{quiet}{logical, if \code{TRUE} (default), error messages from calls in
 inspect are not shown in the console}
 
-\item{...}{further arguments, passed on to 
-\code{\link[shiny]{runApp}}. (The \code{launch.browser} argument of 
+\item{...}{further arguments, passed on to
+\code{\link[shiny:runApp]{shiny::runApp()}}. (The \code{launch.browser} argument of
 version 0.8 can be still used that way)}
 }
 \description{
-The \code{arimamodel} functions is defunct now. Use 
-the more univeral \code{\link{udg}} function.
+The \code{arimamodel} functions is defunct now. Use
+the more univeral \code{\link[=udg]{udg()}} function.
 
-The \code{inspect} functions is defunct now. Use 
-the extended \code{\link{view}} function instead.
+The \code{inspect} functions is defunct now. Use
+the extended \code{\link[=view]{view()}} function instead.
 }
 \examples{
 \dontrun{
@@ -41,7 +41,7 @@ view(m)
 }
 }
 \seealso{
-\code{\link{udg}}, for universal access to X-13 statistics
+\code{\link[=udg]{udg()}}, for universal access to X-13 statistics
 
-\code{\link{view}}, for an extended graphical user interface.
+\code{\link[=view]{view()}}, for an extended graphical user interface.
 }

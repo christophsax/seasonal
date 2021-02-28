@@ -28,12 +28,11 @@ returns a \code{"ts"} object, depending on the function.
 }
 \description{
 Functions to extract the main time series from a \code{"seas"} object. For
-universal import of X-13ARIMA-SEATS tables, use the \code{\link{series}}
+universal import of X-13ARIMA-SEATS tables, use the \code{\link[=series]{series()}}
 function.
 }
 \details{
-These functions support R default NA handling. If \code{na.action =
-na.exclude} is specified in the call to \code{seas}, the time series will
+These functions support R default NA handling. If \code{na.action = na.exclude} is specified in the call to \code{seas}, the time series will
 also contain NAs.
 }
 \examples{
@@ -56,18 +55,16 @@ final(seas(AirPassengersNA, na.action = na.x13))     # NA filled by x13
 }
 \references{
 Vignette with a more detailed description:
-  \url{http://www.seasonal.website/seasonal.html}
+\url{http://www.seasonal.website/seasonal.html}
 
-  Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-  \url{http://www.seasonal.website/examples.html}
+Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
+\url{http://www.seasonal.website/examples.html}
 
-
-
-  Official X-13ARIMA-SEATS manual:
-  \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+Official X-13ARIMA-SEATS manual:
+\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
 }
 \seealso{
-\code{\link{seas}} for the main function of seasonal.
+\code{\link[=seas]{seas()}} for the main function of seasonal.
 
-\code{\link{series}}, for universal X-13 output extraction.
+\code{\link[=series]{series()}}, for universal X-13 output extraction.
 }

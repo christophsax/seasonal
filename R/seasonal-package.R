@@ -11,17 +11,17 @@
 #'
 #'   The best way to start is to have a look at the vignette:
 #'
-#'   \code{vignette("seas")}
+#'   `vignette("seas")`
 #'
 #' @section Installation:
 #' Seasonal depends on the \pkg{x13binary} package, which downloads and installs
 #' the X-13 binaries. To install both packages, simply type to the R
 #' console:
 #'
-#'   \code{install.packages("seasonal")}
+#'   `install.packages("seasonal")`
 #'
 #' A startup message is given if the path to X-13 is specified manually. To
-#' surpress the message, use \code{\link{suppressPackageStartupMessages}}.
+#' surpress the message, use [suppressPackageStartupMessages()].
 #'
 #' @section Setting the X-13 path manually:
 #'
@@ -41,40 +41,40 @@
 #' SEATS, the specific environmental variable X13_PATH needs to be set. This may
 #' be done during your active session in R:
 #'
-#' \code{Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")}
+#' `Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")`
 #'
-#' Exchange \code{YOUR_X13_DIRECTORY} with the path to your installation of
+#' Exchange `YOUR_X13_DIRECTORY` with the path to your installation of
 #' X-13ARIMA- SEATS. You can always check your installation with:
 #'
-#' \code{checkX13()}
+#' `checkX13()`
 #'
 #' If it works, you may want to set the environmental variable permanently, by
-#' adding the Sys.setenv line to one of your \code{.Rprofile} files. The easiest
+#' adding the Sys.setenv line to one of your `.Rprofile` files. The easiest
 #' is to use the one located in your home directory, which can be written
 #' directly from R:
 #'
-#' \code{write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")',
-#'       file = "~/.Rprofile", append = TRUE)}
+#' `write('Sys.setenv(X13_PATH = "YOUR_X13_DIRECTORY")',
+#'       file = "~/.Rprofile", append = TRUE)`
 #'
 #' If the file does not exist (by default), it will be created. Make sure that
 #' you get the quotes right: double quotes around your directory, single quotes
-#' around the whole \code{Sys.setenv} line, such that R understands your string.
-#' Check first that the the \code{Sys.setenv} line works correctly; once it is
-#' written you may have to edit \code{.Rprofile} manually. (Or add a second,
+#' around the whole `Sys.setenv` line, such that R understands your string.
+#' Check first that the the `Sys.setenv` line works correctly; once it is
+#' written you may have to edit `.Rprofile` manually. (Or add a second,
 #' overwriting line to it.) For other ways to set an environmental variable
-#' permanently in R, see \code{\link{Startup}}.
+#' permanently in R, see [Startup()].
 #'
 #' @references
 #'   Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
-#'   in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
-#'   10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+#'   in R." *Journal of Statistical Software*, *87*(11), 1-17. doi:
+#'   10.18637/jss.v087.i11 (<http://doi.org/10.18637/jss.v087.i11>).
 #'
 #' @name seasonal-package
 #' @aliases seasonal
 #' @docType package
 #' @author Christoph Sax \email{christoph.sax@@gmail.com}
 #' @keywords package
-#' @seealso \code{\link{seas}} for the core function and more information on
+#' @seealso [seas()] for the core function and more information on
 #'   package usage.
 NULL
 
@@ -86,7 +86,7 @@ NULL
 #'
 #' @docType data
 #'
-#' @format Time series of class \code{"ts"}.
+#' @format Time series of class `"ts"`.
 #'
 #' @source Federal Statistical Office, Switzerland
 #'
@@ -103,16 +103,16 @@ NULL
 #' Dates of Chinese New Year, Indian Diwali and Easter
 #'
 #' Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in
-#' \code{\link{genhol}}.
+#' [genhol()].
 #'
 #' @docType data
 #'
-#' @format Objects of class \code{"Date"}.
+#' @format Objects of class `"Date"`.
 #'
 #' @source
-#' \url{https://www.census.gov/srd/www/genhol/genhol_downloads.html}
+#' <https://www.census.gov/srd/www/genhol/genhol_downloads.html>
 #'
-#' \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
+#' <http://www.chinesenewyears.info/chinese-new-year-calendar.php>
 #'
 #' Ministry of Statistics and Programme Implementation, with help from Pinaki
 #'   Mukherjee
@@ -139,7 +139,7 @@ NULL
 #'
 #' @docType data
 #'
-#' @format Time series of class \code{"ts"}.
+#' @format Time series of class `"ts"`.
 #'
 #' @source Central Statistics Office of the Ministry of Statistics and Programme
 #' Implementation, with help
@@ -162,7 +162,7 @@ NULL
 #'
 #' @docType data
 #'
-#' @format Each time series is an object of class \code{"ts"}.
+#' @format Each time series is an object of class `"ts"`.
 #'
 #' @source China Customs
 #'
@@ -183,10 +183,10 @@ NULL
 #'
 #' @docType data
 #'
-#' @format Each time series is an object of class \code{"ts"}.
+#' @format Each time series is an object of class `"ts"`.
 #'
 #' @source U.S. Bureau of Labor Statistics, retrieved from FRED, Federal Reserve
-#'   Bank of St. Louis; \url{https://fred.stlouisfed.org/series/LNU03000000},
+#'   Bank of St. Louis; <https://fred.stlouisfed.org/series/LNU03000000>,
 #'   December 14, 2016.
 #'
 #' @name unemp
@@ -201,16 +201,16 @@ NULL
 #' List of Available X-13ARIMA-SEATS Outputs
 #'
 #' The data is used by several functions as a look-up table. Users
-#' should consider the table in \code{\link{series}} or in the official manual.
+#' should consider the table in [series()] or in the official manual.
 #'
 #' @docType data
 #'
-#' @format An object of class \code{"data.frame"}
+#' @format An object of class `"data.frame"`
 #'
 #' @source United States Census Bureau
 #'
 #' @references Official X-13ARIMA-SEATS manual:
-#'   \url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
 #'
 #' @name SPECS
 #' @aliases INSPDATA

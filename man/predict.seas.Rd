@@ -9,10 +9,10 @@
 \arguments{
 \item{object}{an object of class \code{"seas"}.}
 
-\item{newdata}{an object of class \code{"ts"}. new data values for the 
-\code{x} argument in the \code{\link{seas}} function.}
+\item{newdata}{an object of class \code{"ts"}. new data values for the
+\code{x} argument in the \code{\link[=seas]{seas()}} function.}
 
-\item{...}{further arguments, passed to \code{\link{update.seas}}, to 
+\item{...}{further arguments, passed to \code{\link[=update.seas]{update.seas()}}, to
 re-evaluate the model.}
 }
 \value{
@@ -21,11 +21,11 @@ Object of class \code{"ts"}.
 \description{
 Returns the seasonally adjusted series of an
 (optionally re-evaluated) model of class \code{"seas"}. Without further
-arguments, this is equivalent to a call to the \code{\link{final}} function.
+arguments, this is equivalent to a call to the \code{\link[=final]{final()}} function.
 }
 \details{
 With the \code{newdata} argument supplied, the \code{"seas"} object is re-
-evaluated, using the original model call. This is equivalent of calling 
+evaluated, using the original model call. This is equivalent of calling
 \code{final(update(m, x = newdata))}.
 }
 \examples{

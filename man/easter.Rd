@@ -15,11 +15,11 @@ Objects of class \code{"Date"}.
 \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
 
 Ministry of Statistics and Programme Implementation, with help from Pinaki
-  Mukherjee
+Mukherjee
 }
 \description{
 Dates of Chinese New Year, Indian Diwali and Easter, suitable for the use in
-\code{\link{genhol}}.
+\code{\link[=genhol]{genhol()}}.
 }
 \examples{
 
