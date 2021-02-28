@@ -69,6 +69,7 @@ jobs:
         run: |
           remotes::install_cran("tinytex")
           tinytex::tlmgr_install("ae")
+          tinytex::tlmgr_install("grfext")
         shell: Rscript {0}
 
       - name: Install dependencies
