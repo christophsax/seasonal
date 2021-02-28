@@ -10,7 +10,7 @@ new features
 bug fix
   - as.data.frame() fix date conversion for freqency 4, 2 (#256)
   - static() drop occasional warning (#235)
-
+  - fix some backslash confusion on Windows (#237)
 
 1.7.1  2020-06-06
 --------------------------------------------------------------------------------

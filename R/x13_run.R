@@ -15,9 +15,9 @@ x13_run <- function(file, out, meta = FALSE){
   m_flag <- if (meta) "-m" else ""
   if (.Platform$OS.type == "windows"){
     if (getOption("htmlmode") == 1){
-      x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe"), "\"")
+      x13.bin <- paste0("\"", normalizePath(file.path(env.path, "x13ashtml.exe")), "\"")
     } else {
-      x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
+      x13.bin <- paste0("\"", normalizePath(file.path(env.path, "x13as.exe")), "\"")
     }
     # change wd on win as X-13 writes `fort.6` to it
     owd <- getwd()
