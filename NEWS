@@ -1,4 +1,4 @@
-1.8.0  2020-08-??
+1.8.0  2021-03-??
 --------------------------------------------------------------------------------
 
 enhancements
@@ -6,6 +6,9 @@ enhancements
 
 new features
   - support for multiple time series and the composite spec
+
+bug fix
+  - as.data.frame() fix date conversion for freqency 4, 2 (#256)
 
 
 1.7.1  2020-06-06

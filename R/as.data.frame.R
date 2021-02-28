@@ -1,35 +1,35 @@
 #' Coerce Output to \code{data.frame}
-#' 
+#'
 #' These methods coerce the output to a \code{data.frame}. This is useful for
 #' further processing. (This is a second attempt to do that; the first
 #' experimenal attempt in version 1.4 used an argument \code{data.frame} in the
 #' call to the functions, and is now obsolete. The present approach seems
-#' cleaner and is likely to stay, but still consider it as 
+#' cleaner and is likely to stay, but still consider it as
 #' \strong{experimental}.)
-#' 
+#'
 #' The data.frames produced by these functions follow the naming conventions
 #' from the 'broom' package, but do not depend on it otherwise.
-#' 
+#'
 #' @param x  an object of class \code{"seas"} or
 #'   \code{"summary.seas"}, usually, the result of a call to the functions
 #'   with the same name.
 #' @param ...    unused.
-#' 
-#' @return a \code{data.frame} without row names. 
+#'
+#' @return a \code{data.frame} without row names.
 #' @method as.data.frame seas
 #' @export
 #' @examples
 #' \dontrun{
 #' m <- seas(AirPassengers, x11 = "")
-#' 
+#'
 #' # a data.frame containing data
 #' as.data.frame(m)
-#' 
+#'
 #' # a data.frame containing the summary information on the coefficients
 #' as.data.frame(summary(m))
 #' }
 as.data.frame.seas <- function(x, ...){
-  data.frame(date = Date_ts(x$data), x$data) 
+  data.frame(date = Date_ts(x$data), x$data)
 }
 
 # get 'Date' from a 'ts' object
@@ -38,9 +38,9 @@ Date_ts <- function(x){
   if (f == 12){
     z <- as.Date(paste(floor(time(x)), cycle(x), "1", sep = "-"))
   } else if (f == 2){
-    z <- as.Date(paste(floor(time(x)), (cycle(x) - 1) * 6, "1", sep = "-"))
+    z <- as.Date(paste(floor(time(x)), (cycle(x) - 1) * 6 + 1, "1", sep = "-"))
   } else if (f == 4){
-    z <- as.Date(paste(floor(time(x)), (cycle(x) - 1) * 3, "1", sep = "-"))
+    z <- as.Date(paste(floor(time(x)), (cycle(x) - 1) * 3 + 1, "1", sep = "-"))
   } else {
     stop("unsupported frequency")
   }
