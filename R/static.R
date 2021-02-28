@@ -117,7 +117,7 @@ static <- function(x, coef = FALSE, x11.filter = FALSE, test = TRUE,
   if (test){
     # testing the static call
     x.static <- seas(list = lc)
-    test <- (all.equal(log(final(x.static)), log(final(x)), tolerance = 1e-05))
+    test <- (all.equal(final(x.static), final(x), tolerance = 1e-05))
     if (!isTRUE(test)){
       (if (fail) stop else message)(paste("Static series is different.", test))
     }
