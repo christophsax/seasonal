@@ -11,3 +11,6 @@ build.R
 .Rapp.history
 
 .DS_Store
+
+# cran checks complain if it's there but vingettes cannot be built locally wo
+vignettes/jss.cls
