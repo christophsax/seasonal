@@ -19,7 +19,8 @@ Depends:
 Imports:
     x13binary
 Suggests:
-    seasonalview (>= 0.1.3)
+    seasonalview (>= 0.1.3),
+    testthat (>= 3.0.0)
 License: GPL-3
 URL: http://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal
@@ -27,3 +28,4 @@ LazyData: true
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
