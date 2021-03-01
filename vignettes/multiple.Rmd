@@ -2,7 +2,7 @@
 title: "Adjusting Multiple Series"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{multimode}
+  %\VignetteIndexEntry{multiple}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
