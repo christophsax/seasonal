@@ -3,15 +3,19 @@
 
 # for CRAN SUBMISSION:
 # - is NEWS and DESCRIPTION up to date?
-
-# - knit vignette
 # - rhub test
 
+skip_on_cran()
+
 if (!x13binary::supportedPlatform()) skip("platform not supported")
-skip("skip extensive tests")
 
+if (basename(normalizePath("~")) == "christoph") skip("skip extensive tests locally")
 
-nocran_tests <- file.path("tests", "nocran")
+# https://stackoverflow.com/questions/24823353/testthat-in-r-sourcing-in-tested-files
+test_that("nocran dir can be found", {
+  nocran_tests <<- normalizePath(file.path("../nocran"))
+  expect_type(nocran_tests, "character")
+})
 
 test_that("extensive non CRAN tests succeed", {
   source(file.path(nocran_tests, "settings.R"))
