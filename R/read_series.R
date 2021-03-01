@@ -61,6 +61,17 @@ read_series <- function(file, frequency = NULL){
     dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE)
   }
 
+  # workaround for corrupted file #240
+  if (suffix == "fts"){
+    # only do if things seem corrupted
+    if (all(is.na(dta.raw[, ncol(dta.raw)]))) {
+      names(dta.raw) <- c(names(dta.raw)[-1], "drop")
+      dta.raw <- subset(dta.raw, select = setdiff(names(dta.raw), "drop"))
+      dta.raw <- cbind(Date = rownames(dta.raw), dta.raw)
+      rownames(dta.raw) <- NULL
+    }
+  }
+
   # if not numeric, return as it is
   if (grepl("[a-zA-Z]", dta.raw[2, 1])){
     z <- dta.raw[-1, ]
