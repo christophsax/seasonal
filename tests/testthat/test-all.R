@@ -25,6 +25,5 @@ test_that("extensive non CRAN tests succeed", {
   source(file.path(nocran_tests, "test-update.R"))
   source(file.path(nocran_tests, "test-two-way-parsing.R"))
   source(file.path(nocran_tests, "test-multi.R"))
-  source(file.path(nocran_tests, "test-issues.R"))
 })
 
