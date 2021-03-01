@@ -7,3 +7,4 @@
 build.R
 travis
 ^\.github$
+^codecov\.yml$
