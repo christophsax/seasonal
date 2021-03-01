@@ -27,7 +27,7 @@ console:
 \code{install.packages("seasonal")}
 
 A startup message is given if the path to X-13 is specified manually. To
-surpress the message, use \code{\link[=suppressPackageStartupMessages]{suppressPackageStartupMessages()}}.
+suppress the message, use \code{\link[=suppressPackageStartupMessages]{suppressPackageStartupMessages()}}.
 }
 
 \section{Setting the X-13 path manually}{

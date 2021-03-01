@@ -17,7 +17,7 @@ static(
 \item{x}{an object of class \code{seas}.}
 
 \item{coef}{logical. If \code{TRUE}, the coefficients are treated as fixed,
-instead of beeing estimated.}
+instead of being estimated.}
 
 \item{x11.filter}{logical. X-11 only. if \code{TRUE}, the X-11 moving
 averages will be fixed as well. This leads to different filters at

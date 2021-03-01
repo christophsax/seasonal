@@ -14,7 +14,7 @@
 #'
 #' @param x  an object of class `"seas"`, usually, a result of a call to
 #'   [seas()].
-#' @param outliers   logical, should the oultiers be drawn.
+#' @param outliers   logical, should the outliers be drawn.
 #' @param trend      logical, should the trend be drawn.
 #' @param choice     character string, `"seasonal"` (default) or
 #'   `"irregular"`.

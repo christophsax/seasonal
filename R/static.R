@@ -15,7 +15,7 @@
 #'
 #' @param x an object of class `seas`.
 #' @param coef  logical. If `TRUE`, the coefficients are treated as fixed,
-#'   instead of beeing estimated.
+#'   instead of being estimated.
 #' @param x11.filter logical. X-11 only. if `TRUE`, the X-11 moving
 #'   averages will be fixed as well. This leads to different filters at
 #'   different stages, and the resulting series can be are slightly different.

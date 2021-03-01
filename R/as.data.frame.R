@@ -2,7 +2,7 @@
 #'
 #' These methods coerce the output to a `data.frame`. This is useful for
 #' further processing. (This is a second attempt to do that; the first
-#' experimenal attempt in version 1.4 used an argument `data.frame` in the
+#' experimental attempt in version 1.4 used an argument `data.frame` in the
 #' call to the functions, and is now obsolete. The present approach seems
 #' cleaner and is likely to stay, but still consider it as
 #' **experimental**.)

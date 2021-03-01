@@ -21,7 +21,7 @@
 #'   `install.packages("seasonal")`
 #'
 #' A startup message is given if the path to X-13 is specified manually. To
-#' surpress the message, use [suppressPackageStartupMessages()].
+#' suppress the message, use [suppressPackageStartupMessages()].
 #'
 #' @section Setting the X-13 path manually:
 #'
@@ -158,7 +158,7 @@ NULL
 #'
 #' Monthly exports and imports of China (July 1983 to December 2013).
 #'
-#' In 100 mio. U.S. Dollar.
+#' In 100 mio U.S. Dollar.
 #'
 #' @docType data
 #'

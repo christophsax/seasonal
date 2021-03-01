@@ -32,7 +32,7 @@ residplot(
 \item{x}{an object of class \code{"seas"}, usually, a result of a call to
 \code{\link[=seas]{seas()}}.}
 
-\item{outliers}{logical, should the oultiers be drawn.}
+\item{outliers}{logical, should the outliers be drawn.}
 
 \item{trend}{logical, should the trend be drawn.}
 
@@ -71,12 +71,12 @@ can be used for series of all frequencies.
 
 m <- seas(AirPassengers)
 
-plot(m)  
-plot(m, outliers = FALSE)  
-plot(m, trend = TRUE) 
+plot(m)
+plot(m, outliers = FALSE)
+plot(m, trend = TRUE)
 
 residplot(m)
-residplot(m, outliers = FALSE)  
+residplot(m, outliers = FALSE)
 
 monthplot(m)
 

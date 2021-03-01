@@ -229,7 +229,7 @@ x11regression \tab x11regression.xregressionmatrix \tab xrm \cr
 \dontrun{
 
 m <- seas(AirPassengers)
-series(m, "fct")  # re-evaluate with the forecast spec activated 
+series(m, "fct")  # re-evaluate with the forecast spec activated
 
 # more than one series
 series(m, c("rsd", "fct"))
@@ -241,18 +241,18 @@ series(m, "fct") # no re-evaluation (much faster!)
 series(m, "forecast.forecasts")
 
 # history spec
-series(m, "history.trendestimates") 
-series(m, "history.sfestimates") 
-series(m, "history.saestimates") 
-series(m, c("history.sfestimates", "history.trendestimates")) 
+series(m, "history.trendestimates")
+series(m, "history.sfestimates")
+series(m, "history.saestimates")
+series(m, c("history.sfestimates", "history.trendestimates"))
 
 # slidingspans spec
-series(m, "slidingspans.sfspans") 
-series(m, "slidingspans.tdspans") 
+series(m, "slidingspans.sfspans")
+series(m, "slidingspans.tdspans")
 
-# fundamental identities of seasonal adjustment 
+# fundamental identities of seasonal adjustment
 # Y = T * I * (S * TD)
-all.equal(AirPassengers, series(m, "seats.trend") * 
+all.equal(AirPassengers, series(m, "seats.trend") *
          series(m, "seats.irregular") * series(m, "seats.adjustfac"))
 # Y_sa = Y / (S * TD)
 all.equal(final(m), AirPassengers / series(m, "seats.adjustfac"))

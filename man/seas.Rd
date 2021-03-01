@@ -23,10 +23,10 @@ seas(
 )
 }
 \arguments{
-\item{x}{object of class \code{"ts"}: time series to seasonaly adjust.}
+\item{x}{object of class \code{"ts"} or \verb{"mts", or a list of }"ts"` objects: time series to seasonally adjust.}
 
 \item{xreg}{(optional) object of class \code{"ts"}: one or several user
-defined exogenous variables for regARIMA modelling, can be used both with
+defined exogenous variables for regARIMA modeling, can be used both with
 \code{regression} or \code{x11regression}.}
 
 \item{xtrans}{(optional) object of class \code{"ts"}: one or two user
@@ -48,7 +48,7 @@ X-13 to turn it off.}
 Easter effects. Set equal to \code{NULL} to turn it off.}
 
 \item{outlier}{spec \code{outlier} without arguments (default). Automatic
-oulier detection. Set equal to \code{NULL} to turn it off.}
+outlier detection. Set equal to \code{NULL} to turn it off.}
 
 \item{automdl}{spec \code{automdl} without arguments (default). Automatic
 model search with the automdl spec. Set equal to \code{NULL} to turn it off.}
@@ -56,7 +56,7 @@ model search with the automdl spec. Set equal to \code{NULL} to turn it off.}
 \item{composite}{spec \code{composite}. A named list with spec-arguments
 for the aggregation of multiple series. Also requries
 \code{series.comtype = "add"} or similar. Set equal to \code{NULL} to turn
-it off (default).}
+it off (default). See \code{vignette("multiple")}.}
 
 \item{na.action}{a function which indicates what should happen when the data
 contain NAs. \code{na.omit} (default), \code{na.exclude} or \code{na.fail}.
@@ -73,8 +73,8 @@ the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 debugging.}
 
 \item{multimode}{one of \code{"x13"} or \code{"R"}. When multiple series
-are suppied, should they be processed in a single call (\code{"x13"}) or
-processed individually (\code{"R"}).}
+are supplied, should they be processed in a single call (\code{"x13"}) or
+processed individually (\code{"R"}). See \code{vignette("multiple")}.}
 
 \item{...}{additional spec-arguments options sent to X-13ARIMA-SEATS (see
 details).}
@@ -125,15 +125,15 @@ It is possible to use the almost complete syntax of X-13ARIMA-SEAT via the
 \code{...} argument. The syntax of X-13ARIMA-SEATS uses \emph{specs} and
 \emph{arguments}, and each spec optionally contains some arguments. In
 \code{seas}, an additional spec-argument can be added by separating spec and
-argument by a dot (\code{.}) (see examples). Alternatvily, spec-argument
+argument by a dot (\code{.}) (see examples). Alternatively, spec-argument
 combinations can be supplied as a named list, which is useful for
 programming.
 
-Similarily, the \code{\link[=series]{series()}} function can be used to read almost all
+Similarly, the \code{\link[=series]{series()}} function can be used to read almost all
 series from X-13ARIMA-SEATS. The \code{\link[=udg]{udg()}} function provides access
 to a large number of diagnostical statistics.
 
-For a more extensive description, consider the vignette or the wiki page,
+For a more extensive description, consider \code{vignette("seas")} or the wiki page,
 which contains replications of almost all examples from the official
 X-13ARIMA-SEATS manual.
 }

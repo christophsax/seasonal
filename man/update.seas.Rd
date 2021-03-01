@@ -26,7 +26,7 @@ Method to update and re-evaluate an object of class \code{"seas"}.
 Contrary to the default method of \code{\link[=update]{update()}}, the  \code{"seas"}
 method uses the evaluated call, rather than the actual call for re-
 evaluation. This means you can savely use it in other functions, which
-is usuful with \code{\link[=lapply]{lapply()}} and friends (see examples.)
+is useful with \code{\link[=lapply]{lapply()}} and friends (see examples.)
 }
 \examples{
 \dontrun{

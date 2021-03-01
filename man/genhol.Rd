@@ -7,7 +7,7 @@
 genhol(x, start = 0, end = 0, frequency = 12, center = "none")
 }
 \arguments{
-\item{x}{a vector of class \code{"Date"}, containing the occurences
+\item{x}{a vector of class \code{"Date"}, containing the occurrences
 of the holiday. It can be generated with \code{\link[=as.Date]{as.Date()}}.}
 
 \item{start}{integer, shifts the start point of the holiday. Use negative
@@ -19,7 +19,7 @@ values if \code{start} is before the specified date.}
 \item{frequency}{integer, frequency of the resulting series}
 
 \item{center}{character string. Either \code{"calendar"}, \code{"mean"} or
-\code{"none"} (default). Centering avoids a bias in the resultign series.
+\code{"none"} (default). Centering avoids a bias in the resulting series.
 Use \code{"calendar"} for Easter or Chinese New Year, \code{"mean"} for
 Ramadan. See references: Notes on centering holiday.}
 }

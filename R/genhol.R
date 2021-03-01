@@ -11,7 +11,7 @@
 #' "holiday"`. (The default is to include user defined variables in the final
 #' series.)
 #'
-#' @param x  a vector of class `"Date"`, containing the occurences
+#' @param x  a vector of class `"Date"`, containing the occurrences
 #'   of the holiday. It can be generated with [as.Date()].
 #' @param start   integer, shifts the start point of the holiday. Use negative
 #'   values if `start` is before the specified date.
@@ -19,7 +19,7 @@
 #'   `end` is before the specified date.
 #' @param frequency  integer, frequency of the resulting series
 #' @param center   character string. Either `"calendar"`, `"mean"` or
-#'   `"none"` (default). Centering avoids a bias in the resultign series.
+#'   `"none"` (default). Centering avoids a bias in the resulting series.
 #'   Use `"calendar"` for Easter or Chinese New Year, `"mean"` for
 #'   Ramadan. See references: Notes on centering holiday.
 #' @return an object of class `"ts"` that can be used as a user defined

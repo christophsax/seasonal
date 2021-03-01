@@ -15,12 +15,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-Since version 1.8, it possible to seasonally adjust multiple series in a single call to `seas()`, and also benefit from the *composite* spec.
+It is now possible to seasonally adjust multiple series in a single call to `seas()`.
+This is done by using the built-in batch mode of X-13. It removes the need for loops or `lapply()` in such cases, and finally brings one missing feature of X-13 to seasonal -- the *composite* spec.
 
 ### Basics
 
 Multiple adjustments can be performed by supplying multiple time series as an
-`"mts"` time series object:
+`"mts"` object:
 
 ```{r}
 library(seasonal)
@@ -29,9 +30,8 @@ final(m)
 ```
 
 This will perform two seasonal adjustments, one for `fdeaths` and one for
-`mdeaths`. X-13 spec argument combinations can be applied in the usual way, such
-as `x11 = ""`. Note that if entered that way, they will apply to all
-adjustments.
+`mdeaths`. X-13 spec-argument combinations can be applied in the usual way, such
+as `x11 = ""`. Note that if entered that way, they will apply to both series.
 
 
 ### Specifying the specs
@@ -58,8 +58,8 @@ seas(
 )
 ```
 
-We can also combine these ideas. The following applies turns off the regression
-AIC test for all series (`regression.aictest = NULL`) and uses X-11 to adjust
+We can even combine these ideas. The following turns off the
+AIC test of the regression spec for both series (`regression.aictest = NULL`) and uses X-11 to adjust
 `fdeaths` and SEATS to adjust `mdeaths`:
 
 ```{r}
@@ -73,19 +73,18 @@ seas(
 )
 ```
 
-### Specifying the series
+### Specifying multiple series
 
-There are multiple ways of specifying the series, too. We have already seen how `mts`
-objects can be used as an input. Alternatively we can also use a list of single
+There are several ways of specifying multiple series. We have already seen how `"mts"`
+objects can be used as an input. Alternatively, we can also use a list of single
 `"ts"` objects:
 
 ```{r}
 seas(list(mdeaths, AirPassengers))
 ```
 
-This is more convenient if series are of different length or frequency. With the
-the [tsbox](https://www.tsbox.help) package, you can create these kind of time series list from any time
-series object. Let's say your data is in a data frame
+This is convenient if series differ in length or frequency. With
+the [tsbox](https://www.tsbox.help) package, you can create such lists of time series from any time series object. Let us assume your data is in a data frame:
 
 ```r
 library(tsbox)
@@ -93,13 +92,13 @@ dta <- ts_c(mdeaths = ts_df(mdeaths), AirPassengers = ts_df(AirPassengers))
 head(dta)
 ```
 
-In order to seasonally adjust all series, you can run:
+In order to seasonally adjust all series in the data frame, you can run:
 
 ```r
 seas(ts_tslist(dta))
 ```
 
-Finally, you can specify the data directly in the list:
+Finally, you can specify the data directly in the list of lists:
 
 ```{r}
 seas(
@@ -112,9 +111,10 @@ seas(
 
 ### Backend
 
-X-13 comes with a batch mode that allows multiple adjustments with a single call
-to X-13. Alternatively, a separate call for each series can be performed
-(`multimode = "R"`). The results should be usually the same, but switching to
+X-13 ships with a batch mode that allows multiple adjustments in a single call
+to X-13. This is now the default in seasonal (`multimode = "x13"`).
+Alternatively, X-13 can be called for each series (`multimode = "R"`).
+The results should be usually the same, but switching to
 `multimode = "R"` may be useful for debugging:
 
 ```{r}
@@ -122,7 +122,7 @@ seas(cbind(fdeaths, mdeaths), multimode = "x13")
 seas(cbind(fdeaths, mdeaths), multimode = "R")
 ```
 
-In general, `multimode = "x13"` should be faster. The following comparison on a MacBook Pro shows
+In general, `multimode = "x13"` is faster. The following comparison on a MacBook Pro shows
 a modest speed gain, but bigger differences have been observed on other systems:
 
 ```r
@@ -139,20 +139,19 @@ system.time(seas(many, multimode = "R"))
 ### composite spec
 
 Support for the X-13 batch mode makes it finally possible to use the *composite*
-spec -- the one missing feature of X-13. Sometimes, one has to decide whether
+spec -- the one feature of X-13 that was missing in seasonal. Sometimes, one has to decide whether
 seasonal adjustment should be performed on a granular level, or on an aggregated
-one. The *composite* spec helps you to analyze the problem and to compare the
+level. The *composite* spec helps you to analyze the problem and to compare the
 direct and the indirect adjustment.
 
 X-13 requires to define a `series.comptype` for individual series. Usually, this
-will be set to `series.comptype = "add"`. (In principle, this could be defined
-as a default, but since this is very new, I will wait with that.).
+will be set as `series.comptype = "add"`.
 
 The `composite` argument is a list with an X-13 specification that is applied on
 the aggregated series. Specification works identical as for other series in
-`seas()`, including the application of the defaults. If you provide and empty
-list, the usual defaults of `seas()` will be used.
-A minimal call looks like this:
+`seas()`, including the application of the defaults. If you provide an empty
+list, the usual defaults of `seas()` are used.
+A minimal composite call looks like this:
 
 ```{r}
 seas(
@@ -162,9 +161,10 @@ seas(
 )
 ```
 
-You can verify that the composite refers to the total of the two series by
-running:
+You can verify that the composite refers to the total of `mdeaths` and `fdeaths` by running:
 
 ```{r}
 seas(ldeaths)
 ```
+
+where `ldeaths` is the sum of `mdeaths` and `fdeaths`.

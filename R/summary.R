@@ -44,7 +44,7 @@
 #'   \item{coefficients}{a named matrix containing coefficients, standard
 #'   deviations, t-values and p-values}
 #'
-#'   \item{transform}{character string with the type of intial transformation}
+#'   \item{transform}{character string with the type of initial transformation}
 #'
 #'   The `print` method prints the summary output in a similar way as the
 #'   method for `"lm"`.

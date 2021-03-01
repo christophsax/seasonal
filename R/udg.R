@@ -11,7 +11,7 @@
 #'   type converted. Should be used for programming.
 #' @param simplify  logical; should the result be simplified to a vector or
 #'   matrix, if possible?
-#' @param fail   logical; if `TRUE`, an error is droped if an element of
+#' @param fail   logical; if `TRUE`, an error is dropped if an element of
 #'   `stats` is missing in `names(udg(x))`.
 #' @param ...   further arguments (not used)
 #' @return  `qs` returns the QS statistics for seasonality of input and

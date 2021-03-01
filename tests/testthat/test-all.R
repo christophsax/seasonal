@@ -3,7 +3,7 @@
 
 # for CRAN SUBMISSION:
 # - is NEWS and DESCRIPTION up to date?
-# - rhub test
+# - R CMD build seasonal --compact-vignettes="gs+qpdf"
 
 skip_on_cran()
 

@@ -13,21 +13,21 @@
 #' `...` argument. The syntax of X-13ARIMA-SEATS uses *specs* and
 #' *arguments*, and each spec optionally contains some arguments. In
 #' `seas`, an additional spec-argument can be added by separating spec and
-#' argument by a dot (`.`) (see examples). Alternatvily, spec-argument
+#' argument by a dot (`.`) (see examples). Alternatively, spec-argument
 #' combinations can be supplied as a named list, which is useful for
 #' programming.
 #'
-#' Similarily, the [series()] function can be used to read almost all
+#' Similarly, the [series()] function can be used to read almost all
 #' series from X-13ARIMA-SEATS. The [udg()] function provides access
 #' to a large number of diagnostical statistics.
 #'
-#' For a more extensive description, consider the vignette or the wiki page,
+#' For a more extensive description, consider `vignette("seas")` or the wiki page,
 #' which contains replications of almost all examples from the official
 #' X-13ARIMA-SEATS manual.
 #'
-#' @param x   object of class `"ts"`: time series to seasonaly adjust.
+#' @param x   object of class `"ts"` or `"mts", or a list of `"ts"` objects: time series to seasonally adjust.
 #' @param xreg   (optional) object of class `"ts"`: one or several user
-#'   defined exogenous variables for regARIMA modelling, can be used both with
+#'   defined exogenous variables for regARIMA modeling, can be used both with
 #'   `regression` or `x11regression`.
 #' @param xtrans   (optional) object of class `"ts"`: one or two user
 #'   defined exogenous variables for the `transform` spec. Can be specifed
@@ -45,13 +45,13 @@
 #'   `aictest = c("td", "easter")` (default). AIC test for trading days and
 #'   Easter effects. Set equal to `NULL` to turn it off.
 #' @param outlier   spec `outlier` without arguments (default). Automatic
-#'   oulier detection. Set equal to `NULL` to turn it off.
+#'   outlier detection. Set equal to `NULL` to turn it off.
 #' @param automdl   spec `automdl` without arguments (default). Automatic
 #'   model search with the automdl spec. Set equal to `NULL` to turn it off.
 #' @param composite   spec `composite`. A named list with spec-arguments
 #'   for the aggregation of multiple series. Also requries
 #'   `series.comtype = "add"` or similar. Set equal to `NULL` to turn
-#'   it off (default).
+#'   it off (default). See `vignette("multiple")`.
 #' @param na.action  a function which indicates what should happen when the data
 #'   contain NAs. `na.omit` (default), `na.exclude` or `na.fail`.
 #'   If `na.action = na.x13`, NA handling is done by X-13, i.e. NA values
@@ -64,8 +64,8 @@
 #'   the X-13ARIMA-SEATS output files are copied to this folder. Useful for
 #'   debugging.
 #' @param multimode   one of `"x13"` or `"R"`. When multiple series
-#'   are suppied, should they be processed in a single call (`"x13"`) or
-#'   processed individually (`"R"`).
+#'   are supplied, should they be processed in a single call (`"x13"`) or
+#'   processed individually (`"R"`). See `vignette("multiple")`.
 #' @param ...  additional spec-arguments options sent to X-13ARIMA-SEATS (see
 #'   details).
 #' @param list  a named list with additional spec-arguments options. This is an
@@ -222,7 +222,7 @@ seas <- function(x = NULL, xreg = NULL, xtrans = NULL,
          automdl = "", composite = NULL, na.action = na.omit,
          out = FALSE, dir = NULL, multimode = c("x13", "R"), ..., list = NULL){
 
-  # intial checks
+  # initial checks
   checkX13(fail = TRUE, fullcheck = FALSE, htmlcheck = FALSE)
 
 
