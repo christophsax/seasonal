@@ -1,19 +1,35 @@
-## Adjusting multiple series
+---
+title: "Adjusting Multiple Series"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{multimode}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-Since 1.8, it possible to seasonally adjust multiple series in a single call to `seas()`, and also benefit from the *composite* spec.
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  results='hide'
+)
+```
+
+Since version 1.8, it possible to seasonally adjust multiple series in a single call to `seas()`, and also benefit from the *composite* spec.
 
 ### Basics
 
 Multiple adjustments can be performed by supplying multiple time series as an
 `"mts"` time series object:
 
-```r
+```{r}
+library(seasonal)
 m <- seas(cbind(fdeaths, mdeaths), x11 = "")
 final(m)
 ```
 
 This will perform two seasonal adjustments, one for `fdeaths` and one for
-`mdeaths`. X13 spec argument combinations can be applied in the usual way, such
+`mdeaths`. X-13 spec argument combinations can be applied in the usual way, such
 as `x11 = ""`. Note that if entered that way, they will apply to all
 adjustments.
 
@@ -23,7 +39,7 @@ adjustments.
 
 As in a single series call, we can also use the `list` argument:
 
-```r
+```{r}
 seas(cbind(fdeaths, mdeaths), list = list(x11 = ""))
 ```
 
@@ -32,7 +48,7 @@ specific spec lists in the `list` argument. In the following, `fdeaths` is
 adjusted by X-11 and `mdeaths` by the default SEATS procedure. The length of
 list must be equal to number of series.
 
-```r
+```{r}
 seas(
   cbind(fdeaths, mdeaths),
   list = list(
@@ -46,7 +62,7 @@ We can also combine these ideas. The following applies turns off the regression
 AIC test for all series (`regression.aictest = NULL`) and uses X-11 to adjust
 `fdeaths` and SEATS to adjust `mdeaths`:
 
-```r
+```{r}
 seas(
   cbind(fdeaths, mdeaths),
   regression.aictest = NULL,
@@ -59,16 +75,16 @@ seas(
 
 ### Specifying the series
 
-There are multiple ways of specifying the series, too. We already saw how `mts`
+There are multiple ways of specifying the series, too. We have already seen how `mts`
 objects can be used as an input. Alternatively we can also use a list of single
 `"ts"` objects:
 
-```r
+```{r}
 seas(list(mdeaths, AirPassengers))
 ```
 
 This is more convenient if series are of different length or frequency. With the
-the *tsbox* package, you can create these kind of time series list from any time
+the [tsbox](https://www.tsbox.help) package, you can create these kind of time series list from any time
 series object. Let's say your data is in a data frame
 
 ```r
@@ -85,7 +101,7 @@ seas(ts_tslist(dta))
 
 Finally, you can specify the data directly in the list:
 
-```r
+```{r}
 seas(
   list = list(
     list(x = mdeaths, x11 = ""),
@@ -101,12 +117,12 @@ to X-13. Alternatively, a separate call for each series can be performed
 (`multimode = "R"`). The results should be usually the same, but switching to
 `multimode = "R"` may be useful for debugging:
 
-```r
+```{r}
 seas(cbind(fdeaths, mdeaths), multimode = "x13")
 seas(cbind(fdeaths, mdeaths), multimode = "R")
 ```
 
-In general, `multimode = "x13"` should be faster. The following comparison shows
+In general, `multimode = "x13"` should be faster. The following comparison on a MacBook Pro shows
 a modest speed gain, but bigger differences have been observed on other systems:
 
 ```r
@@ -138,7 +154,7 @@ the aggregated series. Specification works identical as for other series in
 list, the usual defaults of `seas()` will be used.
 A minimal call looks like this:
 
-```r
+```{r}
 seas(
   cbind(mdeaths, fdeaths),
   composite = list(),
@@ -149,7 +165,6 @@ seas(
 You can verify that the composite refers to the total of the two series by
 running:
 
-```r
+```{r}
 seas(ldeaths)
 ```
-
