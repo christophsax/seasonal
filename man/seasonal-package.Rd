@@ -75,7 +75,7 @@ permanently in R, see \code{\link[=Startup]{Startup()}}.
 \references{
 Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
 in R." \emph{Journal of Statistical Software}, \emph{87}(11), 1-17. doi:
-10.18637/jss.v087.i11 (\url{http://doi.org/10.18637/jss.v087.i11}).
+10.18637/jss.v087.i11 (\url{https://doi.org/10.18637/jss.v087.i11}).
 }
 \seealso{
 \code{\link[=seas]{seas()}} for the core function and more information on

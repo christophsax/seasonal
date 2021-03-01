@@ -33,7 +33,7 @@ that works well in most circumstances:
     m <- seas(AirPassengers)
 
 For a more detailed introduction, check our [article in the *Journal of
-Statistical Software*](http://doi.org/10.18637/jss.v087.i11) or consider the
+Statistical Software*](https://doi.org/10.18637/jss.v087.i11) or consider the
 vignette:
 
     vignette("seas")
@@ -99,7 +99,7 @@ To cite seasonal in publications use:
 
 Sax C, Eddelbuettel D (2018). “Seasonal Adjustment by X-13ARIMA-SEATS
 in R.” _Journal of Statistical Software_, *87*(11), 1-17. doi:
-10.18637/jss.v087.i11 (URL: http://doi.org/10.18637/jss.v087.i11).
+10.18637/jss.v087.i11 (URL: https://doi.org/10.18637/jss.v087.i11).
 
 Please report bugs and suggestions on [GitHub][github]. Thank you!
 
@@ -107,9 +107,9 @@ Please report bugs and suggestions on [GitHub][github]. Thank you!
 
 [x13binary]: https://cran.r-project.org/package=x13binary "X-13ARIMA-SEATS binary for R"
 
-[manual]: http://www.census.gov/ts/x13as/docX13ASHTML.pdf "Reference Manual"
+[manual]: https://www.census.gov/ts/x13as/docX13ASHTML.pdf "Reference Manual"
 
-[census]: http://www.census.gov/srd/www/x13as/ "United States Census Bureau"
+[census]: https://www.census.gov/srd/www/x13as/ "United States Census Bureau"
 
 [license]: https://www.census.gov/srd/www/disclaimer.html "License Information and Disclaimer"
 
