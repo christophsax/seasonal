@@ -1,72 +1,72 @@
 #' Seasonal Adjustment Plots
-#' 
-#' Functions to graphically analyze a `"seas"` object. 
-#' 
-#' `plot` calls the plot method for class `"seas"`. It plots the 
+#'
+#' Functions to graphically analyze a `"seas"` object.
+#'
+#' `plot` calls the plot method for class `"seas"`. It plots the
 #' adjusted and unadjusted series, as well as the outliers. Optionally draws the
 #' trend series.
-#' 
+#'
 #' `residplot` plots the residuals and the outliers.
-#' 
-#' `monthplot` calls the monthplot method for class `"seas"`. It plot 
+#'
+#' `monthplot` calls the monthplot method for class `"seas"`. It plot
 #' the seasonal and SI component periodwise. Despite its name, `monthplot`
 #' can be used for series of all frequencies.
-#' 
-#' @param x  an object of class `"seas"`, usually, a result of a call to 
+#'
+#' @param x  an object of class `"seas"`, usually, a result of a call to
 #'   [seas()].
 #' @param outliers   logical, should the oultiers be drawn.
 #' @param trend      logical, should the trend be drawn.
-#' @param choice     character string, `"seasonal"` (default) or 
+#' @param choice     character string, `"seasonal"` (default) or
 #'   `"irregular"`.
 #' @param main    character string, title of the graph.
 #' @param xlab    character string, title for the x axis.
 #' @param ylab    character string, title for the y axis.
-#' @param transform   character string, optionally transform the data to period to period  `"PC"` or year to year`"PCY"` percentage change rates. 
+#' @param transform   character string, optionally transform the data to period to period  `"PC"` or year to year`"PCY"` percentage change rates.
 #' @param \dots   further arguments passed to the plotting functions.
-#'   
+#'
 #' @return All plot functions return a plot as their side effect.
-#'   
+#'
 #' @seealso [seas()], for the main function.
 #' @seealso [udg()], for diagnostical statistics.
-#'   
-#' @references Vignette with a more detailed description: 
+#'
+#' @references Vignette with a more detailed description:
 #'   <http://www.seasonal.website/seasonal.html>
-#'   
-#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   <http://www.seasonal.website/examples.html>
-#'   
-#'   
-#'   
-#'   Official X-13ARIMA-SEATS manual: 
+#'
+#'
+#'
+#'   Official X-13ARIMA-SEATS manual:
 #'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
-#'   
+#'
 #' @export
 #' @method plot seas
-#'   
+#'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' m <- seas(AirPassengers)
-#' 
-#' plot(m)  
-#' plot(m, outliers = FALSE)  
-#' plot(m, trend = TRUE) 
-#' 
+#'
+#' plot(m)
+#' plot(m, outliers = FALSE)
+#' plot(m, trend = TRUE)
+#'
 #' residplot(m)
-#' residplot(m, outliers = FALSE)  
-#' 
+#' residplot(m, outliers = FALSE)
+#'
 #' monthplot(m)
-#' 
+#'
 #' # use standard R functions to analyze "seas" models
 #' pacf(resid(m))
 #' spectrum(diff(resid(m)))
 #' plot(density(resid(m)))
 #' qqnorm(resid(m))
 #' }
-plot.seas <- function(x, outliers = TRUE, trend = FALSE, 
-                      main = "Original and Adjusted Series", 
-                      xlab = "Time", ylab = "", 
-                      transform = c("none", "PC", "PCY"), 
+plot.seas <- function(x, outliers = TRUE, trend = FALSE,
+                      main = "Original and Adjusted Series",
+                      xlab = "Time", ylab = "",
+                      transform = c("none", "PC", "PCY"),
                       ...){
 
   transform <- match.arg(transform)
@@ -95,10 +95,10 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
   }
 
   plot(cbind(orignalx, finalx),
-          col = c("black", "red"), 
+          col = c("black", "red"),
           lwd = c(1, 2),
-          main = main, plot.type = "single", 
-          xlab = xlab, 
+          main = main, plot.type = "single",
+          xlab = xlab,
           ylab = ylab, ...
   )
 
@@ -108,7 +108,7 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
     if (transform == "PCY") trendx <- (lag(trendx, -fr) - trendx) / lag(trendx, -fr)
     lines(trendx, col = "blue", lty = "dashed")
   }
-  
+
   if (identical(outliers, TRUE) && (!is.null(final(x)))){
     ol.ts <- outlier(x)
     sym.ts <- ol.ts
@@ -120,7 +120,7 @@ plot.seas <- function(x, outliers = TRUE, trend = FALSE,
 
 #' @rdname plot.seas
 #' @export
-residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA", 
+residplot <- function(x, outliers = TRUE, main = "residuals of regARIMA",
                       xlab = "Time", ylab = "", ...){
   if(is.null(resid(x))){
     stop("no residuals to plot")
@@ -167,9 +167,9 @@ monthplot.seas <- function(x, choice = c("seasonal", "irregular"), main, ...){
 
 siratio <- function(x){
   stopifnot(inherits(x, "seas"))
-  
+
   tf <- transformfunction(x)
-  
+
   # if irregular or seasonal are not returned, set them to 0 or 1
   # (depending on transformfunction())
   if ('irregular' %in% colnames(x$data)){
@@ -177,7 +177,7 @@ siratio <- function(x){
   } else {
     irregular <- x$data[, 'final']
     irregular[] <- if (tf == "log") {1} else {0}
-    
+
   }
   if ('seasonal' %in% colnames(x$data)){
     seasonal <- x$data[, 'seasonal']
@@ -185,7 +185,7 @@ siratio <- function(x){
     seasonal <- x$data[, 'final']
     seasonal[] <- if (tf == "log") {1} else {0}
   }
-  
+
   if (tf == "log"){
     z <- irregular * seasonal
   } else {

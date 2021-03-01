@@ -7,15 +7,15 @@ require(seasonal)
 
 m <- seas(AirPassengers)
 
-# The first argument of 'seas' has to be a time series of class "ts". It 
-# returns an object of class "seas" that contains all necessary information 
+# The first argument of 'seas' has to be a time series of class "ts". It
+# returns an object of class "seas" that contains all necessary information
 # on the adjustment.
 
 # The 'final' function returns the adjusted series:
 
 final(m)
 
-# The 'plot' method shows a plot with the unadjusted and the adjusted series: 
+# The 'plot' method shows a plot with the unadjusted and the adjusted series:
 
 plot(m)
 
@@ -27,27 +27,27 @@ summary(m)
 # adjustment procedure, use the following option:
 
 seas(AirPassengers, x11 = list())
-  
+
 # Alternatively, all inputs may be entered manually, as in the following
 # example:
-    
-seas(x = AirPassengers, 
-     regression.variables = c("td1coef", "easter[1]", "ao1951.May"), 
+
+seas(x = AirPassengers,
+     regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
      arima.model = "(0 1 1)(0 1 1)", regression.aictest = NULL,
      outlier = NULL, transform.function = "log")
-  
+
 # The 'static' command reveals the static call from above that is needed to
 # replicate the automatic seasonal adjustment procedure:
-    
+
 static(m)
-  
+
 # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument:
 
-# no test for easter effects
-seas(AirPassengers, regression.aictest = c("td"))  
+# no test for Easter effects
+seas(AirPassengers, regression.aictest = c("td"))
 
 # force equality of annual values
-seas(AirPassengers, force.type = "denton")  
+seas(AirPassengers, force.type = "denton")
 
 # all series from X-13 can be extracted with series()
 ts.plot(series(m, "forecast.forecasts"))
@@ -65,5 +65,5 @@ seas(imp, xreg = cny.ts, regression.usertype = "holiday", x11 = list(),
      arima.model = "(0 1 2)(0 1 1)", regression.aictest = NULL,
      outlier = NULL, transform.function = "log")
 
-# For many more examples, go to: 
+# For many more examples, go to:
 # https://github.com/christophsax/seasonal/wiki/Examples-of-X-13ARIMA-SEATS-in-R
