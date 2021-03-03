@@ -44,10 +44,15 @@ update.seas <- function(object, ..., evaluate = TRUE){
   # overwrite args in existing list
   ml <- ml[!names(ml) %in% names(ldots)]
 
-  # browser()
+  ldots <- ldots[setdiff(names(ldots), "out")]
   if (!evaluate) return(update.default(object, evaluate = FALSE))
 
-  seas(list = c(ml, ldots))
+  if (isTRUE(ldots$out)) {
+    seas(list = c(ml, ldots), out = TRUE)
+  } else {
+    seas(list = c(ml, ldots))
+  }
+
 }
 
 #' Seasonal Adjusted Series
