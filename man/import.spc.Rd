@@ -56,18 +56,18 @@ import.spc(text =
     span=(1952.01, )
   }
   spectrum{
-    savelog=peaks 
+    savelog=peaks
   }
   transform{
     function=auto
-    savelog=autotransform  
+    savelog=autotransform
   }
   regression{
     aictest=(td easter)
-    savelog=aictest  
+    savelog=aictest
   }
-  automdl{  
-    savelog=automodel  
+  automdl{
+    savelog=automodel
   }
   outlier{ }
   x11{}
@@ -82,15 +82,15 @@ import.spc(text =
 tdir <- tempdir()
 seas(x = AirPassengers, xreg = cbind(a = genhol(cny, start = 1, end = 4,
     center = "calendar"), b = genhol(cny, start = -3, end = 0,
-    center = "calendar")), xtrans = cbind(sqrt(AirPassengers), AirPassengers^3), 
-    transform.function = "log", transform.type = "temporary", 
-    regression.aictest = "td", regression.usertype = "holiday", dir = tdir, 
+    center = "calendar")), xtrans = cbind(sqrt(AirPassengers), AirPassengers^3),
+    transform.function = "log", transform.type = "temporary",
+    regression.aictest = "td", regression.usertype = "holiday", dir = tdir,
     out = TRUE)
 
 # importing the .spc file from the temporary location
 ll <- import.spc(file.path(tdir, "iofile.spc"))
 
-# ll is list containing four calls: 
+# ll is list containing four calls:
 # - 'll$x', 'll$xreg' and 'll$xtrans': calls to import.ts(), which read the
 #   series from the X-13 data files
 # - 'll$seas': a call to seas() which performs the seasonal adjustment in R

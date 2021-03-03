@@ -39,8 +39,8 @@ Utility function to read time series from X-13 data files. A call to
 \examples{
 \dontrun{
 tdir <- tempdir()
-seas(x = AirPassengers, dir = tdir) 
-import.ts(file.path(tdir, "data.dta"))
+seas(x = AirPassengers, dir = tdir)
+import.ts(file.path(tdir, "iofile.dta"))
 import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
 }
 }

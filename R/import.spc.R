@@ -331,12 +331,11 @@ rem_defaults_from_args <- function(x) {
 #' @return an object of class `ts` or `mts`
 #' @seealso [import.spc()], for importing X-13 `.spc` files.
 #' @seealso [seas()] for the main function of seasonal.
-
 #' @examples
 #' \dontrun{
 #' tdir <- tempdir()
 #' seas(x = AirPassengers, dir = tdir)
-#' import.ts(file.path(tdir, "data.dta"))
+#' import.ts(file.path(tdir, "iofile.dta"))
 #' import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
 #' }
 import.ts <- function(file,

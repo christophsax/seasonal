@@ -18,8 +18,8 @@ Utility function to substitute NA values by -99999. Useful as a value for the
 }
 \examples{
 \dontrun{
-#' AirPassengersNA <- AirPassengers
-AirPassengersNA[20] <- NA 
+AirPassengersNA <- AirPassengers
+AirPassengersNA[20] <- NA
 na.x13(AirPassengersNA)
 
 seas(AirPassengersNA, na.action = na.x13)
