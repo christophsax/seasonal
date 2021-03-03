@@ -1,23 +1,23 @@
 #' Import X-13 `.spc` Files
-#' 
+#'
 #' Utility function to import `.spc` files from X-13. It generates a list
 #' of calls to `seas` (and  `import.ts`) that can be run in R.
 #' Evaluating these calls should perform the same X-13 procedure as the original
-#' `.spc` file. The `print` method displays the calls in a way that 
+#' `.spc` file. The `print` method displays the calls in a way that
 #' they can be copy-pasted into an R script.
-#' 
+#'
 #' @param file   character, path to the X-13 `.spc` file
 #' @param text   character, alternatively, the content of a `.spc` file as a character string.
 #' @return returns an object of class `import.spc`, which is a list with the following (optional) objects of class `call`:
-#'   \item{x}{the call to retrieve the data for the input series} 
-#'   \item{xtrans}{the call to retrieve the data for the `xtrans` series (if required by the call)} 
-#'   \item{xreg}{the call to retrieve the data for the `xreg` series (if required by the call)} 
+#'   \item{x}{the call to retrieve the data for the input series}
+#'   \item{xtrans}{the call to retrieve the data for the `xtrans` series (if required by the call)}
+#'   \item{xreg}{the call to retrieve the data for the `xreg` series (if required by the call)}
 #'   \item{seas}{the call to [seas()]}
 #' @export
 #' @seealso [import.ts()], for importing X-13 data files.
 #' @seealso [seas()] for the main function of seasonal.
 #' @examples
-#' 
+#'
 #' # importing the orginal X-13 example file
 #' import.spc(text =
 #' '
@@ -40,41 +40,41 @@
 #'     span=(1952.01, )
 #'   }
 #'   spectrum{
-#'     savelog=peaks 
+#'     savelog=peaks
 #'   }
 #'   transform{
 #'     function=auto
-#'     savelog=autotransform  
+#'     savelog=autotransform
 #'   }
 #'   regression{
 #'     aictest=(td easter)
-#'     savelog=aictest  
+#'     savelog=aictest
 #'   }
-#'   automdl{  
-#'     savelog=automodel  
+#'   automdl{
+#'     savelog=automodel
 #'   }
 #'   outlier{ }
 #'   x11{}
 #' '
 #' )
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' ### reading .spc with multiple user regression and transformation series
-#' 
+#'
 #' # running a complex seas call and save output in a temporary directory
 #' tdir <- tempdir()
 #' seas(x = AirPassengers, xreg = cbind(a = genhol(cny, start = 1, end = 4,
 #'     center = "calendar"), b = genhol(cny, start = -3, end = 0,
-#'     center = "calendar")), xtrans = cbind(sqrt(AirPassengers), AirPassengers^3), 
-#'     transform.function = "log", transform.type = "temporary", 
-#'     regression.aictest = "td", regression.usertype = "holiday", dir = tdir, 
+#'     center = "calendar")), xtrans = cbind(sqrt(AirPassengers), AirPassengers^3),
+#'     transform.function = "log", transform.type = "temporary",
+#'     regression.aictest = "td", regression.usertype = "holiday", dir = tdir,
 #'     out = TRUE)
-#' 
+#'
 #' # importing the .spc file from the temporary location
 #' ll <- import.spc(file.path(tdir, "iofile.spc"))
-#' 
-#' # ll is list containing four calls: 
+#'
+#' # ll is list containing four calls:
 #' # - 'll$x', 'll$xreg' and 'll$xtrans': calls to import.ts(), which read the
 #' #   series from the X-13 data files
 #' # - 'll$seas': a call to seas() which performs the seasonal adjustment in R
@@ -83,17 +83,17 @@
 #' # to replicate the original X-13 operation, run all four calls in a series.
 #' # You can either copy/paste and run the print() output:
 #' ll
-#' 
+#'
 #' # or use eval() to evaluate the call(s). To evaluate the first call and
 #' # import the x variable:
 #' eval(ll$x)
-#' 
+#'
 #' # to run all four calls in 'll', use lapply() and eval():
 #' ee <- lapply(ll, eval, envir = globalenv())
 #' ee$seas  # the 'seas' object, produced by the final call to seas()
 #' }
 import.spc <- function(file, text = NULL){
-  
+
   z <- list()
 
   if (is.null(text)){
@@ -121,7 +121,7 @@ import.spc <- function(file, text = NULL){
 
   # clean args that are produced by seas
   pp[c("series", "regression", "transform")] <- lapply(pp[c("series", "regression", "transform")], function(spc) spc[!names(spc) %in% c("file", "data", "start", "name", "title", "format", "period", "user")])
-  
+
   if (identical(pp$series, structure(list(), .Names = character(0)))){
     pp$series <- NULL
   }
@@ -185,16 +185,16 @@ ext_ser_call <- function(spc, vname){
 
     f <- if (is.null(spc$period)) 12 else spc$period
 
-    xstr <- paste0(vname, " <- ts(", 
-                paste(deparse(spc$data, control = "all"), collapse = ""), 
+    xstr <- paste0(vname, " <- ts(",
+                paste(deparse(spc$data, control = "all"), collapse = ""),
                 ", start = ", deparse(start), ", frequency = ", f, ")")
- 
+
   } else if ("file" %in% names(spc)){
-    
+
     frm <- rem_quotes(spc$format)
 
     # fragment for name, for fortran and x11 series
-    if (!is.null(spc$name)) {  
+    if (!is.null(spc$name)) {
       nm <- rem_quotes(spc$name)
       if (frm %in% c("cs", "cs2")){
         nm <- substr(nm, 1, 8)
@@ -217,7 +217,7 @@ ext_ser_call <- function(spc, vname){
       start <- start_date_x13_to_ts(spc$start)
       frequency <- if (is.null(spc$period)) 12 else spc$period
       xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '", start = ', deparse(start) , ', frequency = ', frequency, nmstr, ')')
-    } 
+    }
   } else {
     return(NULL)
   }
@@ -259,7 +259,7 @@ rem_defaults_from_args <- function(x) {
   z <- x
 
   # default arguents
-  e <- list(seats.noadmiss = "yes", 
+  e <- list(seats.noadmiss = "yes",
              transform.function = "auto",
              regression.aictest = c("td", "easter"),
              outlier = "",
@@ -291,7 +291,7 @@ rem_defaults_from_args <- function(x) {
 
   is.zerolength <- lapply(z, length) == 0
   is.explicitnull <- vapply(x, is.null, TRUE)
-  names.non.explicit.zero <- setdiff(names(is.zerolength)[is.zerolength], 
+  names.non.explicit.zero <- setdiff(names(is.zerolength)[is.zerolength],
                                   names(is.explicitnull)[is.explicitnull])
 
   z[names(z) %in% names.non.explicit.zero] <- NULL
@@ -305,27 +305,27 @@ rem_defaults_from_args <- function(x) {
   # make sure not to loose x11 with default save
   if (any(grepl("^x11", names(x))) & !any(grepl("^x11", names(z)))){
     z$x11 <- ""
-  } 
+  }
 
   z
 }
 
 
 #' Import Time Series from X-13 Data Files
-#' 
+#'
 #' Utility function to read time series from X-13 data files. A call to
 #' `import.ts` is constructed and included in the output of
 #' [import.spc()].
-#' 
+#'
 #' @param file character, name of the X-13 file which the data are to be read from
 #' @param format a valid X-13 file format as described in 7.15 of the
-#'  X-13 manual: `"datevalue"`, `"datevaluecomma"`, `"free"`, 
+#'  X-13 manual: `"datevalue"`, `"datevaluecomma"`, `"free"`,
 #'  `"freecomma"`, `"x13save"`, `"tramo"` or an X-11 or Fortran format.
 #' @param start vector of length 2, time of the first observation (only for
 #'   formats `"free"` and `"freecomma"` and the Fortran formats.)
-#' @param frequency  the number of observations per unit of time (only for 
+#' @param frequency  the number of observations per unit of time (only for
 #'   formats `"free"`, `"freecomma"` and the X-11 or Fortran formats.)
-#' @param name  (X-11 formats only) name of the series, to select from a 
+#' @param name  (X-11 formats only) name of the series, to select from a
 #'   file with multiple time series. Omit if you want to read all time series from an X-11 format file.
 #' @export
 #' @return an object of class `ts` or `mts`
@@ -335,20 +335,20 @@ rem_defaults_from_args <- function(x) {
 #' @examples
 #' \dontrun{
 #' tdir <- tempdir()
-#' seas(x = AirPassengers, dir = tdir) 
+#' seas(x = AirPassengers, dir = tdir)
 #' import.ts(file.path(tdir, "data.dta"))
 #' import.ts(file.path(tdir, "iofile.rsd"), format = "x13save")
 #' }
-import.ts <- function(file, 
-                    format = "datevalue", 
+import.ts <- function(file,
+                    format = "datevalue",
                     start = NULL, frequency = NULL, name = NULL){
-  
+
   stopifnot(file.exists(file))
 
 
   if (format == "x13save"){
     return(read_series(file))
-  }  
+  }
   if (format == "tramo"){
     return(import_tramo(file))
   }
@@ -356,7 +356,7 @@ import.ts <- function(file,
     stopifnot(!is.null(frequency))
     format <- x11_to_fortran(format, frequency)
     return(import_fortran(file = file, format = format, frequency = frequency, name = name))
-  } 
+  }
 
 
   if (format %in% c("datevalue", "datevaluecomma", "free", "freecomma")){
@@ -374,7 +374,7 @@ import.ts <- function(file,
       frequency <- length(unique(dta[, 2]))
       start <- c(as.matrix(dta[1, 1:2]))
       dta <- dta[,-c(1:2)]
-    } 
+    }
 
   } else if (grepl("[\\(.+\\)]", format)){  # fortran format
     stopifnot(!is.null(frequency))
@@ -387,7 +387,7 @@ import.ts <- function(file,
   z <- ts(unname(dta), frequency = frequency, start = start)
   z <- na.omit(z)
   z
-  
+
 
 }
 
@@ -398,36 +398,36 @@ x11_to_fortran <- function(x, frequency) {
   stopifnot(x %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2"))
   p <- if (frequency == 4) "q" else "m"
 
-  # x11fort <- data.frame(m = c("(12f6.0,i2,a6)", 
-  #                           "(6f12.0,/,6f12.0,i2,a6)", 
-  #                           "(a6,i2,12f6.0)", 
-  #                           "(a6,i2,6f12.0,/,8x,6f12.0)" , 
-  #                           "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)", 
-  #                           "(a8,i2,10x,12e16.10,18x) ", 
+  # x11fort <- data.frame(m = c("(12f6.0,i2,a6)",
+  #                           "(6f12.0,/,6f12.0,i2,a6)",
+  #                           "(a6,i2,12f6.0)",
+  #                           "(a6,i2,6f12.0,/,8x,6f12.0)" ,
+  #                           "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)",
+  #                           "(a8,i2,10x,12e16.10,18x) ",
   #                           "(a8,i4,12x,12e16.10,14x)"),
-  #                     q = c("(4(12x,f6.0),i2,a6)", 
-  #                           "(4f12.0,24x,i2,a6)", 
-  #                           "(a6,i2,4(12x,f6.0))", 
-  #                           "(a6,i2,4f12.0)", 
-  #                           "(a8,i4,4f11.0,2x)", 
-  #                           "(a8,i2,10x,12e16.10,18x)", 
+  #                     q = c("(4(12x,f6.0),i2,a6)",
+  #                           "(4f12.0,24x,i2,a6)",
+  #                           "(a6,i2,4(12x,f6.0))",
+  #                           "(a6,i2,4f12.0)",
+  #                           "(a8,i4,4f11.0,2x)",
+  #                           "(a8,i2,10x,12e16.10,18x)",
   #                           "(a8,i4,12x,12e16.10,14x)"),
   #                     stringsAsFactors = FALSE)
 
 
-  x11fort <- data.frame(m = c("(12f6.0,i2,a6)", 
-                            "(6f12.0,/,6f12.0,i2,a6)", 
-                            "(a6,i2,12f6.0)", 
-                            "(a6,i2,6f12.0,/,8x,6f12.0)" , 
-                            "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)", 
-                            "(a8,i2,10x,12e16.10,18x)", 
+  x11fort <- data.frame(m = c("(12f6.0,i2,a6)",
+                            "(6f12.0,/,6f12.0,i2,a6)",
+                            "(a6,i2,12f6.0)",
+                            "(a6,i2,6f12.0,/,8x,6f12.0)" ,
+                            "(a8,i4,6f11.0,2x,/,12x,6f11.0,2x)",
+                            "(a8,i2,10x,12e16.10,18x)",
                             "(a8,i4,12x,12e16.10,14x)"),
-                      q = c("(12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0,i2,a6)", 
-                            "(4f12.0,24x,i2,a6)", 
-                            "(a6,i2,12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0)", 
-                            "(a6,i2,4f12.0)", 
-                            "(a8,i4,4f11.0,2x)", 
-                            "(a8,i2,10x,12e16.10,18x)", 
+                      q = c("(12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0,i2,a6)",
+                            "(4f12.0,24x,i2,a6)",
+                            "(a6,i2,12x,f6.0,12x,f6.0,12x,f6.0,12x,f6.0)",
+                            "(a6,i2,4f12.0)",
+                            "(a8,i4,4f11.0,2x)",
+                            "(a8,i2,10x,12e16.10,18x)",
                             "(a8,i4,12x,12e16.10,14x)"),
                       stringsAsFactors = FALSE)
 
@@ -463,7 +463,7 @@ import_fortran <- function(file, format, frequency, start = NULL, name = NULL){
 
   to_ts <- function(x){
     if (is.null(start)){
-      sty <- x[1, c(ycol)]  
+      sty <- x[1, c(ycol)]
       if (nchar(sty) == 2){   # if start yeear has 2 digits, guess 4 digits
         sty <- if (sty > 45) sty + 1900 else sty + 2000
       }
