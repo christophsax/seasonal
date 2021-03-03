@@ -66,8 +66,8 @@
 #'
 #' @references
 #'   Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
-#'   in R." *Journal of Statistical Software*, *87*(11), 1-17. doi:
-#'   10.18637/jss.v087.i11 (<doi:10.18637/jss.v087.i11>).
+#'   in R." *Journal of Statistical Software*, *87*(11), 1-17.
+#'   \doi{10.18637/jss.v087.i11}.
 #'
 #' @name seasonal-package
 #' @aliases seasonal
