@@ -124,5 +124,13 @@ consist_spclist <-function(x){
     x <- mod_spclist(x, list = list(force.save = "saa"))
   }
 
+
+  ### reorder
+
+  # transform does not like to be at the end
+  first_specs <- intersect(c("composite", "series", "transform"), names(x))
+  x <- x[c(first_specs, setdiff(names(x), first_specs))]
+  class(x) <- c("spclist", "list")
+
   x
 }

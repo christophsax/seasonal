@@ -19,3 +19,34 @@ test_that("update works with out = TRUE (#259)", {
   expect_true(file.exists(out(m, browser = NULL)))
 
 })
+
+
+test_that("list arguments works with coefs", {
+
+  m0 <- seas(
+    x = AirPassengers,
+    regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
+    arima.model = "(0 1 1)(0 1 1)",
+    regression.aictest = NULL,
+    outlier = NULL,
+    transform.function = "log",
+    regression.b = c("-0.002949699141f", "0.01776737357f", "0.1001558244f"),
+    arima.ma = c("0.1156204139f", "0.4973600193f")
+  )
+
+  m1 <- seas(
+    list = list(
+    x = AirPassengers,
+    regression.variables = c("td1coef", "easter[1]", "ao1951.May"),
+    arima.model = "(0 1 1)(0 1 1)",
+    regression.aictest = NULL,
+    outlier = NULL,
+    transform.function = "log",
+    regression.b = c("-0.002949699141f", "0.01776737357f", "0.1001558244f"),
+    arima.ma = c("0.1156204139f", "0.4973600193f")
+    )
+  )
+
+  expect_equal(final(m0), final(m1))
+
+})

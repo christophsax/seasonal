@@ -31,3 +31,11 @@ test_that("multirun works", {
   expect_s3_class(final(m3), "mts")
 
 })
+
+test_that("composite works", {
+  seas(
+    cbind(mdeaths, fdeaths),
+    composite = list(),
+    series.comptype = "add"
+  )
+})
