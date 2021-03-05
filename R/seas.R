@@ -127,7 +127,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' Basic call
+#' # Basic call
 #' m <- seas(AirPassengers)
 #' summary(m)
 #'

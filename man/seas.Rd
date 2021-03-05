@@ -139,7 +139,7 @@ X-13ARIMA-SEATS manual.
 }
 \examples{
 \dontrun{
-Basic call
+# Basic call
 m <- seas(AirPassengers)
 summary(m)
 

@@ -30,8 +30,8 @@ the output by default. Instead, \code{out} re-evaluates the model.
 \examples{
 
 \dontrun{
-m <- seas(AirPassengers) 
-out(m) 
+m <- seas(AirPassengers)
+out(m)
 # customizing the output with additional elements
 out(m, automdl.print = "autochoicemdl")
 
