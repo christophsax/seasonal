@@ -1,32 +1,32 @@
 #' `.spc` File Content
-#' 
-#' Access the content of the `.spc` file that governs the behavior of 
+#'
+#' Access the content of the `.spc` file that governs the behavior of
 #'   X-13ARIMA-SEATS.
-#' 
+#'
 #' @param x  object of class `"seas"`
-#'   
-#' @return returns an object of class `"spclist"`, essentially a list that 
-#' contains the information that is sent to X-13ARIMA-SEATS. The corresponding 
-#' `print` method displays the content of the list as written to the 
+#'
+#' @return returns an object of class `"spclist"`, essentially a list that
+#' contains the information that is sent to X-13ARIMA-SEATS. The corresponding
+#' `print` method displays the content of the list as written to the
 #' `.spc` file.
-#' 
+#'
 #' @seealso [seas()] for the main function.
 #' @seealso [series()], for universal X-13 output extraction.
 #' @seealso [plot.seas()], for diagnostical plots.
 #' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
-#' 
-#' @references Vignette with a more detailed description: 
+#'
+#' @references Vignette with a more detailed description:
 #'   <http://www.seasonal.website/seasonal.html>
-#'   
-#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   <http://www.seasonal.website/examples.html>
-#'   
-#'   Official X-13ARIMA-SEATS manual: 
+#'
+#'   Official X-13ARIMA-SEATS manual:
 #'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
-#'   
+#'
 #' @examples
-#' \dontrun{
-#' 
+#' \donttest{
+#'
 #' m <- seas(AirPassengers)
 #' spc(m)
 #' }
@@ -44,26 +44,26 @@ spc <- function(x){
 #' `automdl` spec to be activated (default). If it is not activated, the
 #' function tries to re-evaluate the model with the `automdl` spec
 #' activated.
-#' 
+#'
 #' @param x  object of class `"seas"`
-#'   
+#'
 #' @seealso [seas()] for the main function.
 #' @seealso [series()], for universal X-13 output extraction.
 #' @seealso [plot.seas()], for diagnostical plots.
 #' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
-#' 
-#' @references Vignette with a more detailed description: 
+#'
+#' @references Vignette with a more detailed description:
 #'   <http://www.seasonal.website/seasonal.html>
-#'   
-#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   <http://www.seasonal.website/examples.html>
-#'   
-#'   Official X-13ARIMA-SEATS manual: 
+#'
+#'   Official X-13ARIMA-SEATS manual:
 #'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
-#'   
+#'
 #' @examples
-#' \dontrun{
-#' 
+#' \donttest{
+#'
 #' m <- seas(AirPassengers)
 #' fivebestmdl(m)
 #' }
@@ -76,7 +76,7 @@ fivebestmdl <- function(x){
       arima.st <- regexpr("Model \\#  \\d : ", txt) + 13
       arima.en <- regexpr(" \\(<abbr", txt) - 1
       arima <- substr(txt, start = arima.st, stop = arima.en)
-      
+
       bic.st <- regexpr("</abbr> = ", txt) + 10
       bic.en <- regexpr("\\) <br> ", txt) - 1
       bic <- as.numeric(substr(txt, start = bic.st, stop = bic.en))
@@ -84,7 +84,7 @@ fivebestmdl <- function(x){
     } else {
       txt <- x$fivebestmdl[3:7]
       arima <- substr(txt, start = 19, stop = 32)
-      arima <- gsub(" *$", "", arima) 
+      arima <- gsub(" *$", "", arima)
       bic <- as.numeric(substr(txt, start = 51, stop = 56))
       z <- data.frame(arima, bic, stringsAsFactors = FALSE)
     }
@@ -105,28 +105,28 @@ fivebestmdl <- function(x){
 
 
 #' Applied Transformation
-#' 
+#'
 #' Returns the transform function that has been applied.
-#' 
+#'
 #' @param x  object of class `"seas"`
-#'   
+#'
 #' @seealso [seas()] for the main function.
 #' @seealso [series()], for universal X-13 output extraction.
 #' @seealso [plot.seas()], for diagnostical plots.
 #' @seealso [out()], for accessing the full output of X-13ARIMA-SEATS.
-#' 
-#' @references Vignette with a more detailed description: 
+#'
+#' @references Vignette with a more detailed description:
 #'   <http://www.seasonal.website/seasonal.html>
-#'   
-#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual: 
+#'
+#'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 #'   <http://www.seasonal.website/examples.html>
-#'   
-#'   Official X-13ARIMA-SEATS manual: 
+#'
+#'   Official X-13ARIMA-SEATS manual:
 #'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
-#'   
+#'
 #' @examples
-#' \dontrun{
-#' 
+#' \donttest{
+#'
 #' m <- seas(AirPassengers)
 #' transformfunction(m)
 #' }
@@ -136,7 +136,7 @@ transformfunction <- function(x){
   if (is.null(x$spc$transform$`function`)){
     stop("no transform function, investigate!")
   }
-  
+
   if (x$spc$transform$`function` == "auto"){
     aictrans <- udg(x, 'aictrans', fail = FALSE)
     if (is.null(aictrans)) aictrans <- ""  # to make grepl work

@@ -9,7 +9,7 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' AirPassengersNA <- AirPassengers
 #' AirPassengersNA[20] <- NA
 #' na.x13(AirPassengersNA)

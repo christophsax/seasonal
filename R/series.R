@@ -228,7 +228,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' m <- seas(AirPassengers)
 #' series(m, "fct")  # re-evaluate with the forecast spec activated

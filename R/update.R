@@ -21,7 +21,7 @@
 #' @importFrom stats update
 #' @method update seas
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # updating the call
 #' m <- seas(AirPassengers)
 #' update(m, x11 = "")
@@ -69,7 +69,7 @@ update.seas <- function(object, ..., evaluate = TRUE){
 #' @importFrom stats predict
 #' @method predict seas
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Using data from Dec. 59 to estimate a model
 #' ap.short <- window(AirPassengers, end = c(1959, 12))
 #' m <- seas(ap.short)

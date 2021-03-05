@@ -50,7 +50,7 @@
 #'   method for `"lm"`.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m <- seas(AirPassengers)
 #' summary(m)
 #'

@@ -19,7 +19,7 @@
 #' @method as.data.frame seas
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m <- seas(AirPassengers, x11 = "")
 #'
 #' # a data.frame containing data

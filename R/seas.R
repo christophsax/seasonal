@@ -126,7 +126,7 @@
 #' @import utils
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Basic call
 #' m <- seas(AirPassengers)
 #' summary(m)

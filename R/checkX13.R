@@ -12,7 +12,7 @@
 #' @param htmlcheck  logical, whether the presence of the the HTML version of
 #'   X-13 should be checked.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' old.path <- Sys.getenv("X13_PATH")
 #' Sys.setenv(X13_PATH = "")  # its broken now
 #' checkX13()

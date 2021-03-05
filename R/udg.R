@@ -35,7 +35,7 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m <- seas(AirPassengers, x11 = "")
 #'
 #' qs(m)

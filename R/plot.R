@@ -44,7 +44,7 @@
 #' @method plot seas
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' m <- seas(AirPassengers)
 #'

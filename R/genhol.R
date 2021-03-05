@@ -33,7 +33,7 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
 #'

@@ -58,7 +58,7 @@
 #' '
 #' )
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' ### reading .spc with multiple user regression and transformation series
 #'
@@ -332,7 +332,7 @@ rem_defaults_from_args <- function(x) {
 #' @seealso [import.spc()], for importing X-13 `.spc` files.
 #' @seealso [seas()] for the main function of seasonal.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' tdir <- tempdir()
 #' seas(x = AirPassengers, dir = tdir)
 #' import.ts(file.path(tdir, "iofile.dta"))

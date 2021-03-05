@@ -42,7 +42,7 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #' m <- seas(AirPassengers)
 #' getCall(m)                   # default call
