@@ -138,13 +138,15 @@ which contains replications of almost all examples from the official
 X-13ARIMA-SEATS manual.
 }
 \examples{
-\donttest{
+
 # Basic call
 m <- seas(AirPassengers)
 summary(m)
 
 # Graphical user interface
+\dontrun{
 view(m)
+}
 
 # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
 # (consult the X-13ARIMA-SEATS manual for many more options and the list of
@@ -188,8 +190,10 @@ original(m)
 resid(m)
 coef(m)
 fivebestmdl(m)
-out(m)                  # the X-13 .out file (see ?out, for details)
 spc(m)                  # the .spc input file to X-13 (for debugging)
+\dontrun{
+out(m)                  # the X-13 .out file (see ?out, for details)
+}
 
 # universal extractor function for any X-13ARIMA-SEATS output (see ?series)
 series(m, "forecast.forecasts")
@@ -226,7 +230,6 @@ seas(
   composite = list(),
   series.comptype = "add"
 )
-}
 
 }
 \references{
