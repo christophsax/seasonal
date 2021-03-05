@@ -23,7 +23,7 @@ Check the installation of the binary executables of X-13ARIMA-SEATS. See
 you intend to use your own binaries.
 }
 \examples{
-\dontrun{
+\donttest{
 old.path <- Sys.getenv("X13_PATH")
 Sys.setenv(X13_PATH = "")  # its broken now
 checkX13()

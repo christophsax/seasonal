@@ -53,7 +53,7 @@ If \code{coef = TRUE}, the coefficients are fixed as well. If
 \code{x11.filter = TRUE}, the X-11 moving averages are fixed as well.
 }
 \examples{
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 getCall(m)                   # default call

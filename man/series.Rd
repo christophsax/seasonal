@@ -226,7 +226,7 @@ x11regression \tab x11regression.xregressionmatrix \tab xrm \cr
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 series(m, "fct")  # re-evaluate with the forecast spec activated

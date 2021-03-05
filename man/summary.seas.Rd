@@ -75,7 +75,7 @@ hypothesis is rejected. The test statistic is the result of
 }
 }
 \examples{
-\dontrun{
+\donttest{
 m <- seas(AirPassengers)
 summary(m)
 

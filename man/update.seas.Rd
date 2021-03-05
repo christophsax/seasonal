@@ -29,7 +29,7 @@ evaluation. This means you can savely use it in other functions, which
 is useful with \code{\link[=lapply]{lapply()}} and friends (see examples.)
 }
 \examples{
-\dontrun{
+\donttest{
 # updating the call
 m <- seas(AirPassengers)
 update(m, x11 = "")

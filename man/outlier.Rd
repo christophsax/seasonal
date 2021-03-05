@@ -20,7 +20,7 @@ Returns an object of class \code{"ts"} that contains the names of the
 outliers.
 }
 \examples{
-\dontrun{
+\donttest{
 x <- seas(AirPassengers)
 outlier(x)
 }

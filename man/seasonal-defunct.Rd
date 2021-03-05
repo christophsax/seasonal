@@ -31,11 +31,11 @@ The \code{inspect} functions is defunct now. Use
 the extended \code{\link[=view]{view()}} function instead.
 }
 \examples{
-\dontrun{
+\donttest{
 m <- seas(AirPassengers)
 udg(x, "x13mdl")
 }
-\dontrun{
+\donttest{
 m <- seas(AirPassengers)
 view(m)
 }

@@ -29,7 +29,7 @@ evaluated, using the original model call. This is equivalent of calling
 \code{final(update(m, x = newdata))}.
 }
 \examples{
-\dontrun{
+\donttest{
 # Using data from Dec. 59 to estimate a model
 ap.short <- window(AirPassengers, end = c(1959, 12))
 m <- seas(ap.short)

@@ -74,7 +74,7 @@ import.spc(text =
 '
 )
 
-\dontrun{
+\donttest{
 
 ### reading .spc with multiple user regression and transformation series
 

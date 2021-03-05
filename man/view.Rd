@@ -62,7 +62,7 @@ m <- seas(AirPassengers)
 view(m)
 
 # store the model after closing the GUI, for further processing in R
-m.upd <- view(m)  
+m.upd <- view(m)
 }
 }
 \references{

@@ -20,7 +20,7 @@ Access the content of the \code{.spc} file that governs the behavior of
 X-13ARIMA-SEATS.
 }
 \examples{
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 spc(m)

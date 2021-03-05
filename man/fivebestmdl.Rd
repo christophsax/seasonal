@@ -16,7 +16,7 @@ function tries to re-evaluate the model with the \code{automdl} spec
 activated.
 }
 \examples{
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 fivebestmdl(m)

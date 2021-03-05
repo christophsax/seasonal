@@ -36,7 +36,7 @@ These functions support R default NA handling. If \code{na.action = na.exclude} 
 also contain NAs.
 }
 \examples{
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 

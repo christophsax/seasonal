@@ -67,7 +67,7 @@ the seasonal and SI component periodwise. Despite its name, \code{monthplot}
 can be used for series of all frequencies.
 }
 \examples{
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 

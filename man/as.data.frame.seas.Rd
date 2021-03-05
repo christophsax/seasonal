@@ -32,7 +32,7 @@ The data.frames produced by these functions follow the naming conventions
 from the 'broom' package, but do not depend on it otherwise.
 }
 \examples{
-\dontrun{
+\donttest{
 m <- seas(AirPassengers, x11 = "")
 
 # a data.frame containing data

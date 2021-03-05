@@ -37,7 +37,7 @@ Utility function to read time series from X-13 data files. A call to
 \code{\link[=import.spc]{import.spc()}}.
 }
 \examples{
-\dontrun{
+\donttest{
 tdir <- tempdir()
 seas(x = AirPassengers, dir = tdir)
 import.ts(file.path(tdir, "iofile.dta"))

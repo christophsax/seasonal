@@ -50,7 +50,7 @@ statistics. The \code{qs} function and the \code{AIC}, \code{BIC} and
 specific diagnostical statistics.
 }
 \examples{
-\dontrun{
+\donttest{
 m <- seas(AirPassengers, x11 = "")
 
 qs(m)

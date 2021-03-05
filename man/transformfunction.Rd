@@ -13,7 +13,7 @@ transformfunction(x)
 Returns the transform function that has been applied.
 }
 \examples{
-\dontrun{
+\donttest{
 
 m <- seas(AirPassengers)
 transformfunction(m)

@@ -49,7 +49,7 @@
 #' model; or `NULL`, if the `story` argument is supplied.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'
 #' m <- seas(AirPassengers)
 #' view(m)

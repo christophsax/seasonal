@@ -138,7 +138,7 @@ which contains replications of almost all examples from the official
 X-13ARIMA-SEATS manual.
 }
 \examples{
-\dontrun{
+\donttest{
 # Basic call
 m <- seas(AirPassengers)
 summary(m)
