@@ -148,6 +148,7 @@ summary(m)
 view(m)
 }
 
+\donttest{
 # invoke X-13ARIMA-SEATS options as 'spec.argument' through the ... argument
 # (consult the X-13ARIMA-SEATS manual for many more options and the list of
 # R examples for more examples)
@@ -191,9 +192,7 @@ resid(m)
 coef(m)
 fivebestmdl(m)
 spc(m)                  # the .spc input file to X-13 (for debugging)
-\dontrun{
 out(m)                  # the X-13 .out file (see ?out, for details)
-}
 
 # universal extractor function for any X-13ARIMA-SEATS output (see ?series)
 series(m, "forecast.forecasts")
@@ -230,7 +229,7 @@ seas(
   composite = list(),
   series.comptype = "add"
 )
-
+}
 }
 \references{
 Sax C, Eddelbuettel D (2018). "Seasonal Adjustment by X-13ARIMA-SEATS
