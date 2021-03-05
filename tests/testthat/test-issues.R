@@ -11,8 +11,11 @@ test_that("'fts' import via series works (#240)", {
   expect_false(any(is.na(m$series$fts[,'t.TC.'])))
 })
 
-test_that("update works with out = TRUE", {
+test_that("update works with out = TRUE (#259)", {
   m <- seas(mdeaths)
-  expect_s3_class(update(m, out = TRUE), "seas")
-})
+  m1 <- update(m, out = TRUE)
+  expect_s3_class(m1, "seas")
+  expect_true(file.exists(out(m1, browser = NULL)))
+  expect_true(file.exists(out(m, browser = NULL)))
 
+})

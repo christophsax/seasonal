@@ -1,6 +1,12 @@
 seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
                       call = "dummycall", series.name = "x"){
 
+  # remove out from the list
+  if ("out" %in% names(list)) {
+    out <- list$out
+    list <- list[setdiff(names(list), "out")]
+  }
+
   # wdir and file name
   id <- "iofile"
   wdir <- wdir_create()
@@ -27,7 +33,6 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
     file.copy(list.files(wdir, full.names = TRUE), dir, overwrite = TRUE)
     message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
   }
-
   if (!out) {
     wdir_clean_up()
   }
