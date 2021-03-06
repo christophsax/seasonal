@@ -36,7 +36,7 @@
 #' @param story character, local file path or URL to an `".Rmd"` file.
 #' @param quiet logical, if `TRUE` (default), error messages from calls in
 #'   `view` are not shown in the console.
-#' @param ... arguments passed to [shiny::runApp()]. E.g., for selecting
+#' @param ... arguments passed to `runApp`. E.g., for selecting
 #'   if the GUI should open in the browser or in the RStudio viewer pane.
 #'
 #' @references Seasonal vignette with a more detailed description:

@@ -14,7 +14,7 @@ view(x = NULL, story = NULL, quiet = TRUE, ...)
 \item{quiet}{logical, if \code{TRUE} (default), error messages from calls in
 \code{view} are not shown in the console.}
 
-\item{...}{arguments passed to \code{\link[shiny:runApp]{shiny::runApp()}}. E.g., for selecting
+\item{...}{arguments passed to \code{runApp}. E.g., for selecting
 if the GUI should open in the browser or in the RStudio viewer pane.}
 }
 \value{
