@@ -128,8 +128,10 @@
 #' @examples
 #'
 #' # Basic call
+#' \donttest{
 #' m <- seas(AirPassengers)
 #' summary(m)
+#' }
 #'
 #' # Graphical user interface
 #' \dontrun{

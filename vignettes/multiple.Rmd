@@ -2,7 +2,7 @@
 title: "Adjusting Multiple Series"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{multiple}
+  %\VignetteIndexEntry{Adjusting Multiple Series}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,7 +23,7 @@ This is done by using the built-in batch mode of X-13. It removes the need for l
 Multiple adjustments can be performed by supplying multiple time series as an
 `"mts"` object:
 
-```{r}
+```r
 library(seasonal)
 m <- seas(cbind(fdeaths, mdeaths), x11 = "")
 final(m)
@@ -39,7 +39,7 @@ as `x11 = ""`. Note that if entered that way, they will apply to both series.
 
 As in a single series call, we can also use the `list` argument:
 
-```{r}
+```r
 seas(cbind(fdeaths, mdeaths), list = list(x11 = ""))
 ```
 
@@ -48,7 +48,7 @@ specific spec lists in the `list` argument. In the following, `fdeaths` is
 adjusted by X-11 and `mdeaths` by the default SEATS procedure. The length of
 list must be equal to number of series.
 
-```{r}
+```r
 seas(
   cbind(fdeaths, mdeaths),
   list = list(
@@ -62,7 +62,7 @@ We can even combine these ideas. The following turns off the
 AIC test of the regression spec for both series (`regression.aictest = NULL`) and uses X-11 to adjust
 `fdeaths` and SEATS to adjust `mdeaths`:
 
-```{r}
+```r
 seas(
   cbind(fdeaths, mdeaths),
   regression.aictest = NULL,
@@ -79,7 +79,7 @@ There are several ways of specifying multiple series. We have already seen how `
 objects can be used as an input. Alternatively, we can also use a list of single
 `"ts"` objects:
 
-```{r}
+```r
 seas(list(mdeaths, AirPassengers))
 ```
 
@@ -100,7 +100,7 @@ seas(ts_tslist(dta))
 
 Finally, you can specify the data directly in the list of lists:
 
-```{r}
+```r
 seas(
   list = list(
     list(x = mdeaths, x11 = ""),
@@ -117,7 +117,7 @@ Alternatively, X-13 can be called for each series (`multimode = "R"`).
 The results should be usually the same, but switching to
 `multimode = "R"` may be useful for debugging:
 
-```{r}
+```r
 seas(cbind(fdeaths, mdeaths), multimode = "x13")
 seas(cbind(fdeaths, mdeaths), multimode = "R")
 ```
@@ -153,7 +153,7 @@ the aggregated series. Specification works identical as for other series in
 list, the usual defaults of `seas()` are used.
 A minimal composite call looks like this:
 
-```{r}
+```r
 seas(
   cbind(mdeaths, fdeaths),
   composite = list(),
@@ -163,7 +163,7 @@ seas(
 
 You can verify that the composite refers to the total of `mdeaths` and `fdeaths` by running:
 
-```{r}
+```r
 seas(ldeaths)
 ```
 
