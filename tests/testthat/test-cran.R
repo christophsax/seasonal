@@ -13,6 +13,11 @@ x13binary::checkX13binary()
 
 if (!x13binary::supportedPlatform()) skip("platform not supported")
 
+testthat::skip_if(
+  getRversion() < "4.0" && !identical(Sys.getenv("NOT_CRAN"), "true"),
+  "skip on CRAN mac oldrel"
+)
+
 test_that("Baisc examples of seasonal work through", {
   expect_null(checkX13())
 })
