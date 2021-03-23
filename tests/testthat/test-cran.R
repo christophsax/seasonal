@@ -73,9 +73,6 @@ test_that("Basic examples of seasonal work through", {
   # universal extractor function for any X-13ARIMA-SEATS output (see ?series)
   expect_s3_class(series(m, "forecast.forecasts"), "ts")
 
-  # copying the output of X-13 to a user defined directory
-  expect_s3_class(seas(AirPassengers, dir = tempdir()), "seas")
-
   # user defined regressors (see ?genhol for more examples)
   # a temporary level shift in R base
   tls <- ts(0, start = 1949, end = 1965, freq = 12)

@@ -173,5 +173,9 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     }
   }
 
+  unlink(list.files(tempdir(), pattern = "Testairline.*", full.names = TRUE))
+
+  invisible()
+
 }
 
