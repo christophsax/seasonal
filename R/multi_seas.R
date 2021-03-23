@@ -122,6 +122,10 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     zs$composite$spc <- spc_composite
   }
 
+  if (!out) {
+    unlink(wdir, recursive = TRUE)
+  }
+
   zs
 
 }
