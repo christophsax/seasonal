@@ -1,4 +1,10 @@
 .onLoad <- function(...){
+
+  # works fine on Mac M1 - no on load testing to avoid detritus NOTE
+  if (R.version$arch == "aarch64"){
+    return(invisible(NULL))
+  }
+
   if (Sys.getenv("X13_PATH") != ""){
     if (x13binary::supportedPlatform()){
       # skip this message if X13_PATH is set to x13binary.path
