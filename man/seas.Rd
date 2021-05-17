@@ -199,9 +199,6 @@ out(m)                  # the X-13 .out file (see ?out, for details)
 # universal extractor function for any X-13ARIMA-SEATS output (see ?series)
 series(m, "forecast.forecasts")
 
-# copying the output of X-13 to a user defined directory
-seas(AirPassengers, dir = "~/mydir")
-
 # user defined regressors (see ?genhol for more examples)
 # a temporary level shift in R base
 tls <- ts(0, start = 1949, end = 1965, freq = 12)
