@@ -1,5 +1,11 @@
 # --- Startup tests ------------------------------------------------------------
 
+# works fine on Mac M1 - no on load testing to avoid detritus NOTE
+testthat::skip_if(
+  R.version$arch == "aarch64",
+  "skip on CRAN mac M1"
+)
+
 x13binary::checkX13binary()
 
 
