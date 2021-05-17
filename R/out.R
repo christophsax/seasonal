@@ -31,7 +31,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' m <- seas(AirPassengers)
 #' out(m)
 #' # customizing the output with additional elements

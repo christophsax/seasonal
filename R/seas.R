@@ -182,7 +182,6 @@
 #' coef(m)
 #' fivebestmdl(m)
 #' spc(m)                  # the .spc input file to X-13 (for debugging)
-#' out(m)                  # the X-13 .out file (see ?out, for details)
 #'
 #' # universal extractor function for any X-13ARIMA-SEATS output (see ?series)
 #' series(m, "forecast.forecasts")

@@ -29,7 +29,7 @@ the output by default. Instead, \code{out} re-evaluates the model.
 }
 \examples{
 
-\donttest{
+\dontrun{
 m <- seas(AirPassengers)
 out(m)
 # customizing the output with additional elements
