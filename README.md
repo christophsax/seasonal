@@ -107,11 +107,11 @@ Please report bugs and suggestions on [GitHub][github]. Thank you!
 
 [x13binary]: https://cran.r-project.org/package=x13binary "X-13ARIMA-SEATS binary for R"
 
-[manual]: https://www.census.gov/ts/x13as/docX13ASHTML.pdf "Reference Manual"
+[manual]: https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf "Reference Manual"
 
-[census]: https://www.census.gov/srd/www/x13as/ "United States Census Bureau"
+[census]: https://www.census.gov/data/software/x13as.X-13ARIMA-SEATS.html "United States Census Bureau"
 
-[license]: https://www.census.gov/srd/www/disclaimer.html "License Information and Disclaimer"
+[license]: https://www.census.gov/data/software/x13as/disclaimer.html "License Information and Disclaimer"
 
 [examples]: http://www.seasonal.website/examples.html "Examples of X-13ARIMA-SEATS in R"
 
