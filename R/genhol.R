@@ -27,9 +27,6 @@
 #'
 #' @seealso [seas()] for the main function of seasonal.
 #'
-#' @references United States Census Bureau, Notes on centering holiday
-#'   regressors: <https://www.census.gov/srd/www/genhol/genhol_center.html>
-#'
 #' @export
 #' @examples
 #'

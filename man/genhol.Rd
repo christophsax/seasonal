@@ -164,10 +164,6 @@ summary(seas(AirPassengers, regression.variables = c("easter[1]"),
 # X-13 with a positive sign.
 }
 }
-\references{
-United States Census Bureau, Notes on centering holiday
-regressors: \url{https://www.census.gov/srd/www/genhol/genhol_center.html}
-}
 \seealso{
 \code{\link[=seas]{seas()}} for the main function of seasonal.
 }

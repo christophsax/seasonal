@@ -163,7 +163,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
     if ((getOption("htmlmode") == 0)){
       if (.Platform$OS.type == "windows"){
         packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more\naccessible output via the out() function. For best user experience, \ndownload the HTML version from:",
-                              "\n\n  https://www.census.gov/srd/www/x13as/x13down_pc.html\n\n",
+                              "\n\n  https://www.census.gov/data/software/x13as.X-13ARIMA-SEATS.html\n\n",
                               "and copy x13ashtml.exe to:\n\n",
                               "  ", env.path)
       } else {

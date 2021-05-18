@@ -210,7 +210,7 @@ NULL
 #' @source United States Census Bureau
 #'
 #' @references Official X-13ARIMA-SEATS manual:
-#'   <https://www.census.gov/ts/x13as/docX13ASHTML.pdf>
+#'   <https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf>
 #'
 #' @name SPECS
 #' @aliases INSPDATA

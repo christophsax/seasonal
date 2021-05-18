@@ -75,7 +75,7 @@ Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
 \url{http://www.seasonal.website/examples.html}
 
 Official X-13ARIMA-SEATS manual:
-\url{https://www.census.gov/ts/x13as/docX13ASHTML.pdf}
+\url{https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf}
 }
 \seealso{
 \code{\link[stats:update]{stats::getCall()}} to extract the actual call.
