@@ -7,7 +7,7 @@ x13_run <- function(file, out, meta = FALSE){
   #
   # required by seas
 
-  env.path <- get_x13_path()
+  x13_path <- get_x13_path()
 
   # -n output suppression (no out file)
   # -s store additional output (.udg file)
@@ -16,9 +16,9 @@ x13_run <- function(file, out, meta = FALSE){
   m_flag <- if (meta) "-m" else ""
   if (.Platform$OS.type == "windows"){
     if (getOption("htmlmode") == 1){
-      x13.bin <- paste0("\"", normalizePath(file.path(env.path, "x13ashtml.exe")), "\"")
+      x13.bin <- paste0("\"", normalizePath(file.path(x13_path, "x13ashtml.exe")), "\"")
     } else {
-      x13.bin <- paste0("\"", normalizePath(file.path(env.path, "x13as.exe")), "\"")
+      x13.bin <- paste0("\"", normalizePath(file.path(x13_path, "x13as.exe")), "\"")
     }
     # change wd on win as X-13 writes `fort.6` to it
     owd <- getwd()
@@ -29,10 +29,10 @@ x13_run <- function(file, out, meta = FALSE){
   } else {
     if (getOption("htmlmode") == 1){
       # ignore case on unix to avoid problems with different binary names
-      fl <- list.files(env.path)
-      x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
+      fl <- list.files(x13_path)
+      x13.bin <- file.path(x13_path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
     } else {
-      x13.bin <- file.path(env.path, "x13as")
+      x13.bin <- file.path(x13_path, "x13as")
     }
     # change wd in meta mode, as it wirtes `fort.14` to it
     if (meta) {
