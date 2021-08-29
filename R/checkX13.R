@@ -12,15 +12,17 @@
 #' @param htmlcheck  logical, whether the presence of the the HTML version of
 #'   X-13 should be checked.
 #' @examples
-#' \donttest{
 #' old.path <- Sys.getenv("X13_PATH")
 #' Sys.setenv(X13_PATH = "")  # its broken now
-#' checkX13()
+#' try(checkX13())
 #'
-#' Sys.setenv(X13_PATH = old.path)  # fix it (provided it worked in the first place)
-#' checkX13()
+#' # fix it (provided it worked in the first place)
+#' if (old.path == "") {
+#'   Sys.unsetenv("X13_PATH")
+#' } else {
+#'   Sys.setenv(X13_PATH = old.path)
 #' }
-#'
+#' try(checkX13())
 #' @export
 checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
