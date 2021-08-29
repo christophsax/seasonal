@@ -8,3 +8,4 @@ build.R
 travis
 ^\.github$
 ^codecov\.yml$
+^seasonal\.Rproj$
