@@ -25,14 +25,14 @@
 checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
   if (fullcheck){
-    if (identical(Sys.getenv("X13_PATH"), (x13binary::x13path()))){
+    if (identical(get_x13_path(), (x13binary::x13path()))){
       message("seasonal is using the X-13 binaries provided by x13binary")
     }
   }
 
   ### check path
   no.path.message <- "No path to the binary executable of X-13 specified.\n\nYou can set 'X13_PATH' manually if you intend to use your own\nbinaries. See ?seasonal for details.\n"
-  env.path <- Sys.getenv("X13_PATH")
+  env.path <- get_x13_path()
 
   if (env.path == ""){
     if (fail){
@@ -148,7 +148,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
     if (has.failed){
       message("\nError details:")
-      message("  - X13_PATH:         ", Sys.getenv("X13_PATH"))
+      message("  - X13_PATH:         ", get_x13_path())
       message("  - Full binary path: ", x13.bin)
       message("  - Platform:         ", R.version$platform)
       message("  - R-Version:        ", R.version$version.string)
@@ -179,3 +179,10 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
 }
 
+get_x13_path <- function() {
+  env_path <- Sys.getenv("X13_PATH")
+  if (env_path != "") {
+    return(env_path)
+  }
+  x13binary::x13path()
+}

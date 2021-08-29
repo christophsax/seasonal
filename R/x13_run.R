@@ -7,7 +7,8 @@ x13_run <- function(file, out, meta = FALSE){
   #
   # required by seas
 
-  env.path <- Sys.getenv("X13_PATH")
+  env.path <- get_x13_path()
+
   # -n output suppression (no out file)
   # -s store additional output (.udg file)
   # -m use metafile
