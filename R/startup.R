@@ -40,7 +40,6 @@
         "\nbinaries. See ?seasonal for details.\n"
       ))
     }
-    Sys.setenv(X13_PATH = x13binary::x13path())
   }
   checkX13(fullcheck = FALSE, htmlcheck = TRUE)
 

@@ -27,16 +27,16 @@
 checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
   if (fullcheck){
-    if (identical(Sys.getenv("X13_PATH"), (x13binary::x13path()))){
+    if (identical(get_x13_path(), (x13binary::x13path()))){
       message("seasonal is using the X-13 binaries provided by x13binary")
     }
   }
 
   ### check path
   no.path.message <- "No path to the binary executable of X-13 specified.\n\nYou can set 'X13_PATH' manually if you intend to use your own\nbinaries. See ?seasonal for details.\n"
-  env.path <- Sys.getenv("X13_PATH")
+  x13_path <- get_x13_path()
 
-  if (env.path == ""){
+  if (x13_path == ""){
     if (fail){
       message(no.path.message)
       stop("Process terminated")
@@ -47,8 +47,8 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   }
 
   ### check validity of path
-  if (!file.exists(env.path)){
-    invalid.path.message <- paste0("Path '", env.path, "' specified but does not exists.")
+  if (!file.exists(x13_path)){
+    invalid.path.message <- paste0("Path '", x13_path, "' specified but does not exists.")
     if (fail){
       message(invalid.path.message)
       stop("Process terminated")
@@ -61,17 +61,17 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
   ### check existence of binaries
   # platform dependent binaries
   if (.Platform$OS.type == "windows"){
-    x13.bin <- file.path(env.path, "x13as.exe")
-    x13.bin.html <- file.path(env.path, "x13ashtml.exe")
+    x13.bin <- file.path(x13_path, "x13as.exe")
+    x13.bin.html <- file.path(x13_path, "x13ashtml.exe")
   } else {
-    x13.bin <- file.path(env.path, "x13as")
+    x13.bin <- file.path(x13_path, "x13as")
     # ignore case on unix to avoid problems with different binary names
-    fl <- list.files(env.path)
+    fl <- list.files(x13_path)
     fn <- fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)]
     if (length(fn) > 0){
-      x13.bin.html <- file.path(env.path, fn)
+      x13.bin.html <- file.path(x13_path, fn)
     } else {
-      x13.bin.html <- file.path(env.path, "x13ashtml")
+      x13.bin.html <- file.path(x13_path, "x13ashtml")
     }
   }
   no.file.message <- paste("Binary executable file", x13.bin, "or", x13.bin.html, "not found.\nSee ?seasonal for details.\n")
@@ -102,17 +102,17 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
     if (.Platform$OS.type == "windows"){
       if (getOption("htmlmode") == 1){
-        x13.bin <- paste0("\"", file.path(env.path, "x13ashtml.exe"), "\"")
+        x13.bin <- paste0("\"", file.path(x13_path, "x13ashtml.exe"), "\"")
       } else {
-        x13.bin <- paste0("\"", file.path(env.path, "x13as.exe"), "\"")
+        x13.bin <- paste0("\"", file.path(x13_path, "x13as.exe"), "\"")
       }
     } else {
       if (getOption("htmlmode") == 1){
         # ignore case on unix to avoid problems with different binary names
-        fl <- list.files(env.path)
-        x13.bin <- file.path(env.path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
+        fl <- list.files(x13_path)
+        x13.bin <- file.path(x13_path, fl[grepl("^x13ashtml$", fl, ignore.case = TRUE)])
       } else {
-        x13.bin <- file.path(env.path, "x13as")
+        x13.bin <- file.path(x13_path, "x13as")
       }
     }
 
@@ -150,7 +150,7 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
     if (has.failed){
       message("\nError details:")
-      message("  - X13_PATH:         ", Sys.getenv("X13_PATH"))
+      message("  - X13_PATH:         ", get_x13_path())
       message("  - Full binary path: ", x13.bin)
       message("  - Platform:         ", R.version$platform)
       message("  - R-Version:        ", R.version$version.string)
@@ -167,10 +167,10 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
         packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more\naccessible output via the out() function. For best user experience, \ndownload the HTML version from:",
                               "\n\n  https://www.census.gov/data/software/x13as.X-13ARIMA-SEATS.html\n\n",
                               "and copy x13ashtml.exe to:\n\n",
-                              "  ", env.path)
+                              "  ", x13_path)
       } else {
         packageStartupMessage("\nseasonal now supports the HTML version of X13, which offers a more \naccessible output via the out() function. For best user experience, \ncopy the binary executables of x13ashtml to:\n\n",
-                              "  ", env.path)
+                              "  ", x13_path)
       }
     }
   }
@@ -181,3 +181,10 @@ checkX13 <- function(fail = FALSE, fullcheck = TRUE, htmlcheck = TRUE){
 
 }
 
+get_x13_path <- function() {
+  env_path <- Sys.getenv("X13_PATH")
+  if (env_path != "") {
+    return(env_path)
+  }
+  x13binary::x13path()
+}
