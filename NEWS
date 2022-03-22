@@ -1,3 +1,9 @@
+1.8.4.1
+--------------------------------------------------------------------------------
+  - Keep series specification also in `noinst/specs/specs.csv`
+  - Adjust specs to include composite series, some additional seats series
+
+
 1.8.4 2021-09-17
 --------------------------------------------------------------------------------
 
