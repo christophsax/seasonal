@@ -8,4 +8,4 @@
 # load SPECS data from .csv and store as data/SPECS.RData
 SPECS <- read.csv("noinst/specs/SPECS.csv", stringsAsFactors = FALSE)
 
-save(SPECS, "data/SPECS.RData")
+save(SPECS, file = "data/specs.RData")
