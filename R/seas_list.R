@@ -34,7 +34,7 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
     message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
   }
   if (!out) {
-    wdir_clean_up()
+    wdir_clean_up(wdir)
   }
 
   z

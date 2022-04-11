@@ -9,10 +9,7 @@ wdir_create <- function() {
   wd
 }
 
-wdir_clean_up <- function() {
-  td <- tempdir()
-  dirs <- list.dirs(path = td, full.names = FALSE, recursive = FALSE)
-  x13_dirs <- file.path(td, grep("^x13", dirs, value = TRUE))
-  unlink(x13_dirs, recursive = TRUE)
+wdir_clean_up <- function(wdir) {
+  unlink(wdir, recursive = TRUE)
 }
 
