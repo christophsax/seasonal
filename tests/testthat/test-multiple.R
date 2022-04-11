@@ -39,3 +39,29 @@ test_that("composite works", {
     series.comptype = "add"
   )
 })
+
+
+test_that("series works with composite coefs", {
+
+  m0 <- seas(
+    cbind(mdeaths, fdeaths),
+    composite = list(),
+    series.comptype = "add"
+  )
+
+  a <- series(m0, "composite.indseasadj")
+
+
+  m1 <- seas(
+    cbind(mdeaths, fdeaths),
+    composite = list(composite.save = "isa"),
+    series.comptype = "add"
+  )
+
+  b <- m1$composite$series$isa
+  b2 <- series(m1, "composite.indseasadj")
+
+  expect_equal(a, b)
+  expect_equal(a, b2)
+
+})

@@ -316,13 +316,26 @@
 #' }
 series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
-  # if (!is.null(x$composite)) {
-  #   stopifnot(inherits(x$composite, "seas"))
-  # }
+  if (inherits(x, "seas_multi")) {
+    if (is.null(x$composite)) {
+      stop("does not contain a composite element")
+    }
+    series.short <- series_short(series)
+
+    if (reeval){
+      reeval.dots <- reeval_dots(x = x$composite, series.short = series.short, verbose = FALSE)
+      if (length(reeval.dots) > 0){
+        x$composite$list <- c(x$composite$list, reeval.dots)
+        x <- update_seas_multi(x)
+      }
+    }
+
+    z <- do.call(cbind, x$composite$series[series.short])
+    z
+    return(z)
+  }
 
   stopifnot(inherits(x, "seas"))
-
-  series.short <- series_short(series)
 
   # reeval with non present output
   if (reeval){

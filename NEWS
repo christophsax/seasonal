@@ -1,6 +1,7 @@
 1.8.4.2 (unreleased)
 --------------------------------------------------------------------------------
   - out() works on composite objects #278
+  - series() works on composite objects #278
 
 
 1.8.4.1 (unreleased)
