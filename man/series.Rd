@@ -42,6 +42,34 @@ List of all importable tables from X-13ARIMA-SEATS:
 check \tab check.acf \tab acf \cr
 check \tab check.acfsquared \tab ac2 \cr
 check \tab check.pacf \tab pcf \cr
+composite \tab composite.adjcompositesrs \tab b1 \cr
+composite \tab composite.calendaradjcomposite \tab cac \cr
+composite \tab composite.compositesrs \tab cms \cr
+composite \tab composite.indadjsatot \tab iaa \cr
+composite \tab composite.indadjustfac \tab iaf \cr
+composite \tab composite.indaoutlier \tab iao \cr
+composite \tab composite.indcalendar \tab ica \cr
+composite \tab composite.indirregular \tab iir \cr
+composite \tab composite.indlevelshift \tab ils \cr
+composite \tab composite.indmcdmovavg \tab if1 \cr
+composite \tab composite.indmodirr \tab ie3 \cr
+composite \tab composite.indmodoriginal \tab ie1 \cr
+composite \tab composite.indmodsadj \tab ie2 \cr
+composite \tab composite.indrevsachanges \tab i6a \cr
+composite \tab composite.indrndsachanges \tab i6r \cr
+composite \tab composite.indrobustsa \tab iee \cr
+composite \tab composite.indsachanges \tab ie6 \cr
+composite \tab composite.indsadjround \tab irn \cr
+composite \tab composite.indseasadj \tab isa \cr
+composite \tab composite.indseasonal \tab isf \cr
+composite \tab composite.indseasonaldiff \tab isd \cr
+composite \tab composite.indtotaladjustment \tab ita \cr
+composite \tab composite.indtrend \tab itn \cr
+composite \tab composite.indtrendchanges \tab ie7 \cr
+composite \tab composite.indunmodsi \tab id8 \cr
+composite \tab composite.origchanges \tab ie5 \cr
+composite \tab composite.outlieradjcomposite \tab oac \cr
+composite \tab composite.prioradjcomposite \tab ia3 \cr
 estimate \tab estimate.armacmatrix \tab acm \cr
 estimate \tab estimate.iterations \tab itr \cr
 estimate \tab estimate.regcmatrix \tab rcm \cr
@@ -116,6 +144,18 @@ series \tab series.calendaradjorig \tab a18 \cr
 series \tab series.outlieradjorig \tab a19 \cr
 series \tab series.seriesmvadj \tab mv \cr
 series \tab series.span \tab a1 \cr
+seats \tab seats.componentmodels \tab mdc \cr
+seats \tab seats.filtersaconc \tab fac \cr
+seats \tab seats.filtersasym \tab faf \cr
+seats \tab seats.filtertrendconc \tab ftc \cr
+seats \tab seats.filtertrendsym \tab ftf \cr
+seats \tab seats.squaredgainsaconc \tab gac \cr
+seats \tab seats.squaredgainsasym \tab gaf \cr
+seats \tab seats.squaredgaintrendconc \tab gtc \cr
+seats \tab seats.squaredgaintrendsym \tab gtf \cr
+seats \tab seats.timeshiftsaconc \tab tac \cr
+seats \tab seats.timeshifttrendconc \tab ttc \cr
+seats \tab seats.wkendfilter \tab wkf \cr
 slidingspans \tab slidingspans.chngspans \tab chs \cr
 slidingspans \tab slidingspans.indchngspans \tab cis \cr
 slidingspans \tab slidingspans.indsaspans \tab ais \cr
@@ -155,7 +195,7 @@ x11 \tab x11.combholiday \tab chl \cr
 x11 \tab x11.extreme \tab c20 \cr
 x11 \tab x11.extremeb \tab b20 \cr
 x11 \tab x11.irregular \tab d13 \cr
-x11 \tab x11.irregularadjao \tab iao \cr
+x11 \tab x11.irregularadjao \tab ira \cr
 x11 \tab x11.irregularb \tab b13 \cr
 x11 \tab x11.irregularc \tab c13 \cr
 x11 \tab x11.irrwt \tab c17 \cr
@@ -185,7 +225,7 @@ x11 \tab x11.seasonalb5 \tab b5 \cr
 x11 \tab x11.seasonalc10 \tab c10 \cr
 x11 \tab x11.seasonalc5 \tab c5 \cr
 x11 \tab x11.seasonald5 \tab d5 \cr
-x11 \tab x11.seasonaldi\_ \tab fsd \cr
+x11 \tab x11.seasonaldi_ \tab fsd \cr
 x11 \tab x11.sib3 \tab b3 \cr
 x11 \tab x11.sib8 \tab b8 \cr
 x11 \tab x11.tdadjorig \tab c19 \cr
@@ -248,7 +288,7 @@ series(m, c("history.sfestimates", "history.trendestimates"))
 
 # slidingspans spec
 series(m, "slidingspans.sfspans")
-series(m, "slidingspans.tdspans")
+series(m, "slidingspans.ychngspans")
 
 # fundamental identities of seasonal adjustment
 # Y = T * I * (S * TD)
@@ -271,7 +311,16 @@ lines(x13.pacf[,2])
 lines(-x13.pacf[,2])
 # R equivalent: pacf from stats
 pacf(AirPassengers, lag.max = 35)
+
+# use with composite (see vignette("multiple", "seasonal"))
+m_composite <- seas(
+  cbind(mdeaths, fdeaths),
+  composite = list(),
+  series.comptype = "add"
+)
+series(m_composite, "composite.indseasadj")
 }
+
 }
 \references{
 Vignette with a more detailed description:

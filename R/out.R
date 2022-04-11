@@ -46,14 +46,23 @@ out <- function(x, browser = getOption("browser"), ...){
   # clean remainings from previous out runs
   unlink(list.files(tempdir(), pattern = "^x13out", full.names = TRUE), recursive = TRUE)
 
-  if (!inherits(x, "seas") && is.list(x)) {
-    if (length(x) > 1) message("more than one series, showing first only")
-    x <- x[[1]]
+  if (inherits(x, "seas")) {
+    # use exported update.seas
+    m <- update(x, out = TRUE, ...)
+    iofile <- m$iofile
+  } else if (inherits(x, "seas_multi")) {
+    if (!("composite" %in% names(x))) {
+      stop("Not a composite object. Use out() on individual elments of `x` instead.")
+    }
+    # use non-exported pseudeo method
+    if (length(list(...)) > 0) message("... are ignored when out() is applied on 'composite' output.")
+    m <- update_seas_multi(x, out = TRUE)
+    iofile <- m$composite$iofile
+  } else {
+    stop("class of x is not supported")
   }
 
-  m <- update(x, out = TRUE, ...)
-
-  out_file <- normalizePath(paste0(m$iofile, ".html"), mustWork = TRUE)
+  out_file <- normalizePath(paste0(iofile, ".html"), mustWork = TRUE)
 
   if (!is.null(browser)) browseURL(url = out_file, browser = browser)
   invisible(out_file)

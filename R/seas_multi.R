@@ -126,6 +126,9 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     unlink(wdir, recursive = TRUE)
   }
 
+  zs$call <- zs[[1]]$call
+  class(zs) <- c("seas_multi", class(zs))
+
   zs
 
 }

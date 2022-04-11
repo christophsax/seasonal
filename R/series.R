@@ -16,6 +16,34 @@
 #' check \tab check.acf \tab acf \cr
 #' check \tab check.acfsquared \tab ac2 \cr
 #' check \tab check.pacf \tab pcf \cr
+#' composite \tab composite.adjcompositesrs \tab b1 \cr
+#' composite \tab composite.calendaradjcomposite \tab cac \cr
+#' composite \tab composite.compositesrs \tab cms \cr
+#' composite \tab composite.indadjsatot \tab iaa \cr
+#' composite \tab composite.indadjustfac \tab iaf \cr
+#' composite \tab composite.indaoutlier \tab iao \cr
+#' composite \tab composite.indcalendar \tab ica \cr
+#' composite \tab composite.indirregular \tab iir \cr
+#' composite \tab composite.indlevelshift \tab ils \cr
+#' composite \tab composite.indmcdmovavg \tab if1 \cr
+#' composite \tab composite.indmodirr \tab ie3 \cr
+#' composite \tab composite.indmodoriginal \tab ie1 \cr
+#' composite \tab composite.indmodsadj \tab ie2 \cr
+#' composite \tab composite.indrevsachanges \tab i6a \cr
+#' composite \tab composite.indrndsachanges \tab i6r \cr
+#' composite \tab composite.indrobustsa \tab iee \cr
+#' composite \tab composite.indsachanges \tab ie6 \cr
+#' composite \tab composite.indsadjround \tab irn \cr
+#' composite \tab composite.indseasadj \tab isa \cr
+#' composite \tab composite.indseasonal \tab isf \cr
+#' composite \tab composite.indseasonaldiff \tab isd \cr
+#' composite \tab composite.indtotaladjustment \tab ita \cr
+#' composite \tab composite.indtrend \tab itn \cr
+#' composite \tab composite.indtrendchanges \tab ie7 \cr
+#' composite \tab composite.indunmodsi \tab id8 \cr
+#' composite \tab composite.origchanges \tab ie5 \cr
+#' composite \tab composite.outlieradjcomposite \tab oac \cr
+#' composite \tab composite.prioradjcomposite \tab ia3 \cr
 #' estimate \tab estimate.armacmatrix \tab acm \cr
 #' estimate \tab estimate.iterations \tab itr \cr
 #' estimate \tab estimate.regcmatrix \tab rcm \cr
@@ -90,6 +118,18 @@
 #' series \tab series.outlieradjorig \tab a19 \cr
 #' series \tab series.seriesmvadj \tab mv \cr
 #' series \tab series.span \tab a1 \cr
+#' seats \tab seats.componentmodels \tab mdc \cr
+#' seats \tab seats.filtersaconc \tab fac \cr
+#' seats \tab seats.filtersasym \tab faf \cr
+#' seats \tab seats.filtertrendconc \tab ftc \cr
+#' seats \tab seats.filtertrendsym \tab ftf \cr
+#' seats \tab seats.squaredgainsaconc \tab gac \cr
+#' seats \tab seats.squaredgainsasym \tab gaf \cr
+#' seats \tab seats.squaredgaintrendconc \tab gtc \cr
+#' seats \tab seats.squaredgaintrendsym \tab gtf \cr
+#' seats \tab seats.timeshiftsaconc \tab tac \cr
+#' seats \tab seats.timeshifttrendconc \tab ttc \cr
+#' seats \tab seats.wkendfilter \tab wkf \cr
 #' slidingspans \tab slidingspans.chngspans \tab chs \cr
 #' slidingspans \tab slidingspans.indchngspans \tab cis \cr
 #' slidingspans \tab slidingspans.indsaspans \tab ais \cr
@@ -129,7 +169,7 @@
 #' x11 \tab x11.extreme \tab c20 \cr
 #' x11 \tab x11.extremeb \tab b20 \cr
 #' x11 \tab x11.irregular \tab d13 \cr
-#' x11 \tab x11.irregularadjao \tab iao \cr
+#' x11 \tab x11.irregularadjao \tab ira \cr
 #' x11 \tab x11.irregularb \tab b13 \cr
 #' x11 \tab x11.irregularc \tab c13 \cr
 #' x11 \tab x11.irrwt \tab c17 \cr
@@ -159,7 +199,7 @@
 #' x11 \tab x11.seasonalc10 \tab c10 \cr
 #' x11 \tab x11.seasonalc5 \tab c5 \cr
 #' x11 \tab x11.seasonald5 \tab d5 \cr
-#' x11 \tab x11.seasonaldi\_ \tab fsd \cr
+#' x11 \tab x11.seasonaldi_ \tab fsd \cr
 #' x11 \tab x11.sib3 \tab b3 \cr
 #' x11 \tab x11.sib8 \tab b8 \cr
 #' x11 \tab x11.tdadjorig \tab c19 \cr
@@ -250,7 +290,7 @@
 #'
 #' # slidingspans spec
 #' series(m, "slidingspans.sfspans")
-#' series(m, "slidingspans.tdspans")
+#' series(m, "slidingspans.ychngspans")
 #'
 #' # fundamental identities of seasonal adjustment
 #' # Y = T * I * (S * TD)
@@ -273,12 +313,60 @@
 #' lines(-x13.pacf[,2])
 #' # R equivalent: pacf from stats
 #' pacf(AirPassengers, lag.max = 35)
+#'
+#' # use with composite (see vignette("multiple", "seasonal"))
+#' m_composite <- seas(
+#'   cbind(mdeaths, fdeaths),
+#'   composite = list(),
+#'   series.comptype = "add"
+#' )
+#' series(m_composite, "composite.indseasadj")
 #' }
+#'
 series <- function(x, series, reeval = TRUE, verbose = TRUE){
+
+  if (inherits(x, "seas_multi")) {
+    if (is.null(x$composite)) {
+      stop("does not contain a composite element")
+    }
+    series.short <- series_short(series)
+
+    if (reeval){
+      reeval.dots <- reeval_dots(x = x$composite, series.short = series.short, verbose = FALSE)
+      if (length(reeval.dots) > 0){
+        x$composite$list <- c(x$composite$list, reeval.dots)
+        x <- update_seas_multi(x)
+      }
+    }
+
+    z <- do.call(cbind, x$composite$series[series.short])
+    z
+    return(z)
+  }
+
   stopifnot(inherits(x, "seas"))
 
-  SPECS <- NULL
-  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
+  # reeval with non present output
+  if (reeval){
+
+    reeval.dots <- reeval_dots(x = x, series.short = series.short, verbose = verbose)
+
+    if (length(reeval.dots) > 0){
+      # this is the same as in update.seas()
+      ml <- x$list
+      # overwrite args in existing list
+      ml <- ml[!names(ml) %in% names(reeval.dots)]
+      x <- seas(list = c(ml, reeval.dots))
+    }
+  }
+
+  z <- do.call(cbind, x$series[series.short])
+  z
+}
+
+
+series_short <- function(series) {
+  SPECS <- get_specs()
 
   is.dotted <- grepl("\\.", series)
 
@@ -294,59 +382,56 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
   # unique short names
   series.short <- unique(c(series[!is.dotted],
     merge(data.frame(long = series[is.dotted]), SPECS)$short))
+  series.short
+}
 
-  # reeval with non present output
-  if (reeval){
-    # check which series are already there
-    if (is.null(x$series)){
-      series.NA <- series.short
-    } else {
-      series.NA <- setdiff(series.short, names(x$series))
-    }
-    activated <- NULL
-    reeval.dots <- list()
-    j <- 1  # flexible index to allow for an arbitrary number of requirements
-    for (i in seq_along(series.NA)){
-      series.NA.i <- series.NA[i]
-      spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
-      if (length(spec.i) > 1) stop("not unique.")
-      if (!spec.i %in% names(x$spc)){
-        if (spec.i %in% c("x11", "seats")){
-          stop(spec.i, " is not activated. You should change the adjustment method.")
-        } else {
-          activated <- c(activated, spec.i)
-        }
+
+
+
+reeval_dots <- function(x, series.short, verbose = TRUE) {
+
+  # check which series are already there
+  if (is.null(x$series)){
+    series.NA <- series.short
+  } else {
+    series.NA <- setdiff(series.short, names(x$series))
+  }
+  activated <- NULL
+  reeval.dots <- list()
+  j <- 1  # flexible index to allow for an arbitrary number of requirements
+  for (i in seq_along(series.NA)){
+    series.NA.i <- series.NA[i]
+    SPECS <- get_specs()
+    spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
+    if (length(spec.i) > 1) stop("not unique.")
+    if (!spec.i %in% names(x$spc)){
+      if (spec.i %in% c("x11", "seats")){
+        stop(spec.i, " is not activated. You should change the adjustment method.")
+      } else {
+        activated <- c(activated, spec.i)
       }
-
-      # additional options that are required to produce a series
-      requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
-      if (!identical(requires.i, "")){
-        requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
-        reeval.dots <- c(reeval.dots, requires.list)
-        j <- length(reeval.dots) + 1
-      }
-
-      reeval.dots[[j]] <- series.NA.i
-      names(reeval.dots)[j] <- paste0(spec.i, '.save')
-      j <- j + 1
     }
 
-    if (verbose & length(activated) > 0){
-      message(paste("specs have been added to the model:",
-                    paste(unique(activated), collapse = ", ")))
+    # additional options that are required to produce a series
+    requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
+    if (!identical(requires.i, "")){
+      requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
+      reeval.dots <- c(reeval.dots, requires.list)
+      j <- length(reeval.dots) + 1
     }
 
-    if (length(reeval.dots) > 0){
-      # this is the same as in update.seas()
-      ml <- x$list
-      # overwrite args in existing list
-      ml <- ml[!names(ml) %in% names(reeval.dots)]
-      x <- seas(list = c(ml, reeval.dots))
-    }
+    reeval.dots[[j]] <- series.NA.i
+    names(reeval.dots)[j] <- paste0(spec.i, '.save')
+    j <- j + 1
   }
 
-  z <- do.call(cbind, x$series[series.short])
-  z
+  if (verbose & length(activated) > 0){
+    message(paste("specs have been added to the model:",
+                  paste(unique(activated), collapse = ", ")))
+  }
+
+  reeval.dots
+
 }
 
 
