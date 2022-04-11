@@ -7,7 +7,7 @@ align_x_list <- function(x, list = NULL) {
   } else if (is.list(x)) {
     stopifnot(all(sapply(x, inherits, "ts")))
     n_series <- length(x)
-    series.names <- if (is.null(names(x))) paste0("ser_", seq(n_series)) else names(x)
+    series.names <- if (is.null(names(x))) paste0("ser_", seq(n_series)) else valid_names(names(x))
     xs <- x
   } else {
     # x specified as mts

@@ -41,7 +41,8 @@ test_that("composite works", {
 })
 
 
-test_that("series works with composite coefs", {
+test_that("series() works on composite #278", {
+  # https://github.com/christophsax/seasonal/issues/278
 
   m0 <- seas(
     cbind(mdeaths, fdeaths),
@@ -65,3 +66,27 @@ test_that("series works with composite coefs", {
   expect_equal(a, b2)
 
 })
+
+
+
+
+test_that("long names can be used as inputs", {
+  # https://github.com/christophsax/seasonal/issues/274
+
+  tt <- list("National.retail.sales..CNY..Monthly" = AirPassengers,
+              "National.retail.sales..catering..CNY..Monthly" = AirPassengers + 200)
+  ans <- seas(tt)
+
+  a <- final(ans$Nationalretailsalesc)
+  b <- final(seas(tt[[2]]))
+  expect_equal(a, b)
+
+
+  # MTS input
+  tt2 <- do.call("cbind", tt)
+  ans2 <- seas(tt2)
+  expect_false(identical(coef(ans2[[1]]), coef(ans2[[2]])))
+  expect_equal(final(ans2), final(ans))
+}
+
+
