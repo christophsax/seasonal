@@ -311,7 +311,16 @@ lines(x13.pacf[,2])
 lines(-x13.pacf[,2])
 # R equivalent: pacf from stats
 pacf(AirPassengers, lag.max = 35)
+
+# use with composite (see vignette("multiple", "seasonal"))
+m_composite <- seas(
+  cbind(mdeaths, fdeaths),
+  composite = list(),
+  series.comptype = "add"
+)
+series(m_composite, "composite.indseasadj")
 }
+
 }
 \references{
 Vignette with a more detailed description:

@@ -154,11 +154,12 @@ list, the usual defaults of `seas()` are used.
 A minimal composite call looks like this:
 
 ```r
-seas(
+m_composite <- seas(
   cbind(mdeaths, fdeaths),
   composite = list(),
   series.comptype = "add"
 )
+m_composite
 ```
 
 You can verify that the composite refers to the total of `mdeaths` and `fdeaths` by running:
@@ -168,3 +169,10 @@ seas(ldeaths)
 ```
 
 where `ldeaths` is the sum of `mdeaths` and `fdeaths`.
+
+The functions `out()` and `series()` can be used to extract the output or series of the composite adjustment:
+
+```r
+out(m_composite)
+series(m_composite, "composite.indseasadj"))
+```
