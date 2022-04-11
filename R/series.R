@@ -275,6 +275,11 @@
 #' pacf(AirPassengers, lag.max = 35)
 #' }
 series <- function(x, series, reeval = TRUE, verbose = TRUE){
+
+  # if (!is.null(x$composite)) {
+  #   stopifnot(inherits(x$composite, "seas"))
+  # }
+
   stopifnot(inherits(x, "seas"))
 
   SPECS <- NULL
@@ -297,44 +302,8 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
   # reeval with non present output
   if (reeval){
-    # check which series are already there
-    if (is.null(x$series)){
-      series.NA <- series.short
-    } else {
-      series.NA <- setdiff(series.short, names(x$series))
-    }
-    activated <- NULL
-    reeval.dots <- list()
-    j <- 1  # flexible index to allow for an arbitrary number of requirements
-    for (i in seq_along(series.NA)){
-      series.NA.i <- series.NA[i]
-      spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
-      if (length(spec.i) > 1) stop("not unique.")
-      if (!spec.i %in% names(x$spc)){
-        if (spec.i %in% c("x11", "seats")){
-          stop(spec.i, " is not activated. You should change the adjustment method.")
-        } else {
-          activated <- c(activated, spec.i)
-        }
-      }
 
-      # additional options that are required to produce a series
-      requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
-      if (!identical(requires.i, "")){
-        requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
-        reeval.dots <- c(reeval.dots, requires.list)
-        j <- length(reeval.dots) + 1
-      }
-
-      reeval.dots[[j]] <- series.NA.i
-      names(reeval.dots)[j] <- paste0(spec.i, '.save')
-      j <- j + 1
-    }
-
-    if (verbose & length(activated) > 0){
-      message(paste("specs have been added to the model:",
-                    paste(unique(activated), collapse = ", ")))
-    }
+    reeval.dots <- reeval_dots(x = x, series.short = series.short, verbose = verbose)
 
     if (length(reeval.dots) > 0){
       # this is the same as in update.seas()
@@ -347,6 +316,52 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
   z <- do.call(cbind, x$series[series.short])
   z
+}
+
+
+reeval_dots <- function(x, series.short, verbose = TRUE) {
+
+  # check which series are already there
+  if (is.null(x$series)){
+    series.NA <- series.short
+  } else {
+    series.NA <- setdiff(series.short, names(x$series))
+  }
+  activated <- NULL
+  reeval.dots <- list()
+  j <- 1  # flexible index to allow for an arbitrary number of requirements
+  for (i in seq_along(series.NA)){
+    series.NA.i <- series.NA[i]
+    spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
+    if (length(spec.i) > 1) stop("not unique.")
+    if (!spec.i %in% names(x$spc)){
+      if (spec.i %in% c("x11", "seats")){
+        stop(spec.i, " is not activated. You should change the adjustment method.")
+      } else {
+        activated <- c(activated, spec.i)
+      }
+    }
+
+    # additional options that are required to produce a series
+    requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
+    if (!identical(requires.i, "")){
+      requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
+      reeval.dots <- c(reeval.dots, requires.list)
+      j <- length(reeval.dots) + 1
+    }
+
+    reeval.dots[[j]] <- series.NA.i
+    names(reeval.dots)[j] <- paste0(spec.i, '.save')
+    j <- j + 1
+  }
+
+  if (verbose & length(activated) > 0){
+    message(paste("specs have been added to the model:",
+                  paste(unique(activated), collapse = ", ")))
+  }
+
+  reeval.dots
+
 }
 
 
