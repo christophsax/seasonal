@@ -5,7 +5,7 @@
 # load SPECS data from .csv and store as data/SPECS.RData
 SPECS <- read.csv("noinst/specs/SPECS.csv", stringsAsFactors = FALSE)
 
-save(SPECS, file = "data/specs.RData")
+save(SPECS, file = "data/specs.RData", version = 2)  # version 3 requires >= R3.5
 
 
 
