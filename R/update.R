@@ -39,6 +39,7 @@
 #' lapply(ll, update, arima.model = c(0, 1, 1, 0, 1, 1))
 #' }
 update.seas <- function(object, ..., evaluate = TRUE){
+  if (inherits(object, "seas_multi")) stop("update() does not work on multiple series output. If you think it should, please file an issue.")
   ml <- object$list
   ldots <- list(...)
   # overwrite args in existing list
@@ -48,6 +49,26 @@ update.seas <- function(object, ..., evaluate = TRUE){
 
   seas(list = c(ml, ldots))
 }
+
+
+# A (not so smart) non-exported pseudo method for composite objects, that is
+# called by `out()` and `series()`, when applied on composite objects.
+# Composite objects are currently too complex and a proper update method needs
+# quite a bit of work and is probably of very limited use.
+update_seas_multi <- function(object, ...){
+  stopifnot(inherits(object, "seas_multi"))
+
+  object_series <- object[setdiff(names(object), c("call", "composite"))]
+
+  lists_raw <- lapply(object_series, function(e) e$list)
+  xs <- lapply(object_series, function(e) e$list$x)
+
+  lists <- Map(enrich_list, list = lists_raw, x = xs)
+
+  seas(composite = object$composite$list, list = lists, ...)
+
+}
+
 
 #' Seasonal Adjusted Series
 #'

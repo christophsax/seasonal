@@ -1,4 +1,9 @@
-1.8.4.1
+1.8.4.2 (unreleased)
+--------------------------------------------------------------------------------
+  - out() works on composite objects #278
+
+
+1.8.4.1 (unreleased)
 --------------------------------------------------------------------------------
   - Keep series specification also in `noinst/specs/specs.csv`
   - Adjust specs to include composite series, some additional seats series
