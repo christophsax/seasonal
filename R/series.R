@@ -346,6 +346,8 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
   stopifnot(inherits(x, "seas"))
 
+  series.short <- series_short(series)
+
   # reeval with non present output
   if (reeval){
 
