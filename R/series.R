@@ -250,7 +250,7 @@
 #'
 #' # slidingspans spec
 #' series(m, "slidingspans.sfspans")
-#' series(m, "slidingspans.tdspans")
+#' series(m, "slidingspans.ychngspans")
 #'
 #' # fundamental identities of seasonal adjustment
 #' # Y = T * I * (S * TD)
