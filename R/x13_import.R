@@ -22,8 +22,7 @@ x13_import <- function(iofile, x = NULL, na.action, out = FALSE) {
   }
 
   # lookup table for output specification
-  SPECS <- NULL
-  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
+  SPECS <- get_specs()
   SERIES_SUFFIX <- SPECS$short[SPECS$is.series]
 
   # add all series that have been produced and are specified in SERIES_SUFFIX

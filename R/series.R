@@ -322,23 +322,7 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
   stopifnot(inherits(x, "seas"))
 
-  SPECS <- NULL
-  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
-
-  is.dotted <- grepl("\\.", series)
-
-  # check validiy of short or long names
-  is.valid <- logical(length = length(series))
-  is.valid[is.dotted] <- series[is.dotted] %in% SPECS$long[SPECS$is.series]
-  is.valid[!is.dotted] <- series[!is.dotted] %in% SPECS$short[SPECS$is.series]
-
-  if (any(!is.valid)){
-    stop(paste0("\nseries not valid: ", paste(series[!is.valid], collapse = ", "), "\nsee ?series for a list of importable series "))
-  }
-
-  # unique short names
-  series.short <- unique(c(series[!is.dotted],
-    merge(data.frame(long = series[is.dotted]), SPECS)$short))
+  series.short <- series_short(series)
 
   # reeval with non present output
   if (reeval){
@@ -359,6 +343,29 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 }
 
 
+series_short <- function(series) {
+  SPECS <- get_specs()
+
+  is.dotted <- grepl("\\.", series)
+
+  # check validiy of short or long names
+  is.valid <- logical(length = length(series))
+  is.valid[is.dotted] <- series[is.dotted] %in% SPECS$long[SPECS$is.series]
+  is.valid[!is.dotted] <- series[!is.dotted] %in% SPECS$short[SPECS$is.series]
+
+  if (any(!is.valid)){
+    stop(paste0("\nseries not valid: ", paste(series[!is.valid], collapse = ", "), "\nsee ?series for a list of importable series "))
+  }
+
+  # unique short names
+  series.short <- unique(c(series[!is.dotted],
+    merge(data.frame(long = series[is.dotted]), SPECS)$short))
+  series.short
+}
+
+
+
+
 reeval_dots <- function(x, series.short, verbose = TRUE) {
 
   # check which series are already there
@@ -372,6 +379,7 @@ reeval_dots <- function(x, series.short, verbose = TRUE) {
   j <- 1  # flexible index to allow for an arbitrary number of requirements
   for (i in seq_along(series.NA)){
     series.NA.i <- series.NA[i]
+    SPECS <- get_specs()
     spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
     if (length(spec.i) > 1) stop("not unique.")
     if (!spec.i %in% names(x$spc)){

@@ -198,6 +198,10 @@ NULL
 NULL
 
 
+
+# FIXME use rds, do not export SPECS, remove Documentation
+
+
 #' List of Available X-13ARIMA-SEATS Outputs
 #'
 #' The data is used by several functions as a look-up table. Users
@@ -216,3 +220,14 @@ NULL
 #' @aliases INSPDATA
 #' @keywords datasets
 NULL
+
+
+
+get_specs <- function() {
+  # https://r-pkgs.org/data.html#data-sysdata
+  SPECS <- NULL
+  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
+  SPECS
+}
+
+
