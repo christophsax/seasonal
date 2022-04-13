@@ -87,6 +87,6 @@ test_that("long names can be used as inputs", {
   ans2 <- seas(tt2)
   expect_false(identical(coef(ans2[[1]]), coef(ans2[[2]])))
   expect_equal(final(ans2), final(ans))
-}
+})
 
 
