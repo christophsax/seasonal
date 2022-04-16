@@ -1,7 +1,7 @@
 Package: seasonal
 Type: Package
 Title: R Interface to X-13-ARIMA-SEATS
-Version: 1.8.4.2
+Version: 1.8.4.3
 Authors@R: c(
     person("Christoph", "Sax", email = "christoph.sax@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7192-7044")),
     person("Dirk", "Eddelbuettel", role = c("ctb"), comment = c(ORCID = "0000-0001-6419-907X"))
