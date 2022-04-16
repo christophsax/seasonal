@@ -59,3 +59,25 @@ test_that("seas works with forking parallelization #276", {
   expect_false(any(sapply(runs, inherits, "try-error")))
 })
 
+test_that("annual series are read correctly #264", {
+  y <- ts(c(41,39.8,40,40.5,37.8,37.3,34.6,36.1,37.1,32.9,35,33.4,34.7,36.2,38.1),freq=1,start=2005)
+  m <- seas(y,x11=NULL,seats=NULL,regression.aictest = NULL,forecast.maxlead=1, forecast.save = "fct")
+  expect_true(time(m$series$fct)[1] == 2020)
+})
+
+
+test_that("January first can be used in genhol() #261", {
+  holiday  <- structure(c(8401, 8766, 9131, 9496, 9862, 10227, 10592, 10957,
+  11323, 11688, 12053, 12418, 12784, 13149, 13514, 13879, 14245,
+  14610, 14975, 15340, 15706, 16071, 16436, 16801, 17167, 17532,
+  17897, 18262, 18628), class = "Date", control = c(method = "trunc",
+  FinCenter = "GMT"))
+  ans <- seasonal::genhol(x = holiday, frequency = 12, center = "calendar")
+  expect_s3_class(ans, "ts")
+})
+
+
+
+
+
+

@@ -202,10 +202,14 @@ genhol <- function(x, start = 0, end = 0, frequency = 12, center = "none"){
   if (!first.day %in% event.st){
     event.st.added <- c(first.day, event.st)
     event.st <- c(as.Date(NA), event.st)
+  } else {
+    event.st.added <- event.st
   }
   if (!first.day %in% event.en){
     event.en.added <- c(first.day, event.en)
     event.en <- c(as.Date(NA), event.en)
+  } else {
+    event.en.added <- event.en
   }
 
   # "ts" object with each date in the right period
