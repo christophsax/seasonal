@@ -50,3 +50,12 @@ test_that("list arguments works with coefs", {
   expect_equal(final(m0), final(m1))
 
 })
+
+test_that("seas works with forking parallelization #276", {
+  skip_on_os("windows")
+  library(parallel)
+  library(seasonal)
+  runs <- mclapply(1:12, function(x) seas(AirPassengers), mc.cores = 12)
+  expect_false(any(sapply(runs, inherits, "try-error")))
+})
+
