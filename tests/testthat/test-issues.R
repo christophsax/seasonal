@@ -55,7 +55,7 @@ test_that("seas works with forking parallelization #276", {
   skip_on_os("windows")
   library(parallel)
   library(seasonal)
-  runs <- mclapply(1:12, function(x) seas(AirPassengers), mc.cores = 12)
+  runs <- mclapply(1:2, function(x) seas(AirPassengers), mc.cores = 2)
   expect_false(any(sapply(runs, inherits, "try-error")))
 })
 
