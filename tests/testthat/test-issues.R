@@ -66,3 +66,18 @@ test_that("annual series are read correctly #264", {
 })
 
 
+test_that("January first can be used in genhol() #261", {
+  holiday  <- structure(c(8401, 8766, 9131, 9496, 9862, 10227, 10592, 10957,
+  11323, 11688, 12053, 12418, 12784, 13149, 13514, 13879, 14245,
+  14610, 14975, 15340, 15706, 16071, 16436, 16801, 17167, 17532,
+  17897, 18262, 18628), class = "Date", control = c(method = "trunc",
+  FinCenter = "GMT"))
+  ans <- seasonal::genhol(x = holiday, frequency = 12, center = "calendar")
+  expect_s3_class(ans, "ts")
+})
+
+
+
+
+
+
