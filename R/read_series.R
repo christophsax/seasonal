@@ -96,7 +96,14 @@ read_series <- function(file, frequency = NULL){
     if (dim(dd)[2] == 1L){
       dd <- c(dd)
     }
-    time <- as.numeric(year) + (as.numeric(per) - 1) / frequency
+    if (unique(per)[1] == "00") {
+      time_subperiod <- 0
+    } else {
+      time_subperiod <- (as.numeric(per) - 1) / frequency
+    }
+    stopifnot(time_subperiod >= 0)
+
+    time <- as.numeric(year) + time_subperiod
     z <- ts(dd, start = time[1], frequency = frequency)
     z[z==-999] <- NA   # usual NA code
 

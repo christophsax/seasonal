@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------
   - seas() works within forking parallization (e.g., mclapply) #276
     Thanks to @jonlachmann!
+  - annual series are read correctly #264
 
 
 1.8.4.2 (unreleased)

@@ -59,3 +59,10 @@ test_that("seas works with forking parallelization #276", {
   expect_false(any(sapply(runs, inherits, "try-error")))
 })
 
+test_that("annual series are read correctly #264", {
+  y <- ts(c(41,39.8,40,40.5,37.8,37.3,34.6,36.1,37.1,32.9,35,33.4,34.7,36.2,38.1),freq=1,start=2005)
+  m <- seas(y,x11=NULL,seats=NULL,regression.aictest = NULL,forecast.maxlead=1, forecast.save = "fct")
+  expect_true(time(m$series$fct)[1] == 2020)
+})
+
+
