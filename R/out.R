@@ -44,7 +44,7 @@ out <- function(x, browser = getOption("browser"), ...){
   }
 
   # clean remainings from previous out runs
-  unlink(list.files(tempdir(), pattern = "^x13out", full.names = TRUE), recursive = TRUE)
+  unlink(list.files(tempdir(), pattern = "^x13", full.names = TRUE), recursive = TRUE)
 
   if (inherits(x, "seas")) {
     # use exported update.seas
