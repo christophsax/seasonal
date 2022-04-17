@@ -3,7 +3,8 @@
   - seas() works within forking parallization (e.g., mclapply) #276
     Thanks to @jonlachmann!
   - annual series are read correctly #264
-  - January first can be used in genhol() #261
+  - Jan 1 can be used in genhol() #261
+  - genhol() produces correct result in 1931 #193
 
 
 1.8.4.2 (unreleased)

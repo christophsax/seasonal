@@ -77,7 +77,8 @@ test_that("January first can be used in genhol() #261", {
 })
 
 
-
-
-
+test_that("genhol() produces correct result in 1931 #193", {
+  ans <- genhol(easter, start = -46, end = 0, frequency = 12)
+  expect_equal(sum(abs(rowSums(matrix(ans, ncol = 12, byrow = TRUE)) - 1)), 0)
+})
 
