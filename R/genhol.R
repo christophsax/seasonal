@@ -240,8 +240,11 @@ genhol <- function(x, start = 0, end = 0, frequency = 12, center = "none"){
   # drop
   drop <- is.na(event.st.ts) & is.na(event.en.ts)
 
+  fill.na.event.en.ts <- fillNA(event.en.ts)
+  fill.na.event.en.ts[is.na(fill.na.event.en.ts)] <- as.Date("0001-01-01")
+
   # dont drop these (start value larger than end value)
-  drop[fillNA(event.st.ts) > fillNA(event.en.ts)] <- FALSE
+  drop[fillNA(event.st.ts) > fill.na.event.en.ts] <- FALSE
 
   days[drop] <- 0
   z.raw <- ts(c(days), start = start(z.ts), frequency = frequency(z.ts))
