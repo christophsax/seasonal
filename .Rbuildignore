@@ -6,7 +6,7 @@
 ^appveyor\.yml$
 build.R
 travis
-noninst
+^noinst$
 ^\.github$
 ^codecov\.yml$
 ^seasonal\.Rproj$
