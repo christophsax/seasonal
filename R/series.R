@@ -1,7 +1,7 @@
 #' Import X-13ARIMA-SEATS Output Tables
 #'
-#' With the exception of the composite spec, the `series` function imports
-#' all tables that can be saved in X-13ARIMA-SEATS.
+#' The `series` function imports all tables that can be saved in
+#' X-13ARIMA-SEATS.
 #'
 #' If the save argument is not specified in the model call, `series`
 #' re-evaluates the call with the corresponding specs enabled (also returning a
