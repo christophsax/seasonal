@@ -1,4 +1,9 @@
 
+# Update SPECS.csv --------------------------------------------------------
+
+source("noinst/specs/specs_from_pdf.R")
+
+
 # update internal data file ----------------------------------------------------
 
 
@@ -18,13 +23,13 @@ save(SPECS, file = "data/specs.RData", version = 2)  # version 3 requires >= R3.
 library(tidyverse)
 
 txt <- read_lines("R/series.R")
-line0 <- which(txt == "#' **spec** \\tab **long name** \\tab **short name** \\cr")
+line0 <- which(txt == "#' **spec** \\tab **long name** \\tab **short name** \\tab **description** \\cr")
 
 linen <- which(txt == "#' }")[1]
 txt[line0:linen]
 
 
-#' **spec** \tab **long name** \tab **short name** \cr
+#' **spec** \tab **long name** \tab **short name** \tab **description** \cr
 SPECS <- as_tibble(SPECS)
 
 # why this? series, but not save
@@ -39,10 +44,12 @@ SPECS <- as_tibble(SPECS)
 
 tbl_txt <-
   SPECS |>
-  filter(is.series == TRUE) |>
-  filter(is.save == TRUE) |>
-  select(spec, long, short) |>
-  transmute(new = paste("#'", spec, "\\tab", long, "\\tab", short, "\\cr")) |>
+  filter(
+    is.series == TRUE,
+    is.save == TRUE
+  ) |>
+  select(spec, long, short, description) |>
+  transmute(new = paste("#'", spec, "\\tab", long, "\\tab", short, "\\tab", description, "\\cr")) |>
   pull(new)
 
 txt_new <-
