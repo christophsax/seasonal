@@ -1,330 +1,380 @@
-long,short,spec,is.save,is.series,requires
-automdl.autochoice,ach,automdl,FALSE,FALSE,
-automdl.autochoicemdl,amd,automdl,FALSE,FALSE,
-automdl.autodefaulttests,adt,automdl,FALSE,FALSE,
-automdl.autofinaltests,aft,automdl,FALSE,FALSE,
-automdl.autoljungboxtest,alb,automdl,FALSE,FALSE,
-automdl.bestfivemdl,b5m,automdl,FALSE,FALSE,
-automdl.header,hdr,automdl,FALSE,FALSE,
-automdl.unitroottest,urt,automdl,FALSE,FALSE,
-automdl.unitroottestmdl,urm,automdl,FALSE,FALSE,
-check.acf,acf,check,TRUE,TRUE,
-check.acfplot,acp,check,FALSE,FALSE,
-check.acfsquared,ac2,check,TRUE,TRUE,
-check.acfsquaredplot,ap2,check,FALSE,FALSE,
-check.histogram,hst,check,FALSE,FALSE,
-check.normalitytest,nrm,check,FALSE,FALSE,
-check.pacf,pcf,check,TRUE,TRUE,
-check.pacfplot,pcp,check,FALSE,FALSE,
-composite.adjcompositeplot,b1p,composite,FALSE,FALSE,
-composite.adjcompositesrs,b1,composite,TRUE,TRUE,
-composite.calendaradjcomposite,cac,composite,TRUE,TRUE,
-composite.compositeplot,cmp,composite,FALSE,FALSE,
-composite.compositesrs,cms,composite,TRUE,TRUE,
-composite.header,hdr,composite,FALSE,FALSE,
-composite.indadjsatot,iaa,composite,TRUE,TRUE,
-composite.indadjustfac,iaf,composite,TRUE,TRUE,
-composite.indadjustmentratio,i18,composite,TRUE,FALSE,
-composite.indaoutlier,iao,composite,TRUE,TRUE,
-composite.indcalendar,ica,composite,TRUE,TRUE,
-composite.indcalendaradjchanges,ie8,composite,TRUE,FALSE,
-composite.indcratio,cri,composite,TRUE,FALSE,
-composite.indforcefactor,iff,composite,TRUE,FALSE,
-composite.indftestd8,idf,composite,FALSE,FALSE,
-composite.indirregular,iir,composite,TRUE,TRUE,
-composite.indirregularplot,iip,composite,FALSE,FALSE,
-composite.indlevelshift,ils,composite,TRUE,TRUE,
-composite.indmcdmovavg,if1,composite,TRUE,TRUE,
-composite.indmodirr,ie3,composite,TRUE,TRUE,
-composite.indmodoriginal,ie1,composite,TRUE,TRUE,
-composite.indmodsadj,ie2,composite,TRUE,TRUE,
-composite.indmovseasrat,ims,composite,FALSE,TRUE,
-composite.indqstat,if3,composite,FALSE,FALSE,
-composite.indreplacsi,id9,composite,FALSE,TRUE,
-composite.indresidualseasf,irf,composite,FALSE,TRUE,
-composite.indrevsachanges,i6a,composite,TRUE,TRUE,
-composite.indrndsachanges,i6r,composite,TRUE,TRUE,
-composite.indrobustsa,iee,composite,TRUE,TRUE,
-composite.indrratio,rri,composite,TRUE,FALSE,
-composite.indsachanges,ie6,composite,TRUE,TRUE,
-composite.indsadjround,irn,composite,TRUE,TRUE,
-composite.indseasadj,isa,composite,TRUE,TRUE,
-composite.indseasadjplot,iap,composite,FALSE,FALSE,
-composite.indseasonal,isf,composite,TRUE,TRUE,
-composite.indseasonaldiff,isd,composite,TRUE,TRUE,
-composite.indseasonalplot,isp,composite,FALSE,FALSE,
-composite.indtest,itt,composite,FALSE,FALSE,
-composite.indtotaladjustment,ita,composite,TRUE,TRUE,
-composite.indtrend,itn,composite,TRUE,TRUE,
-composite.indtrendchanges,ie7,composite,TRUE,TRUE,
-composite.indtrendplot,itp,composite,FALSE,FALSE,
-composite.indunmodsi,id8,composite,TRUE,TRUE,
-composite.indx11diag,if2,composite,FALSE,FALSE,
-composite.indyrtotals,ie4,composite,TRUE,FALSE,
-composite.origchanges,ie5,composite,TRUE,TRUE,
-composite.origwindsaplot,ie0,composite,FALSE,FALSE,
-composite.outlieradjcomposite,oac,composite,TRUE,TRUE,
-composite.prioradjcomposite,ia3,composite,TRUE,TRUE,
-composite.ratioplotindsa,ir2,composite,FALSE,TRUE,
-composite.ratioplotorig,ir1,composite,FALSE,TRUE,
-estimate.armacmatrix,acm,estimate,TRUE,TRUE,
-estimate.averagefcsterr,afc,estimate,FALSE,FALSE,
-estimate.estimates,est,estimate,TRUE,FALSE,
-estimate.iterationerrors,ite,estimate,FALSE,FALSE,
-estimate.iterations,itr,estimate,TRUE,TRUE,
-estimate.lformulas,lkf,estimate,FALSE,FALSE,
-estimate.lkstats,lks,estimate,TRUE,FALSE,
-estimate.model,mdl,estimate,TRUE,FALSE,
-estimate.options,opt,estimate,FALSE,FALSE,
-estimate.regcmatrix,rcm,estimate,TRUE,TRUE,
-estimate.regressioneffects,ref,estimate,TRUE,TRUE,
-estimate.regressionresiduals,rrs,estimate,FALSE,FALSE,
-estimate.residuals,rsd,estimate,TRUE,TRUE,
-estimate.roots,rts,estimate,TRUE,TRUE,
-force.forcefactor,ffc,force,TRUE,TRUE,
-force.revsachanges,e6a,force,TRUE,TRUE,
-force.rndsachanges,e6r,force,TRUE,TRUE,
-force.saround,rnd,force,TRUE,TRUE,
-force.seasadjtot,saa,force,TRUE,TRUE,
-forecast.backcasts,bct,forecast,TRUE,TRUE,
-forecast.forecasts,fct,forecast,TRUE,TRUE,
-forecast.transformed,ftr,forecast,TRUE,TRUE,
-forecast.transformedbcst,btr,forecast,TRUE,TRUE,
-forecast.variances,fvr,forecast,TRUE,TRUE,
-history.chngestimates,che,history,TRUE,TRUE,"history.estimates = ""sadjchng"""
-history.chngrevisions,chr,history,TRUE,TRUE,"history.estimates = ""sadjchng"""
-history.chngsummary,chs,history,FALSE,FALSE,
-history.fcsterrors,fce,history,TRUE,TRUE,
-history.fcsthistory,fch,history,TRUE,TRUE,
-history.header,hdr,history,FALSE,FALSE,
-history.indsaestimates,iae,history,TRUE,TRUE,
-history.indsarevisions,iar,history,TRUE,TRUE,
-history.indsasummary,ias,history,FALSE,FALSE,
-history.lkhdhistory,lkh,history,TRUE,TRUE,
-history.outlierhistory,rot,history,TRUE,TRUE,
-history.saestimates,sae,history,TRUE,TRUE,"history.estimates = ""sadj"""
-history.sarevisions,sar,history,TRUE,TRUE,"history.estimates = ""sadj"""
-history.sasummary,sas,history,FALSE,FALSE,
-history.seatsmdlhistory,smh,history,TRUE,TRUE,
-history.sfestimates,sfe,history,TRUE,TRUE,"history.estimates = ""seasonal"""
-history.sfilterhistory,sfh,history,TRUE,TRUE,"history.estimates = ""seasonal"""
-history.sfrevisions,sfr,history,TRUE,TRUE,"history.estimates = ""seasonal"""
-history.sfsummary,sfs,history,FALSE,FALSE,
-history.trendchngestimates,tce,history,TRUE,TRUE,"history.estimates = ""trendchng"""
-history.trendchngrevisions,tcr,history,TRUE,TRUE,"history.estimates = ""trendchng"""
-history.trendchngsummary,tcs,history,FALSE,FALSE,
-history.trendestimates,tre,history,TRUE,TRUE,"history.estimates = ""trend"""
-history.trendrevisions,trr,history,TRUE,TRUE,"history.estimates = ""trend"""
-history.trendsummary,trs,history,FALSE,FALSE,
-identify.acf,iac,identify,TRUE,TRUE,
-identify.acfplot,acp,identify,FALSE,FALSE,
-identify.pacf,ipc,identify,TRUE,TRUE,
-identify.pacfplot,pcp,identify,FALSE,FALSE,
-identify.regcoefficients,rgc,identify,FALSE,FALSE,
-outlier.finaltests,fts,outlier,TRUE,TRUE,
-outlier.header,hdr,outlier,FALSE,FALSE,
-outlier.iterations,oit,outlier,TRUE,TRUE,
-outlier.temporaryls,tls,outlier,FALSE,FALSE,
-outlier.tests,ots,outlier,FALSE,FALSE,
-pickmdl.header,hdr,pickmdl,FALSE,FALSE,
-pickmdl.pickmdlchoice,pch,pickmdl,FALSE,FALSE,
-pickmdl.usermodels,umd,pickmdl,FALSE,FALSE,
-regression.aictest,ats,regression,FALSE,FALSE,
-regression.aoutlier,ao,regression,TRUE,TRUE,
-regression.chi2test,cts,regression,FALSE,FALSE,
-regression.dailyweights,tdw,regression,FALSE,FALSE,
-regression.holiday,hol,regression,TRUE,TRUE,
-regression.levelshift,ls,regression,TRUE,TRUE,
-regression.outlier,otl,regression,TRUE,TRUE,
-regression.regressionmatrix,rmx,regression,TRUE,TRUE,
-regression.regseasonal,a10,regression,TRUE,TRUE,
-regression.seasonaloutlier,so,regression,TRUE,TRUE,
-regression.temporarychange,tc,regression,TRUE,TRUE,
-regression.tradingday,td,regression,TRUE,TRUE,
-regression.transitory,a13,regression,TRUE,TRUE,
-regression.userdef,usr,regression,TRUE,TRUE,
-seats.adjustfac,s16,seats,TRUE,TRUE,
-seats.adjustmentratio,s18,seats,TRUE,TRUE,
-seats.cycle,cyc,seats,TRUE,TRUE,
-seats.diffseasonaladj,dsa,seats,TRUE,TRUE,
-seats.difftrend,dtr,seats,TRUE,TRUE,
-seats.irregular,s13,seats,TRUE,TRUE,
-seats.longtermtrend,ltt,seats,TRUE,TRUE,
-seats.seasadjconst,sec,seats,TRUE,TRUE,
-seats.seasonal,s10,seats,TRUE,TRUE,
-seats.seasonaladj,s11,seats,TRUE,TRUE,
-seats.seasonaladjfcstdecomp,afd,seats,TRUE,TRUE,
-seats.seasonalfcstdecomp,sfd,seats,TRUE,TRUE,
-seats.seasonalsum,ssm,seats,TRUE,TRUE,
-seats.seriesfcstdecomp,ofd,seats,TRUE,TRUE,
-seats.totaladjustment,sta,seats,TRUE,TRUE,
-seats.transitory,s14,seats,TRUE,TRUE,
-seats.transitoryfcstdecomp,yfd,seats,TRUE,TRUE,
-seats.trend,s12,seats,TRUE,TRUE,
-seats.trendconst,stc,seats,TRUE,TRUE,
-seats.trendfcstdecomp,tfd,seats,TRUE,TRUE,
-series.adjoriginal,b1,series,TRUE,TRUE,
-series.adjorigplot,b1p,series,FALSE,FALSE,
-series.calendaradjorig,a18,series,TRUE,TRUE,
-series.header,hdr,series,FALSE,FALSE,
-series.outlieradjorig,a19,series,TRUE,TRUE,
-series.savefile,sav,series,FALSE,FALSE,
-series.seriesmvadj,mv,series,TRUE,TRUE,
-series.seriesplot,a1p,series,FALSE,FALSE,
-series.span,a1,series,TRUE,TRUE,
-series.specfile,spc,series,TRUE,FALSE,
-seats.componentmodels,mdc,seats,TRUE,TRUE,
-seats.filtersaconc,fac,seats,TRUE,TRUE,
-seats.filtersasym,faf,seats,TRUE,TRUE,
-seats.filtertrendconc,ftc,seats,TRUE,TRUE,
-seats.filtertrendsym,ftf,seats,TRUE,TRUE,
-seats.squaredgainsaconc,gac,seats,TRUE,TRUE,
-seats.squaredgainsasym,gaf,seats,TRUE,TRUE,
-seats.squaredgaintrendconc,gtc,seats,TRUE,TRUE,
-seats.squaredgaintrendsym,gtf,seats,TRUE,TRUE,
-seats.timeshiftsaconc,tac,seats,TRUE,TRUE,
-seats.timeshifttrendconc,ttc,seats,TRUE,TRUE,
-seats.wkendfilter,wkf,seats,TRUE,TRUE,
-slidingspans.chngspans,chs,slidingspans,TRUE,TRUE,
-slidingspans.factormeans,fmn,slidingspans,FALSE,FALSE,
-slidingspans.header,hdr,slidingspans,FALSE,FALSE,
-slidingspans.indchngspans,cis,slidingspans,TRUE,TRUE,
-slidingspans.indfactormeans,fmi,slidingspans,FALSE,FALSE,
-slidingspans.indpercent,pci,slidingspans,FALSE,FALSE,
-slidingspans.indsaspans,ais,slidingspans,TRUE,TRUE,
-slidingspans.indsfspans,sis,slidingspans,TRUE,TRUE,
-slidingspans.indsummary,smi,slidingspans,FALSE,FALSE,
-slidingspans.indychngspans,yis,slidingspans,TRUE,TRUE,
-slidingspans.indyypercent,piy,slidingspans,FALSE,FALSE,
-slidingspans.indyysummary,siy,slidingspans,FALSE,FALSE,
-slidingspans.percent,pct,slidingspans,FALSE,FALSE,
-slidingspans.saspans,sas,slidingspans,TRUE,FALSE,
-slidingspans.sfspans,sfs,slidingspans,TRUE,TRUE,
-slidingspans.ssftest,ssf,slidingspans,FALSE,FALSE,
-slidingspans.summary,sum,slidingspans,FALSE,FALSE,
-slidingspans.tdspans,tds,slidingspans,TRUE,TRUE,
-slidingspans.ychngspans,ycs,slidingspans,TRUE,TRUE,
-slidingspans.yypercent,pcy,slidingspans,FALSE,FALSE,
-slidingspans.yysummary,suy,slidingspans,FALSE,FALSE,
-spectrum.qs,qs,spectrum,FALSE,FALSE,
-spectrum.speccomposite,is0,spectrum,TRUE,TRUE,
-spectrum.specindirr,is2,spectrum,TRUE,TRUE,
-spectrum.specindsa,is1,spectrum,TRUE,TRUE,
-spectrum.specirr,sp2,spectrum,TRUE,TRUE,
-spectrum.specorig,sp0,spectrum,TRUE,TRUE,
-spectrum.specresidual,spr,spectrum,TRUE,TRUE,
-spectrum.specsa,sp1,spectrum,TRUE,TRUE,
-spectrum.specseatsextresiduals,ser,spectrum,TRUE,TRUE,
-spectrum.specseatsirr,s2s,spectrum,TRUE,TRUE,
-spectrum.specseatssa,s1s,spectrum,TRUE,TRUE,
-transform.aictransform,tac,transform,FALSE,FALSE,
-transform.permprior,a2p,transform,TRUE,TRUE,
-transform.permprioradjusted,a3p,transform,TRUE,TRUE,
-transform.permprioradjustedptd,a4p,transform,TRUE,TRUE,
-transform.prior,a2,transform,TRUE,TRUE,
-transform.prioradjusted,a3,transform,TRUE,TRUE,
-transform.prioradjustedptd,a4d,transform,TRUE,TRUE,
-transform.seriesconstant,a1c,transform,TRUE,TRUE,
-transform.seriesconstantplot,acp,transform,FALSE,FALSE,
-transform.tempprior,a2t,transform,TRUE,TRUE,
-transform.transformed,trn,transform,TRUE,TRUE,
-x11.adjoriginalc,c1,x11,TRUE,TRUE,
-x11.adjoriginald,d1,x11,TRUE,TRUE,
-x11.adjustdiff,fad,x11,TRUE,TRUE,
-x11.adjustfac,d16,x11,TRUE,TRUE,
-x11.adjustmentratio,e18,x11,TRUE,TRUE,
-x11.autosf,asf,x11,FALSE,FALSE,
-x11.biasfactor,bcf,x11,TRUE,TRUE,
-x11.calendar,d18,x11,TRUE,TRUE,
-x11.calendaradjchanges,e8,x11,TRUE,TRUE,
-x11.combholiday,chl,x11,TRUE,TRUE,
-x11.extreme,c20,x11,TRUE,TRUE,
-x11.extremeb,b20,x11,TRUE,TRUE,
-x11.ftestb1,b1f,x11,FALSE,FALSE,
-x11.ftestd8,d8f,x11,FALSE,FALSE,
-x11.irregular,d13,x11,TRUE,TRUE,
-x11.irregularadjao,ira,x11,TRUE,TRUE,
-x11.irregularb,b13,x11,TRUE,TRUE,
-x11.irregularc,c13,x11,TRUE,TRUE,
-x11.irregularplot,irp,x11,FALSE,FALSE,
-x11.irrwt,c17,x11,TRUE,TRUE,
-x11.irrwtb,b17,x11,TRUE,TRUE,
-x11.mcdmovavg,f1,x11,TRUE,TRUE,
-x11.modirregular,e3,x11,TRUE,TRUE,
-x11.modoriginal,e1,x11,TRUE,TRUE,
-x11.modseasadj,e2,x11,TRUE,TRUE,
-x11.modsic4,c4,x11,TRUE,TRUE,
-x11.modsid4,d4,x11,TRUE,TRUE,
-x11.movseasrat,d9a,x11,FALSE,FALSE,
-x11.origchanges,e5,x11,TRUE,TRUE,
-x11.origwsaplot,e0,x11,FALSE,FALSE,
-x11.qstat,f3,x11,FALSE,FALSE,
-x11.ratioplotorig,ra1,x11,FALSE,FALSE,
-x11.ratioplotsa,ra2,x11,FALSE,FALSE,
-x11.replacsi,d9,x11,TRUE,TRUE,
-x11.replacsib4,b4,x11,FALSE,FALSE,
-x11.replacsib9,b9,x11,FALSE,FALSE,
-x11.replacsic9,c9,x11,TRUE,TRUE,
-x11.residualseasf,rsf,x11,FALSE,FALSE,
-x11.robustsa,e11,x11,TRUE,TRUE,
-x11.sachanges,e6,x11,TRUE,TRUE,
-x11.seasadj,d11,x11,TRUE,TRUE,
-x11.seasadjb11,b11,x11,TRUE,TRUE,
-x11.seasadjb6,b6,x11,TRUE,TRUE,
-x11.seasadjc11,c11,x11,TRUE,TRUE,
-x11.seasadjc6,c6,x11,TRUE,TRUE,
-x11.seasadjconst,sac,x11,TRUE,TRUE,
-x11.seasadjd6,d6,x11,TRUE,TRUE,
-x11.seasadjplot,sap,x11,FALSE,FALSE,
-x11.seasonal,d10,x11,TRUE,TRUE,
-x11.seasonaladjregsea,ars,x11,TRUE,TRUE,
-x11.seasonalb10,b10,x11,TRUE,TRUE,
-x11.seasonalb5,b5,x11,TRUE,TRUE,
-x11.seasonalc10,c10,x11,TRUE,TRUE,
-x11.seasonalc5,c5,x11,TRUE,TRUE,
-x11.seasonald5,d5,x11,TRUE,TRUE,
-x11.seasonaldi_,fsd,x11,TRUE,TRUE,
-x11.seasonalplot,sfp,x11,FALSE,FALSE,
-x11.sib3,b3,x11,TRUE,TRUE,
-x11.sib8,b8,x11,TRUE,TRUE,
-x11.tdadjorig,c19,x11,TRUE,TRUE,
-x11.tdadjorigb,b19,x11,TRUE,TRUE,
-x11.tdaytype,tdy,x11,FALSE,FALSE,
-x11.totaladjustment,tad,x11,TRUE,TRUE,
-x11.trend,d12,x11,TRUE,TRUE,
-x11.trendadjls,tal,x11,TRUE,TRUE,
-x11.trendb2,b2,x11,TRUE,TRUE,
-x11.trendb7,b7,x11,TRUE,TRUE,
-x11.trendc2,c2,x11,TRUE,TRUE,
-x11.trendc7,c7,x11,TRUE,TRUE,
-x11.trendchanges,e7,x11,TRUE,TRUE,
-x11.trendconst,tac,x11,TRUE,TRUE,
-x11.trendd2,d2,x11,TRUE,TRUE,
-x11.trendd7,d7,x11,TRUE,TRUE,
-x11.trendplot,trp,x11,FALSE,FALSE,
-x11.unmodsi,d8,x11,TRUE,TRUE,
-x11.unmodsiox,d8b,x11,TRUE,TRUE,
-x11.x11diag,f2,x11,FALSE,FALSE,
-x11.yrtotals,e4,x11,TRUE,TRUE,
-x11regression.calendar,xca,x11regression,TRUE,TRUE,
-x11regression.calendarb,bxc,x11regression,TRUE,TRUE,
-x11regression.combcalendar,xcc,x11regression,TRUE,TRUE,
-x11regression.combcalendarb,bcc,x11regression,TRUE,TRUE,
-x11regression.combtradingday,c18,x11regression,TRUE,TRUE,
-x11regression.combtradingdayb,b18,x11regression,TRUE,TRUE,
-x11regression.extremeval,c14,x11regression,TRUE,TRUE,
-x11regression.extremevalb,b14,x11regression,TRUE,TRUE,
-x11regression.holiday,xhl,x11regression,TRUE,TRUE,
-x11regression.holidayb,bxh,x11regression,TRUE,TRUE,
-x11regression.outlierfinaltests,xft,x11regression,FALSE,FALSE,
-x11regression.outlierhdr,xoh,x11regression,FALSE,FALSE,
-x11regression.outlieriter,xoi,x11regression,TRUE,TRUE,
-x11regression.outliertests,xot,x11regression,FALSE,FALSE,
-x11regression.priortd,a4,x11regression,TRUE,TRUE,
-x11regression.tradingday,c16,x11regression,TRUE,TRUE,
-x11regression.tradingdayb,b16,x11regression,TRUE,TRUE,
-x11regression.x11reg,c15,x11regression,TRUE,TRUE,
-x11regression.x11regb,b15,x11regression,TRUE,TRUE,
-x11regression.xaictest,xat,x11regression,FALSE,FALSE,
-x11regression.xregressioncmatrix,xrc,x11regression,TRUE,TRUE,
-x11regression.xregressionmatrix,xrm,x11regression,TRUE,TRUE,
+long,short,spec,is.save,is.series,description,requires
+automdl.autochoice,ach,automdl,FALSE,FALSE,model choice of automatic model procedure,NA
+automdl.autochoicemdl,amd,automdl,FALSE,FALSE,summary output for models estimated during choice of ARMA model orders,NA
+automdl.autodefaulttests,adt,automdl,FALSE,FALSE,tests performed on the default model (usually the airline model) of the automatic model identification procedure,NA
+automdl.autofinaltests,aft,automdl,FALSE,FALSE,final tests performed on the model identified by automdl,NA
+automdl.autoljungboxtest,alb,automdl,FALSE,FALSE,check of the residual Ljung-Box statistic,NA
+automdl.bestfivemdl,b5m,automdl,FALSE,FALSE,summary of best five models found during choice of ARMA model orders,NA
+automdl.header,hdr,automdl,FALSE,FALSE,header for the automatic modeling output,NA
+automdl.unitroottest,urt,automdl,FALSE,FALSE,choice of differencing,NA
+automdl.unitroottestmdl,urm,automdl,FALSE,FALSE,summary output for models estimated during difference order identification,NA
+check.acf,acf,check,TRUE,TRUE,autocorrelation function of residuals with standard errors and Ljung-Box Q-statistics computed through each lag,NA
+check.acfplot,acp,check,FALSE,FALSE,plot of residual autocorrelation function with ± 2 standard error limits,NA
+check.acfsquared,ac2,check,TRUE,TRUE,autocorrelation function of squared residuals with standard errors and Ljung-Box Q-statistics computed through each lag,NA
+check.acfsquaredplot,ap2,check,FALSE,FALSE,plot of squared residual autocorrelation function with ± 2 standard error limits,NA
+check.durbinwatson,dw,check,FALSE,NA,Durbin-Watson statistic for model residuals,NA
+check.friedmantest,frt,check,FALSE,NA,Friedman non-parametric test for residual seasonality,NA
+check.histogram,hst,check,FALSE,FALSE,"histogram of standardized residuals and the following summary statistics of the residuals: minimum, maximum, median, standard deviation, and robust estimate of residual standard deviation (1.48 × the median absolute deviation)",NA
+check.normalitytest,nrm,check,FALSE,FALSE,"Geary’s a and kurtosis statistical tests for the normality of the model residuals, as well as a test for skewness of the residuals",NA
+check.pacf,pcf,check,TRUE,TRUE,partial autocorrelation function of residuals with standard errors,NA
+check.pacfplot,pcp,check,FALSE,FALSE,plot of residual partial autocorrelation function with ± 2 standard error limits,NA
+composite.adjcompositeplot,b1p,composite,FALSE,FALSE,NA,NA
+composite.adjcompositesrs,b1,composite,TRUE,TRUE,"aggregated time series data, prior adjusted, with associated dates ",NA
+composite.calendaradjcomposite,cac,composite,TRUE,TRUE,"aggregated time series data, adjusted for regARIMA calendar effects.",NA
+composite.compositeplot,cmp,composite,FALSE,FALSE,plot of the prior adjusted aggregate series,NA
+composite.compositesrs,cms,composite,TRUE,TRUE,"aggregated time series data, with associated dates",NA
+composite.header,hdr,composite,FALSE,FALSE,header for indirect seasonal adjustment,NA
+composite.indadjsatot,iaa,composite,TRUE,TRUE,"final indirect seasonally adjusted series, with yearly totals adjusted to match the original series",NA
+composite.indadjustfac,iaf,composite,TRUE,TRUE,final combined adjustment factors for the indirect seasonal adjustment,NA
+composite.indadjustmentratio,i18,composite,TRUE,FALSE,indirect total adjustment factors,NA
+composite.indaoutlier,iao,composite,TRUE,TRUE,final indirect AO outliers,NA
+composite.indcalendar,ica,composite,TRUE,TRUE,final calendar factors for the indirect seasonal adjustment,NA
+composite.indcalendaradjchanges,ie8,composite,TRUE,FALSE,percent changes (differences) in the original series adjusted for calendar effects,NA
+composite.indforcefactor,iff,composite,TRUE,FALSE,factors applied to get indirect seasonally adjusted series with forced yearly totals,NA
+composite.indftestd8,idf,composite,FALSE,FALSE,final unmodified SI-ratios (differences) for the indirect adjustment,NA
+composite.indirregular,iir,composite,TRUE,TRUE,final irregular component for the indirect adjustment,NA
+composite.indirregularplot,iip,composite,FALSE,FALSE,plot of the final irregular component from the indirect seasonal adjustment,NA
+composite.indlevelshift,ils,composite,TRUE,TRUE,final indirect LS outliers,NA
+composite.indmcdmovavg,if1,composite,TRUE,TRUE,MCD moving average of the final indirect seasonally adjusted series,NA
+composite.indmodirr,ie3,composite,TRUE,TRUE,irregular component modified for extreme values from the indirect seasonal adjustment,NA
+composite.indmodoriginal,ie1,composite,TRUE,TRUE,original series modified for extreme values from the indirect seasonal adjustment,NA
+composite.indmodsadj,ie2,composite,TRUE,TRUE,seasonally adjusted series modified for extreme values from the indirect seasonal adjustment,NA
+composite.indqstat,if3,composite,FALSE,FALSE,quality control statistics for the indirect seasonal adjustment,NA
+composite.indreplacsi,id9,composite,TRUE,TRUE,final replacement values for extreme SI-ratios (differences) for the indirect adjustment,NA
+composite.indresidualseasf,irf,composite,FALSE,TRUE,F-test for residual seasonality,NA
+composite.indrevsachanges,i6a,composite,TRUE,TRUE,percent changes for indirect seasonally adjusted series with revised yearly totals,NA
+composite.indrndsachanges,i6r,composite,TRUE,TRUE,percent changes (differences) in the indirect seasonally adjusted series,NA
+composite.indrobustsa,iee,composite,TRUE,TRUE,final indirect seasonally adjusted series modified for extreme values,NA
+composite.indsachanges,ie6,composite,TRUE,TRUE,percent changes (differences) in the indirect seasonally adjusted series,NA
+composite.indsadjround,irn,composite,TRUE,TRUE,percent changes for rounded indirect seasonally adjusted series,NA
+composite.indseasadj,isa,composite,TRUE,TRUE,final indirect seasonally adjusted series,NA
+composite.indseasadjplot,iap,composite,FALSE,FALSE,plot of the final indirect seasonally adjusted series,NA
+composite.indseasonal,isf,composite,TRUE,TRUE,final seasonal factors for the indirect seasonal adjustment,NA
+composite.indseasonaldiff,isd,composite,TRUE,TRUE,final seasonal difference for the indirect seasonal adjustment (only for pseudo-additive seasonal adjustment),NA
+composite.indseasonalplot,isp,composite,FALSE,FALSE,"indirect seasonal factor plots, grouped by month or quarter",NA
+composite.indtest,itt,composite,FALSE,FALSE,test for adequacy of composite adjustment,NA
+composite.indtotaladjustment,ita,composite,TRUE,TRUE,total indirect adjustment factors (only produced if the original series contains values that are ≤ 0),NA
+composite.indtrend,itn,composite,TRUE,TRUE,final trend-cycle for the indirect adjustment,NA
+composite.indtrendchanges,ie7,composite,TRUE,TRUE,percent changes (differences) in the indirect final trend component,NA
+composite.indtrendplot,itp,composite,FALSE,FALSE,plot of the final trend-cycle from the indirect seasonal adjustment,NA
+composite.indunmodsi,id8,composite,TRUE,TRUE,final unmodified SI-ratios (differences) for the indirect adjustment,NA
+composite.indx11diag,if2,composite,FALSE,FALSE,summary of seasonal adjustment diagnostics for the indirect seasonal adjustment,NA
+composite.indyrtotals,ie4,composite,FALSE,FALSE,ratio of yearly totals of the original series and the indirect seasonally adjusted series,NA
+composite.origchanges,ie5,composite,TRUE,TRUE,percent changes (differences) in the original series,NA
+composite.origwindsaplot,ie0,composite,FALSE,FALSE,plot of the aggregate series with the indirect seasonally adjusted series,NA
+composite.outlieradjcomposite,oac,composite,TRUE,TRUE,"aggregated time series data, adjusted for outliers.",NA
+composite.prioradjcomposite,ia3,composite,TRUE,TRUE,composite series adjusted for user-defined prior adjustments applied at the component level,NA
+composite.ratioplotindsa,ir2,composite,FALSE,TRUE,month-to-month (or quarter-to-quarter) ratio plots of the original series,NA
+composite.ratioplotorig,ir1,composite,FALSE,TRUE,month-to-month (or quarter-to-quarter) ratio plots of the indirect seasonally adjusted series,NA
+estimate.armacmatrix,acm,estimate,TRUE,TRUE,correlation matrix of ARMA parameter estimates if used with the print argument; covariance matrix of same if used with the save argument,NA
+estimate.averagefcsterr,afc,estimate,FALSE,FALSE,average magnitude of forecast errors over each of the last three years of data,NA
+estimate.estimates,est,estimate,TRUE,FALSE,"regression and ARMA parameter estimates, with standard errors",NA
+estimate.iterationerrors,ite,estimate,FALSE,FALSE,"error messages for estimation iterations, including failure to converge",NA
+estimate.iterations,itr,estimate,TRUE,TRUE,"detailed output for estimation iterations, including log-likelihood values and parameters, and counts of function evaluations and iterations",NA
+estimate.lformulas,lkf,estimate,FALSE,FALSE,formulas for computing the log-likelihood and model selection criteria,NA
+estimate.lkstats,lks,estimate,TRUE,FALSE,"log-likelihood at final parameter estimates and, if exact = arma is used (default option), corresponding model selection criteria (AIC, AICC, Hannan-Quinn, BIC)",NA
+estimate.model,mdl,estimate,TRUE,FALSE,"if used with the print argument, this controls printing of a short description of the model; if used with the save argument, this creates a file containing regression and arima specs corresponding to the model, with the estimation results used to specify initial values for the ARMA parameters",NA
+estimate.options,opt,estimate,FALSE,FALSE,header for the estimation options,NA
+estimate.regcmatrix,rcm,estimate,TRUE,TRUE,correlation matrix of regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument,NA
+estimate.regressioneffects,ref,estimate,TRUE,TRUE,"Xβ,b matrix of regression variables multiplied by the vector of estimated regression coefficients",NA
+estimate.regressionresiduals,rrs,estimate,TRUE,FALSE,residuals from regression effects,NA
+estimate.residuals,rsd,estimate,TRUE,TRUE,model residuals with associated dates or observation numbers,NA
+estimate.roots,rts,estimate,TRUE,TRUE,roots of the autoregressive and moving average operators in the estimated model,NA
+force.forcefactor,ffc,force,TRUE,TRUE,factors applied to get seasonally adjusted series with constrained yearly totals (if type = regress or type = denton),NA
+force.revsachanges,e6a,force,TRUE,TRUE,percent changes (differences) in seasonally adjusted series with revised yearly totals,NA
+force.rndsachanges,e6r,force,TRUE,TRUE,percent changes (differences) in rounded seasonally adjusted series,NA
+force.saround,rnd,force,TRUE,TRUE,rounded final seasonally adjusted series (if round = yes) or the rounded final seasonally adjusted series with constrained yearly totals (if type = regress or type = denton),NA
+force.seasadjtot,saa,force,TRUE,TRUE,final seasonally adjusted series with constrained yearly totals (if type = regress or type = denton),NA
+forecast.backcasts,bct,forecast,TRUE,TRUE,"point backcasts on the original scale, along with upper and lower prediction interval limits",NA
+forecast.forecasts,fct,forecast,TRUE,TRUE,"point forecasts on the original scale, along with upper and lower prediction interval limits",NA
+forecast.transformed,ftr,forecast,TRUE,TRUE,"forecasts on the transformed scale, with corresponding forecast standard errors",NA
+forecast.transformedbcst,btr,forecast,TRUE,TRUE,"backcasts on the transformed scale, with corresponding forecast standard errors",NA
+forecast.variances,fvr,forecast,TRUE,TRUE,"forecast error variances on the transformed scale, showing the contributions of the error assuming the model is completely known (stochastic variance) and the error due to estimating any regression parameters (error in estimating AR and MA parameters is ignored)",NA
+history.armahistory,amh,history,TRUE,NA,history of estimated AR and MA coefficients from the regARIMA model,NA
+history.chngestimates,che,history,TRUE,TRUE,concurrent and most recent estimate of the month-tomonth (or quarter-to-quarter) changes in the seasonally adjusted data,"history.estimates = ""sadjchng"""
+history.chngrevisions,chr,history,TRUE,TRUE,revision from concurrent to most recent estimate of the month-to-month (or quarter-to-quarter) changes in the seasonally adjusted data,"history.estimates = ""sadjchng"""
+history.chngsummary,chs,history,FALSE,FALSE,summary statistics for revisions in the month-to-month (or quarter-to-quarter) changes in the seasonally adjusted data,NA
+history.fcsterrors,fce,history,TRUE,TRUE,revision history of the accumulated sum of squared forecast errors,NA
+history.fcsthistory,fch,history,TRUE,TRUE,listing of the forecast and forecast errors used to generate accumulated sum of squared forecast errors,NA
+history.header,hdr,history,FALSE,FALSE,header for history analysis,NA
+history.indsaestimates,iae,history,TRUE,TRUE,concurrent and most recent estimate of the indirect seasonally adjusted data,NA
+history.indsarevisions,iar,history,TRUE,TRUE,revision from concurrent to most recent estimate of the indirect seasonally adjusted series,NA
+history.indsasummary,ias,history,FALSE,FALSE,summary statistics for indirect seasonal adjustment revisions,NA
+history.lkhdhistory,lkh,history,TRUE,TRUE,history of AICC and likelihood values,NA
+history.outlierhistory,rot,history,TRUE,TRUE,record of outliers removed and kept for the revisions history (printed only if automatic outlier identification is used),NA
+history.saestimates,sae,history,TRUE,TRUE,concurrent and most recent estimate of the seasonally adjusted data,"history.estimates = ""sadj"""
+history.sarevisions,sar,history,TRUE,TRUE,revision from concurrent to most recent estimate of the seasonally adjusted data,"history.estimates = ""sadj"""
+history.sasummary,sas,history,FALSE,FALSE,summary statistics for seasonal adjustment revisions,NA
+history.seatsmdlhistory,smh,history,TRUE,TRUE,SEATS ARIMA model history,NA
+history.sfestimates,sfe,history,TRUE,TRUE,concurrent and most recent estimate of the seasonal factors and projected seasonal factors,"history.estimates = ""seasonal"""
+history.sfilterhistory,sfh,history,TRUE,TRUE,record of seasonal filter selection for each observation in the revisions history (printed only if automatic seasonal filter selection is used),"history.estimates = ""seasonal"""
+history.sfrevisions,sfr,history,TRUE,TRUE,"revision from concurrent to most recent estimate of the seasonal factor, as well as projected seasonal factors","history.estimates = ""seasonal"""
+history.sfsummary,sfs,history,FALSE,FALSE,summary statistics for seasonal factor revisions,NA
+history.tdhistory,tdh,history,TRUE,NA,history of estimated trading day regression coefficients from the regARIMA model,NA
+history.trendchngestimates,tce,history,TRUE,TRUE,concurrent and most recent estimate of the month-tomonth (or quarter-to-quarter) changes in the trend component,"history.estimates = ""trendchng"""
+history.trendchngrevisions,tcr,history,TRUE,TRUE,revision from concurrent to most recent estimate of the month-to-month (or quarter-to-quarter) changes in the trend component,"history.estimates = ""trendchng"""
+history.trendchngsummary,tcs,history,FALSE,FALSE,summary statistics for revisions in the month-to-month (or quarter-to-quarter) changes in the trend component,NA
+history.trendestimates,tre,history,TRUE,TRUE,concurrent and most recent estimate of the trend component,"history.estimates = ""trend"""
+history.trendrevisions,trr,history,TRUE,TRUE,revision from concurrent to most recent estimate of the trend component,"history.estimates = ""trend"""
+history.trendsummary,trs,history,FALSE,FALSE,summary statistics for trend component revisions,NA
+identify.acf,iac,identify,TRUE,TRUE,"sample autocorrelation function(s), with standard errors and Ljung-Box Q-statistics for each lag",NA
+identify.acfplot,acp,identify,FALSE,FALSE,line printer plot of sample autocorrelation function(s) with ±2 standard error limits shown on the plot,NA
+identify.pacf,ipc,identify,TRUE,TRUE,sample partial autocorrelation function(s) with standard errors for each lag,NA
+identify.pacfplot,pcp,identify,FALSE,FALSE,line printer plot of sample partial autocorrelation function(s) with ±2 standard error limits shown on the plot,NA
+identify.regcoefficients,rgc,identify,FALSE,FALSE,regression coefficients removed from the transformed series before ACFs and PACFs were generated,NA
+outlier.finaltests,fts,outlier,TRUE,TRUE,t-statistics for every time point and outlier type generated during the final outlier detection iteration (not saved when automdl/pickmdl is used),NA
+outlier.header,hdr,outlier,FALSE,FALSE,"options specified for outlier detection including critical value, outlier span, and types of outliers searched for",NA
+outlier.iterations,oit,outlier,TRUE,TRUE,"detailed results for each iteration of outlier detection including outliers detected, outliers deleted, model parameter estimates, and robust and nonrobust estimates of the residual standard deviation",NA
+outlier.temporaryls,tls,outlier,FALSE,FALSE,summary of t-statistics for testing cancellation of level shifts,NA
+outlier.tests,ots,outlier,FALSE,FALSE,t-statistics for every time point and outlier type on each outlier detection iteration,NA
+pickmdl.header,hdr,pickmdl,FALSE,FALSE,header for the pickmdl output,NA
+pickmdl.pickmdlchoice,pch,pickmdl,FALSE,FALSE,model choice of the pickmdl automatic model selection procedure,NA
+pickmdl.usermodels,umd,pickmdl,FALSE,FALSE,output for each model used in the pickmdl automatic model selection procedure,NA
+regression.aictest,ats,regression,FALSE,FALSE,"output from AIC-based test(s) for trading day, Easter, and user-defined regression variables",NA
+regression.aoutlier,ao,regression,TRUE,TRUE,regARIMA additive (or point) outlier factors (table A8.AO),NA
+regression.chi2test,cts,regression,FALSE,FALSE,output from chi-squared based test for groups of user-defined regression variables,NA
+regression.dailyweights,tdw,regression,FALSE,FALSE,"Daily weights from trading day regressors, normalized to sum to seven",NA
+regression.holiday,hol,regression,TRUE,TRUE,regARIMA holiday factors (table A7),NA
+regression.levelshift,ls,regression,TRUE,TRUE,"regARIMA level shift, temporary level shift and ramp outlier factors (table A8.LS)",NA
+regression.outlier,otl,regression,TRUE,TRUE,combined regARIMA outlier factors (table A8),NA
+regression.regressionmatrix,rmx,regression,TRUE,TRUE,values of regression variables with associated dates,NA
+regression.regseasonal,a10,regression,TRUE,TRUE,regARIMA user-defined seasonal factors (table A10),NA
+regression.seasonaloutlier,so,regression,TRUE,TRUE,regARIMA seasonal outlier factors (table A8.SO),NA
+regression.temporarychange,tc,regression,TRUE,TRUE,regARIMA temporary change outlier factors (table A8.TC),NA
+regression.tradingday,td,regression,TRUE,TRUE,regARIMA trading day factors (table A6),NA
+regression.transitory,a13,regression,TRUE,TRUE,regARIMA transitory component factors from userdefined regressors (table A13),NA
+regression.userdef,usr,regression,TRUE,TRUE,factors from user-defined regression variables (table A9),NA
+seats.adjustfac,s16,seats,TRUE,TRUE,final SEATS combined adjustment factors,NA
+seats.adjustmentratio,s18,seats,TRUE,TRUE,final SEATS adjustment ratio,NA
+seats.cycle,cyc,seats,TRUE,TRUE,cycle component,NA
+seats.difforiginal,dor,seats,TRUE,NA,fully differenced transformed original series,NA
+seats.diffseasonaladj,dsa,seats,TRUE,TRUE,fully differenced transformed SEATS seasonal adjustment,NA
+seats.difftrend,dtr,seats,TRUE,TRUE,fully differenced transformed SEATS trend,NA
+seats.irregular,s13,seats,TRUE,TRUE,final SEATS irregular component,NA
+seats.irregularoutlieradj,se3,seats,TRUE,NA,"final SEATS irregular component, outlier adjusted",NA
+seats.longtermtrend,ltt,seats,TRUE,TRUE,long term trend,NA
+seats.seasadjconst,sec,seats,TRUE,TRUE,final SEATS seasonal adjustment with constant term included,NA
+seats.seasonal,s10,seats,TRUE,TRUE,final SEATS seasonal component,NA
+seats.seasonaladj,s11,seats,TRUE,TRUE,final SEATS seasonal adjustment,NA
+seats.seasonaladjfcstdecomp,afd,seats,TRUE,TRUE,forecast of the final SEATS seasonal adjustment,NA
+seats.seasonaladjoutlieradj,se2,seats,TRUE,NA,"final SEATS seasonal adjustment, outlier adjusted",NA
+seats.seasonalfcstdecomp,sfd,seats,TRUE,TRUE,forecast of the seasonal component,NA
+seats.seasonalsum,ssm,seats,TRUE,TRUE,seasonal-period-length sums of final SEATS seasonal component,NA
+seats.seriesfcstdecomp,ofd,seats,TRUE,TRUE,forecast of the series component,NA
+seats.totaladjustment,sta,seats,TRUE,TRUE,total adjustment factors for SEATS seasonal adjustment,NA
+seats.transitory,s14,seats,TRUE,TRUE,final SEATS transitory component,NA
+seats.transitoryfcstdecomp,yfd,seats,TRUE,TRUE,forecast of the transitory component,NA
+seats.trend,s12,seats,TRUE,TRUE,final SEATS trend component,NA
+seats.trendconst,stc,seats,TRUE,TRUE,final SEATS trend component with constant term included,NA
+seats.trendfcstdecomp,tfd,seats,TRUE,TRUE,forecast of the trend component,NA
+series.adjoriginal,b1,series,TRUE,TRUE,"original series, adjusted for prior effects and forecast extended",NA
+series.adjorigplot,b1p,series,FALSE,FALSE,"plot of the prior adjusted original series augmented by prior-adjusted forecasts (if specified); if no prior factors or forecasts are used, the original series is plotted",NA
+series.calendaradjorig,a18,series,TRUE,TRUE,original series adjusted for regARIMA calendar effects,NA
+series.header,hdr,series,FALSE,FALSE,summary of options selected for this run of X-13ARIMA-SEATS,NA
+series.outlieradjorig,a19,series,TRUE,TRUE,original series adjusted for regARIMA outliers,NA
+series.savefile,sav,series,FALSE,FALSE,list of files to be produced by the X-13ARIMA-SEATS run,NA
+series.seriesmvadj,mv,series,TRUE,TRUE,original series with missing values replaced by regARIMA estimates,NA
+series.seriesplot,a1p,series,FALSE,FALSE,plot of the original series,NA
+series.span,a1,series,TRUE,TRUE,"time series data, with associated dates (if the span argument is present, data are printed and/or saved only for the specified span)",NA
+series.specfile,spc,series,TRUE,FALSE,contents of input specification file used for this run,NA
+slidingspans.chngspans,chs,slidingspans,TRUE,TRUE,month-to-month (or quarter-to-quarter) changes from all sliding spans,NA
+slidingspans.factormeans,fmn,slidingspans,FALSE,FALSE,range analysis for each of the sliding spans,NA
+slidingspans.header,hdr,slidingspans,FALSE,FALSE,header text for the sliding spans analysis,NA
+slidingspans.indchngspans,cis,slidingspans,TRUE,TRUE,indirect month-to-month (or quarter-to-quarter) changes from all sliding spans,NA
+slidingspans.indfactormeans,fmi,slidingspans,FALSE,FALSE,range analysis for the implicit adjustment factors of the indirectly seasonally adjusted series,NA
+slidingspans.indpercent,pci,slidingspans,FALSE,FALSE,tables of the percent of observations flagged as unstable for the seasonal factors and month-tomonth (or quarter-to-quarter) changes of the indirect seasonal adjustment,NA
+slidingspans.indsaspans,ais,slidingspans,TRUE,TRUE,indirect seasonally adjusted series from all sliding spans,NA
+slidingspans.indsfspans,sis,slidingspans,TRUE,TRUE,indirect seasonal factors from all sliding spans,NA
+slidingspans.indsummary,smi,slidingspans,FALSE,FALSE,"tables, histograms and hinge values summarizing the percentage of observations flagged for unstable seasonal factors, month-to-month (or quarter-to-quarter) and year-to-year changes for the indirect adjustment",NA
+slidingspans.indychngspans,yis,slidingspans,TRUE,TRUE,indirect year-to-year changes from all sliding spans,NA
+slidingspans.indyypercent,piy,slidingspans,FALSE,FALSE,additional entry for the percent of observations flagged as unstable for the year-to-year (or quarter-to-quarter) changes of the indirect seasonal adjustment,NA
+slidingspans.indyysummary,siy,slidingspans,FALSE,FALSE,"additional tables, histograms and hinge values summarizing the percentage of observations flagged for the year-to-year changes of the indirect seasonal adjustment",NA
+slidingspans.percent,pct,slidingspans,FALSE,FALSE,"table showing the percent of observations flagged as unstable for the seasonal and/or trading day factors, final seasonally adjusted series (if necessary), and the month-to-month (or quarter-to-quarter) changes",NA
+slidingspans.saspans,ads,slidingspans,TRUE,FALSE,seasonally adjusted series from all sliding spans,NA
+slidingspans.sfspans,sfs,slidingspans,TRUE,TRUE,seasonal factors from all sliding spans,NA
+slidingspans.ssftest,ssf,slidingspans,FALSE,FALSE,F-tests for stable and moving seasonality estimated over each of the sliding spans,NA
+slidingspans.summary,sum,slidingspans,FALSE,FALSE,"tables, histograms and hinge values summarizing the percentage of observations flagged for unstable seasonal and/or trading day factors, final seasonally adjusted series (if necessary), and month-to-month (or quarter-toquarter) changes",NA
+slidingspans.tdspans,tds,slidingspans,TRUE,TRUE,trading day factors from all sliding spans,NA
+slidingspans.ychngspans,ycs,slidingspans,TRUE,TRUE,year-to-year changes from all sliding spans,NA
+slidingspans.yypercent,pcy,slidingspans,FALSE,FALSE,additional entry for the percent of observations flagged as unstable for the year-to-year changes,NA
+slidingspans.yysummary,suy,slidingspans,FALSE,FALSE,"additional tables, histograms and hinge values summarizing the percentage of observations flagged for the year-to-year changes",NA
+spectrum.npsa,npa,spectrum,FALSE,NA,non-parametric test of residual seasonality for seasonally adjusted series,NA
+spectrum.npsaind,npi,spectrum,FALSE,NA,non-parametric test of residual seasonality for indirect seasonal adjustment,NA
+spectrum.qcheck,qch,spectrum,FALSE,NA,QS diagnostic to detect seasonality in quarterly version of a monthly series,NA
+spectrum.qs,qs,spectrum,FALSE,FALSE,QS diagnostic to detect seasonality,NA
+spectrum.qsind,qsi,spectrum,FALSE,NA,QS diagnostic to detect seasonality (indirect adjustment),NA
+spectrum.speccomposite,is0,spectrum,TRUE,TRUE,spectral plot of first-differenced aggregate series,NA
+spectrum.specextresiduals,ser,spectrum,TRUE,NA,spectrum of the extended residuals,NA
+spectrum.specindirr,is2,spectrum,TRUE,TRUE,spectral plot of the first-differenced indirect seasonally adjusted series,NA
+spectrum.specindsa,is1,spectrum,TRUE,TRUE,spectral plot of outlier-modified irregular series from the indirect seasonal adjustment,NA
+spectrum.specirr,sp2,spectrum,TRUE,TRUE,spectral plot of outlier-modified X-11 irregular series,NA
+spectrum.specorig,sp0,spectrum,TRUE,TRUE,spectral plot of the first-differenced original series,NA
+spectrum.specresidual,spr,spectrum,TRUE,TRUE,spectral plot of the regARIMA model residuals,NA
+spectrum.specsa,sp1,spectrum,TRUE,TRUE,"spectral plot of differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult)",NA
+spectrum.specseatsirr,s2s,spectrum,TRUE,TRUE,spectrum of the final SEATS irregular,NA
+spectrum.specseatssa,s1s,spectrum,TRUE,TRUE,spectrum of the differenced final SEATS seasonal adjustment,NA
+spectrum.tukeypeaks,tpk,spectrum,FALSE,NA,peak probability of Tukey spectrum,NA
+transform.aictransform,tac,transform,FALSE,FALSE,output from AIC-based test(s) for transformation,NA
+transform.permprior,a2p,transform,TRUE,TRUE,"permanent prior adjustment factors, with associated dates",NA
+transform.permprioradjusted,a3p,transform,TRUE,TRUE,"prior adjusted series using only permanent prior factors, with associated dates",NA
+transform.permprioradjustedptd,a4p,transform,TRUE,TRUE,"prior adjusted series using only permanent prior factors and prior trading day adjustments, with associated dates",NA
+transform.prior,a2,transform,TRUE,TRUE,"prior adjustment factors, with associated dates",NA
+transform.prioradjusted,a3,transform,TRUE,TRUE,"prior adjusted series, with associated dates",NA
+transform.prioradjustedptd,a4d,transform,TRUE,TRUE,"prior adjusted series (including prior trading day adjustments), with associated dates",NA
+transform.seriesconstant,a1c,transform,TRUE,TRUE,original series with value from the constant argument added to the series,NA
+transform.seriesconstantplot,acp,transform,FALSE,FALSE,plot of original series with value from the constant argument added to the series,NA
+transform.tempprior,a2t,transform,TRUE,TRUE,"temporary prior adjustment factors, with associated dates",NA
+transform.transformed,trn,transform,TRUE,TRUE,"prior adjusted and transformed data, with associated dates",NA
+x11.adjoriginalc,c1,x11,TRUE,TRUE,"original series modified for outliers, trading day and prior factors, C iteration",NA
+x11.adjoriginald,d1,x11,TRUE,TRUE,"original series modified for outliers, trading day and prior factors, D iteration",NA
+x11.adjustdiff,fad,x11,TRUE,TRUE,final adjustment difference (only for pseudo-additive seasonal adjustment),NA
+x11.adjustfac,d16,x11,TRUE,TRUE,combined seasonal and trading day factors,NA
+x11.adjustmentratio,e18,x11,TRUE,TRUE,final adjustment ratios (original series/seasonally adjusted series),NA
+x11.autosf,asf,x11,FALSE,FALSE,automatic seasonal factor selection,NA
+x11.biasfactor,bcf,x11,TRUE,TRUE,bias correction factors,NA
+x11.calendar,d18,x11,TRUE,TRUE,combined holiday and trading day factors,NA
+x11.calendaradjchanges,e8,x11,TRUE,TRUE,percent changes (differences) in original series adjusted for calendar effects,NA
+x11.combholiday,chl,x11,TRUE,TRUE,"combined holiday prior adjustment factors, A16 table",NA
+x11.extreme,c20,x11,TRUE,TRUE,"extreme values, C iteration",NA
+x11.extremeb,b20,x11,TRUE,TRUE,"extreme values, B iteration",NA
+x11.ftestb1,b1f,x11,FALSE,FALSE,"F-test for stable seasonality, B1 table",NA
+x11.ftestd8,d8f,x11,FALSE,FALSE,"F-tests for stable and moving seasonality, D8",NA
+x11.irregular,d13,x11,TRUE,TRUE,final irregular component,NA
+x11.irregularadjao,ira,x11,TRUE,TRUE,final irregular component adjusted for point outliers,NA
+x11.irregularb,b13,x11,TRUE,TRUE,"irregular component, B iteration",NA
+x11.irregularc,c13,x11,TRUE,TRUE,"irregular component, C iteration",NA
+x11.irregularplot,irp,x11,FALSE,FALSE,NA,NA
+x11.irrwt,c17,x11,TRUE,TRUE,final weights for the irregular component,NA
+x11.irrwtb,b17,x11,TRUE,TRUE,preliminary weights for the irregular component,NA
+x11.mcdmovavg,f1,x11,TRUE,TRUE,MCD moving average of the final seasonally adjusted series,NA
+x11.modirregular,e3,x11,TRUE,TRUE,irregular component modified for zero-weighted extreme values,NA
+x11.modoriginal,e1,x11,TRUE,TRUE,original series modified for zero-weighted extreme values,NA
+x11.modseasadj,e2,x11,TRUE,TRUE,seasonally adjusted series modified for zero-weighted extreme values,NA
+x11.modsic4,c4,x11,TRUE,TRUE,"modified SI-ratios (differences), C iteration",NA
+x11.modsid4,d4,x11,TRUE,TRUE,"modified SI-ratios (differences), D iteration",NA
+x11.movseasrat,d9a,x11,FALSE,FALSE,moving seasonality ratios for each period,NA
+x11.origchanges,e5,x11,TRUE,TRUE,percent changes (differences) in original series,NA
+x11.origwsaplot,e0,x11,FALSE,FALSE,NA,NA
+x11.qstat,f3,x11,FALSE,FALSE,quality control statistics,NA
+x11.ratioplotorig,ra1,x11,FALSE,FALSE,NA,NA
+x11.ratioplotsa,ra2,x11,FALSE,FALSE,NA,NA
+x11.replacsi,d9,x11,TRUE,TRUE,"final replacement values for extreme SI-ratios (differences), D iteration",NA
+x11.replacsib4,b4,x11,FALSE,FALSE,"preliminary replacement values for extreme SI-ratios (differences), B iteration",NA
+x11.replacsib9,b9,x11,FALSE,FALSE,"replacement values for extreme SI-ratios (differences), B iteration",NA
+x11.replacsic9,c9,x11,TRUE,TRUE,"modified SI-ratios (differences), C iteration",NA
+x11.residualseasf,rsf,x11,FALSE,FALSE,F-test for residual seasonality,NA
+x11.robustsa,e11,x11,TRUE,TRUE,robust final seasonally adjusted series,NA
+x11.sachanges,e6,x11,TRUE,TRUE,percent changes (differences) in seasonally adjusted series,NA
+x11.seasadj,d11,x11,TRUE,TRUE,final seasonally adjusted series,NA
+x11.seasadjb11,b11,x11,TRUE,TRUE,"seasonally adjusted series, B iteration",NA
+x11.seasadjb6,b6,x11,TRUE,TRUE,"preliminary seasonally adjusted series, B iteration",NA
+x11.seasadjc11,c11,x11,TRUE,TRUE,"seasonally adjusted series, C iteration",NA
+x11.seasadjc6,c6,x11,TRUE,TRUE,"preliminary seasonally adjusted series, C iteration",NA
+x11.seasadjconst,sac,x11,TRUE,TRUE,final seasonally adjusted series with constant from transform spec included,NA
+x11.seasadjd6,d6,x11,TRUE,TRUE,"preliminary seasonally adjusted series, D iteration",NA
+x11.seasadjplot,sap,x11,FALSE,FALSE,NA,NA
+x11.seasonal,d10,x11,TRUE,TRUE,final seasonal factors,NA
+x11.seasonaladjregsea,ars,x11,TRUE,TRUE,seasonal factors adjusted for user-defined seasonal regARIMA component,NA
+x11.seasonalb10,b10,x11,TRUE,TRUE,"seasonal factors, B iteration",NA
+x11.seasonalb5,b5,x11,TRUE,TRUE,"preliminary seasonal factors, B iteration",NA
+x11.seasonalc10,c10,x11,TRUE,TRUE,"preliminary seasonal factors, C iteration",NA
+x11.seasonalc5,c5,x11,TRUE,TRUE,"preliminary seasonal factors, C iteration",NA
+x11.seasonald5,d5,x11,TRUE,TRUE,"preliminary seasonal factors, D iteration",NA
+x11.seasonaldiff,fsd,x11,TRUE,NA,final seasonal difference (only for pseudo-additive seasonal adjustment),NA
+x11.seasonalplot,sfp,x11,FALSE,FALSE,NA,NA
+x11.sib3,b3,x11,TRUE,TRUE,preliminary unmodified SI-ratios (differences),NA
+x11.sib8,b8,x11,TRUE,TRUE,unmodified SI-ratios (differences),NA
+x11.tdadjorig,c19,x11,TRUE,TRUE,original series adjusted for final trading day,NA
+x11.tdadjorigb,b19,x11,TRUE,TRUE,original series adjusted for preliminary trading day,NA
+x11.tdaytype,tdy,x11,FALSE,FALSE,trading day factors printed by type of month,NA
+x11.totaladjustment,tad,x11,TRUE,TRUE,total adjustment factors (only printed out if the original series contains values that are ≤ 0),NA
+x11.trend,d12,x11,TRUE,TRUE,final trend-cycle,NA
+x11.trendadjls,tal,x11,TRUE,TRUE,final trend-cycle adjusted for level shift outliers,NA
+x11.trendb2,b2,x11,TRUE,TRUE,"preliminary trend-cycle, B iteration",NA
+x11.trendb7,b7,x11,TRUE,TRUE,"preliminary trend-cycle, B iteration",NA
+x11.trendc2,c2,x11,TRUE,TRUE,"preliminary trend-cycle, C iteration",NA
+x11.trendc7,c7,x11,TRUE,TRUE,"preliminary trend-cycle, C iteration",NA
+x11.trendchanges,e7,x11,TRUE,TRUE,percent changes (differences) in final trend component series,NA
+x11.trendconst,tac,x11,TRUE,TRUE,final trend component with constant from transform spec included,NA
+x11.trendd2,d2,x11,TRUE,TRUE,"preliminary trend-cycle, D iteration",NA
+x11.trendd7,d7,x11,TRUE,TRUE,"preliminary trend-cycle, D iteration",NA
+x11.trendplot,trp,x11,FALSE,FALSE,NA,NA
+x11.unmodsi,d8,x11,TRUE,TRUE,final unmodified SI-ratios (differences),NA
+x11.unmodsiox,d8b,x11,TRUE,TRUE,"final unmodified SI-ratios, with labels for outliers and extreme values",NA
+x11.x11diag,f2,x11,FALSE,FALSE,summary of seasonal adjustment diagnostics,NA
+x11.yrtotals,e4,x11,TRUE,TRUE,ratio of yearly totals of original and seasonally adjusted series,NA
+x11regression.calendar,xca,x11regression,TRUE,TRUE,final calendar factors (trading day and holiday),NA
+x11regression.calendarb,bxc,x11regression,TRUE,TRUE,preliminary calendar factors,NA
+x11regression.combcalendar,xcc,x11regression,TRUE,TRUE,final calendar factors from combined daily weights,NA
+x11regression.combcalendarb,bcc,x11regression,TRUE,TRUE,preliminary calendar factors from combined daily weights,NA
+x11regression.combtradingday,c18,x11regression,TRUE,TRUE,final trading day factors from combined daily weights,NA
+x11regression.combtradingdayb,b18,x11regression,TRUE,TRUE,preliminary trading day factors from combined daily weights,NA
+x11regression.extremeval,c14,x11regression,TRUE,TRUE,"irregulars excluded from the irregular regression, C iteration",NA
+x11regression.extremevalb,b14,x11regression,TRUE,TRUE,"irregulars excluded from the irregular regression, B iteration",NA
+x11regression.holiday,xhl,x11regression,TRUE,TRUE,final holiday factors,NA
+x11regression.holidayb,bxh,x11regression,TRUE,TRUE,preliminary holiday factors,NA
+x11regression.outlierfinaltests,xft,x11regression,FALSE,FALSE,NA,NA
+x11regression.outlierhdr,xoh,x11regression,FALSE,FALSE,options specified for outlier detection including critical value and outlier span,NA
+x11regression.outlieriter,xoi,x11regression,TRUE,TRUE,"detailed results for each iteration of outlier detection including outliers detected, outliers deleted, model parameter estimates, and robust and non-robust estimates of the residual standard deviation",NA
+x11regression.outliertests,xot,x11regression,FALSE,FALSE,t-statistics for every time point of each outlier detection iteration,NA
+x11regression.priortd,a4,x11regression,TRUE,TRUE,prior trading day weights and factors,NA
+x11regression.tradingday,c16,x11regression,TRUE,TRUE,final trading day factors and weights,NA
+x11regression.tradingdayb,b16,x11regression,TRUE,TRUE,preliminary trading day factors and weights,NA
+x11regression.x11reg,c15,x11regression,TRUE,TRUE,final irregular regression coefficients and diagnostics,NA
+x11regression.x11regb,b15,x11regression,TRUE,TRUE,preliminary irregular regression coefficients and diagnostics,NA
+x11regression.xaictest,xat,x11regression,FALSE,FALSE,output from AIC-based tests for trading day and holiday,NA
+x11regression.xregressioncmatrix,xrc,x11regression,TRUE,TRUE,correlation matrix of irregular regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument,NA
+x11regression.xregressionmatrix,xrm,x11regression,TRUE,TRUE,values of irregular regression variables with associated dates,NA
+composite.adjcompositesrsplot,b1p,composite,NA,NA,plot of the prior adjusted aggregate series ,NA
+composite.origchangespct,ip5,composite,NA,NA,percent changes for composite series,NA
+composite.indsachangespct,ip6,composite,NA,NA,percent changes for indirect seasonally adjusted series,NA
+composite.indrevsachangespct,ipa,composite,NA,NA,percent changes for indirect seasonally adjusted series with forced yearly totals,NA
+composite.indrndsachangespct,ipr,composite,NA,NA,percent changes for rounded indirect seasonally adjusted series,NA
+composite.indtrendchangespct,ip7,composite,NA,NA,percent changes for indirect trend component,NA
+composite.indcalendaradjchangespct,ip8,composite,NA,NA,percent changes in original series adjusted for calendar effects,NA
+composite.indseasonalpct,ips,composite,NA,NA,indirect seasonal component expressed as percentages if appropriate,NA
+composite.indirregularpct,ipi,composite,NA,NA,indirect irregular component expressed as percentages if appropriate,NA
+composite.indadjustfacpct,ipf,composite,NA,NA,indirect combined adjustment factors expressed as percentages if appropriate,NA
+force.revsachangespct,p6a,force,NA,NA,percent changes in seasonally adjusted series with forced yearly totals,NA
+force.rndsachangespct,p6r,force,NA,NA,percent changes in rounded seasonally adjusted series,NA
+seats.componentmodels,mdc,seats,NA,TRUE,models for the components,NA
+seats.filtersaconc,fac,seats,NA,TRUE,concurrent finite seasonal adjustment filter,NA
+seats.filtersasym,faf,seats,NA,TRUE,symmetric finite seasonal adjustment filter,NA
+seats.filtertrendconc,ftc,seats,NA,TRUE,concurrent finite trend filter,NA
+seats.filtertrendsym,ftf,seats,NA,TRUE,symmetric finite trend filter,NA
+seats.pseudoinnovtrend,pic,seats,NA,NA,pseudo-innovations of the trend component,NA
+seats.pseudoinnovseasonal,pis,seats,NA,NA,pseudo-innovations of the seasonal component,NA
+seats.psuedoinnovtransitory,pit,seats,NA,NA,pseudo-innovations of the transitory component,NA
+seats.psuedoinnovsadj,pia,seats,NA,NA,pseudo-innovations of the final SEATS seasonal adjustment,NA
+seats.squaredgainsaconc,gac,seats,NA,TRUE,squared gain for finite concurrent seasonal adjustment filter,NA
+seats.squaredgainsasym,gaf,seats,NA,TRUE,squared gain for finite symmetric seasonal adjustment filter,NA
+seats.squaredgaintrendconc,gtc,seats,NA,TRUE,squared gain for finite concurrent trend filter,NA
+seats.squaredgaintrendsym,gtf,seats,NA,TRUE,squared gain for finite symmetric trend filter,NA
+seats.timeshiftsaconc,tac,seats,NA,TRUE,time shift for finite concurrent seasonal adjustment filter,NA
+seats.timeshifttrendconc,ttc,seats,NA,TRUE,time shift for finite concurrent trend filter,NA
+seats.wkendfilter,wkf,seats,NA,TRUE,end filters of the semi-infinite Wiener-Kolmogorov filter,NA
+seats.seasonalpct,pss,seats,NA,NA,"final seasonal factors, expressed as percentages if appropriate",NA
+seats.irregularpct,psi,seats,NA,NA,"final irregular component, expressed as percentages if appropriate",NA
+seats.transitorypct,psc,seats,NA,NA,"final transitory component, expressed as percentages if appropriate",NA
+seats.adjustfacpct,psa,seats,NA,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
+spectrum.spectukeyorig,st0,spectrum,NA,NA,Tukey spectrum of the first-differenced original series,NA
+spectrum.spectukeysa,st1,spectrum,NA,NA,"Tukey spectrum of the differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult)",NA
+spectrum.spectukeyirr,st2,spectrum,NA,NA,Tukey spectrum of the outlier-modified X-11 irregular series,NA
+spectrum.spectukeyseatssa,t1s,spectrum,NA,NA,Tukey spectrum of the differenced final SEATS seasonal adjustment,NA
+spectrum.spectukeyseatsirr,t2s,spectrum,NA,NA,Tukey spectrum of the final SEATS irregular,NA
+spectrum.spectukeyextresiduals,ter,spectrum,NA,NA,Tukey spectrum of the extended residuals,NA
+spectrum.spectukeyresidual,str,spectrum,NA,NA,Tukey spectrum of the regARIMA model residuals,NA
+spectrum.spectukeycomposite,it0,spectrum,NA,NA,Tukey spectrum of the first-differenced aggregate series,NA
+spectrum.spectukeyindsa,it1,spectrum,NA,NA,Tukey spectrum of the first-differenced indirect seasonally adjusted series,NA
+spectrum.spectukeyindirr,it2,spectrum,NA,NA,Tukey spectrum of the outlier-modified irregular series from the indirect seasonal adjustment,NA
+spectrum.original,a1,spectrum,NA,NA,original series,NA
+spectrum.outlieradjoriginal,a19,spectrum,NA,NA,"original series, adjusted for regARIMA outliers",NA
+spectrum.adjoriginal,b1,spectrum,NA,NA,"original series, adjusted for user specified and regARIMA prior effects",NA
+spectrum.modoriginal,e1,spectrum,NA,NA,original series modified for extremes,NA
+x11.adjustfacpct,paf,x11,NA,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
+x11.calendaradjchangespct,pe8,x11,NA,NA,percent changes in original series adjusted for calendar factors,NA
+x11.irregularpct,pir,x11,NA,NA,"final irregular component, expressed as percentages if appropriate",NA
+x11.origchangespct,pe5,x11,NA,NA,percent changes in the original series,NA
+x11.sachangespct,pe6,x11,NA,NA,percent changes in seasonally adjusted series,NA
+x11.seasonalpct,psf,x11,NA,NA,"final seasonal factors, expressed as percentages if appropriate",NA
+x11.trendchangespct,pe7,x11,NA,NA,percent changes in final trend cycle,NA
