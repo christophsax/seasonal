@@ -5,6 +5,7 @@ R interface to X-13ARIMA-SEATS
 [![R-CMD-check](https://github.com/christophsax/seasonal/workflows/R-CMD-check/badge.svg)](https://github.com/christophsax/seasonal/actions)
 [![Downloads](http://cranlogs.r-pkg.org/badges/seasonal)](https://cran.r-project.org/package=seasonal)
 <!-- [![Codecov test coverage](https://codecov.io/gh/christophsax/seasonal/branch/main/graph/badge.svg)](https://codecov.io/gh/christophsax/seasonal?branch=main) -->
+[![R-CMD-check](https://github.com/christophsax/seasonal/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/christophsax/seasonal/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 
