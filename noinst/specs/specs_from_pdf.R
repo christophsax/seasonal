@@ -291,6 +291,9 @@ tbl_final <- tbl_final |>
 # "Save argument is not defined" error
 tbl_final |> filter(is.save != is.save.actual)
 
+# Mark the specs which an actual run of x13 claims (should) have saveable output
+# as is.save. Calling seas with non-saveable tables in save should have thrown
+# one of the errors checked for above (e.g. seas(AirPassengers, regression.save = "ats"))
 tbl_final <- tbl_final |>
   mutate(
     is.save = is.save.actual
