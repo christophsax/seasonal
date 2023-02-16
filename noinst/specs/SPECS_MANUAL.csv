@@ -108,7 +108,7 @@ history.sasummary,FALSE,NA
 history.seatsmdlhistory,TRUE,NA
 history.sfestimates,TRUE,"history.estimates = ""seasonal"""
 history.sfilterhistory,TRUE,"history.estimates = ""seasonal"""
-history.sfrevisions,TRUE,"history.estimates = ""seasonal"""
+history.sfrevisions,TRUE,NA
 history.sfsummary,FALSE,NA
 history.trendchngestimates,TRUE,"history.estimates = ""trendchng"""
 history.trendchngrevisions,TRUE,"history.estimates = ""trendchng"""

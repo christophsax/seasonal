@@ -1,31 +1,43 @@
 library(tidyverse)
 library(rex)
 
-# TODO: There is also a full table in appendix B of the full manual but eh.
-txt_quick <- pdftools::pdf_text(
-  "https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/qrefx13ashtmlpc.pdf"
+txt_full <- pdftools::pdf_text(
+  "https://www2.census.gov/software/x-13arima-seats/x13as/unix-linux/documentation/docx13ashtml.pdf"
+)
+
+# Named thus because this bit used to be extracted from the quickstart guido
+quick_from_full <- tibble(
+  page = txt_full
+) |>
+  filter(
+    re_matches(
+      page,
+      rex("Table B.1: Print and Save")
+    )
   ) |>
+  # Convert to lines
+  pull(page) |>
   paste(collapse = "\n") |>
   strsplit("\n") |>
-  unlist()
-
-quick <- tibble(
-  line = trimws(txt_quick)
-) |>
+  unlist() |>
+  trimws() |>
+  tibble() |>
+  setNames("line") |>
+  # Pull lines that are part of the desired tables
   mutate(
-    starts_table = grepl("^Name.*Table\\?.*Spec$", line),
-    table_number = cumsum(starts_table),
-    is_empty = line == ""
+    starts_table = re_matches(line, rex("Name", anything, "Spec")),
+    is_after_table = re_matches(line, rex("PRINT AND SAVE TABLES")),
+    table_number = cumsum(starts_table)
   ) |>
-  group_by(
-    table_number
-  ) |>
-  filter(cumsum(is_empty) == 0) |>
+  group_by(table_number) |>
+  filter(cumsum(is_after_table) == 0) |>
   ungroup() |>
-  filter(
-    table_number > 0,
-    !grepl("Table\\?", line)
+  filter(table_number > 0) |>
+  filter(!starts_table) |>
+  mutate(
+    line = trimws(line)
   ) |>
+  filter(nchar(line) > 0) |>
   pull(line) |>
   re_matches(
     rex(
@@ -33,27 +45,26 @@ quick <- tibble(
       capture(alnums, name = "long"),
       spaces,
       capture(alnums, name = "short"),
-      capture(anything, name = "rest"),
-      boundary,
+      spaces,
+      capture(alnums, name = "save"),
+      spaces,
+      capture(alnums, name = "brief"),
+      spaces,
+      capture(alnums, name = "default"),
+      spaces,
       capture(alnums, name = "spec"),
       end
     )
   ) |>
   as_tibble() |>
-  mutate(
-    save = re_matches(rest, rex(start, between(space, 0, 15), "+"))
-  ) |>
   transmute(
     long = sprintf("%s.%s", spec, long),
     short,
     spec,
-    is.save = save
+    is.save = save == "yes",
+    is.brief = brief == "yes",
+    is.default = default == "yes"
   )
-
-
-txt_full <- pdftools::pdf_text(
-  "https://www2.census.gov/software/x-13arima-seats/x13as/unix-linux/documentation/docx13ashtml.pdf"
-)
 
 full <- tibble(
   page = txt_full
@@ -121,7 +132,7 @@ full <- tibble(
         capture(alnums, name = "long"),
         spaces,
         capture(alnums, name = "short"),
-        any_of(space, "·", "+"),
+        capture(any_of(space, "·", "+"), name = "issave"),
         capture(anything, name = "description"),
         end
       )
@@ -131,20 +142,34 @@ full <- tibble(
   transmute(
     long = sprintf("%s.%s", spec, long),
     short,
+    is.save = re_matches(issave, "\\+"),
     spec,
     description
   )
 
-tbl_all <- full_join(quick, full, by = c("long")) |>
+jnd <- full_join(quick_from_full, full, by = "long")
+
+jnd |> filter(is.na(short.x))
+
+jnd |> filter(is.na(short.y))
+
+jnd |> filter(!is.na(short.x) & !is.na(short.y)) |>
+  filter(is.save.x != is.save.y)
+
+tbl_all <- full_join(quick_from_full, full, by = c("long")) |>
   mutate(
     short = coalesce(short.x, short.y),
-    spec = coalesce(spec.x, spec.y)
+    spec = coalesce(spec.x, spec.y),
+    # Be optimistic for starters
+    is.save = is.save.x | is.save.y
   ) |>
   select(
     -short.x,
     -short.y,
     -spec.x,
-    -spec.y
+    -spec.y,
+    -is.save.x,
+    -is.save.y
   )
 
 manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv")
@@ -152,4 +177,160 @@ manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv")
 tbl_final <- left_join(tbl_all, manual_specs, by = "long") |>
   select(long, short, spec, is.save, is.series, description, requires)
 
-write_csv(tbl_final, "noinst/specs/SPECS.csv")
+
+# Check validity of tbl_final and fix possible issues ---------------------
+
+analyze_output <- function(.x, .y, x11_seats) {
+  message("doing ", .x$long)
+
+  # Create a separate dir for each combination to allow inspection of the generated files
+  specdir_seats <- file.path(td, paste0(.x$spec, "_", .x$short, "_", x11_seats))
+  dir.create(specdir_seats, showWarnings = FALSE, recursive = TRUE)
+
+  l <- list()
+  l[[paste0(.x$spec, ".save")]] <- unlist(.x$short)
+
+  if(x11_seats == "x11") {
+    l[["x11"]] = ""
+  }
+
+  if(!is.na(.x$requires)) {
+    message("Adding required argument ", .x$requires)
+
+    required_args <- re_matches(
+      .x$requires,
+      rex(
+        capture(anything, name = "name"),
+        " = \"",
+        capture(anything, name = "value"),
+        "\"")
+    )
+
+    l[[required_args$name]] <- required_args$value
+  }
+
+  m <- try(seas(AirPassengers, list = l, dir = specdir_seats), silent = TRUE)
+
+  if(inherits(m, "try-error")) {
+    return(tibble(
+      long = .x$long,
+      short = .x$short,
+      is_error = TRUE,
+      error_msg = as.character(m),
+      x11_seats
+    ))
+  }
+
+  readable_files <- .x |>
+    filter(!short %in% c("est", "mdl")) |>
+    mutate(
+      file = file.path(specdir_seats, paste0("iofile.", short))
+    )
+
+  if(nrow(readable_files) > 0) {
+    readable_files |>
+      rowwise() |>
+      mutate(
+        has_file = file.exists(file),
+        content = {message(file); list(read_series(file))},
+        content_raw = if(has_file) { paste(readLines(file), collapse = "\n") } else { "" }
+      ) |>
+      ungroup() |>
+      mutate(
+        is_ts = sapply(content, is.ts),
+        length = sapply(content, length),
+        has_content = length > 0,
+        is_series = short %in% names(m$series),
+        is_error = FALSE,
+        model = list(m)
+      ) |>
+      select(long, short, is_ts, has_content, is_series, has_file, is_error, content, content_raw, model)
+  } else {
+    tibble()
+  }
+}
+
+# Run every spec + save combination and see what sticks
+res <- tbl_final |>
+  # The author does not understand composite spec yet. ;)
+  filter(spec != "composite") |>
+  rowwise() |>
+  group_map(~{
+    bind_rows(
+      analyze_output(.x, .y, "seats") |> mutate(x11_seats = "seats"),
+      analyze_output(.x, .y, "x11") |> mutate(x11_seats = "x11")
+    )
+  }) |>
+  bind_rows()
+
+
+# Mark entries that x13 actually can't save
+not_save <- res |>
+  filter(
+    !is.na(error_msg),
+    re_matches(error_msg, rex(
+        or(
+          "Save argument is not defined",
+          "Argument name \"save\" not found"
+        )
+      ),
+      options = "i")
+  ) |>
+  select(long)
+
+tbl_final <- tbl_final |>
+  mutate(
+    is.save.actual = case_when(
+      spec == "composite" ~ is.save,
+      TRUE ~ !(long %in% not_save$long)
+    )
+  )
+
+# At the time of writing there was only one: slidingspans.yysummary which
+# is marked as save in the manual (conflictingly) but gives a
+# "Save argument is not defined" error
+tbl_final |> filter(is.save != is.save.actual)
+
+tbl_final <- tbl_final |>
+  mutate(
+    is.save = is.save.actual
+  )
+
+contentless <- res |>
+  filter(!has_content) |>
+  transmute(
+    long,
+    short,
+    x11_seats,
+    err = lapply(model, function(x){
+      y <- unclass(x$err)
+      tibble(
+        error = ifelse(is.list(y$error), "", unlist(y$error)),
+        warning = ifelse(is.list(y$warning), "", unlist(y$warning)),
+        note = ifelse(is.list(y$note), "", unlist(y$note))
+      )
+    })
+  ) |>
+  unnest(err) |>
+  mutate(
+    works_with_one = n() == 1,
+    .by = long
+  )
+#
+# contentless |> pull(x11_seats) |> table()
+#
+# contentless |>
+#   filter(works_with_one) |>
+#   select(long, x11_seats) |>
+#   left_join(tbl_final) |>
+#   select(long, short, x11_seats, description) |>
+#   View()
+#
+# tbl_final |>
+#   filter(!long %in% contentless$long) |>
+#   View()
+
+tbl_final |>
+  select(long, short, spec, is.save, is.series, description, requires) |>
+  write_csv("noinst/specs/SPECS.csv")
+

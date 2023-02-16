@@ -223,6 +223,18 @@
 #' x11regression \tab x11regression.x11regb \tab b15 \tab preliminary irregular regression coefficients and diagnostics \cr
 #' x11regression \tab x11regression.xregressioncmatrix \tab xrc \tab correlation matrix of irregular regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
 #' x11regression \tab x11regression.xregressionmatrix \tab xrm \tab values of irregular regression variables with associated dates \cr
+#' seats \tab seats.componentmodels \tab mdc \tab models for the components \cr
+#' seats \tab seats.filtersaconc \tab fac \tab concurrent finite seasonal adjustment filter \cr
+#' seats \tab seats.filtersasym \tab faf \tab symmetric finite seasonal adjustment filter \cr
+#' seats \tab seats.filtertrendconc \tab ftc \tab concurrent finite trend filter \cr
+#' seats \tab seats.filtertrendsym \tab ftf \tab symmetric finite trend filter \cr
+#' seats \tab seats.squaredgainsaconc \tab gac \tab squared gain for finite concurrent seasonal adjustment filter \cr
+#' seats \tab seats.squaredgainsasym \tab gaf \tab squared gain for finite symmetric seasonal adjustment filter \cr
+#' seats \tab seats.squaredgaintrendconc \tab gtc \tab squared gain for finite concurrent trend filter \cr
+#' seats \tab seats.squaredgaintrendsym \tab gtf \tab squared gain for finite symmetric trend filter \cr
+#' seats \tab seats.timeshiftsaconc \tab tac \tab time shift for finite concurrent seasonal adjustment filter \cr
+#' seats \tab seats.timeshifttrendconc \tab ttc \tab time shift for finite concurrent trend filter \cr
+#' seats \tab seats.wkendfilter \tab wkf \tab end filters of the semi-infinite Wiener-Kolmogorov filter \cr
 #' }
 #'
 #'

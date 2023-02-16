@@ -18,7 +18,7 @@ check.histogram,hst,check,FALSE,FALSE,"histogram of standardized residuals and t
 check.normalitytest,nrm,check,FALSE,FALSE,"Geary’s a and kurtosis statistical tests for the normality of the model residuals, as well as a test for skewness of the residuals",NA
 check.pacf,pcf,check,TRUE,TRUE,partial autocorrelation function of residuals with standard errors,NA
 check.pacfplot,pcp,check,FALSE,FALSE,plot of residual partial autocorrelation function with ± 2 standard error limits,NA
-composite.adjcompositeplot,b1p,composite,FALSE,FALSE,NA,NA
+composite.adjcompositeplot,b1p,composite,NA,FALSE,NA,NA
 composite.adjcompositesrs,b1,composite,TRUE,TRUE,"aggregated time series data, prior adjusted, with associated dates ",NA
 composite.calendaradjcomposite,cac,composite,TRUE,TRUE,"aggregated time series data, adjusted for regARIMA calendar effects.",NA
 composite.compositeplot,cmp,composite,FALSE,FALSE,plot of the prior adjusted aggregate series,NA
@@ -204,13 +204,13 @@ spectrum.qcheck,qch,spectrum,FALSE,NA,QS diagnostic to detect seasonality in qua
 spectrum.qs,qs,spectrum,FALSE,FALSE,QS diagnostic to detect seasonality,NA
 spectrum.qsind,qsi,spectrum,FALSE,NA,QS diagnostic to detect seasonality (indirect adjustment),NA
 spectrum.speccomposite,is0,spectrum,TRUE,TRUE,spectral plot of first-differenced aggregate series,NA
-spectrum.specextresiduals,ser,spectrum,TRUE,NA,spectrum of the extended residuals,NA
 spectrum.specindirr,is2,spectrum,TRUE,TRUE,spectral plot of the first-differenced indirect seasonally adjusted series,NA
 spectrum.specindsa,is1,spectrum,TRUE,TRUE,spectral plot of outlier-modified irregular series from the indirect seasonal adjustment,NA
 spectrum.specirr,sp2,spectrum,TRUE,TRUE,spectral plot of outlier-modified X-11 irregular series,NA
 spectrum.specorig,sp0,spectrum,TRUE,TRUE,spectral plot of the first-differenced original series,NA
 spectrum.specresidual,spr,spectrum,TRUE,TRUE,spectral plot of the regARIMA model residuals,NA
 spectrum.specsa,sp1,spectrum,TRUE,TRUE,"spectral plot of differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult)",NA
+spectrum.specextresiduals,ser,spectrum,TRUE,NA,spectrum of the extended residuals,NA
 spectrum.specseatsirr,s2s,spectrum,TRUE,TRUE,spectrum of the final SEATS irregular,NA
 spectrum.specseatssa,s1s,spectrum,TRUE,TRUE,spectrum of the differenced final SEATS seasonal adjustment,NA
 spectrum.tukeypeaks,tpk,spectrum,FALSE,NA,peak probability of Tukey spectrum,NA
@@ -335,46 +335,46 @@ composite.indcalendaradjchangespct,ip8,composite,NA,NA,percent changes in origin
 composite.indseasonalpct,ips,composite,NA,NA,indirect seasonal component expressed as percentages if appropriate,NA
 composite.indirregularpct,ipi,composite,NA,NA,indirect irregular component expressed as percentages if appropriate,NA
 composite.indadjustfacpct,ipf,composite,NA,NA,indirect combined adjustment factors expressed as percentages if appropriate,NA
-force.revsachangespct,p6a,force,NA,NA,percent changes in seasonally adjusted series with forced yearly totals,NA
-force.rndsachangespct,p6r,force,NA,NA,percent changes in rounded seasonally adjusted series,NA
-seats.componentmodels,mdc,seats,NA,TRUE,models for the components,NA
-seats.filtersaconc,fac,seats,NA,TRUE,concurrent finite seasonal adjustment filter,NA
-seats.filtersasym,faf,seats,NA,TRUE,symmetric finite seasonal adjustment filter,NA
-seats.filtertrendconc,ftc,seats,NA,TRUE,concurrent finite trend filter,NA
-seats.filtertrendsym,ftf,seats,NA,TRUE,symmetric finite trend filter,NA
-seats.pseudoinnovtrend,pic,seats,NA,NA,pseudo-innovations of the trend component,NA
-seats.pseudoinnovseasonal,pis,seats,NA,NA,pseudo-innovations of the seasonal component,NA
-seats.psuedoinnovtransitory,pit,seats,NA,NA,pseudo-innovations of the transitory component,NA
-seats.psuedoinnovsadj,pia,seats,NA,NA,pseudo-innovations of the final SEATS seasonal adjustment,NA
-seats.squaredgainsaconc,gac,seats,NA,TRUE,squared gain for finite concurrent seasonal adjustment filter,NA
-seats.squaredgainsasym,gaf,seats,NA,TRUE,squared gain for finite symmetric seasonal adjustment filter,NA
-seats.squaredgaintrendconc,gtc,seats,NA,TRUE,squared gain for finite concurrent trend filter,NA
-seats.squaredgaintrendsym,gtf,seats,NA,TRUE,squared gain for finite symmetric trend filter,NA
-seats.timeshiftsaconc,tac,seats,NA,TRUE,time shift for finite concurrent seasonal adjustment filter,NA
-seats.timeshifttrendconc,ttc,seats,NA,TRUE,time shift for finite concurrent trend filter,NA
-seats.wkendfilter,wkf,seats,NA,TRUE,end filters of the semi-infinite Wiener-Kolmogorov filter,NA
-seats.seasonalpct,pss,seats,NA,NA,"final seasonal factors, expressed as percentages if appropriate",NA
-seats.irregularpct,psi,seats,NA,NA,"final irregular component, expressed as percentages if appropriate",NA
-seats.transitorypct,psc,seats,NA,NA,"final transitory component, expressed as percentages if appropriate",NA
-seats.adjustfacpct,psa,seats,NA,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
-spectrum.spectukeyorig,st0,spectrum,NA,NA,Tukey spectrum of the first-differenced original series,NA
-spectrum.spectukeysa,st1,spectrum,NA,NA,"Tukey spectrum of the differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult)",NA
-spectrum.spectukeyirr,st2,spectrum,NA,NA,Tukey spectrum of the outlier-modified X-11 irregular series,NA
-spectrum.spectukeyseatssa,t1s,spectrum,NA,NA,Tukey spectrum of the differenced final SEATS seasonal adjustment,NA
-spectrum.spectukeyseatsirr,t2s,spectrum,NA,NA,Tukey spectrum of the final SEATS irregular,NA
-spectrum.spectukeyextresiduals,ter,spectrum,NA,NA,Tukey spectrum of the extended residuals,NA
-spectrum.spectukeyresidual,str,spectrum,NA,NA,Tukey spectrum of the regARIMA model residuals,NA
-spectrum.spectukeycomposite,it0,spectrum,NA,NA,Tukey spectrum of the first-differenced aggregate series,NA
-spectrum.spectukeyindsa,it1,spectrum,NA,NA,Tukey spectrum of the first-differenced indirect seasonally adjusted series,NA
-spectrum.spectukeyindirr,it2,spectrum,NA,NA,Tukey spectrum of the outlier-modified irregular series from the indirect seasonal adjustment,NA
-spectrum.original,a1,spectrum,NA,NA,original series,NA
-spectrum.outlieradjoriginal,a19,spectrum,NA,NA,"original series, adjusted for regARIMA outliers",NA
-spectrum.adjoriginal,b1,spectrum,NA,NA,"original series, adjusted for user specified and regARIMA prior effects",NA
-spectrum.modoriginal,e1,spectrum,NA,NA,original series modified for extremes,NA
-x11.adjustfacpct,paf,x11,NA,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
-x11.calendaradjchangespct,pe8,x11,NA,NA,percent changes in original series adjusted for calendar factors,NA
-x11.irregularpct,pir,x11,NA,NA,"final irregular component, expressed as percentages if appropriate",NA
-x11.origchangespct,pe5,x11,NA,NA,percent changes in the original series,NA
-x11.sachangespct,pe6,x11,NA,NA,percent changes in seasonally adjusted series,NA
-x11.seasonalpct,psf,x11,NA,NA,"final seasonal factors, expressed as percentages if appropriate",NA
-x11.trendchangespct,pe7,x11,NA,NA,percent changes in final trend cycle,NA
+force.revsachangespct,p6a,force,TRUE,NA,percent changes in seasonally adjusted series with forced yearly totals,NA
+force.rndsachangespct,p6r,force,TRUE,NA,percent changes in rounded seasonally adjusted series,NA
+seats.componentmodels,mdc,seats,TRUE,TRUE,models for the components,NA
+seats.filtersaconc,fac,seats,TRUE,TRUE,concurrent finite seasonal adjustment filter,NA
+seats.filtersasym,faf,seats,TRUE,TRUE,symmetric finite seasonal adjustment filter,NA
+seats.filtertrendconc,ftc,seats,TRUE,TRUE,concurrent finite trend filter,NA
+seats.filtertrendsym,ftf,seats,TRUE,TRUE,symmetric finite trend filter,NA
+seats.pseudoinnovtrend,pic,seats,TRUE,NA,pseudo-innovations of the trend component,NA
+seats.pseudoinnovseasonal,pis,seats,TRUE,NA,pseudo-innovations of the seasonal component,NA
+seats.psuedoinnovtransitory,pit,seats,TRUE,NA,pseudo-innovations of the transitory component,NA
+seats.psuedoinnovsadj,pia,seats,TRUE,NA,pseudo-innovations of the final SEATS seasonal adjustment,NA
+seats.squaredgainsaconc,gac,seats,TRUE,TRUE,squared gain for finite concurrent seasonal adjustment filter,NA
+seats.squaredgainsasym,gaf,seats,TRUE,TRUE,squared gain for finite symmetric seasonal adjustment filter,NA
+seats.squaredgaintrendconc,gtc,seats,TRUE,TRUE,squared gain for finite concurrent trend filter,NA
+seats.squaredgaintrendsym,gtf,seats,TRUE,TRUE,squared gain for finite symmetric trend filter,NA
+seats.timeshiftsaconc,tac,seats,TRUE,TRUE,time shift for finite concurrent seasonal adjustment filter,NA
+seats.timeshifttrendconc,ttc,seats,TRUE,TRUE,time shift for finite concurrent trend filter,NA
+seats.wkendfilter,wkf,seats,TRUE,TRUE,end filters of the semi-infinite Wiener-Kolmogorov filter,NA
+seats.seasonalpct,pss,seats,TRUE,NA,"final seasonal factors, expressed as percentages if appropriate",NA
+seats.irregularpct,psi,seats,TRUE,NA,"final irregular component, expressed as percentages if appropriate",NA
+seats.transitorypct,psc,seats,TRUE,NA,"final transitory component, expressed as percentages if appropriate",NA
+seats.adjustfacpct,psa,seats,TRUE,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
+spectrum.spectukeyorig,st0,spectrum,TRUE,NA,Tukey spectrum of the first-differenced original series,NA
+spectrum.spectukeysa,st1,spectrum,TRUE,NA,"Tukey spectrum of the differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult)",NA
+spectrum.spectukeyirr,st2,spectrum,TRUE,NA,Tukey spectrum of the outlier-modified X-11 irregular series,NA
+spectrum.spectukeyseatssa,t1s,spectrum,TRUE,NA,Tukey spectrum of the differenced final SEATS seasonal adjustment,NA
+spectrum.spectukeyseatsirr,t2s,spectrum,TRUE,NA,Tukey spectrum of the final SEATS irregular,NA
+spectrum.spectukeyextresiduals,ter,spectrum,TRUE,NA,Tukey spectrum of the extended residuals,NA
+spectrum.spectukeyresidual,str,spectrum,TRUE,NA,Tukey spectrum of the regARIMA model residuals,NA
+spectrum.spectukeycomposite,it0,spectrum,TRUE,NA,Tukey spectrum of the first-differenced aggregate series,NA
+spectrum.spectukeyindsa,it1,spectrum,TRUE,NA,Tukey spectrum of the first-differenced indirect seasonally adjusted series,NA
+spectrum.spectukeyindirr,it2,spectrum,TRUE,NA,Tukey spectrum of the outlier-modified irregular series from the indirect seasonal adjustment,NA
+spectrum.original,a1,spectrum,FALSE,NA,original series,NA
+spectrum.outlieradjoriginal,a19,spectrum,FALSE,NA,"original series, adjusted for regARIMA outliers",NA
+spectrum.adjoriginal,b1,spectrum,FALSE,NA,"original series, adjusted for user specified and regARIMA prior effects",NA
+spectrum.modoriginal,e1,spectrum,FALSE,NA,original series modified for extremes,NA
+x11.adjustfacpct,paf,x11,TRUE,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
+x11.calendaradjchangespct,pe8,x11,TRUE,NA,percent changes in original series adjusted for calendar factors,NA
+x11.irregularpct,pir,x11,TRUE,NA,"final irregular component, expressed as percentages if appropriate",NA
+x11.origchangespct,pe5,x11,TRUE,NA,percent changes in the original series,NA
+x11.sachangespct,pe6,x11,TRUE,NA,percent changes in seasonally adjusted series,NA
+x11.seasonalpct,psf,x11,TRUE,NA,"final seasonal factors, expressed as percentages if appropriate",NA
+x11.trendchangespct,pe7,x11,TRUE,NA,percent changes in final trend cycle,NA
