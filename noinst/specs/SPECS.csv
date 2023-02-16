@@ -108,7 +108,7 @@ history.sasummary,sas,history,FALSE,FALSE,summary statistics for seasonal adjust
 history.seatsmdlhistory,smh,history,TRUE,TRUE,SEATS ARIMA model history,NA
 history.sfestimates,sfe,history,TRUE,TRUE,concurrent and most recent estimate of the seasonal factors and projected seasonal factors,"history.estimates = ""seasonal"""
 history.sfilterhistory,sfh,history,TRUE,TRUE,record of seasonal filter selection for each observation in the revisions history (printed only if automatic seasonal filter selection is used),"history.estimates = ""seasonal"""
-history.sfrevisions,sfr,history,TRUE,TRUE,"revision from concurrent to most recent estimate of the seasonal factor, as well as projected seasonal factors","history.estimates = ""seasonal"""
+history.sfrevisions,sfr,history,TRUE,TRUE,"revision from concurrent to most recent estimate of the seasonal factor, as well as projected seasonal factors",NA
 history.sfsummary,sfs,history,FALSE,FALSE,summary statistics for seasonal factor revisions,NA
 history.tdhistory,tdh,history,TRUE,NA,history of estimated trading day regression coefficients from the regARIMA model,NA
 history.trendchngestimates,tce,history,TRUE,TRUE,concurrent and most recent estimate of the month-tomonth (or quarter-to-quarter) changes in the trend component,"history.estimates = ""trendchng"""
@@ -367,10 +367,10 @@ spectrum.spectukeyresidual,str,spectrum,TRUE,NA,Tukey spectrum of the regARIMA m
 spectrum.spectukeycomposite,it0,spectrum,TRUE,NA,Tukey spectrum of the first-differenced aggregate series,NA
 spectrum.spectukeyindsa,it1,spectrum,TRUE,NA,Tukey spectrum of the first-differenced indirect seasonally adjusted series,NA
 spectrum.spectukeyindirr,it2,spectrum,TRUE,NA,Tukey spectrum of the outlier-modified irregular series from the indirect seasonal adjustment,NA
-spectrum.original,a1,spectrum,FALSE,NA,original series,NA
-spectrum.outlieradjoriginal,a19,spectrum,FALSE,NA,"original series, adjusted for regARIMA outliers",NA
-spectrum.adjoriginal,b1,spectrum,FALSE,NA,"original series, adjusted for user specified and regARIMA prior effects",NA
-spectrum.modoriginal,e1,spectrum,FALSE,NA,original series modified for extremes,NA
+NA.original,a1,NA,TRUE,NA,original series,NA
+NA.outlieradjoriginal,a19,NA,TRUE,NA,"original series, adjusted for regARIMA outliers",NA
+NA.adjoriginal,b1,NA,TRUE,NA,"original series, adjusted for user specified and regARIMA prior effects",NA
+NA.modoriginal,e1,NA,TRUE,NA,original series modified for extremes,NA
 x11.adjustfacpct,paf,x11,TRUE,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
 x11.calendaradjchangespct,pe8,x11,TRUE,NA,percent changes in original series adjusted for calendar factors,NA
 x11.irregularpct,pir,x11,TRUE,NA,"final irregular component, expressed as percentages if appropriate",NA

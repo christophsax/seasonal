@@ -1,3 +1,4 @@
+devtools::load_all()
 library(tidyverse)
 library(rex)
 
@@ -101,9 +102,22 @@ full <- tibble(
     spec = re_matches(
       line,
       rex(
-        or("Output Tables for ", "Argument of ", "Argument for ", "Arguments for "),
-        capture(anything, name = "X")
-      )
+        # n.b. "Argument(s) for" is not sufficient here as there are also tables
+        #      "XXX Available Using the YYY Argument for SPEC"
+        #      those may reference the tables we want but actually document
+        #      different parameters of the spec
+        or(
+          "Output Tables for",
+          "Tables Saved As Percentages in the save Argument",
+          "Available Output Tables in Both print and save Arguments",
+          "Output Tables Available Only with save Argument"
+        ),
+        anything,
+        space,
+        capture(anything, name = "X"),
+        end
+      ),
+      options = "i"
     )$X) |>
   mutate(spec = trimws(tolower(spec))) |>
   fill(spec, .direction = "downup") |>
@@ -179,6 +193,8 @@ tbl_final <- left_join(tbl_all, manual_specs, by = "long") |>
 
 
 # Check validity of tbl_final and fix possible issues ---------------------
+
+td <- tempdir()
 
 analyze_output <- function(.x, .y, x11_seats) {
   message("doing ", .x$long)
