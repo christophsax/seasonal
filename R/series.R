@@ -334,6 +334,15 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     if (reeval){
       reeval.dots <- reeval_dots(x = x$composite, series.short = series.short, verbose = FALSE)
       if (length(reeval.dots) > 0){
+
+        message("Re-Running the model with additional")
+        message("To have the desired output series included in the future use this call:")
+
+        y <- x$call
+        new_args <- lapply(split(reeval.dots, names(reeval.dots)), \(xx) unlist(unname(xx)))
+        y[names(new_args)] <- new_args
+        message(deparse(y))
+
         x$composite$list <- c(x$composite$list, reeval.dots)
         x <- update_seas_multi(x)
       }
@@ -353,7 +362,15 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
     reeval.dots <- reeval_dots(x = x, series.short = series.short, verbose = verbose)
 
-    if (length(reeval.dots) > 0){
+    if (length(reeval.dots) > 0) {
+      message("Re-Running the model with additional")
+      message("To have the desired output series included in the future use this call:")
+
+      y <- x$call
+      new_args <- lapply(split(reeval.dots, names(reeval.dots)), \(xx) unlist(unname(xx)))
+      y[names(new_args)] <- new_args
+      message(deparse(y))
+
       # this is the same as in update.seas()
       ml <- x$list
       # overwrite args in existing list
