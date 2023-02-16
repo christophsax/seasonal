@@ -123,6 +123,7 @@ full <- tibble(
   fill(spec, .direction = "downup") |>
   filter(cumsum(is_after_table) == 0) |>
   ungroup() |>
+  filter(!is.na(spec)) |> # Remove tables whose footer did not match that of desired tables (e.g. 7.46)
   filter(table_number > 0) |>
   filter(!starts_table) |>
   # Mark lines that are just the continuation of the description col of the previous

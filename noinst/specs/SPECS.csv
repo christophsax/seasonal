@@ -367,10 +367,6 @@ spectrum.spectukeyresidual,str,spectrum,TRUE,NA,Tukey spectrum of the regARIMA m
 spectrum.spectukeycomposite,it0,spectrum,TRUE,NA,Tukey spectrum of the first-differenced aggregate series,NA
 spectrum.spectukeyindsa,it1,spectrum,TRUE,NA,Tukey spectrum of the first-differenced indirect seasonally adjusted series,NA
 spectrum.spectukeyindirr,it2,spectrum,TRUE,NA,Tukey spectrum of the outlier-modified irregular series from the indirect seasonal adjustment,NA
-NA.original,a1,NA,TRUE,NA,original series,NA
-NA.outlieradjoriginal,a19,NA,TRUE,NA,"original series, adjusted for regARIMA outliers",NA
-NA.adjoriginal,b1,NA,TRUE,NA,"original series, adjusted for user specified and regARIMA prior effects",NA
-NA.modoriginal,e1,NA,TRUE,NA,original series modified for extremes,NA
 x11.adjustfacpct,paf,x11,TRUE,NA,"combined adjustment factors, expressed as percentages if appropriate",NA
 x11.calendaradjchangespct,pe8,x11,TRUE,NA,percent changes in original series adjusted for calendar factors,NA
 x11.irregularpct,pir,x11,TRUE,NA,"final irregular component, expressed as percentages if appropriate",NA
