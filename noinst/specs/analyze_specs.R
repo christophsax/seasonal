@@ -1,3 +1,5 @@
+# This is a scratchpad for
+
 devtools::load_all()
 library(tidyverse)
 library(rex)
@@ -40,7 +42,12 @@ analyze_output <- function(.x, .y, x11_seats) {
   m <- try(seas(AirPassengers, list = l, dir = specdir_seats), silent = TRUE)
 
   if(inherits(m, "try-error")) {
-    return(tibble(is_error = TRUE))
+    return(tibble(
+      long = .x$long,
+      short = .x$short,
+      is_error = TRUE,
+      x11_seats
+    ))
   }
 
   readable_files <- .x |>
@@ -53,7 +60,9 @@ analyze_output <- function(.x, .y, x11_seats) {
       readable_files |>
         rowwise() |>
         mutate(
-          content = {message(file); list(read_series(file))}
+          has_file = file.exists(file),
+          content = {message(file); list(read_series(file))},
+          content_raw = if(has_file) { paste(readLines(file), collapse = "\n") } else { "" }
         ) |>
         ungroup() |>
         mutate(
@@ -64,7 +73,7 @@ analyze_output <- function(.x, .y, x11_seats) {
           is_error = FALSE,
           model = list(m)
         ) |>
-        select(long, short, is_ts, has_content, is_series, is_error, content, model)
+        select(long, short, is_ts, has_content, is_series, has_file, is_error, content, content_raw, model)
   } else {
     tibble()
   }
@@ -83,7 +92,27 @@ res <- specs_save |>
 
 res |> nrow()
 
+# Seems like a "they" problem (or AirPassengers is bad input.)
+# [1] ""
+# [2] " X-13ARIMA-SEATS Seasonal Adjustment Program"
+# [3] " Version Number 1.1 Build 57"
+# [4] " Execution began  Feb 16, 2023  09.37.30 "
+# [5] ""
+# [6] "  Reading input spec file from C:\\Users\\X\\AppData\\Local\\Temp\\RtmpAnUWr5\\x131a6810aa3764/iofile.spc"
+# [7] "  Storing any program output into C:\\Users\\X\\AppData\\Local\\Temp\\RtmpAnUWr5\\x131a6810aa3764/iofile.html"
+# [8] "  Storing any program error messages into C:\\Users\\X\\AppData\\Local\\Temp\\RtmpAnUWr5\\x131a6810aa3764/iofile_err.html"
+# [9] "  Storing any diagnostics output into C:\\Users\\X\\AppData\\Local\\Temp\\RtmpAnUWr5\\x131a6810aa3764/iofile.udg"
+# [10] ""
+# [11] ""
+# [12] "Program received signal SIGSEGV: Segmentation fault - invalid memory reference."
+# [13] ""
+# [14] "Backtrace for this error:"
+# Author's note: this is the end of the output, no backtrace
 res |> filter(is_error)
+
+# Oddly, without the 'required' history.estimates = "seasonal" it seems to work.
+m <- seas(AirPassengers, history.save = "sfr")
+seas(AirPassengers, history.save = "sfr", history.estimates = "seasonal")
 
 contentless <- res |>
   filter(!has_content) |>
@@ -115,3 +144,11 @@ contentless |>
   left_join(specs, by = "long") |>
   select(long, short = short.x, description, requires) |>
   distinct(long, .keep_all = TRUE)
+
+contentless_with_file <- res |>
+  filter(
+    !has_content,
+    nchar(content_raw) > 0
+  )
+
+res$has_content == (nchar(res$content_raw) > 0)
