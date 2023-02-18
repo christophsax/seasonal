@@ -44,8 +44,15 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/setup-tinytex@v2
-      - run: tlmgr --version
+      - name: Install tex for vignette building
+        uses: r-lib/actions/setup-tinytex@v2
+        run: tlmgr --version
+
+      - name: Install tex packages
+        run: |
+          tinytex::tlmgr_install("ae")
+          tinytex::tlmgr_install("grfext")
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
