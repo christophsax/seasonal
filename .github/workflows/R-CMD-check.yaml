@@ -46,7 +46,8 @@ jobs:
 
       - name: Install tex for vignette building
         uses: r-lib/actions/setup-tinytex@v2
-        run: tlmgr --version
+
+      - run: tlmgr --version
 
       - name: Install tex packages
         run: |
