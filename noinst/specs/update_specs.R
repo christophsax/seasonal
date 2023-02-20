@@ -1,3 +1,4 @@
+library(tidyverse)
 
 # Update SPECS.csv --------------------------------------------------------
 
@@ -8,7 +9,18 @@ source("noinst/specs/specs_from_pdf.R")
 
 
 # load SPECS data from .csv and store as data/SPECS.RData
-SPECS <- read.csv("noinst/specs/SPECS.csv", stringsAsFactors = FALSE)
+SPECS <- read_csv("noinst/specs/SPECS.csv") |>
+  # Fix non-ascii characters. R CMD CHECK only allows ascii in data
+  mutate(
+    description = stringi::stri_trans_general(description, "latin-ascii")
+  ) |>
+  mutate(
+    # Fix for estimate.regressioneffects. The beta should have a circumflex
+    # but pdftools::pdf_text seens unable to reflect that.
+    description = gsub("Xβ,b", "Xβ", description)
+  ) |>
+  as.data.frame()
+
 
 save(SPECS, file = "data/specs.RData", version = 2)  # version 3 requires >= R3.5
 

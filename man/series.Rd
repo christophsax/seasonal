@@ -42,7 +42,7 @@ List of all importable tables from X-13ARIMA-SEATS:
 check \tab check.acf \tab acf \tab autocorrelation function of residuals with standard errors and Ljung-Box Q-statistics computed through each lag \cr
 check \tab check.acfsquared \tab ac2 \tab autocorrelation function of squared residuals with standard errors and Ljung-Box Q-statistics computed through each lag \cr
 check \tab check.pacf \tab pcf \tab partial autocorrelation function of residuals with standard errors \cr
-composite \tab composite.adjcompositesrs \tab b1 \tab aggregated time series data, prior adjusted, with associated dates  \cr
+composite \tab composite.adjcompositesrs \tab b1 \tab aggregated time series data, prior adjusted, with associated dates \cr
 composite \tab composite.calendaradjcomposite \tab cac \tab aggregated time series data, adjusted for regARIMA calendar effects. \cr
 composite \tab composite.compositesrs \tab cms \tab aggregated time series data, with associated dates \cr
 composite \tab composite.indadjsatot \tab iaa \tab final indirect seasonally adjusted series, with yearly totals adjusted to match the original series \cr
@@ -74,7 +74,7 @@ composite \tab composite.prioradjcomposite \tab ia3 \tab composite series adjust
 estimate \tab estimate.armacmatrix \tab acm \tab correlation matrix of ARMA parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
 estimate \tab estimate.iterations \tab itr \tab detailed output for estimation iterations, including log-likelihood values and parameters, and counts of function evaluations and iterations \cr
 estimate \tab estimate.regcmatrix \tab rcm \tab correlation matrix of regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
-estimate \tab estimate.regressioneffects \tab ref \tab Xβ,b matrix of regression variables multiplied by the vector of estimated regression coefficients \cr
+estimate \tab estimate.regressioneffects \tab ref \tab Xβ matrix of regression variables multiplied by the vector of estimated regression coefficients \cr
 estimate \tab estimate.residuals \tab rsd \tab model residuals with associated dates or observation numbers \cr
 estimate \tab estimate.roots \tab rts \tab roots of the autoregressive and moving average operators in the estimated model \cr
 force \tab force.forcefactor \tab ffc \tab factors applied to get seasonally adjusted series with constrained yearly totals (if type = regress or type = denton) \cr
