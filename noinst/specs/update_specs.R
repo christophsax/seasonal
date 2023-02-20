@@ -30,20 +30,14 @@ save(SPECS, file = "data/specs.RData", version = 2)  # version 3 requires >= R3.
 
 # update roxygen header (carfully review!) -------------------------------------
 
-# Would be nice if we could link or include the description from X-13 manual
-
-library(tidyverse)
-
 txt <- read_lines("R/series.R")
+
+# Find start/end of spec description table
 line0 <- which(txt == "#' **spec** \\tab **long name** \\tab **short name** \\tab **description** \\cr")
 
 linen <- which(txt == "#' }")[1]
-txt[line0:linen]
-
 
 #' **spec** \tab **long name** \tab **short name** \tab **description** \cr
-SPECS <- as_tibble(SPECS)
-
 # why this? series, but not save
 # # A tibble: 5 × 6
 #   long                       short spec      is.save is.series requires
@@ -54,8 +48,11 @@ SPECS <- as_tibble(SPECS)
 # 4 composite.ratioplotindsa   ir2   composite FALSE   TRUE      ""
 # 5 composite.ratioplotorig    ir1   composite FALSE   TRUE      ""
 
+
+# Create updated spec description table
 tbl_txt <-
   SPECS |>
+  as_tibble()
   filter(
     is.series == TRUE,
     is.save == TRUE
@@ -64,6 +61,7 @@ tbl_txt <-
   transmute(new = paste("#'", spec, "\\tab", long, "\\tab", short, "\\tab", description, "\\cr")) |>
   pull(new)
 
+# Patch together new contents of series.R
 txt_new <-
   c(
     txt[1:line0],
