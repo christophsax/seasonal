@@ -187,6 +187,8 @@ tbl_all <- full_join(quick_from_full, full, by = c("long")) |>
     -is.save.y
   )
 
+# Some aspects of SPECS.csv can not be automatically determined (e.g. requires)
+# Read those from a manually curated file and join them to the extracted SPECS
 manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv")
 
 tbl_final <- left_join(tbl_all, manual_specs, by = "long") |>
