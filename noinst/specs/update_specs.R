@@ -22,10 +22,10 @@ SPECS <- read_csv("noinst/specs/SPECS.csv") |>
   as.data.frame()
 
 
-save(SPECS, file = "data/specs.RData", version = 2)  # version 3 requires >= R3.5
 
 
 
+usethis::use_data(SPECS, overwrite = TRUE)
 
 
 # update roxygen header (carfully review!) -------------------------------------
