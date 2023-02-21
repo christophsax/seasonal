@@ -374,8 +374,7 @@ message_rerun_hint <- function(call, dots) {
   new_args <- lapply(split(dots, names(dots)), \(x) unlist(unname(x)))
   call[names(new_args)] <- new_args
 
-  # sprintf-ing constants to keep the line width manageable
-  # also using a single message call because expect_message
+  # using a single message call because expect_message
   # apparently only considers the first one
   message(sprintf("To speed up, extend the `seas()` call (see ?series):\n%s",
                   deparse(call)))
