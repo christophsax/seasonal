@@ -334,6 +334,8 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     if (reeval){
       reeval.dots <- reeval_dots(x = x$composite, series.short = series.short, verbose = FALSE)
       if (length(reeval.dots) > 0){
+        message_rerun_hint(x$call, reeval.dots)
+
         x$composite$list <- c(x$composite$list, reeval.dots)
         x <- update_seas_multi(x)
       }
@@ -353,7 +355,9 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
     reeval.dots <- reeval_dots(x = x, series.short = series.short, verbose = verbose)
 
-    if (length(reeval.dots) > 0){
+    if (length(reeval.dots) > 0) {
+      message_rerun_hint(x$call, reeval.dots)
+
       # this is the same as in update.seas()
       ml <- x$list
       # overwrite args in existing list
@@ -366,6 +370,15 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
   z
 }
 
+message_rerun_hint <- function(call, dots) {
+  new_args <- lapply(split(dots, names(dots)), \(x) unlist(unname(x)))
+  call[names(new_args)] <- new_args
+
+  # using a single message call because expect_message
+  # apparently only considers the first one
+  message(sprintf("To speed up, extend the `seas()` call (see ?series):\n%s",
+                  deparse(call)))
+}
 
 series_short <- function(series) {
   SPECS <- get_specs()
