@@ -377,9 +377,7 @@ message_rerun_hint <- function(call, dots) {
   # sprintf-ing constants to keep the line width manageable
   # also using a single message call because expect_message
   # apparently only considers the first one
-  message(sprintf("%s\n%s\n%s",
-                  "Re-running the model with additional arguments.",
-                  "To have the desired output series included in the future use this call:",
+  message(sprintf("To speed up, extend the `seas()` call (see ?series):\n%s",
                   deparse(call)))
 }
 
