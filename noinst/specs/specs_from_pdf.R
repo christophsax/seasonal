@@ -320,6 +320,11 @@ tbl_final |> filter(is.save != is.save.actual)
 tbl_final <- tbl_final |>
   mutate(
     is.save = is.save.actual
+  ) |>
+  # is.series is a proxy for is.save as all saveable output can be read into
+  # the series field of a model.
+  mutate(
+    is.series = is.save
   )
 
 contentless <- res |>
