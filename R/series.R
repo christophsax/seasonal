@@ -415,7 +415,7 @@ reeval_dots <- function(x, series.short, verbose = TRUE) {
 
     # additional options that are required to produce a series
     requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
-    if (!(identical(requires.i, "") || is.na(requires.i))) {
+    if (!identical(requires.i, "")) {
       requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
       reeval.dots <- c(reeval.dots, requires.list)
       j <- length(reeval.dots) + 1

@@ -189,7 +189,11 @@ tbl_all <- full_join(quick_from_full, full, by = c("long")) |>
 
 # Some aspects of SPECS.csv can not be automatically determined (e.g. requires)
 # Read those from a manually curated file and join them to the extracted SPECS
-manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv")
+manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv") |>
+  # For backwards compatibility, encode missing requires as ""
+  # Ideally this would already be the case in the csv but we can't be sure with
+  # different editors etc. so we have this failsafe.
+  mutate(requires = if_else(is.na(requires), "", requires))
 
 tbl_final <- left_join(tbl_all, manual_specs, by = "long") |>
   select(long, short, spec, is.save, is.series, description, requires)
