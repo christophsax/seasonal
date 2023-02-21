@@ -11,6 +11,8 @@ if (!x13binary::supportedPlatform()) skip("platform not supported")
 
 if (basename(normalizePath("~")) == "christoph") skip("skip extensive tests locally")
 
+skip_if(!is.null(Sys.getenv("SEASONAL_SKIP_EXTENSIVE")), "extensive tests overridden by SEASONAL_SKIP_EXTENSIVE")
+
 # https://stackoverflow.com/questions/24823353/testthat-in-r-sourcing-in-tested-files
 test_that("nocran dir can be found", {
   nocran_tests <<- normalizePath(file.path("../nocran"))
