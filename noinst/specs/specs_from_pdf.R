@@ -189,12 +189,9 @@ tbl_all <- full_join(quick_from_full, full, by = c("long")) |>
 
 # Some aspects of SPECS.csv can not be automatically determined (e.g. requires)
 # Read those from a manually curated file and join them to the extracted SPECS
-manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv") |>
-  # For backwards compatibility, encode missing requires as ""
-  # Ideally this would already be the case in the csv but we can't be sure with
-  # different editors etc. so we have this failsafe.
-  mutate(requires = if_else(is.na(requires), "", requires))
+manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv")
 
+# left_join as including no longer available specs does not make sense
 tbl_final <- left_join(tbl_all, manual_specs, by = "long") |>
   select(long, short, spec, is.save, is.series, description, requires)
 
@@ -322,6 +319,22 @@ tbl_final <- tbl_final |>
     is.save = is.save.actual
   )
 
+if(any(is.na(tbl_final$is.series))) {
+  message("Some series appear to have newly appeared. Consider researching them and adding them to SPECS_MANUAL.csv\n")
+  message(
+    paste(
+      tbl_final |> filter(is.na(is.series)) |> pull(long) |> sort(),
+      collapse = "\n"
+    )
+  )
+  message("Otherwise is.series = is.save and requires = \"\" are used by default.")
+}
+
+tbl_final <- tbl_final |>
+  mutate(
+    is.series = if_else(is.na(is.series), is.save, is.series)
+  )
+
 contentless <- res |>
   filter(!has_content) |>
   transmute(
@@ -358,5 +371,8 @@ contentless <- res |>
 
 tbl_final |>
   select(long, short, spec, is.save, is.series, description, requires) |>
+  # For backwards compatibility, encode missing requires as ""
+  mutate(requires = if_else(is.na(requires), "", requires)) |>
+  arrange(long) |>
   write_csv("noinst/specs/SPECS.csv")
 
