@@ -39,3 +39,15 @@ test_that("message_rerun_hint preserves existing args", {
     "seas\\(x, foo = c\\(\"no\", \"yes\"\\)\\)"
   )
 })
+
+test_that("message_rerun_hint does not introduce duplicates", {
+  call <- quote(seas(x, foo = "yes"))
+
+  expect_message(
+    message_rerun_hint(
+      call,
+      list(foo = "yes")
+    ),
+    "seas\\(x, foo = \"yes\"\\)"
+  )
+})
