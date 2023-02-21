@@ -196,7 +196,7 @@ manual_specs <- read_csv("noinst/specs/SPECS_MANUAL.csv") |>
   mutate(requires = if_else(is.na(requires), "", requires))
 
 tbl_final <- left_join(tbl_all, manual_specs, by = "long") |>
-  select(long, short, spec, is.save, is.series, description, requires)
+  select(long, short, spec, is.save, description, requires)
 
 
 # Check validity of tbl_final and fix possible issues ---------------------
@@ -327,26 +327,26 @@ tbl_final <- tbl_final |>
     is.series = is.save
   )
 
-contentless <- res |>
-  filter(!has_content) |>
-  transmute(
-    long,
-    short,
-    x11_seats,
-    err = lapply(model, function(x){
-      y <- unclass(x$err)
-      tibble(
-        error = ifelse(is.list(y$error), "", unlist(y$error)),
-        warning = ifelse(is.list(y$warning), "", unlist(y$warning)),
-        note = ifelse(is.list(y$note), "", unlist(y$note))
-      )
-    })
-  ) |>
-  unnest(err) |>
-  mutate(
-    works_with_one = n() == 1,
-    .by = long
-  )
+# contentless <- res |>
+#   filter(!has_content) |>
+#   transmute(
+#     long,
+#     short,
+#     x11_seats,
+#     err = lapply(model, function(x){
+#       y <- unclass(x$err)
+#       tibble(
+#         error = ifelse(is.list(y$error), "", unlist(y$error)),
+#         warning = ifelse(is.list(y$warning), "", unlist(y$warning)),
+#         note = ifelse(is.list(y$note), "", unlist(y$note))
+#       )
+#     })
+#   ) |>
+#   unnest(err) |>
+#   mutate(
+#     works_with_one = n() == 1,
+#     .by = long
+#   )
 #
 # contentless |> pull(x11_seats) |> table()
 #
