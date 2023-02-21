@@ -226,7 +226,7 @@ NULL
 get_specs <- function() {
   # https://r-pkgs.org/data.html#data-sysdata
   SPECS <- NULL
-  data(specs, envir = environment(), package = "seasonal")  # avoid side effects
+  data(SPECS, envir = environment(), package = "seasonal")  # avoid side effects
   SPECS
 }
 
