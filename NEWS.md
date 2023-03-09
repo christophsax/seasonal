@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
 
 bug fix
-  - seas() works within forking parallization (e.g., mclapply) #276
+  - seas() works within forking parallelization (e.g., mclapply) #276
     Thanks to @jonlachmann!
   - annual series are read correctly #264
   - Jan 1 can be used in genhol() #261
@@ -52,7 +52,7 @@ enhancements
   - static() prints a prettier output
 
 bug fix
-  - as.data.frame() fix date conversion for freqency 4, 2 (#256)
+  - as.data.frame() fix date conversion for frequency 4, 2 (#256)
   - static() drop occasional warning (#235)
   - fix some backslash confusion on Windows (#237)
 
@@ -82,7 +82,7 @@ bug fix
 documentation
   - article in Journal of Statistical Software as vignette
   - README.md providing a short overview of the package
-  - citation refering to publication in Journal of Statistical Software
+  - citation referring to publication in Journal of Statistical Software
 
 
 1.6.1  2017-05-02
@@ -237,7 +237,7 @@ major changes
 enhancements
   - basic X-13 tests on all CRAN platforms (except Solaris)
   - The return value of the (experimental) import.spc function has a better name
-    for the main compontent ('$seas', instead of '$call').
+    for the main component ('$seas', instead of '$call').
 
 documentation
   - updated documentation to reflect the new installation process
@@ -277,7 +277,7 @@ new features
   - experimental import.spc, to read existing .spc files into R.
     Thanks, Brian Monsell.
   - experimental import.ts, to read existing X-13 data files into R.
-  - with 'seats = NULL', seasonal adjustment can be completly turned of, to use
+  - with 'seats = NULL', seasonal adjustment can be completely turned of, to use
     X-13 for other purposes than seasonal adjustment.
 
 enhancements
@@ -326,7 +326,7 @@ bug fixes
 --------------------------------------------------------------------------------
 
 enhancements
-  - improved parsing and intergration of X-13 error messages
+  - improved parsing and integration of X-13 error messages
   - checkX13 performs more tests and returns an error report.
   - spec-arguments can also be entered as a named list (experimental)
 
