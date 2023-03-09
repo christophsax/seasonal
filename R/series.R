@@ -370,7 +370,14 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 }
 
 message_rerun_hint <- function(call, dots) {
-  new_args <- lapply(split(dots, names(dots)), \(x) unlist(unname(x)))
+  new_args <- lapply(split(dots, names(dots)), \(x) {
+    unique(
+      c(
+        unlist(unname(x)), # new args
+        call[[names(x)[1]]] # if call already has this parameter filled, add it to the new ones
+      )
+    )
+  })
   call[names(new_args)] <- new_args
 
   # using a single message call because expect_message
