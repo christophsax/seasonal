@@ -1,3 +1,12 @@
+1.9.0.9001
+--------------------------------------------------------------------------------
+
+minor changes
+
+  - Improved messages on rerun in series()
+  - Spec list in ?series is automatically parsed from the X-13 manual
+
+
 1.9.0
 --------------------------------------------------------------------------------
 
