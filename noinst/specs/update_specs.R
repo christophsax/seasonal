@@ -1,32 +1,63 @@
+library(tidyverse)
 
-# update internal data file ----------------------------------------------------
+# Update SPECS.csv --------------------------------------------------------
 
-
-# load SPECS data from .csv and store as data/SPECS.RData
-SPECS <- read.csv("noinst/specs/SPECS.csv", stringsAsFactors = FALSE)
-
-save(SPECS, file = "data/specs.RData", version = 2)  # version 3 requires >= R3.5
+source("noinst/specs/specs_from_pdf.R")
 
 
+# load new specs data from csv --------------------------------------------
 
+
+SPECS <- read_csv("noinst/specs/SPECS.csv") |>
+  # Fix non-ascii characters. R CMD CHECK only allows ascii in data
+  mutate(
+    description = stringi::stri_trans_general(description, "latin-ascii")
+  ) |>
+  mutate(
+    # Fix for estimate.regressioneffects. The beta should have a circumflex
+    # but pdftools::pdf_text seens unable to reflect that.
+    description = gsub("Xβ,b", "Xβ", description)
+  ) |>
+  as.data.frame()
+
+# find differences between updated and previous version (if any) ----------
+
+if(file.exists("data/SPECS.rda")) {
+  SPECS_old_env <- new.env()
+  load("data/SPECS.rda", SPECS_old_env)
+  SPECS_old <- SPECS_old_env$SPECS
+
+  differences <- bind_rows(
+    SPECS |>
+      filter(!long %in% SPECS_old$long) |>
+      mutate(is_new = TRUE),
+    SPECS_old |>
+      filter(!long %in% SPECS$long) |>
+      mutate(is_removed = TRUE)
+  )
+
+  # For a detailed overview of changes within lines
+  # use `git diff noinst/spec/SPECS.csv`
+
+  write_csv(differences, "noinst/specs/SPECS_added_removed.csv")
+}
+
+
+# Update data file --------------------------------------------------------
+
+usethis::use_data(SPECS, overwrite = TRUE)
 
 
 # update roxygen header (carfully review!) -------------------------------------
 
-# Would be nice if we could link or include the description from X-13 manual
-
-library(tidyverse)
-
 txt <- read_lines("R/series.R")
-line0 <- which(txt == "#' **spec** \\tab **long name** \\tab **short name** \\cr")
+
+# Find start/end of spec description table
+line0 <- which(txt == "#' **spec** \\tab **long name** \\tab **short name** \\tab **description** \\cr")
 
 linen <- which(txt == "#' }")[1]
-txt[line0:linen]
 
-
-#' **spec** \tab **long name** \tab **short name** \cr
-SPECS <- as_tibble(SPECS)
-
+#' **spec** \tab **long name** \tab **short name** \tab **description** \cr
 # why this? series, but not save
 # # A tibble: 5 × 6
 #   long                       short spec      is.save is.series requires
@@ -37,14 +68,20 @@ SPECS <- as_tibble(SPECS)
 # 4 composite.ratioplotindsa   ir2   composite FALSE   TRUE      ""
 # 5 composite.ratioplotorig    ir1   composite FALSE   TRUE      ""
 
+
+# Create updated spec description table
 tbl_txt <-
   SPECS |>
-  filter(is.series == TRUE) |>
-  filter(is.save == TRUE) |>
-  select(spec, long, short) |>
-  transmute(new = paste("#'", spec, "\\tab", long, "\\tab", short, "\\cr")) |>
+  as_tibble()
+  filter(
+    is.series == TRUE,
+    is.save == TRUE
+  ) |>
+  select(spec, long, short, description) |>
+  transmute(new = paste("#'", spec, "\\tab", long, "\\tab", short, "\\tab", description, "\\cr")) |>
   pull(new)
 
+# Patch together new contents of series.R
 txt_new <-
   c(
     txt[1:line0],

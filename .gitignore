@@ -15,3 +15,6 @@ build.R
 # cran checks complain if it's there but vingettes cannot be built locally wo
 # vignettes/jss.cls
 inst/doc
+
+# intermediate output when updating specs
+noinst/specs/SPECS_added_removed.csv
