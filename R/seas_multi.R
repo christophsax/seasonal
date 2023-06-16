@@ -122,6 +122,15 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     zs$composite$spc <- spc_composite
   }
 
+  # ### Save output files if 'dir' is specified
+  if (!is.null(dir)){
+    if (!file.exists(dir)){
+      dir.create(dir)
+    }
+    file.copy(list.files(wdir, full.names = TRUE), dir, overwrite = TRUE)
+    message("All X-13ARIMA-SEATS output files have been copied to '", dir, "'.")
+  }
+
   if (!out) {
     unlink(wdir, recursive = TRUE)
   }
