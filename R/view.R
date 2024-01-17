@@ -65,7 +65,7 @@ view <- function(x = NULL, story = NULL, quiet = TRUE, ...){
   }
 
   # temp workaround until next version of seasonalview is on CRAN
-  # (current version allways picks frame 1, rather than the one of
+  # (current version always picks frame 1, rather than the one of
   # seasonalview::view())
   if (!is.null(x)) .model.passed.to.shiny <- x
   if (!is.null(story)) .story.filename.passed.to.shiny <- story

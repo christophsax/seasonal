@@ -6,7 +6,7 @@
 \alias{seasonal}
 \title{seasonal: R interface to X-13ARIMA-SEATS}
 \description{
-\pkg{seasonal} is an asy-to-use interface to X-13-ARIMA-SEATS, the seasonal
+\pkg{seasonal} is an easy-to-use interface to X-13-ARIMA-SEATS, the seasonal
 adjustment software by the US Census Bureau. It offers full access to
 almost all options and outputs of X-13, including X-11 and SEATS, automatic
 ARIMA model search, outlier detection and support for user defined holiday
