@@ -38,7 +38,7 @@
 #'
 #' # 10 day before Easter day to one day after, quarterly data:
 #' genhol(easter, start = -10, end = 1, frequency = 4)
-#' genhol(easter, frequency = 2)  # easter is allways in the first half-year
+#' genhol(easter, frequency = 2)  # easter is always in the first half-year
 #'
 #' # centering for overall mean or monthly calendar means
 #' genhol(easter, center = "mean")
