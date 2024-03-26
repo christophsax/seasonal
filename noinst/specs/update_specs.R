@@ -1,7 +1,9 @@
 library(tidyverse)
 
-# Update SPECS.csv --------------------------------------------------------
+# Update SPECS_auto.csv --------------------------------------------------------
 
+# download latest version of X-13 manual and write SPEC to SPECS_auto.csv
+#
 # source("noinst/specs/specs_from_pdf.R")
 
 
