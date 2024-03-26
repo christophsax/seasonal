@@ -5,6 +5,7 @@ minor changes
 
   - Improved messages on rerun in series()
   - Spec list in ?series is automatically parsed from the X-13 manual
+  - Save output files if 'dir' is specified
 
 
 1.9.0
