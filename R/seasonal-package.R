@@ -108,7 +108,7 @@ NULL
 #' @format Objects of class `"Date"`.
 #'
 #' @source
-#' <https://www.census.gov/srd/www/genhol/genhol_downloads.html>
+#' <https://www2.census.gov/software/x-13arima-seats/win-genhol/download/>
 #'
 #' <http://www.chinesenewyears.info/chinese-new-year-calendar.php>
 #'
