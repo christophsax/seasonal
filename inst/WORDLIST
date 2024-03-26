@@ -58,7 +58,6 @@ arima
 arimamodel
 armacmatrix
 ars
-asy
 autocorr
 automdl
 backcasts
@@ -102,6 +101,7 @@ denton
 diagnostical
 diffseasonaladj
 difftrend
+dir
 diwali
 doi
 dsa
