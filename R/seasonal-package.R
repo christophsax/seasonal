@@ -71,13 +71,11 @@
 #'
 #' @name seasonal-package
 #' @aliases seasonal
-#' @docType package
 #' @author Christoph Sax \email{christoph.sax@@gmail.com}
 #' @keywords package
 #' @seealso [seas()] for the core function and more information on
 #'   package usage.
 NULL
-
 
 
 #' Consumer Price Index of Switzerland

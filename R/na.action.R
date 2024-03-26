@@ -23,7 +23,7 @@ na.x13 <- function(x){
   x
 }
 
-
+#' @method na.exclude ts
 na.exclude.ts <- function(x){
   # time series method for na.exclude
   #
