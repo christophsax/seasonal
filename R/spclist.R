@@ -101,7 +101,7 @@ consist_spclist <-function(x){
 
   ### ensure arima.model is character
   if (!is.null(x$arima$model)){
-    x$arima$model <- as.character.arima(x$arima$model)
+    x$arima$model <- as_character_arima(x$arima$model)
   }
 
 
