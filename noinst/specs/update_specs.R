@@ -81,7 +81,7 @@ linen <- which(txt == "#' }")[1]
 
 # Create updated spec description table
 tbl_txt <-
-  SPECS |>
+  SPECS_description |>
   as_tibble() |>
   filter(
     is.series == TRUE,
