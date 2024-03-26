@@ -10,7 +10,7 @@ library(tidyverse)
 # load new specs data from csv --------------------------------------------
 
 
-SPECS <- read_csv("noinst/specs/SPECS.csv") |>
+SPECS_description <- read_csv("noinst/specs/SPECS_auto.csv") |>
   # Fix non-ascii characters. R CMD CHECK only allows ascii in data
   mutate(
     description = stringi::stri_trans_general(description, "latin-ascii")
@@ -20,34 +20,42 @@ SPECS <- read_csv("noinst/specs/SPECS.csv") |>
     # but pdftools::pdf_text seens unable to reflect that.
     description = gsub("Xβ,b", "Xb", description),
     description = gsub("≤", "<=", description)
-  )
-
-# find differences between updated and previous version (if any) ----------
-
-if(file.exists("data/SPECS.rda")) {
-  SPECS_old_env <- new.env()
-  load("data/SPECS.rda", SPECS_old_env)
-  SPECS_old <- SPECS_old_env$SPECS
-
-  differences <- bind_rows(
-    SPECS |>
-      filter(!long %in% SPECS_old$long) |>
-      mutate(is_new = TRUE),
-    SPECS_old |>
-      filter(!long %in% SPECS$long) |>
-      mutate(is_removed = TRUE)
-  )
-
-  # For a detailed overview of changes within lines
-  # use `git diff noinst/spec/SPECS.csv`
-
-  write_csv(differences, "noinst/specs/SPECS_added_removed.csv")
-}
+  ) |>
+  arrange(long) |>
+  mutate(requires = coalesce(requires, ""))
 
 
 # Update data file --------------------------------------------------------
 
-usethis::use_data(SPECS, overwrite = TRUE)
+SPECS_old <- readr::read_csv("noinst/specs/SPECS.csv", na = "NA")
+
+# SPECS.rda and SPECS.csv must match!
+stopifnot(all.equal(arrange(get_specs(), long), as.data.frame(SPECS_old)))
+
+SPECS <-
+  SPECS_description |>
+  select(-description) |>
+  arrange(long) |>
+  mutate(is.save = coalesce(is.save, TRUE)) |>
+  mutate(is.series = coalesce(is.series, TRUE)) |>
+  mutate(requires = if_else(long == "history.sfrevisions", 'history.estimates = \"seasonal\"', requires)) |>
+  as.data.frame()
+
+# library(daff)
+# render_diff(diff_data(
+#   SPECS_old,
+#   SPECS
+#
+# ))
+
+# acutal update
+# readr::write_csv(SPECS, "noinst/specs/SPECS.csv")
+# usethis::use_data(SPECS, overwrite = TRUE)
+
+# SPECS_new <- readr::read_csv("noinst/specs/SPECS.csv", na = "NA")
+
+# SPECS.rda and SPECS.csv must match!
+# stopifnot(all.equal(arrange(get_specs(), long), as.data.frame(SPECS_new)))
 
 
 # update roxygen header (carfully review!) -------------------------------------
