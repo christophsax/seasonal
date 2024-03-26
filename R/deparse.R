@@ -66,7 +66,7 @@ write_ts_dat <- function(x, file = "data.dat"){
 }
 
 
-as.character.arima <- function(x){
+as_character_arima <- function(x){
   # converts a numeric arima model to a character string
   # 
   # x  numeric or character,  "ts" object

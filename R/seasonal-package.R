@@ -71,13 +71,11 @@
 #'
 #' @name seasonal-package
 #' @aliases seasonal
-#' @docType package
 #' @author Christoph Sax \email{christoph.sax@@gmail.com}
 #' @keywords package
 #' @seealso [seas()] for the core function and more information on
 #'   package usage.
 NULL
-
 
 
 #' Consumer Price Index of Switzerland
@@ -110,7 +108,7 @@ NULL
 #' @format Objects of class `"Date"`.
 #'
 #' @source
-#' <https://www.census.gov/srd/www/genhol/genhol_downloads.html>
+#' <https://www2.census.gov/software/x-13arima-seats/win-genhol/download/>
 #'
 #' <http://www.chinesenewyears.info/chinese-new-year-calendar.php>
 #'

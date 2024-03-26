@@ -374,5 +374,5 @@ tbl_final |>
   # For backwards compatibility, encode missing requires as ""
   mutate(requires = if_else(is.na(requires), "", requires)) |>
   arrange(long) |>
-  write_csv("noinst/specs/SPECS.csv")
+  write_csv("noinst/specs/SPECS_auto.csv")
 

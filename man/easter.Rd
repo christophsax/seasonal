@@ -10,7 +10,7 @@
 Objects of class \code{"Date"}.
 }
 \source{
-\url{https://www.census.gov/srd/www/genhol/genhol_downloads.html}
+\url{https://www2.census.gov/software/x-13arima-seats/win-genhol/download/}
 
 \url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
 

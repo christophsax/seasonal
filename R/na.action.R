@@ -23,18 +23,18 @@ na.x13 <- function(x){
   x
 }
 
-
-na.exclude.ts <- function(x){
+#' @method na.exclude ts
+na.exclude.ts <- function(object, ...){
   # time series method for na.exclude
   #
   # does not exist in the base package
   #
-  # x  a "ts" object
+  # object  a "ts" object
   #
   # returns a "ts" object
   #
   # required by seas
-  z <- na.omit(x)
+  z <- na.omit(object)
   if (!is.null(attr(z, "na.action"))){
     attr(attr(z, "na.action"), "class") <- "exclude"
   }
