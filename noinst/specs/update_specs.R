@@ -2,7 +2,7 @@ library(tidyverse)
 
 # Update SPECS.csv --------------------------------------------------------
 
-source("noinst/specs/specs_from_pdf.R")
+# source("noinst/specs/specs_from_pdf.R")
 
 
 # load new specs data from csv --------------------------------------------
@@ -16,9 +16,9 @@ SPECS <- read_csv("noinst/specs/SPECS.csv") |>
   mutate(
     # Fix for estimate.regressioneffects. The beta should have a circumflex
     # but pdftools::pdf_text seens unable to reflect that.
-    description = gsub("Xβ,b", "Xβ", description)
-  ) |>
-  as.data.frame()
+    description = gsub("Xβ,b", "Xb", description),
+    description = gsub("≤", "<=", description)
+  )
 
 # find differences between updated and previous version (if any) ----------
 
@@ -72,7 +72,7 @@ linen <- which(txt == "#' }")[1]
 # Create updated spec description table
 tbl_txt <-
   SPECS |>
-  as_tibble()
+  as_tibble() |>
   filter(
     is.series == TRUE,
     is.save == TRUE

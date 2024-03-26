@@ -31,14 +31,14 @@
 #' composite \tab composite.indmodsadj \tab ie2 \tab seasonally adjusted series modified for extreme values from the indirect seasonal adjustment \cr
 #' composite \tab composite.indreplacsi \tab id9 \tab final replacement values for extreme SI-ratios (differences) for the indirect adjustment \cr
 #' composite \tab composite.indrevsachanges \tab i6a \tab percent changes for indirect seasonally adjusted series with revised yearly totals \cr
-#' composite \tab composite.indrndsachanges \tab i6r \tab percent changes (differences) in the indirect seasonally adjusted series \cr
+#' composite \tab composite.indrndsachanges \tab i6r \tab percent changes (differences) in the rounded indirect seasonally adjusted series \cr
 #' composite \tab composite.indrobustsa \tab iee \tab final indirect seasonally adjusted series modified for extreme values \cr
 #' composite \tab composite.indsachanges \tab ie6 \tab percent changes (differences) in the indirect seasonally adjusted series \cr
-#' composite \tab composite.indsadjround \tab irn \tab percent changes for rounded indirect seasonally adjusted series \cr
+#' composite \tab composite.indsadjround \tab irn \tab rounded indirect seasonally adjusted series \cr
 #' composite \tab composite.indseasadj \tab isa \tab final indirect seasonally adjusted series \cr
 #' composite \tab composite.indseasonal \tab isf \tab final seasonal factors for the indirect seasonal adjustment \cr
 #' composite \tab composite.indseasonaldiff \tab isd \tab final seasonal difference for the indirect seasonal adjustment (only for pseudo-additive seasonal adjustment) \cr
-#' composite \tab composite.indtotaladjustment \tab ita \tab total indirect adjustment factors (only produced if the original series contains values that are ≤ 0) \cr
+#' composite \tab composite.indtotaladjustment \tab ita \tab total indirect adjustment factors (only produced if the original series contains values that are <= 0) \cr
 #' composite \tab composite.indtrend \tab itn \tab final trend-cycle for the indirect adjustment \cr
 #' composite \tab composite.indtrendchanges \tab ie7 \tab percent changes (differences) in the indirect final trend component \cr
 #' composite \tab composite.indunmodsi \tab id8 \tab final unmodified SI-ratios (differences) for the indirect adjustment \cr
@@ -48,12 +48,14 @@
 #' estimate \tab estimate.armacmatrix \tab acm \tab correlation matrix of ARMA parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
 #' estimate \tab estimate.iterations \tab itr \tab detailed output for estimation iterations, including log-likelihood values and parameters, and counts of function evaluations and iterations \cr
 #' estimate \tab estimate.regcmatrix \tab rcm \tab correlation matrix of regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
-#' estimate \tab estimate.regressioneffects \tab ref \tab Xβ matrix of regression variables multiplied by the vector of estimated regression coefficients \cr
+#' estimate \tab estimate.regressioneffects \tab ref \tab Xb matrix of regression variables multiplied by the vector of estimated regression coefficients \cr
 #' estimate \tab estimate.residuals \tab rsd \tab model residuals with associated dates or observation numbers \cr
 #' estimate \tab estimate.roots \tab rts \tab roots of the autoregressive and moving average operators in the estimated model \cr
 #' force \tab force.forcefactor \tab ffc \tab factors applied to get seasonally adjusted series with constrained yearly totals (if type = regress or type = denton) \cr
 #' force \tab force.revsachanges \tab e6a \tab percent changes (differences) in seasonally adjusted series with revised yearly totals \cr
+#' force \tab force.revsachangespct \tab p6a \tab percent changes in seasonally adjusted series with forced yearly totals \cr
 #' force \tab force.rndsachanges \tab e6r \tab percent changes (differences) in rounded seasonally adjusted series \cr
+#' force \tab force.rndsachangespct \tab p6r \tab percent changes in rounded seasonally adjusted series \cr
 #' force \tab force.saround \tab rnd \tab rounded final seasonally adjusted series (if round = yes) or the rounded final seasonally adjusted series with constrained yearly totals (if type = regress or type = denton) \cr
 #' force \tab force.seasadjtot \tab saa \tab final seasonally adjusted series with constrained yearly totals (if type = regress or type = denton) \cr
 #' forecast \tab forecast.backcasts \tab bct \tab point backcasts on the original scale, along with upper and lower prediction interval limits \cr
@@ -61,6 +63,7 @@
 #' forecast \tab forecast.transformed \tab ftr \tab forecasts on the transformed scale, with corresponding forecast standard errors \cr
 #' forecast \tab forecast.transformedbcst \tab btr \tab backcasts on the transformed scale, with corresponding forecast standard errors \cr
 #' forecast \tab forecast.variances \tab fvr \tab forecast error variances on the transformed scale, showing the contributions of the error assuming the model is completely known (stochastic variance) and the error due to estimating any regression parameters (error in estimating AR and MA parameters is ignored) \cr
+#' history \tab history.armahistory \tab amh \tab history of estimated AR and MA coefficients from the regARIMA model \cr
 #' history \tab history.chngestimates \tab che \tab concurrent and most recent estimate of the month-tomonth (or quarter-to-quarter) changes in the seasonally adjusted data \cr
 #' history \tab history.chngrevisions \tab chr \tab revision from concurrent to most recent estimate of the month-to-month (or quarter-to-quarter) changes in the seasonally adjusted data \cr
 #' history \tab history.fcsterrors \tab fce \tab revision history of the accumulated sum of squared forecast errors \cr
@@ -75,6 +78,7 @@
 #' history \tab history.sfestimates \tab sfe \tab concurrent and most recent estimate of the seasonal factors and projected seasonal factors \cr
 #' history \tab history.sfilterhistory \tab sfh \tab record of seasonal filter selection for each observation in the revisions history (printed only if automatic seasonal filter selection is used) \cr
 #' history \tab history.sfrevisions \tab sfr \tab revision from concurrent to most recent estimate of the seasonal factor, as well as projected seasonal factors \cr
+#' history \tab history.tdhistory \tab tdh \tab history of estimated trading day regression coefficients from the regARIMA model \cr
 #' history \tab history.trendchngestimates \tab tce \tab concurrent and most recent estimate of the month-tomonth (or quarter-to-quarter) changes in the trend component \cr
 #' history \tab history.trendchngrevisions \tab tcr \tab revision from concurrent to most recent estimate of the month-to-month (or quarter-to-quarter) changes in the trend component \cr
 #' history \tab history.trendestimates \tab tre \tab concurrent and most recent estimate of the trend component \cr
@@ -95,25 +99,53 @@
 #' regression \tab regression.transitory \tab a13 \tab regARIMA transitory component factors from userdefined regressors (table A13) \cr
 #' regression \tab regression.userdef \tab usr \tab factors from user-defined regression variables (table A9) \cr
 #' seats \tab seats.adjustfac \tab s16 \tab final SEATS combined adjustment factors \cr
+#' seats \tab seats.adjustfacpct \tab psa \tab combined adjustment factors, expressed as percentages if appropriate \cr
 #' seats \tab seats.adjustmentratio \tab s18 \tab final SEATS adjustment ratio \cr
+#' seats \tab seats.componentmodels \tab mdc \tab models for the components \cr
 #' seats \tab seats.cycle \tab cyc \tab cycle component \cr
+#' seats \tab seats.difforiginal \tab dor \tab fully differenced transformed original series \cr
 #' seats \tab seats.diffseasonaladj \tab dsa \tab fully differenced transformed SEATS seasonal adjustment \cr
 #' seats \tab seats.difftrend \tab dtr \tab fully differenced transformed SEATS trend \cr
+#' seats \tab seats.filtersaconc \tab fac \tab concurrent finite seasonal adjustment filter \cr
+#' seats \tab seats.filtersasym \tab faf \tab symmetric finite seasonal adjustment filter \cr
+#' seats \tab seats.filtertrendconc \tab ftc \tab concurrent finite trend filter \cr
+#' seats \tab seats.filtertrendsym \tab ftf \tab symmetric finite trend filter \cr
 #' seats \tab seats.irregular \tab s13 \tab final SEATS irregular component \cr
+#' seats \tab seats.irregularoutlieradj \tab se3 \tab final SEATS irregular component, outlier adjusted \cr
+#' seats \tab seats.irregularpct \tab psi \tab final irregular component, expressed as percentages if appropriate \cr
 #' seats \tab seats.longtermtrend \tab ltt \tab long term trend \cr
+#' seats \tab seats.pseudoinnovsadj \tab pia \tab pseudo-innovations of the final SEATS seasonal adjustment \cr
+#' seats \tab seats.pseudoinnovseasonal \tab pis \tab pseudo-innovations of the seasonal component \cr
+#' seats \tab seats.pseudoinnovtransitory \tab pit \tab pseudo-innovations of the transitory component \cr
+#' seats \tab seats.pseudoinnovtrend \tab pic \tab pseudo-innovations of the trend component \cr
 #' seats \tab seats.seasadjconst \tab sec \tab final SEATS seasonal adjustment with constant term included \cr
 #' seats \tab seats.seasonal \tab s10 \tab final SEATS seasonal component \cr
 #' seats \tab seats.seasonaladj \tab s11 \tab final SEATS seasonal adjustment \cr
 #' seats \tab seats.seasonaladjfcstdecomp \tab afd \tab forecast of the final SEATS seasonal adjustment \cr
+#' seats \tab seats.seasonaladjoutlieradj \tab se2 \tab final SEATS seasonal adjustment, outlier adjusted \cr
+#' seats \tab seats.seasonaladjse \tab ase \tab standard error of final seasonally adjusted series \cr
 #' seats \tab seats.seasonalfcstdecomp \tab sfd \tab forecast of the seasonal component \cr
+#' seats \tab seats.seasonalpct \tab pss \tab final seasonal factors, expressed as percentages if appropriate \cr
+#' seats \tab seats.seasonalse \tab sse \tab standard error of final steasonal component \cr
 #' seats \tab seats.seasonalsum \tab ssm \tab seasonal-period-length sums of final SEATS seasonal component \cr
 #' seats \tab seats.seriesfcstdecomp \tab ofd \tab forecast of the series component \cr
+#' seats \tab seats.squaredgainsaconc \tab gac \tab squared gain for finite concurrent seasonal adjustment filter \cr
+#' seats \tab seats.squaredgainsasym \tab gaf \tab squared gain for finite symmetric seasonal adjustment filter \cr
+#' seats \tab seats.squaredgaintrendconc \tab gtc \tab squared gain for finite concurrent trend filter \cr
+#' seats \tab seats.squaredgaintrendsym \tab gtf \tab squared gain for finite symmetric trend filter \cr
+#' seats \tab seats.timeshiftsaconc \tab tac \tab time shift for finite concurrent seasonal adjustment filter \cr
+#' seats \tab seats.timeshifttrendconc \tab ttc \tab time shift for finite concurrent trend filter \cr
 #' seats \tab seats.totaladjustment \tab sta \tab total adjustment factors for SEATS seasonal adjustment \cr
 #' seats \tab seats.transitory \tab s14 \tab final SEATS transitory component \cr
 #' seats \tab seats.transitoryfcstdecomp \tab yfd \tab forecast of the transitory component \cr
+#' seats \tab seats.transitorypct \tab psc \tab final transitory component, expressed as percentages if appropriate \cr
+#' seats \tab seats.transitoryse \tab cse \tab standard error of final transitory component \cr
 #' seats \tab seats.trend \tab s12 \tab final SEATS trend component \cr
+#' seats \tab seats.trendadjls \tab stl \tab level shift adjusted trend \cr
 #' seats \tab seats.trendconst \tab stc \tab final SEATS trend component with constant term included \cr
 #' seats \tab seats.trendfcstdecomp \tab tfd \tab forecast of the trend component \cr
+#' seats \tab seats.trendse \tab tse \tab standard error of final trend component \cr
+#' seats \tab seats.wkendfilter \tab wkf \tab end filters of the semi-infinite Wiener-Kolmogorov filter \cr
 #' series \tab series.adjoriginal \tab b1 \tab original series, adjusted for prior effects and forecast extended \cr
 #' series \tab series.calendaradjorig \tab a18 \tab original series adjusted for regARIMA calendar effects \cr
 #' series \tab series.outlieradjorig \tab a19 \tab original series adjusted for regARIMA outliers \cr
@@ -128,14 +160,25 @@
 #' slidingspans \tab slidingspans.tdspans \tab tds \tab trading day factors from all sliding spans \cr
 #' slidingspans \tab slidingspans.ychngspans \tab ycs \tab year-to-year changes from all sliding spans \cr
 #' spectrum \tab spectrum.speccomposite \tab is0 \tab spectral plot of first-differenced aggregate series \cr
-#' spectrum \tab spectrum.specindirr \tab is2 \tab spectral plot of the first-differenced indirect seasonally adjusted series \cr
-#' spectrum \tab spectrum.specindsa \tab is1 \tab spectral plot of outlier-modified irregular series from the indirect seasonal adjustment \cr
+#' spectrum \tab spectrum.specextresiduals \tab ser \tab spectrum of the extended residuals \cr
+#' spectrum \tab spectrum.specindirr \tab is2 \tab spectral plot of outlier-modified irregular series from the indirect seasonal adjustment \cr
+#' spectrum \tab spectrum.specindsa \tab is1 \tab spectral plot of the first-differenced indirect seasonally adjusted series \cr
 #' spectrum \tab spectrum.specirr \tab sp2 \tab spectral plot of outlier-modified X-11 irregular series \cr
 #' spectrum \tab spectrum.specorig \tab sp0 \tab spectral plot of the first-differenced original series \cr
 #' spectrum \tab spectrum.specresidual \tab spr \tab spectral plot of the regARIMA model residuals \cr
 #' spectrum \tab spectrum.specsa \tab sp1 \tab spectral plot of differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult) \cr
 #' spectrum \tab spectrum.specseatsirr \tab s2s \tab spectrum of the final SEATS irregular \cr
 #' spectrum \tab spectrum.specseatssa \tab s1s \tab spectrum of the differenced final SEATS seasonal adjustment \cr
+#' spectrum \tab spectrum.spectukeycomposite \tab it0 \tab Tukey spectrum of the first-differenced aggregate series \cr
+#' spectrum \tab spectrum.spectukeyextresiduals \tab ter \tab Tukey spectrum of the extended residuals \cr
+#' spectrum \tab spectrum.spectukeyindirr \tab it2 \tab Tukey spectrum of the outlier-modified irregular series from the indirect seasonal adjustment \cr
+#' spectrum \tab spectrum.spectukeyindsa \tab it1 \tab Tukey spectrum of the first-differenced indirect seasonally adjusted series \cr
+#' spectrum \tab spectrum.spectukeyirr \tab st2 \tab Tukey spectrum of the outlier-modified X-11 irregular series \cr
+#' spectrum \tab spectrum.spectukeyorig \tab st0 \tab Tukey spectrum of the first-differenced original series \cr
+#' spectrum \tab spectrum.spectukeyresidual \tab str \tab Tukey spectrum of the regARIMA model residuals \cr
+#' spectrum \tab spectrum.spectukeysa \tab st1 \tab Tukey spectrum of the differenced, X-11 seasonally adjusted series (or of the logged seasonally adjusted series if mode = logadd or mode = mult) \cr
+#' spectrum \tab spectrum.spectukeyseatsirr \tab t2s \tab Tukey spectrum of the final SEATS irregular \cr
+#' spectrum \tab spectrum.spectukeyseatssa \tab t1s \tab Tukey spectrum of the differenced final SEATS seasonal adjustment \cr
 #' transform \tab transform.permprior \tab a2p \tab permanent prior adjustment factors, with associated dates \cr
 #' transform \tab transform.permprioradjusted \tab a3p \tab prior adjusted series using only permanent prior factors, with associated dates \cr
 #' transform \tab transform.permprioradjustedptd \tab a4p \tab prior adjusted series using only permanent prior factors and prior trading day adjustments, with associated dates \cr
@@ -149,10 +192,12 @@
 #' x11 \tab x11.adjoriginald \tab d1 \tab original series modified for outliers, trading day and prior factors, D iteration \cr
 #' x11 \tab x11.adjustdiff \tab fad \tab final adjustment difference (only for pseudo-additive seasonal adjustment) \cr
 #' x11 \tab x11.adjustfac \tab d16 \tab combined seasonal and trading day factors \cr
+#' x11 \tab x11.adjustfacpct \tab paf \tab combined adjustment factors, expressed as percentages if appropriate \cr
 #' x11 \tab x11.adjustmentratio \tab e18 \tab final adjustment ratios (original series/seasonally adjusted series) \cr
 #' x11 \tab x11.biasfactor \tab bcf \tab bias correction factors \cr
 #' x11 \tab x11.calendar \tab d18 \tab combined holiday and trading day factors \cr
 #' x11 \tab x11.calendaradjchanges \tab e8 \tab percent changes (differences) in original series adjusted for calendar effects \cr
+#' x11 \tab x11.calendaradjchangespct \tab pe8 \tab percent changes in original series adjusted for calendar factors \cr
 #' x11 \tab x11.combholiday \tab chl \tab combined holiday prior adjustment factors, A16 table \cr
 #' x11 \tab x11.extreme \tab c20 \tab extreme values, C iteration \cr
 #' x11 \tab x11.extremeb \tab b20 \tab extreme values, B iteration \cr
@@ -160,6 +205,7 @@
 #' x11 \tab x11.irregularadjao \tab ira \tab final irregular component adjusted for point outliers \cr
 #' x11 \tab x11.irregularb \tab b13 \tab irregular component, B iteration \cr
 #' x11 \tab x11.irregularc \tab c13 \tab irregular component, C iteration \cr
+#' x11 \tab x11.irregularpct \tab pir \tab final irregular component, expressed as percentages if appropriate \cr
 #' x11 \tab x11.irrwt \tab c17 \tab final weights for the irregular component \cr
 #' x11 \tab x11.irrwtb \tab b17 \tab preliminary weights for the irregular component \cr
 #' x11 \tab x11.mcdmovavg \tab f1 \tab MCD moving average of the final seasonally adjusted series \cr
@@ -169,10 +215,12 @@
 #' x11 \tab x11.modsic4 \tab c4 \tab modified SI-ratios (differences), C iteration \cr
 #' x11 \tab x11.modsid4 \tab d4 \tab modified SI-ratios (differences), D iteration \cr
 #' x11 \tab x11.origchanges \tab e5 \tab percent changes (differences) in original series \cr
+#' x11 \tab x11.origchangespct \tab pe5 \tab percent changes in the original series \cr
 #' x11 \tab x11.replacsi \tab d9 \tab final replacement values for extreme SI-ratios (differences), D iteration \cr
 #' x11 \tab x11.replacsic9 \tab c9 \tab modified SI-ratios (differences), C iteration \cr
 #' x11 \tab x11.robustsa \tab e11 \tab robust final seasonally adjusted series \cr
 #' x11 \tab x11.sachanges \tab e6 \tab percent changes (differences) in seasonally adjusted series \cr
+#' x11 \tab x11.sachangespct \tab pe6 \tab percent changes in seasonally adjusted series \cr
 #' x11 \tab x11.seasadj \tab d11 \tab final seasonally adjusted series \cr
 #' x11 \tab x11.seasadjb11 \tab b11 \tab seasonally adjusted series, B iteration \cr
 #' x11 \tab x11.seasadjb6 \tab b6 \tab preliminary seasonally adjusted series, B iteration \cr
@@ -187,11 +235,13 @@
 #' x11 \tab x11.seasonalc10 \tab c10 \tab preliminary seasonal factors, C iteration \cr
 #' x11 \tab x11.seasonalc5 \tab c5 \tab preliminary seasonal factors, C iteration \cr
 #' x11 \tab x11.seasonald5 \tab d5 \tab preliminary seasonal factors, D iteration \cr
+#' x11 \tab x11.seasonaldiff \tab fsd \tab final seasonal difference (only for pseudo-additive seasonal adjustment) \cr
+#' x11 \tab x11.seasonalpct \tab psf \tab final seasonal factors, expressed as percentages if appropriate \cr
 #' x11 \tab x11.sib3 \tab b3 \tab preliminary unmodified SI-ratios (differences) \cr
 #' x11 \tab x11.sib8 \tab b8 \tab unmodified SI-ratios (differences) \cr
 #' x11 \tab x11.tdadjorig \tab c19 \tab original series adjusted for final trading day \cr
 #' x11 \tab x11.tdadjorigb \tab b19 \tab original series adjusted for preliminary trading day \cr
-#' x11 \tab x11.totaladjustment \tab tad \tab total adjustment factors (only printed out if the original series contains values that are ≤ 0) \cr
+#' x11 \tab x11.totaladjustment \tab tad \tab total adjustment factors (only printed out if the original series contains values that are <= 0) \cr
 #' x11 \tab x11.trend \tab d12 \tab final trend-cycle \cr
 #' x11 \tab x11.trendadjls \tab tal \tab final trend-cycle adjusted for level shift outliers \cr
 #' x11 \tab x11.trendb2 \tab b2 \tab preliminary trend-cycle, B iteration \cr
@@ -199,6 +249,7 @@
 #' x11 \tab x11.trendc2 \tab c2 \tab preliminary trend-cycle, C iteration \cr
 #' x11 \tab x11.trendc7 \tab c7 \tab preliminary trend-cycle, C iteration \cr
 #' x11 \tab x11.trendchanges \tab e7 \tab percent changes (differences) in final trend component series \cr
+#' x11 \tab x11.trendchangespct \tab pe7 \tab percent changes in final trend cycle \cr
 #' x11 \tab x11.trendconst \tab tac \tab final trend component with constant from transform spec included \cr
 #' x11 \tab x11.trendd2 \tab d2 \tab preliminary trend-cycle, D iteration \cr
 #' x11 \tab x11.trendd7 \tab d7 \tab preliminary trend-cycle, D iteration \cr
@@ -223,18 +274,6 @@
 #' x11regression \tab x11regression.x11regb \tab b15 \tab preliminary irregular regression coefficients and diagnostics \cr
 #' x11regression \tab x11regression.xregressioncmatrix \tab xrc \tab correlation matrix of irregular regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
 #' x11regression \tab x11regression.xregressionmatrix \tab xrm \tab values of irregular regression variables with associated dates \cr
-#' seats \tab seats.componentmodels \tab mdc \tab models for the components \cr
-#' seats \tab seats.filtersaconc \tab fac \tab concurrent finite seasonal adjustment filter \cr
-#' seats \tab seats.filtersasym \tab faf \tab symmetric finite seasonal adjustment filter \cr
-#' seats \tab seats.filtertrendconc \tab ftc \tab concurrent finite trend filter \cr
-#' seats \tab seats.filtertrendsym \tab ftf \tab symmetric finite trend filter \cr
-#' seats \tab seats.squaredgainsaconc \tab gac \tab squared gain for finite concurrent seasonal adjustment filter \cr
-#' seats \tab seats.squaredgainsasym \tab gaf \tab squared gain for finite symmetric seasonal adjustment filter \cr
-#' seats \tab seats.squaredgaintrendconc \tab gtc \tab squared gain for finite concurrent trend filter \cr
-#' seats \tab seats.squaredgaintrendsym \tab gtf \tab squared gain for finite symmetric trend filter \cr
-#' seats \tab seats.timeshiftsaconc \tab tac \tab time shift for finite concurrent seasonal adjustment filter \cr
-#' seats \tab seats.timeshifttrendconc \tab ttc \tab time shift for finite concurrent trend filter \cr
-#' seats \tab seats.wkendfilter \tab wkf \tab end filters of the semi-infinite Wiener-Kolmogorov filter \cr
 #' }
 #'
 #'
