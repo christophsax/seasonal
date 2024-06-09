@@ -140,7 +140,7 @@ parse_singlespc <- function(txt){
   nam <- sapply(snamarg, function(e) e[[1]])
 
   # nam <- spltxt[-length(spltxt)]
-  nam <- gsub("( +$)|(^ +)", "", nam)
+  nam <- tolower(gsub("( +$)|(^ +)", "", nam))
   # nam <- gsub(".* ([A-Za-z0-9]+$)", "\\1", nam)
 
 
