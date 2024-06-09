@@ -13,4 +13,7 @@ test_that("parse_spc accounts for uppercase arguments and spec", {
   
   expect_snapshot(parse_spc(text))
   
+  pp.cap <- parse_spc(text)
+  expect_false(is.null(pp.cap[['series']][['file']]))
+  
 })
