@@ -42,7 +42,7 @@ parse_spc <- function(txt){
   stopifnot(length(z0) == length(nam))
 
 
-  names(z0) <- nam
+  names(z0) <- tolower(nam)
   
   # # separate individual specs
   # z0 <- list()
