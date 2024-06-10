@@ -92,13 +92,13 @@
 #' ee <- lapply(ll, eval, envir = globalenv())
 #' ee$seas  # the 'seas' object, produced by the final call to seas()
 #' }
-import.spc <- function(file, text = NULL){
+import.spc <- function(file, text = NULL, warn = ifelse(!is.null(text), NULL, FALSE)){
 
   z <- list()
 
   if (is.null(text)){
     stopifnot(file.exists(file))
-    text <- readLines(file, warn = FALSE)
+    text <- readLines(file, warn = warn)
   } else {
     stopifnot(inherits(text, "character"))
     text <- paste(text, collapse = "\n")
