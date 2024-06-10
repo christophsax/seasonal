@@ -8,6 +8,7 @@
 #'
 #' @param file   character, path to the X-13 `.spc` file
 #' @param text   character, alternatively, the content of a `.spc` file as a character string.
+#' @param warn   a logical passed to [readLines()] if `file` is provided. `FALSE` by default.
 #' @return returns an object of class `import.spc`, which is a list with the following (optional) objects of class `call`:
 #'   \item{x}{the call to retrieve the data for the input series}
 #'   \item{xtrans}{the call to retrieve the data for the `xtrans` series (if required by the call)}

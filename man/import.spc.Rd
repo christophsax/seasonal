@@ -5,7 +5,7 @@
 \alias{print.import.spc}
 \title{Import X-13 \code{.spc} Files}
 \usage{
-import.spc(file, text = NULL)
+import.spc(file, text = NULL, warn = ifelse(!is.null(text), NULL, FALSE))
 
 \method{print}{import.spc}(x, ...)
 }
@@ -13,6 +13,8 @@ import.spc(file, text = NULL)
 \item{file}{character, path to the X-13 \code{.spc} file}
 
 \item{text}{character, alternatively, the content of a \code{.spc} file as a character string.}
+
+\item{warn}{a logical passed to \code{\link[=readLines]{readLines()}} if \code{file} is provided. \code{FALSE} by default.}
 
 \item{x}{object of class \code{import.spc}}
 
