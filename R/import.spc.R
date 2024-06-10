@@ -98,7 +98,7 @@ import.spc <- function(file, text = NULL){
 
   if (is.null(text)){
     stopifnot(file.exists(file))
-    text <- readLines(file)
+    text <- readLines(file, warn = FALSE)
   } else {
     stopifnot(inherits(text, "character"))
     text <- paste(text, collapse = "\n")
