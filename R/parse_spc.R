@@ -42,7 +42,7 @@ parse_spc <- function(txt){
   stopifnot(length(z0) == length(nam))
 
 
-  names(z0) <- nam
+  names(z0) <- tolower(nam)
   
   # # separate individual specs
   # z0 <- list()
@@ -140,7 +140,7 @@ parse_singlespc <- function(txt){
   nam <- sapply(snamarg, function(e) e[[1]])
 
   # nam <- spltxt[-length(spltxt)]
-  nam <- gsub("( +$)|(^ +)", "", nam)
+  nam <- tolower(gsub("( +$)|(^ +)", "", nam))
   # nam <- gsub(".* ([A-Za-z0-9]+$)", "\\1", nam)
 
 
