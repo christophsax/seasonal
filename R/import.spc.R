@@ -178,6 +178,10 @@ print.import.spc <- function(x, ...){
 
 ext_ser_call <- function(spc, vname){
   if (is.null(spc)) return(NULL)
+  
+  # the default data format for X-13 is "free"
+  fformat <- ifelse(is.null(spc$format), "free", spc$format)
+  frm <- rem_quotes(fformat)
 
   # analyze series spec
   if ("data" %in% names(spc)){
@@ -190,9 +194,7 @@ ext_ser_call <- function(spc, vname){
                 ", start = ", deparse(start), ", frequency = ", f, ")")
 
   } else if ("file" %in% names(spc)){
-
-    frm <- rem_quotes(spc$format)
-
+    
     # fragment for name, for fortran and x11 series
     if (!is.null(spc$name)) {
       nm <- rem_quotes(spc$name)
