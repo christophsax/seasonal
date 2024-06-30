@@ -98,7 +98,7 @@ import.spc <- function(file, text = NULL){
 
   if (is.null(text)){
     stopifnot(file.exists(file))
-    text <- readLines(file)
+    text <- readLines(file, warn = FALSE)
   } else {
     stopifnot(inherits(text, "character"))
     text <- paste(text, collapse = "\n")
@@ -361,7 +361,7 @@ import.ts <- function(file,
 
 
   if (format %in% c("datevalue", "datevaluecomma", "free", "freecomma")){
-    txt <- readLines(file)
+    txt <- readLines(file, warn = FALSE)
 
     dec <- if (format %in% c("datevaluecomma", "freecomma")) "," else "."
     sep <- if (grepl("\\t", txt[2])) "\t" else " "
@@ -497,7 +497,7 @@ import_fortran <- function(file, format, frequency, start = NULL, name = NULL){
 
 
 import_tramo <- function(file){
-  txt <- readLines(file)
+  txt <- readLines(file, warn = FALSE)
   ssp <- strsplit(gsub("^ +| +$", "", txt[2]), " ")[[1]]
   if (length(ssp) != 4){
     stop("tramo format: line 2 must have 4 elements.")
