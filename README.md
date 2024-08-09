@@ -2,7 +2,7 @@ R interface to X-13ARIMA-SEATS
 ------------------------------
 
 <!-- badges: start -->
-[![Downloads](http://cranlogs.r-pkg.org/badges/seasonal)](https://cran.r-project.org/package=seasonal)
+[![Downloads](https://cranlogs.r-pkg.org/badges/seasonal)](https://cran.r-project.org/package=seasonal)
 [![R-CMD-check](https://github.com/christophsax/seasonal/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/christophsax/seasonal/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
