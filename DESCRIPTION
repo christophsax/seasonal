@@ -29,9 +29,10 @@ License: GPL-3
 URL: http://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+CompactVignettes: both
 Language: en-US

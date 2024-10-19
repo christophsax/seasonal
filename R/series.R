@@ -404,7 +404,19 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     }
   }
 
-  z <- do.call(cbind, x$series[series.short])
+  ll <- x$series[series.short]
+
+  # return mts if possible
+  if (all(vapply(ll, inherits, TRUE, "ts"))) {
+    z <- do.call(cbind, ll)
+  } else {
+    if (length(ll) == 1L) {
+      z <- ll[[1]]
+    } else {
+      z <- ll
+    }
+  }
+
   z
 }
 

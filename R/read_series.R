@@ -55,8 +55,7 @@ read_series <- function(file, frequency = NULL){
   }
 
   if (suffix %in% c("ipc", "iac")){  # these files heave a header
-    # browser()
-    dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE, skip = 2)
+    return(read_series_ipc_iac(file))
   } else {
     dta.raw <- read.table(file, stringsAsFactors = F, sep = "\t", header = TRUE, fill = TRUE)
   }
@@ -116,3 +115,58 @@ read_series <- function(file, frequency = NULL){
   z
 }
 
+
+# output of ipc and iac contains multiple tables, collect them in a long df
+read_series_ipc_iac <- function(file) {
+  raw0 <- read.table(file, stringsAsFactors = F, sep = "\t", header = FALSE, fill = TRUE)
+
+  Lag <- NULL  # satisfy checks
+
+  first_header <- raw0[which(grepl("Lag", raw0$V1, fixed = TRUE))[1], ]
+  colnames(raw0) <- as.character(first_header)
+
+  fill_down <- function(x) {
+    ix <- seq_along(x)
+    good <- !is.na(x)
+
+    if (all(!good)) {
+      return(x)
+    }
+
+    x_filled <- approx(
+      x = ix[good],
+      y = x[good],
+      xout = ix,
+      method = "constant",
+      rule = 2,
+      f = 0
+    )$y
+
+    if (is.factor(x)) {
+      x_filled <- factor(x_filled, levels = levels(x))
+    } else {
+      mode(x_filled) <- mode(x)
+    }
+
+    return(x_filled)
+  }
+
+  extract_diff <- function(x, string) {
+    z <- ifelse(
+      grepl(string, x, fixed = TRUE),
+      trimws(gsub(string, "", x, fixed = TRUE)),
+      NA_real_
+    )
+    fill_down(z)
+  }
+
+  raw <- transform(raw0, diff = extract_diff(Lag, "$diff="))
+  raw <- transform(raw, sdiff = extract_diff(Lag, "$sdiff="))
+
+  to_drop <- grepl("Lag|\\-\\-\\-|\\$", raw$Lag)
+  ans <- raw[!to_drop, ]
+  ans[] <- lapply(ans, as.numeric)
+  rownames(ans) <- NULL
+
+  ans
+}
