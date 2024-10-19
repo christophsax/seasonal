@@ -34,5 +34,4 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-CompactVignettes: both
 Language: en-US
