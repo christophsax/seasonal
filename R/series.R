@@ -406,6 +406,9 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
   ll <- x$series[series.short]
 
+  # remove missing series from list
+  ll <- ll[!is.na(names(ll))]
+
   # return mts if possible
   if (all(vapply(ll, inherits, TRUE, "ts"))) {
     z <- do.call(cbind, ll)
@@ -505,5 +508,3 @@ reeval_dots <- function(x, series.short, verbose = TRUE) {
   reeval.dots
 
 }
-
-
