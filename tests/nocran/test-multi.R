@@ -1,115 +1,107 @@
-# call -------------------------------------------------------------------------
+library(testthat)
+library(seasonal)
 
-# this seems straigtforward
+skip_on_cran()
 
-mdta <- cbind(a = AirPassengers, b = AirPassengers)
+test_that("Multiple series and specs work correctly", {
+  mdta <- cbind(a = AirPassengers, b = AirPassengers)
 
-# multiple series, one spec
-seas(x = mdta, x11 = "")
+  # Test multiple series, one spec
+  expect_no_error(seas(x = mdta, x11 = ""))
 
-# R multimode
-seas(x = mdta, x11 = "", multimode = "R")
-seas(x = mdta, x11 = "", multimode = "x13")
+  # Test R multimode
+  expect_no_error(seas(x = mdta, x11 = "", multimode = "R"))
+  expect_no_error(seas(x = mdta, x11 = "", multimode = "x13"))
 
-# Open question: which default to use - speed vs stability, ease of debugging
+  # Test series as a list
+  m <- seas(x = list(a = mdeaths, b = AirPassengers), x11 = "", list = list(list(), list(outlier.critical = 3)))
 
-# series as a list
-m <- seas(x = list(a = mdeaths, b = AirPassengers), x11 = "", list = list(list(), list(outlier.critical = 3)))
+  m_a <- seas(mdeaths, x11 = "")
+  m_b <- seas(AirPassengers, x11 = "", outlier.critical = 3)
 
-m_a <- seas(mdeaths, x11 = "")
-m_b <- seas(AirPassengers, x11 = "", outlier.critical = 3)
+  expect_equal(final(m$a), final(m_a))
+  expect_equal(final(m$b), final(m_b))
+  expect_equal(original(m$a), original(m_a))
+  expect_equal(original(m$b), original(m_b))
+  expect_equal(trend(m$a), trend(m_a))
+  expect_equal(trend(m$b), trend(m_b))
+  expect_equal(irregular(m$a), irregular(m_a))
+  expect_equal(irregular(m$b), irregular(m_b))
 
-stopifnot(all.equal(final(m$a), final(m_a)))
-stopifnot(all.equal(final(m$b), final(m_b)))
+  # Test using list =
+  expect_no_error(seas(x = mdta, list = list(x11 = "")))
 
-stopifnot(all.equal(original(m$a), original(m_a)))
-stopifnot(all.equal(original(m$b), original(m_b)))
-
-stopifnot(all.equal(trend(m$a), trend(m_a)))
-stopifnot(all.equal(trend(m$b), trend(m_b)))
-
-stopifnot(all.equal(irregular(m$a), irregular(m_a)))
-stopifnot(all.equal(irregular(m$b), irregular(m_b)))
-
-# use with tsbox
-# seas(x = tsbox::ts_tslist(tsbox::ts_c(mdeaths, fdeaths)), x11 = "")
-
-
-# alternatively, using list =
-seas(x = mdta, list = list(x11 = ""))
-
-# multiple series, multiples specs
-seas(
-  x = mdta,
-  # lengths of list must be equal to number of series
-  list = list(
-    list(x11 = ""),
-    list()
+  # Test multiple series, multiple specs
+  expect_no_error(
+    seas(
+      x = mdta,
+      list = list(
+        list(x11 = ""),
+        list()
+      )
+    )
   )
-)
 
-# this would be nice: specify SOME specs.args for all series
-seas(
-  x = mdta,
-  regression.aictest = NULL,
-  list = list(
-    list(x11 = ""),
-    list()
+  # Test specifying some specs.args for all series
+  expect_no_error(
+    seas(
+      x = mdta,
+      regression.aictest = NULL,
+      list = list(
+        list(x11 = ""),
+        list()
+      )
+    )
   )
-)
 
-
-# alternatively, use x in lists
-seas(
-  # lengths of list must be equal to number of series
-  list = list(
-    list(x = AirPassengers, x11 = ""),
-    list(x = AirPassengers)
+  # Test using x in lists
+  expect_no_error(
+    seas(
+      list = list(
+        list(x = AirPassengers, x11 = ""),
+        list(x = AirPassengers)
+      )
+    )
   )
-)
+})
 
-
-# composite spec ---------------------------------------------------------------
-
-# same spec for all series
-m <- seas(
-  cbind(mdeaths, fdeaths),
-  composite = list(),           # adding an empty composite will use the seas() defaults for the indirect adjustment
-  series.comptype = "add"       # may be added automatically if composite is not NULL
-)
-
-m <- seas(
-  cbind(mdeaths, fdeaths),
-  series.comptype = "add",
-  composite = list(x11 = ""),   # use x11 for indirect adjustment
-)
-
-
-# different spec for all series
-m <- seas(
-  cbind(mdeaths, fdeaths),
-  series.comptype = "add",
-  composite = list(
-    regression.aictest = NULL,
-    x11.seasonalma = "s3x9"
-  ),
-  list = list(
-    list(x11 = ""),
-    list()
+test_that("Composite specs work correctly", {
+  # Test same spec for all series
+  m <- seas(
+    cbind(mdeaths, fdeaths),
+    composite = list(),
+    series.comptype = "add"
   )
-)
+  expect_s3_class(m, "seas_multi")
 
+  m <- seas(
+    cbind(mdeaths, fdeaths),
+    series.comptype = "add",
+    composite = list(x11 = "")
+  )
+  expect_s3_class(m, "seas_multi")
 
-# extractor functions ----------------------------------------------------------
+  # Test different spec for all series
+  m <- seas(
+    cbind(mdeaths, fdeaths),
+    series.comptype = "add",
+    composite = list(
+      regression.aictest = NULL,
+      x11.seasonalma = "s3x9"
+    ),
+    list = list(
+      list(x11 = ""),
+      list()
+    )
+  )
+  expect_s3_class(m, "seas_multi")
+})
 
-m <- seas(x = cbind(mdeaths, fdeaths), x11 = "")
+test_that("Extractor functions work correctly", {
+  m <- seas(x = cbind(mdeaths, fdeaths), x11 = "")
 
-final(m)
-
-original(m)
-
-trend(m)
-
-irregular(m)
-
-
+  expect_s3_class(final(m), "mts")
+  expect_s3_class(original(m), "mts")
+  expect_s3_class(trend(m), "mts")
+  expect_s3_class(irregular(m), "mts")
+})
