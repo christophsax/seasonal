@@ -1,3 +1,13 @@
+1.10.1
+--------------------------------------------------------------------------------
+
+bug fix
+
+  - import.spc() deals with tabs, with the legacy 'x12save' format label and
+    with non-UTF-8 comments #338
+    Thanks to @CatalinDochitoiu!
+
+
 1.10.0
 --------------------------------------------------------------------------------
 
