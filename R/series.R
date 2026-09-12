@@ -396,11 +396,9 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
     if (length(reeval.dots) > 0) {
       message_rerun_hint(x$call, reeval.dots)
 
-      # this is the same as in update.seas()
-      ml <- x$list
-      # overwrite args in existing list
-      ml <- ml[!names(ml) %in% names(reeval.dots)]
-      x <- seas(list = c(ml, reeval.dots))
+      # this is the same as in update.seas(). Args of the same name are merged
+      # by mod_spclist(), so that series of the original call survive (#290)
+      x <- seas(list = c(x$list, reeval.dots))
     }
   }
 
@@ -437,7 +435,7 @@ message_rerun_hint <- function(call, dots) {
   # using a single message call because expect_message
   # apparently only considers the first one
   message(sprintf("To speed up, extend the `seas()` call (see ?series):\n%s",
-                  deparse(call)))
+                  paste(deparse(call), collapse = "\n")))
 }
 
 series_short <- function(series) {
@@ -477,8 +475,11 @@ reeval_dots <- function(x, series.short, verbose = TRUE) {
   for (i in seq_along(series.NA)){
     series.NA.i <- series.NA[i]
     SPECS <- get_specs()
+    # a few table names are used by more than one spec ('b1' by 'series' and
+    # 'composite', 'tac' by 'seats' and 'x11'). Within a run they are unique,
+    # since these specs are mutually exclusive. (#289)
     spec.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$spec)
-    if (length(spec.i) > 1) stop("not unique.")
+    if (length(spec.i) > 1) spec.i <- intersect(spec.i, names(x$spc))
     if (!spec.i %in% names(x$spc)){
       if (spec.i %in% c("x11", "seats")){
         stop(spec.i, " is not activated. You should change the adjustment method.")
@@ -488,7 +489,9 @@ reeval_dots <- function(x, series.short, verbose = TRUE) {
     }
 
     # additional options that are required to produce a series
-    requires.i <- as.character(SPECS[SPECS$short == series.NA.i & SPECS$is.series, ]$requires)
+    requires.i <- as.character(
+      SPECS[SPECS$short == series.NA.i & SPECS$spec == spec.i & SPECS$is.series, ]$requires
+    )
     if (!identical(requires.i, "")) {
       requires.list <- eval(parse(text = paste("list(", requires.i, ")")))
       reeval.dots <- c(reeval.dots, requires.list)

@@ -8,6 +8,12 @@ bug fix
     #293 #294
   - series that span more than the 85 years X-13 can handle are reported as
     such, instead of as an unreadable data file #287
+  - series() works with table names that are used by more than one spec, such
+    as 'b1' or 'tac'. The spec is resolved from the model #289
+  - series() no longer drops series of the original call when the model is
+    re-evaluated #290
+  - the rerun hint of series() is no longer repeated when the call spans
+    several lines
 
 
 1.10.0
