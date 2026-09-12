@@ -119,3 +119,13 @@ test_that("seats = NULL does not limit forecasts and backcasts (#293, #294)", {
   expect_identical(NROW(series(m, "fct")), 60L)
   expect_identical(NROW(series(m, "bct")), 24L)
 })
+
+
+test_that("series longer than the X-13 limit are reported as such (#287)", {
+  expect_silent(check_span(ts(1:(85 * 12), start = c(1930, 1), frequency = 12)))
+  expect_error(
+    check_span(ts(1:(86 * 12), start = c(1930, 1), frequency = 12)),
+    "85 years"
+  )
+  expect_error(seas(ts(1:(93 * 12), start = c(1930, 1), frequency = 12)), "85 years")
+})
