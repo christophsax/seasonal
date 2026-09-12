@@ -94,3 +94,28 @@ test_that("missing iofile.est for short series causes an error #296", {
                                                                  12), class = "ts")
   expect_no_error(seas(tdata))
 })
+
+
+test_that("removing an argument does not create the spec (#293, #294)", {
+  spc <- structure(list(), class = c("spclist", "list"))
+  expect_length(mod_spclist(spc, list(seats.noadmiss = NULL)), 0)
+})
+
+
+test_that("seats = NULL removes the seats spec (#293, #294)", {
+  m <- seas(AirPassengers, seats = NULL)
+  expect_false("seats" %in% names(m$spc))
+})
+
+
+test_that("seats = NULL does not limit forecasts and backcasts (#293, #294)", {
+  m <- seas(
+    AirPassengers,
+    seats = NULL,
+    forecast.maxlead = 60,
+    forecast.maxback = 24,
+    forecast.save = c("fct", "bct")
+  )
+  expect_identical(NROW(series(m, "fct")), 60L)
+  expect_identical(NROW(series(m, "bct")), 24L)
+})
