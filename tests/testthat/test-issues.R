@@ -149,3 +149,20 @@ test_that("series of the original call survive the re-run (#290)", {
   z <- suppressMessages(series(m, c("a1", "b1", "d11")))
   expect_equal(colnames(z), c("a1", "b1", "d11"))
 })
+
+
+test_that("a failed spectral plot is a warning, not an error (#337)", {
+  # X-13 cannot draw the spectrum of the logged adjusted series if the
+  # adjustment turns negative
+  x <- ts(
+    c(19, 0, -32, -47, -19, 8, 41, 51, 31, -1, -27, -39,
+      19, -4, -28, -50, -20, 12, 42, 51, 32, 2, -30, -44,
+      21, 0, -30, -53, -21, 11, 43, 50, 31, 0, -33, -41,
+      19, 0, -28, -48, -20, 9, 41, 51, 29, -1, -29, -38),
+    start = c(2010, 1), frequency = 12
+  )
+  m <- seas(x, transform.function = "log", transform.constant = 200, x11 = "")
+  expect_s3_class(final(m), "ts")
+  expect_length(m$err$error, 0)
+  expect_match(m$err$warning, "Spectral plot", all = FALSE)
+})
