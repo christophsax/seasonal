@@ -129,3 +129,23 @@ test_that("series longer than the X-13 limit are reported as such (#287)", {
   )
   expect_error(seas(ts(1:(93 * 12), start = c(1930, 1), frequency = 12)), "85 years")
 })
+
+
+test_that("table names that are used by two specs work (#289)", {
+  m <- seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)", x11 = "")
+  b1 <- suppressMessages(series(m, "b1"))
+  expect_s3_class(b1, "ts")
+  expect_equal(b1, suppressMessages(series(m, "series.adjoriginal")))
+})
+
+
+test_that("series of the original call survive the re-run (#290)", {
+  m <- seas(
+    AirPassengers,
+    arima.model = "(0 1 1)(0 1 1)",
+    x11 = "",
+    series.save = "b1"
+  )
+  z <- suppressMessages(series(m, c("a1", "b1", "d11")))
+  expect_equal(colnames(z), c("a1", "b1", "d11"))
+})
