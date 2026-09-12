@@ -7,8 +7,9 @@
 #' cleaner and is likely to stay, but still consider it as
 #' **experimental**.)
 #'
-#' The data.frames produced by these functions follow the naming conventions
-#' from the 'broom' package, but do not depend on it otherwise.
+#' The data.frames follow the naming conventions of the 'broom' package, but
+#' do not depend on it. `tidy()`, `augment()` and `glance()` return the same
+#' data, as soon as a package that provides these generics is loaded.
 #'
 #' @param x  an object of class `"seas"` or
 #'   `"summary.seas"`, usually, the result of a call to the functions

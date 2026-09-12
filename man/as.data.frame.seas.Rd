@@ -28,8 +28,9 @@ cleaner and is likely to stay, but still consider it as
 \strong{experimental}.)
 }
 \details{
-The data.frames produced by these functions follow the naming conventions
-from the 'broom' package, but do not depend on it otherwise.
+The data.frames follow the naming conventions of the 'broom' package, but
+do not depend on it. \code{tidy()}, \code{augment()} and \code{glance()} return the same
+data, as soon as a package that provides these generics is loaded.
 }
 \examples{
 \donttest{

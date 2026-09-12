@@ -1,6 +1,10 @@
 1.10.1
 --------------------------------------------------------------------------------
 
+new features
+
+  - tidy(), augment() and glance() methods, without a dependency on 'broom' #192
+
 bug fix
   - na.action is kept when a model is re-evaluated. update(), predict() with
     the 'newdata' argument, out() and series() used to fall back to na.omit,

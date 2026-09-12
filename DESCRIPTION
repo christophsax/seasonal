@@ -23,6 +23,7 @@ Imports:
     x13binary
 Suggests:
     seasonalview (>= 0.1.3),
+    generics,
     testthat (>= 3.0.0),
     covr,
     knitr,
