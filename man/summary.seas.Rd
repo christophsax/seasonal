@@ -66,8 +66,13 @@ rejected. QS statistics for more series (e.g., the original series) can be
 extracted with \code{\link[=qs]{qs()}}.}
 \item{Box-Ljung}{test for residual autocorrelation; null hypothesis: no
 autocorrelation in residuals; signif. codes are shown if the null hypothesis
-is rejected. The test statistic is the result of
-\code{Box.test(resid(m), lag = 24, type = "Ljung")}}
+is rejected. The statistic is the one X-13ARIMA-SEATS computes in its check
+spec: at lag twice the frequency of the series, on the observations left
+after differencing, and with the degrees of freedom reduced by the number of
+estimated ARMA coefficients. It is therefore smaller than
+\code{Box.test(resid(m), lag = 24, type = "Ljung")}. Statistic, degrees of
+freedom and p-value for every lag are available from
+\code{series(m, "check.acf")}.}
 \item{Shapiro}{test for normality of the residuals; null hypothesis: normal
 distribution of the residuals; signif. codes are shown if the null
 hypothesis is rejected. The test statistic is the result of
