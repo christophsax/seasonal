@@ -1,3 +1,13 @@
+1.10.1
+--------------------------------------------------------------------------------
+
+bug fix
+
+  - 'seats = NULL' turns seasonal adjustment off again, as documented, and
+    forecasts and backcasts are no longer limited by SEATS. Broken since 1.8.0
+    #293 #294
+
+
 1.10.0
 --------------------------------------------------------------------------------
 

@@ -20,6 +20,10 @@ mod_spclist <- function(x, list){
 
     spc.name <- split.names.i[[1]][1]
 
+    if (is.null(content.i) && is.null(x[[spc.name]])){
+      next
+    }
+
     # empty list if spc is not present
     if (is.null(x[[spc.name]])){
       x[[spc.name]] <- list()
