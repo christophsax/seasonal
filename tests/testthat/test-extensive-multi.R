@@ -1,9 +1,8 @@
-library(testthat)
-library(seasonal)
-
-skip_on_cran()
+# Multiple series, composite specs and extractors
 
 test_that("Multiple series and specs work correctly", {
+  skip_if_not_extensive()
+
   mdta <- cbind(a = AirPassengers, b = AirPassengers)
 
   # Test multiple series, one spec
@@ -66,6 +65,8 @@ test_that("Multiple series and specs work correctly", {
 })
 
 test_that("Composite specs work correctly", {
+  skip_if_not_extensive()
+
   # Test same spec for all series
   m <- seas(
     cbind(mdeaths, fdeaths),
@@ -98,6 +99,8 @@ test_that("Composite specs work correctly", {
 })
 
 test_that("Extractor functions work correctly", {
+  skip_if_not_extensive()
+
   m <- seas(x = cbind(mdeaths, fdeaths), x11 = "")
 
   expect_s3_class(final(m), "mts")
