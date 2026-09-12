@@ -6,6 +6,8 @@ bug fix
   - 'seats = NULL' turns seasonal adjustment off again, as documented, and
     forecasts and backcasts are no longer limited by SEATS. Broken since 1.8.0
     #293 #294
+  - series that span more than the 85 years X-13 can handle are reported as
+    such, instead of as an unreadable data file #287
 
 
 1.10.0
