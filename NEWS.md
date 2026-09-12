@@ -1,6 +1,14 @@
 1.10.1
 --------------------------------------------------------------------------------
 
+new features
+
+  - tidy(), augment() and glance() methods for 'seas' objects, for use with
+    the 'broom' package. Nothing is imported: the methods are registered on
+    the generics of the lightweight 'generics' package, which broom
+    re-exports, as soon as that package is loaded. seasonal works as before
+    when it is not. This requires R >= 3.6.0 #192
+
 bug fix
 
   - 'seats = NULL' turns seasonal adjustment off again, as documented, and

@@ -29,7 +29,8 @@ cleaner and is likely to stay, but still consider it as
 }
 \details{
 The data.frames produced by these functions follow the naming conventions
-from the 'broom' package, but do not depend on it otherwise.
+from the 'broom' package, but do not depend on it otherwise. If 'broom' is
+installed, \code{tidy()}, \code{augment()} and \code{glance()} can be used as well.
 }
 \examples{
 \donttest{

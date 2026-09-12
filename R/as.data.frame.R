@@ -8,7 +8,8 @@
 #' **experimental**.)
 #'
 #' The data.frames produced by these functions follow the naming conventions
-#' from the 'broom' package, but do not depend on it otherwise.
+#' from the 'broom' package, but do not depend on it otherwise. If 'broom' is
+#' installed, `tidy()`, `augment()` and `glance()` can be used as well.
 #'
 #' @param x  an object of class `"seas"` or
 #'   `"summary.seas"`, usually, the result of a call to the functions

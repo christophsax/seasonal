@@ -15,7 +15,7 @@ Description: Easy-to-use interface to X-13-ARIMA-SEATS, the seasonal adjustment
     used through the 'seasonalview' package. Uses the X-13-binaries from the
     'x13binary' package.
 Depends:
-    R (>= 2.15)
+    R (>= 3.6.0)
 Imports:
     graphics,
     stats,
@@ -23,6 +23,7 @@ Imports:
     x13binary
 Suggests:
     seasonalview (>= 0.1.3),
+    generics,
     testthat (>= 3.0.0),
     covr,
     knitr,
@@ -32,7 +33,7 @@ License: GPL-3
 URL: http://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal/issues
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
