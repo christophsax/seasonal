@@ -14,6 +14,8 @@ bug fix
     re-evaluated #290
   - the rerun hint of series() is no longer repeated when the call spans
     several lines
+  - errors from X-13 that only concern a diagnostic plot no longer abort the
+    run, they are reported as warnings #337
 
 
 1.10.0

@@ -66,6 +66,10 @@ detect_error <- function(err, htmlmode = getOption("htmlmode")){
   # do not show this meaningless warning 
   # (its caused by default activation of spectrum)
   z$warning <- z$warning[!grepl("Spectrums are only generated for monthly series.", z$warning)]
+  # a failed spectral plot does not affect the adjustment, do not abort #337
+  is_plot <- grepl("Spectral plot for the logged .+ cannot be done", z$error)
+  z$warning <- c(as.character(z$warning), z$error[is_plot])
+  z$error <- z$error[!is_plot]
   z$note <- sapply(grep("note:", err, ignore.case = TRUE), ParseInfo)
   z
 }
