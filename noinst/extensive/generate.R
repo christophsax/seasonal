@@ -31,9 +31,16 @@ benchmark_file <- "tests/testthat/fixtures/extensive-benchmark.csv"
 
 # --- case list ----------------------------------------------------------------
 
-# These calls are not part of the test set. They are the "known issues" that
-# do not run at all, kept in ex_run.csv for reference.
-excluded <- c(87, 91, 96, 97, 98, 99, 100, 101, 102, 103)
+# These calls are not part of the test set.
+#
+#  98: X-13 aborts with a Fortran runtime error when writing the udg file
+#      (x11mdl.f, formatted transfer of a character into an F8.4 field)
+# 103: an exact duplicate of case 1
+#
+# The other calls that used to sit here were the ones from #272. They failed
+# with the 2021 build of X-13 and run again since, so they are part of the
+# test set.
+excluded <- c(98, 103)
 
 cc <- read.csv(csv)
 calls <- as.character(cc$r)[-excluded]
@@ -41,7 +48,7 @@ calls <- as.character(cc$r)[-excluded]
 # --- known issues -------------------------------------------------------------
 
 # Cases where static() does not reproduce the model. Verified against
-# seasonal 1.10.0 and x13binary 1.1.61.2 on 2026-09-12.
+# seasonal 1.10.0 and x13binary 1.1.61.2 on 2026-09-13.
 static_issues <- list(
   `47` = list(
     why = "complicated outliers (qi1950.2-1950.4) are not read back from the mdl file",
@@ -54,6 +61,14 @@ static_issues <- list(
   `60` = list(
     why = "fixed regression.b coefficients are written back with the wrong length",
     msg = "Number of initial values is not the same"
+  ),
+  `87` = list(
+    why = "the static call writes the aic selected td1coef back as a plain regressor, and X-13 then fits an additional 'Leap Year' term that the original run does not have",
+    msg = "Static series is different"
+  ),
+  `99` = list(
+    why = "the fixed (3 1 1)(0 1 1) model is re-estimated to a different optimum (the original MA-Nonseasonal-01 of -0.94 sits close to the invertibility boundary)",
+    msg = "Static series is different"
   )
 )
 
