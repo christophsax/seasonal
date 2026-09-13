@@ -15,8 +15,11 @@ Description: Easy-to-use interface to X-13-ARIMA-SEATS, the seasonal adjustment
     used through the 'seasonalview' package. Uses the X-13-binaries from the
     'x13binary' package.
 Depends:
-    R (>= 2.15)
+    R (>= 4.1)
 Imports:
+    graphics,
+    stats,
+    utils,
     x13binary
 Suggests:
     seasonalview (>= 0.1.3),

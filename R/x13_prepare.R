@@ -24,6 +24,7 @@ x13_prepare <- function(list, na.action = na.omit, iofile, composite = FALSE) {
     }
 
     x.na <- na.action(x)
+    check_span(x.na)
     write_ts_dat(x.na, file = datafile)
 
     spc$series$title <- paste0("\"", series.name, "\"")
@@ -99,4 +100,18 @@ x13_prepare <- function(list, na.action = na.omit, iofile, composite = FALSE) {
   spctxt <- deparse_spclist(spc)
   writeLines(spctxt, con = paste0(iofile, ".spc"))
   invisible(spc)
+}
+
+
+check_span <- function(x) {
+  # file instead (#287).
+  span <- NROW(x) / frequency(x)
+  if (span > 85) {
+    stop(
+      "the series spans ", round(span), " years, which is more than the ",
+      "85 years X-13 can handle (section 2.7 of the X-13ARIMA-SEATS manual).",
+      call. = FALSE
+    )
+  }
+  invisible(x)
 }

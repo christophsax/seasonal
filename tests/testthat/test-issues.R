@@ -94,3 +94,75 @@ test_that("missing iofile.est for short series causes an error #296", {
                                                                  12), class = "ts")
   expect_no_error(seas(tdata))
 })
+
+
+test_that("removing an argument does not create the spec (#293, #294)", {
+  spc <- structure(list(), class = c("spclist", "list"))
+  expect_length(mod_spclist(spc, list(seats.noadmiss = NULL)), 0)
+})
+
+
+test_that("seats = NULL removes the seats spec (#293, #294)", {
+  m <- seas(AirPassengers, seats = NULL)
+  expect_false("seats" %in% names(m$spc))
+})
+
+
+test_that("seats = NULL does not limit forecasts and backcasts (#293, #294)", {
+  m <- seas(
+    AirPassengers,
+    seats = NULL,
+    forecast.maxlead = 60,
+    forecast.maxback = 24,
+    forecast.save = c("fct", "bct")
+  )
+  expect_identical(NROW(series(m, "fct")), 60L)
+  expect_identical(NROW(series(m, "bct")), 24L)
+})
+
+
+test_that("series longer than the X-13 limit are reported as such (#287)", {
+  expect_silent(check_span(ts(1:(85 * 12), start = c(1930, 1), frequency = 12)))
+  expect_error(
+    check_span(ts(1:(86 * 12), start = c(1930, 1), frequency = 12)),
+    "85 years"
+  )
+  expect_error(seas(ts(1:(93 * 12), start = c(1930, 1), frequency = 12)), "85 years")
+})
+
+
+test_that("table names that are used by two specs work (#289)", {
+  m <- seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)", x11 = "")
+  b1 <- suppressMessages(series(m, "b1"))
+  expect_s3_class(b1, "ts")
+  expect_equal(b1, suppressMessages(series(m, "series.adjoriginal")))
+})
+
+
+test_that("series of the original call survive the re-run (#290)", {
+  m <- seas(
+    AirPassengers,
+    arima.model = "(0 1 1)(0 1 1)",
+    x11 = "",
+    series.save = "b1"
+  )
+  z <- suppressMessages(series(m, c("a1", "b1", "d11")))
+  expect_equal(colnames(z), c("a1", "b1", "d11"))
+})
+
+
+test_that("a failed spectral plot is a warning, not an error (#337)", {
+  # X-13 cannot draw the spectrum of the logged adjusted series if the
+  # adjustment turns negative
+  x <- ts(
+    c(19, 0, -32, -47, -19, 8, 41, 51, 31, -1, -27, -39,
+      19, -4, -28, -50, -20, 12, 42, 51, 32, 2, -30, -44,
+      21, 0, -30, -53, -21, 11, 43, 50, 31, 0, -33, -41,
+      19, 0, -28, -48, -20, 9, 41, 51, 29, -1, -29, -38),
+    start = c(2010, 1), frequency = 12
+  )
+  m <- seas(x, transform.function = "log", transform.constant = 200, x11 = "")
+  expect_s3_class(final(m), "ts")
+  expect_length(m$err$error, 0)
+  expect_match(m$err$warning, "Spectral plot", all = FALSE)
+})

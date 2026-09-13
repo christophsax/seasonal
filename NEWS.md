@@ -2,17 +2,28 @@
 --------------------------------------------------------------------------------
 
 bug fix
-
   - import.spc() deals with tabs, with the legacy 'x12save' format label and
     with non-UTF-8 comments #338
     Thanks to @CatalinDochitoiu!
+  - 'seats = NULL' turns seasonal adjustment off again, as documented, and
+    forecasts and backcasts are no longer limited by SEATS. Broken since 1.8.0
+    #293 #294
+  - series that span more than the 85 years X-13 can handle are reported as
+    such, instead of as an unreadable data file #287
+  - series() works with table names that are used by more than one spec, such
+    as 'b1' or 'tac'. The spec is resolved from the model #289
+  - series() no longer drops series of the original call when the model is
+    re-evaluated #290
+  - the rerun hint of series() is no longer repeated when the call spans
+    several lines
+  - errors from X-13 that only concern a diagnostic plot no longer abort the
+    run, they are reported as warnings #337
 
 
 1.10.0
 --------------------------------------------------------------------------------
 
 minor changes
-
   - Improved messages on rerun in series()
   - Spec list in ?series is automatically parsed from the X-13 manual
   - Save output files if 'dir' is specified
