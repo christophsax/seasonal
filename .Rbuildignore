@@ -10,3 +10,4 @@ travis
 ^\.github$
 ^codecov\.yml$
 ^seasonal\.Rproj$
+^manual-tests$
