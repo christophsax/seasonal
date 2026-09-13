@@ -2,7 +2,9 @@
 --------------------------------------------------------------------------------
 
 bug fix
-
+  - import.spc() deals with tabs, with the legacy 'x12save' format label and
+    with non-UTF-8 comments #338
+    Thanks to @CatalinDochitoiu!
   - 'seats = NULL' turns seasonal adjustment off again, as documented, and
     forecasts and backcasts are no longer limited by SEATS. Broken since 1.8.0
     #293 #294
@@ -22,7 +24,6 @@ bug fix
 --------------------------------------------------------------------------------
 
 minor changes
-
   - Improved messages on rerun in series()
   - Spec list in ?series is automatically parsed from the X-13 manual
   - Save output files if 'dir' is specified

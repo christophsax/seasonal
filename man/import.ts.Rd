@@ -17,7 +17,8 @@ import.ts(
 
 \item{format}{a valid X-13 file format as described in 7.15 of the
 X-13 manual: \code{"datevalue"}, \code{"datevaluecomma"}, \code{"free"},
-\code{"freecomma"}, \code{"x13save"}, \code{"tramo"} or an X-11 or Fortran format.}
+\code{"freecomma"}, \code{"x13save"} (or its legacy label \code{"x12save"}),
+\code{"tramo"} or an X-11 or Fortran format.}
 
 \item{start}{vector of length 2, time of the first observation (only for
 formats \code{"free"} and \code{"freecomma"} and the Fortran formats.)}

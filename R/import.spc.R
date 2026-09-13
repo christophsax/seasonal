@@ -105,8 +105,12 @@ import.spc <- function(file, text = NULL){
     stopifnot(length(text) == 1)
     text <- strsplit(text, split = "\n")[[1]]
   }
+  # comments first, and by bytes: legacy .spc files may have non-UTF-8
+  # characters in their comments, which would make the substitutions below fail
+  text <- gsub("#.*$", "", text, useBytes = TRUE)
+
   text <- gsub("\\\\", "/", text)  # window file names to unix
-  text <- gsub("#.*$", "", text) # remove comments
+  text <- gsub("\t", " ", text)  # tabs end up in argument names, otherwise
 
   # keep everything lowercase, except filenames
   pp.cap <- parse_spc(text)
@@ -210,7 +214,9 @@ ext_ser_call <- function(spc, vname){
 
     if (frm == "datevalue"){
       xstr <- paste0(vname, ' <- import.ts(', spc$file, ')')
-    } else if (frm %in% c("datevaluecomma", "x13save")){
+    } else if (frm %in% c("datevaluecomma", "x12save", "x13save")){
+      # "x12save" is the legacy label of the same format
+      if (frm == "x12save") frm <- "x13save"
       xstr <- paste0(vname, ' <- import.ts(', spc$file, ', format = "', frm, '")')
     } else if (frm %in% c("1r", "2r", "1l", "2l", "2l2", "cs", "cs2")){
       frequency <- if (is.null(spc$period)) 12 else spc$period
@@ -322,7 +328,8 @@ rem_defaults_from_args <- function(x) {
 #' @param file character, name of the X-13 file which the data are to be read from
 #' @param format a valid X-13 file format as described in 7.15 of the
 #'  X-13 manual: `"datevalue"`, `"datevaluecomma"`, `"free"`,
-#'  `"freecomma"`, `"x13save"`, `"tramo"` or an X-11 or Fortran format.
+#'  `"freecomma"`, `"x13save"` (or its legacy label `"x12save"`),
+#'  `"tramo"` or an X-11 or Fortran format.
 #' @param start vector of length 2, time of the first observation (only for
 #'   formats `"free"` and `"freecomma"` and the Fortran formats.)
 #' @param frequency  the number of observations per unit of time (only for
@@ -347,7 +354,7 @@ import.ts <- function(file,
   stopifnot(file.exists(file))
 
 
-  if (format == "x13save"){
+  if (format %in% c("x12save", "x13save")){
     return(read_series(file))
   }
   if (format == "tramo"){
