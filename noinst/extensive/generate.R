@@ -27,7 +27,7 @@ library(seasonal)
 
 csv <- "noinst/extensive/ex_run.csv"
 out_file <- "tests/testthat/test-extensive-cases.R"
-benchmark_file <- "tests/testthat/fixtures/extensive-benchmark.rds"
+benchmark_file <- "tests/testthat/fixtures/extensive-benchmark.csv"
 
 # --- case list ----------------------------------------------------------------
 
@@ -68,14 +68,59 @@ eval_case <- function(x) {
   eval(exprs[[length(exprs)]], envir = globalenv())
 }
 
+# The benchmark is a csv and not an rds so that regenerating it shows up as a
+# readable diff. Twelve significant digits is far below the 1e-6 the tests
+# compare at.
+benchmark_digits <- 12
+
+benchmark_as_data_frame <- function(series) {
+  do.call(rbind, lapply(seq_along(series), function(i) {
+    x <- series[[i]]
+    tt <- time(x)
+    freq <- frequency(x)
+    year <- floor(tt + 1e-8)
+    data.frame(
+      case = i,
+      frequency = freq,
+      year = as.integer(year),
+      period = as.integer(round((tt - year) * freq) + 1),
+      value = signif(as.numeric(x), benchmark_digits)
+    )
+  }))
+}
+
 if (identical(Sys.getenv("SEASONAL_REGENERATE_BENCHMARK"), "true")) {
   message("regenerating ", benchmark_file)
+
   bench <- lapply(seq_along(calls), function(i) {
     message("  case ", i)
     final(eval_case(calls[i]))
   })
-  names(bench) <- paste0("case", seq_along(calls))
-  saveRDS(bench, benchmark_file, version = 2)
+
+  # report what moved, so that regenerating is a decision and not a reflex
+  if (file.exists(benchmark_file)) {
+    old <- read.csv(benchmark_file)
+    drift <- vapply(seq_along(bench), function(i) {
+      was <- old$value[old$case == i]
+      if (length(was) != length(bench[[i]])) return(NA_real_)
+      max(abs(as.numeric(bench[[i]]) - was) / pmax(abs(was), 1e-8))
+    }, numeric(1))
+
+    changed <- which(is.na(drift) | drift > 1e-6)
+    if (length(changed) == 0) {
+      message("no case moved by more than 1e-6")
+    } else {
+      message("cases that moved by more than 1e-6:")
+      for (i in changed) {
+        message(sprintf(
+          "  case %3d: %s", i,
+          if (is.na(drift[i])) "different length" else format(drift[i], digits = 3)
+        ))
+      }
+    }
+  }
+
+  write.csv(benchmark_as_data_frame(bench), benchmark_file, row.names = FALSE)
 }
 
 # --- code generation ----------------------------------------------------------
@@ -131,13 +176,10 @@ gen_case <- function(i) {
     "",
     '  expect_s3_class(m, "seas")',
     "",
-    "  # numerical regression against the stored benchmark. The tolerance is",
+    "  # numerical regression against the stored benchmark, at a tolerance",
     "  # loose enough to absorb the last-digit differences between the X-13",
-    "  # builds on different platforms.",
-    paste0(
-      "  expect_equal(final(m), benchmark_final(", i,
-      "), tolerance = 1e-6)"
-    ),
+    "  # builds on different platforms",
+    paste0("  expect_matches_benchmark(m, ", i, ")"),
     "",
     "  # update() reproduces the model",
     "  expect_equal(final(update(m)), final(m))",

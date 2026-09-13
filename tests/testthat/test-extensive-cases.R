@@ -12,10 +12,10 @@ test_that("example case 1 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(1), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 1)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -34,10 +34,10 @@ test_that("example case 2 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(2), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 2)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -57,10 +57,10 @@ test_that("example case 3 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(3), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 3)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -79,10 +79,10 @@ test_that("example case 4 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(4), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 4)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -102,10 +102,10 @@ test_that("example case 5 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(5), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 5)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -125,10 +125,10 @@ test_that("example case 6 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(6), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 6)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -148,10 +148,10 @@ test_that("example case 7 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(7), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 7)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -171,10 +171,10 @@ test_that("example case 8 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(8), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 8)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -194,10 +194,10 @@ test_that("example case 9 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(9), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 9)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -216,10 +216,10 @@ test_that("example case 10 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(10), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 10)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -239,10 +239,10 @@ test_that("example case 11 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(11), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 11)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -264,10 +264,10 @@ test_that("example case 12 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(12), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 12)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -287,10 +287,10 @@ test_that("example case 13 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(13), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 13)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -312,10 +312,10 @@ test_that("example case 14 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(14), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 14)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -340,10 +340,10 @@ test_that("example case 15 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(15), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 15)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -362,10 +362,10 @@ test_that("example case 16 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(16), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 16)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -385,10 +385,10 @@ test_that("example case 17 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(17), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 17)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -407,10 +407,10 @@ test_that("example case 18 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(18), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 18)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -430,10 +430,10 @@ test_that("example case 19 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(19), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 19)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -453,10 +453,10 @@ test_that("example case 20 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(20), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 20)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -477,10 +477,10 @@ test_that("example case 21 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(21), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 21)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -505,10 +505,10 @@ test_that("example case 22 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(22), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 22)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -529,10 +529,10 @@ test_that("example case 23 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(23), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 23)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -553,10 +553,10 @@ test_that("example case 24 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(24), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 24)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -575,10 +575,10 @@ test_that("example case 25 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(25), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 25)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -599,10 +599,10 @@ test_that("example case 26 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(26), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 26)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -623,10 +623,10 @@ test_that("example case 27 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(27), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 27)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -646,10 +646,10 @@ test_that("example case 28 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(28), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 28)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -669,10 +669,10 @@ test_that("example case 29 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(29), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 29)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -693,10 +693,10 @@ test_that("example case 30 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(30), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 30)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -716,10 +716,10 @@ test_that("example case 31 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(31), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 31)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -740,10 +740,10 @@ test_that("example case 32 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(32), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 32)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -763,10 +763,10 @@ test_that("example case 33 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(33), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 33)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -786,10 +786,10 @@ test_that("example case 34 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(34), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 34)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -811,10 +811,10 @@ test_that("example case 35 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(35), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 35)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -835,10 +835,10 @@ test_that("example case 36 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(36), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 36)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -859,10 +859,10 @@ test_that("example case 37 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(37), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 37)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -881,10 +881,10 @@ test_that("example case 38 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(38), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 38)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -905,10 +905,10 @@ test_that("example case 39 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(39), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 39)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -928,10 +928,10 @@ test_that("example case 40 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(40), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 40)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -951,10 +951,10 @@ test_that("example case 41 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(41), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 41)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -974,10 +974,10 @@ test_that("example case 42 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(42), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 42)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -998,10 +998,10 @@ test_that("example case 43 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(43), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 43)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1022,10 +1022,10 @@ test_that("example case 44 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(44), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 44)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1045,10 +1045,10 @@ test_that("example case 45 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(45), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 45)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1069,10 +1069,10 @@ test_that("example case 46 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(46), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 46)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1093,10 +1093,10 @@ test_that("example case 47 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(47), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 47)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1120,10 +1120,10 @@ test_that("example case 48 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(48), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 48)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1143,10 +1143,10 @@ test_that("example case 49 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(49), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 49)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1173,10 +1173,10 @@ test_that("example case 50 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(50), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 50)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1196,10 +1196,10 @@ test_that("example case 51 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(51), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 51)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1219,10 +1219,10 @@ test_that("example case 52 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(52), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 52)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1243,10 +1243,10 @@ test_that("example case 53 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(53), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 53)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1267,10 +1267,10 @@ test_that("example case 54 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(54), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 54)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1290,10 +1290,10 @@ test_that("example case 55 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(55), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 55)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1313,10 +1313,10 @@ test_that("example case 56 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(56), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 56)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1336,10 +1336,10 @@ test_that("example case 57 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(57), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 57)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1369,10 +1369,10 @@ test_that("example case 58 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(58), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 58)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1402,10 +1402,10 @@ test_that("example case 59 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(59), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 59)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1428,10 +1428,10 @@ test_that("example case 60 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(60), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 60)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1453,10 +1453,10 @@ test_that("example case 61 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(61), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 61)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1485,10 +1485,10 @@ test_that("example case 62 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(62), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 62)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1514,10 +1514,10 @@ test_that("example case 63 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(63), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 63)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1537,10 +1537,10 @@ test_that("example case 64 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(64), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 64)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1561,10 +1561,10 @@ test_that("example case 65 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(65), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 65)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1587,10 +1587,10 @@ test_that("example case 66 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(66), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 66)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1609,10 +1609,10 @@ test_that("example case 67 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(67), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 67)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1634,10 +1634,10 @@ test_that("example case 68 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(68), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 68)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1656,10 +1656,10 @@ test_that("example case 69 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(69), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 69)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1678,10 +1678,10 @@ test_that("example case 70 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(70), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 70)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1700,10 +1700,10 @@ test_that("example case 71 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(71), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 71)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1722,10 +1722,10 @@ test_that("example case 72 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(72), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 72)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1744,10 +1744,10 @@ test_that("example case 73 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(73), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 73)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1766,10 +1766,10 @@ test_that("example case 74 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(74), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 74)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1788,10 +1788,10 @@ test_that("example case 75 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(75), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 75)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1810,10 +1810,10 @@ test_that("example case 76 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(76), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 76)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1835,10 +1835,10 @@ test_that("example case 77 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(77), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 77)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1859,10 +1859,10 @@ test_that("example case 78 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(78), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 78)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1883,10 +1883,10 @@ test_that("example case 79 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(79), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 79)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1907,10 +1907,10 @@ test_that("example case 80 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(80), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 80)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1930,10 +1930,10 @@ test_that("example case 81 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(81), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 81)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1953,10 +1953,10 @@ test_that("example case 82 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(82), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 82)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -1982,10 +1982,10 @@ test_that("example case 83 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(83), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 83)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2004,10 +2004,10 @@ test_that("example case 84 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(84), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 84)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2032,10 +2032,10 @@ test_that("example case 85 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(85), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 85)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2061,10 +2061,10 @@ test_that("example case 86 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(86), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 86)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2091,10 +2091,10 @@ test_that("example case 87 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(87), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 87)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2113,10 +2113,10 @@ test_that("example case 88 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(88), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 88)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2135,10 +2135,10 @@ test_that("example case 89 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(89), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 89)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2159,10 +2159,10 @@ test_that("example case 90 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(90), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 90)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2184,10 +2184,10 @@ test_that("example case 91 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(91), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 91)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2209,10 +2209,10 @@ test_that("example case 92 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(92), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 92)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2233,10 +2233,10 @@ test_that("example case 93 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(93), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 93)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
@@ -2255,10 +2255,10 @@ test_that("example case 94 runs, matches the benchmark, and is reproducible", {
 
   expect_s3_class(m, "seas")
 
-  # numerical regression against the stored benchmark. The tolerance is
+  # numerical regression against the stored benchmark, at a tolerance
   # loose enough to absorb the last-digit differences between the X-13
-  # builds on different platforms.
-  expect_equal(final(m), benchmark_final(94), tolerance = 1e-6)
+  # builds on different platforms
+  expect_matches_benchmark(m, 94)
 
   # update() reproduces the model
   expect_equal(final(update(m)), final(m))
