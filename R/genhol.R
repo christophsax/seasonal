@@ -85,7 +85,7 @@
 #' data(seasonal)
 #' data(holiday)  # dates of Chinese New Year, Indian Diwali and Easter
 #'
-#' # de facto holiday length: http://en.wikipedia.org/wiki/Chinese_New_Year
+#' # de facto holiday length: https://en.wikipedia.org/wiki/Chinese_New_Year
 #' cny.ts <- genhol(cny, start = 0, end = 6, center = "calendar")
 #'
 #' m1 <- seas(x = imp, xreg = cny.ts, regression.usertype = "holiday", x11 = "",

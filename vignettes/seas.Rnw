@@ -29,7 +29,7 @@ search, outlier detection, and support for user-defined holiday
 variables such as the Chinese New Year or Indian Diwali. The required
 X-13 binaries are provided by the \pkg{x13binary} package,
 which facilitates a fully-automatic installation on most platforms. A
-demo website (at \url{http://www.seasonal.website}) supports interactive
+demo website (at \url{https://www.seasonal.website}) supports interactive
 modeling of custom data. A graphical user interface in the
 \pkg{seasonalview} package offers the same functionality locally.
 X-13 can handle monthly, quarterly or bi-annual time series.
@@ -57,14 +57,13 @@ This is a version of our article in the \emph{Journal of Statistical Software}
   University of Basel\\
   Peter Merian-Weg 6, Basel, Switzerland\\
   ORCID: \href{https://orcid.org/0000-0002-7192-7044}{0000-0002-7192-7044}\\
-  E-mail: \email{christoph.sax@gmail.com}\\
-  URL: \url{http://www.christophsax.com}\\~\\
+  E-mail: \email{christoph.sax@gmail.com}\\~\\
   Dirk Eddelbuettel\\
   University of Illinois at Urbana-Champaign\\
   725 S Wright St, Chicago, USA\\
   ORCID: \href{https://orcid.org/0000-0001-6419-907X}{0000-0001-6419-907X}\\
   E-mail: \email{edd@debian.org}\\
-  URL: \url{http://dirk.eddelbuettel.com}\\~\\
+  URL: \url{https://dirk.eddelbuettel.com}\\~\\
 }
 %% It is also possible to add a telephone and fax number
 %% before the e-mail in the following format:
@@ -109,7 +108,7 @@ approach to seasonal adjustment.
 \begin{figure}
 \begin{center}
    \includegraphics{Figures/website.jpg}
-   \caption{The website \url{http://www.seasonal.website} gives a full-featured preview of the modeling facilities of \pkg{seasonal}, including the possibility to upload and adjust time series. \label{fig:website}}
+   \caption{The website \url{https://www.seasonal.website} gives a full-featured preview of the modeling facilities of \pkg{seasonal}, including the possibility to upload and adjust time series. \label{fig:website}}
 \end{center}
 \end{figure}
 
@@ -184,7 +183,7 @@ article and in the documentation of the package.
 
 Last but not least, to try out X-13 and \pkg{seasonal}
 without installing any software locally, a full-featured website (at
-\url{http://www.seasonal.website}) allows uploading and modeling of
+\url{https://www.seasonal.website}) allows uploading and modeling of
 time-series interactively, making use of the complete feature set of
 \pkg{seasonal}. Figure~\ref{fig:website} shows a screenshot of the
 website.
@@ -327,7 +326,7 @@ R> static(m)
 With the \pkg{seasonalview} package installed, the \code{view} command
 offers an easy way to analyze and modify a seasonal adjustment
 procedure, in the same way as it is possible on the website at
-\url{http://www.seasonal.website}:
+\url{https://www.seasonal.website}:
 
 \begin{CodeInput}
 R> view(m)
@@ -377,7 +376,7 @@ It is possible to manipulate almost all inputs to X-13 in
 that way. Chapter 7 of the X\nobreakdash-13 manual (US
 Census Bureau 2016) describes all available spec-argument combinations
 in detail. The comprehensive list of examples available at
-\url{http://www.seasonal.website/examples.html} offers numerous
+\url{https://www.seasonal.website/examples.html} offers numerous
 illustrations about the mapping of both functionality and syntax
 between X-13 and \pkg{seasonal}.
 
@@ -610,7 +609,7 @@ R> identify(m)
 
 The \pkg{seasonalview} package provides a graphical interface for
 choosing a seasonal adjustment model using \pkg{shiny} \citep{shiny16}. It provides the identical look and feel as the demo website at
-\url{http://www.seasonal.website}. To install the latest version of
+\url{https://www.seasonal.website}. To install the latest version of
 \pkg{seasonalview}, use:
 
 \begin{CodeInput}

@@ -67,7 +67,7 @@ m.upd <- view(m)
 }
 \references{
 Seasonal vignette with a more detailed description:
-\url{http://www.seasonal.website/seasonal.html}
+\url{https://www.seasonal.website/seasonal.html}
 
 Development version of the x13story package:
 \url{https://github.com/christophsax/x13story}

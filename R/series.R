@@ -293,13 +293,13 @@
 #' @seealso [seas()] for the main function.
 #'
 #' @references Vignette with a more detailed description:
-#'   <http://www.seasonal.website/seasonal.html>
+#'   <https://www.seasonal.website/seasonal.html>
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-#'   <http://www.seasonal.website/examples.html>
+#'   <https://www.seasonal.website/examples.html>
 #'
 #'   Official X-13ARIMA-SEATS manual:
-#'   <https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf>
+#'   <https://www2.census.gov/software/x-13arima-seats/x13as/unix-linux/documentation/docx13as.pdf>
 #'
 #' @export
 #'

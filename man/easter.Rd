@@ -12,7 +12,7 @@ Objects of class \code{"Date"}.
 \source{
 \url{https://www2.census.gov/software/x-13arima-seats/win-genhol/download/}
 
-\url{http://www.chinesenewyears.info/chinese-new-year-calendar.php}
+\url{https://www.chinesenewyears.info/chinese-new-year-calendar.php}
 
 Ministry of Statistics and Programme Implementation, with help from Pinaki
 Mukherjee

@@ -40,7 +40,7 @@
 #'   if the GUI should open in the browser or in the RStudio viewer pane.
 #'
 #' @references Seasonal vignette with a more detailed description:
-#'   <http://www.seasonal.website/seasonal.html>
+#'   <https://www.seasonal.website/seasonal.html>
 #'
 #'   Development version of the x13story package:
 #'   <https://github.com/christophsax/x13story>

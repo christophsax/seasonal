@@ -110,7 +110,7 @@ NULL
 #' @source
 #' <https://www2.census.gov/software/x-13arima-seats/win-genhol/download/>
 #'
-#' <http://www.chinesenewyears.info/chinese-new-year-calendar.php>
+#' <https://www.chinesenewyears.info/chinese-new-year-calendar.php>
 #'
 #' Ministry of Statistics and Programme Implementation, with help from Pinaki
 #'   Mukherjee
@@ -212,7 +212,7 @@ NULL
 #' @source United States Census Bureau
 #'
 #' @references Official X-13ARIMA-SEATS manual:
-#'   <https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf>
+#'   <https://www2.census.gov/software/x-13arima-seats/x13as/unix-linux/documentation/docx13as.pdf>
 #'
 #' @name SPECS
 #' @aliases INSPDATA
