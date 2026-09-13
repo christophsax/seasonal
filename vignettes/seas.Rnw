@@ -264,7 +264,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 SEATS adj.  ARIMA: (1 1 1)(0 1 1)  Obs.: 323  Transform: none
 AICc: 4.32e+03, BIC: 4.34e+03  QS (no seasonality in final):   0
-Box-Ljung (no autocorr.):   22   Shapiro (normality): 0.995
+Box-Ljung (no autocorr.): 22.53   Shapiro (normality): 0.995
 \end{CodeOutput}
 
 

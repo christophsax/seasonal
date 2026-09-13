@@ -166,3 +166,60 @@ test_that("a failed spectral plot is a warning, not an error (#337)", {
   expect_length(m$err$error, 0)
   expect_match(m$err$warning, "Spectral plot", all = FALSE)
 })
+
+
+test_that("Box-Ljung in summary() reproduces the statistic of X-13 (#310)", {
+  # lbq() recomputes what X-13 puts in the acf table of the check spec, so that
+  # the table does not have to be saved on every run. Verify they agree.
+  cases <- list(
+    quote(seas(AirPassengers)),
+    quote(seas(AirPassengers, x11 = "")),
+    quote(seas(AirPassengers, arima.model = "(2 1 0)(0 1 1)",
+               regression.aictest = NULL, outlier = NULL)),
+    quote(seas(AirPassengers, arima.model = "(1 0 0)(0 0 0)",
+               regression.variables = "const", regression.aictest = NULL,
+               outlier = NULL, transform.function = "log")),
+    quote(seas(AirPassengers, arima.model = "(0 2 2)(0 1 1)",
+               regression.aictest = NULL, outlier = NULL)),
+    # all ARMA coefficients fixed, none of them costs a degree of freedom
+    quote(seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)",
+               arima.ma = c("0.1156f", "0.4974f"), regression.aictest = NULL,
+               outlier = NULL, transform.function = "log")),
+    # one fixed, one estimated
+    quote(seas(AirPassengers, arima.model = "(0 1 1)(0 1 1)",
+               arima.ma = c("0.1156f", "0.4974"), regression.aictest = NULL,
+               outlier = NULL, transform.function = "log")),
+    quote(seas(mdeaths)),
+    quote(seas(ts(cumsum(rnorm(160)) + 200, start = c(1980, 1), frequency = 4)))
+  )
+
+  set.seed(42)
+  for (cl in cases) {
+    cl$check.save <- "acf"
+    m <- eval(cl)
+
+    acf <- m$series$acf
+    last <- acf[NROW(acf), ]
+    x13 <- c(statistic = unname(last["Ljung.Box_Q"]),
+             parameter = unname(last["df_of_Q"]),
+             p.value = unname(last["P.value"]))
+
+    expect_equal(seasonal:::lbq(m), x13, tolerance = 1e-4,
+                 info = deparse(cl, width.cutoff = 500))
+  }
+})
+
+test_that("summary() shows the corrected Box-Ljung statistic (#310)", {
+  m <- seas(AirPassengers)
+
+  bl <- seasonal:::lbq(m)
+  expect_equal(unname(bl["statistic"]), 23.885, tolerance = 1e-4)
+
+  # 24 lags less the two estimated MA coefficients, not 24 as before
+  expect_equal(unname(bl["parameter"]), 22)
+
+  expect_output(print(summary(m)), "Box-Ljung \\(no autocorr.\\): 23.88")
+
+  # the check spec is not saved, summary() costs no extra output file
+  expect_null(m$series$acf)
+})

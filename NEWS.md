@@ -18,6 +18,11 @@ bug fix
     several lines
   - errors from X-13 that only concern a diagnostic plot no longer abort the
     run, they are reported as warnings #337
+  - the Box-Ljung statistic in summary() matches the one X-13 computes. It is
+    evaluated at twice the frequency of the series, on the observations left
+    after differencing, and its degrees of freedom are reduced by the number of
+    estimated ARMA coefficients. It used to be 'Box.test(resid(m), lag = 24,
+    type = "Ljung")', which accounted for none of the three #310
 
 
 1.10.0

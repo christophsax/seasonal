@@ -18,8 +18,13 @@
 #' extracted with [qs()].}
 #' \item{Box-Ljung}{test for residual autocorrelation; null hypothesis: no
 #' autocorrelation in residuals; signif. codes are shown if the null hypothesis
-#' is rejected. The test statistic is the result of
-#' `Box.test(resid(m), lag = 24, type = "Ljung")`}
+#' is rejected. The statistic is the one X-13ARIMA-SEATS computes in its check
+#' spec: at lag twice the frequency of the series, on the observations left
+#' after differencing, and with the degrees of freedom reduced by the number of
+#' estimated ARMA coefficients. It is therefore smaller than
+#' `Box.test(resid(m), lag = 24, type = "Ljung")`. Statistic, degrees of
+#' freedom and p-value for every lag are available from
+#' `series(m, "check.acf")`.}
 #' \item{Shapiro}{test for normality of the residuals; null hypothesis: normal
 #' distribution of the residuals; signif. codes are shown if the null
 #' hypothesis is rejected. The test statistic is the result of
@@ -149,13 +154,13 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
 
   if (!is.null(x$resid)){
     # Box Ljung Test
-    bltest <- Box.test(x$resid, lag = 24, type = "Ljung")
-    blstars <- symnum(bltest$p.value,
+    bltest <- lbq(x)
+    blstars <- symnum(bltest["p.value"],
                       corr = FALSE, na = FALSE, legend = FALSE,
                       cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
                       symbols = c("***", "**", "*", ".", " "))
     cat("\nBox-Ljung (no autocorr.):",
-        formatC(bltest$statistic, digits = digits), blstars)
+        formatC(bltest["statistic"], digits = digits), blstars)
 
     # Normality
     swtest <- shapiro.test(x$resid)
@@ -194,4 +199,48 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
   }
   cat("\n")
   invisible(x)
+}
+
+
+lbq <- function(x) {
+  # Ljung-Box Q statistic of the residuals, the way X-13ARIMA-SEATS computes it
+  # in the check spec: at lag 2 * frequency, on the observations that are left
+  # after differencing, and with the degrees of freedom reduced by the number
+  # of estimated ARMA coefficients. Box.test(resid(m), lag = 24) accounts for
+  # neither and gives a larger statistic on more degrees of freedom.
+  #
+  # Recomputed here rather than read from the 'acf' table of the check spec, so
+  # that no extra file has to be saved on every run. test-issues.R checks that
+  # the two agree.
+  #
+  # x  "seas" or "summary.seas" object
+  #
+  # returns a named numeric vector: statistic, parameter (degrees of freedom),
+  # p.value
+
+  res <- if (is.null(x$resid)) residuals(x) else x$resid
+  freq <- frequency(res)
+
+  x1 <- x
+  class(x1) <- "seas"  # reclassify, so udg() can be used on a "summary.seas"
+
+  # observations left after differencing, which is what X-13 uses
+  nefobs <- udg(x1, "nefobs", fail = FALSE)
+  if (!is.null(nefobs)) res <- utils::tail(res, nefobs)
+  n <- length(res)
+
+  maxlag <- x$spc$check$maxlag
+  k <- min(if (is.null(maxlag)) 2 * freq else as.numeric(maxlag), n - 1)
+
+  rho <- drop(acf(res, lag.max = k, plot = FALSE, na.action = na.pass)$acf)[-1]
+  statistic <- n * (n + 2) * sum(rho^2 / (n - seq_len(k)))
+
+  # fixed coefficients have a standard error of 0 and do not cost a degree of
+  # freedom
+  is_arma <- grepl("^(AR|MA)-", names(x$est$coefficients))
+  df <- k - sum(is_arma & x$est$se != 0)
+
+  c(statistic = statistic,
+    parameter = df,
+    p.value = if (df > 0) pchisq(statistic, df, lower.tail = FALSE) else NA_real_)
 }
