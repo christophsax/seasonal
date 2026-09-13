@@ -3,7 +3,7 @@
 test_that("checkX13() reports a working installation", {
   skip_if_no_x13()
 
-  expect_null(checkX13())
+  expect_null(suppressMessages(checkX13()))
   expect_message(checkX13(), "X-13 installation test")
   expect_message(checkX13(), "seasonal test run successful")
 })
@@ -11,9 +11,9 @@ test_that("checkX13() reports a working installation", {
 test_that("checkX13() can skip the long checks", {
   skip_if_no_x13()
 
-  expect_null(checkX13(fullcheck = FALSE, htmlcheck = FALSE))
-  expect_null(checkX13(fullcheck = FALSE))
-  expect_null(checkX13(htmlcheck = FALSE))
+  expect_null(suppressMessages(checkX13(fullcheck = FALSE, htmlcheck = FALSE)))
+  expect_null(suppressMessages(checkX13(fullcheck = FALSE)))
+  expect_null(suppressMessages(checkX13(htmlcheck = FALSE)))
 })
 
 test_that("checkX13() complains about a path that does not exist", {
