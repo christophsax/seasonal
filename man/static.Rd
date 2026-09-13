@@ -69,13 +69,13 @@ static(m, coef = TRUE)       # also fixes the coefficients
 }
 \references{
 Vignette with a more detailed description:
-\url{http://www.seasonal.website/seasonal.html}
+\url{https://www.seasonal.website/seasonal.html}
 
 Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-\url{http://www.seasonal.website/examples.html}
+\url{https://www.seasonal.website/examples.html}
 
 Official X-13ARIMA-SEATS manual:
-\url{https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf}
+\url{https://www2.census.gov/software/x-13arima-seats/x13as/unix-linux/documentation/docx13as.pdf}
 }
 \seealso{
 \code{\link[stats:update]{stats::getCall()}} to extract the actual call.

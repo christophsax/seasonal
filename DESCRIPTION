@@ -29,7 +29,7 @@ Suggests:
     rmarkdown,
     spelling
 License: GPL-3
-URL: http://www.seasonal.website
+URL: https://www.seasonal.website
 BugReports: https://github.com/christophsax/seasonal/issues
 LazyData: true
 RoxygenNote: 7.3.2

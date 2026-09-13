@@ -112,13 +112,13 @@
 #'   \doi{10.18637/jss.v087.i11}.
 #'
 #'   On-Line Interface to seasonal
-#'   <http://www.seasonal.website>
+#'   <https://www.seasonal.website>
 #'
 #'   Comprehensive list of R examples from the X-13ARIMA-SEATS manual:
-#'   <http://www.seasonal.website/examples.html>
+#'   <https://www.seasonal.website/examples.html>
 #'
 #'   Official X-13ARIMA-SEATS manual:
-#'   <https://www2.census.gov/software/x-13arima-seats/x13as/windows/documentation/docx13as.pdf>
+#'   <https://www2.census.gov/software/x-13arima-seats/x13as/unix-linux/documentation/docx13as.pdf>
 #' @export
 #' @import graphics
 #' @import utils
