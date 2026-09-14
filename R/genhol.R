@@ -80,6 +80,28 @@
 #' summary(m3)
 #'
 #'
+#' ### replicating X-13's built-in trading day adjustment
+#'
+#' # 'td1nolpyear' is the weekday-weekend contrast variable:
+#' # (no. of weekdays) - 5/2 * (no. of Saturdays and Sundays)
+#' # note that the regressor must also cover the forecast horizon
+#' dates <- seq(as.Date("1949-01-01"), as.Date("1965-12-31"), by = "day")
+#' wd <- as.POSIXlt(dates)$wday
+#' td1 <- tapply(wd, format(dates, "%Y-%m"),
+#'               function(w) sum(w %in% 1:5) - 2.5 * sum(w %in% c(0, 6)))
+#' td1 <- ts(as.numeric(td1), start = c(1949, 1), frequency = 12)
+#'
+#' # user defined variable
+#' m4 <- seas(AirPassengers, xreg = td1, regression.usertype = "td",
+#'            regression.aictest = NULL, outlier = NULL)
+#'
+#' # built-in
+#' m5 <- seas(AirPassengers, regression.variables = "td1nolpyear",
+#'            regression.aictest = NULL, outlier = NULL)
+#'
+#' all.equal(final(m4), final(m5), tolerance = 1e-10)
+#'
+#'
 #' ### Chinese New Year
 #'
 #' data(seasonal)
