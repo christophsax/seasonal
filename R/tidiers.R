@@ -47,7 +47,7 @@ glance_df <- function(x) {
   )
 
   if (!is.null(x$resid)) {
-    bltest <- lbq(x)
+    bltest <- x$lbq
     z$box.ljung <- unname(bltest["statistic"])
     z$box.ljung.df <- unname(bltest["parameter"])
     z$box.ljung.p.value <- unname(bltest["p.value"])

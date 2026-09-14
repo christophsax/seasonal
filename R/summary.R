@@ -51,6 +51,10 @@
 #'
 #'   \item{transform}{character string with the type of initial transformation}
 #'
+#'   \item{lbq}{named numeric vector with the Ljung-Box Q statistic of the
+#'   residuals, its degrees of freedom and its p-value, computed the way
+#'   X-13ARIMA-SEATS does}
+#'
 #'   The `print` method prints the summary output in a similar way as the
 #'   method for `"lm"`.
 #'
@@ -104,6 +108,7 @@ summary.seas <- function(object, stats = getOption("seas.stats"), ...){
   z$nobs <- nobs(object)
   z$aicc <- unname(udg(object, "aicc", fail = FALSE))
   z$bic <- BIC(object)
+  z$lbq <- if (!is.null(z$resid)) lbq(object)
 
   class(z) <- "summary.seas"
   z
@@ -154,7 +159,7 @@ print.summary.seas <- function (x, digits = max(3, getOption("digits") - 3),
 
   if (!is.null(x$resid)){
     # Box Ljung Test
-    bltest <- lbq(x)
+    bltest <- x$lbq
     blstars <- symnum(bltest["p.value"],
                       corr = FALSE, na = FALSE, legend = FALSE,
                       cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
