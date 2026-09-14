@@ -2,6 +2,9 @@
 --------------------------------------------------------------------------------
 
 bug fix
+  - na.action is kept when a model is re-evaluated. update(), predict() with
+    the 'newdata' argument, out() and series() used to fall back to na.omit,
+    so na.exclude and na.x13 were silently ignored #295
   - series() works on multiple series output without a composite spec. It used
     to fail with 'does not contain a composite element' #306
     Thanks to @HomoCodens!

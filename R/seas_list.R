@@ -7,6 +7,13 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
     list <- list[setdiff(names(list), "out")]
   }
 
+  # same for na.action, which is kept in the list so that update() and the
+  # functions that re-evaluate a model do not fall back to na.omit (#295)
+  if ("na.action" %in% names(list)) {
+    na.action <- list$na.action
+    list <- list[setdiff(names(list), "na.action")]
+  }
+
   # wdir and file name
   id <- "iofile"
   wdir <- wdir_create()
@@ -22,6 +29,7 @@ seas_list <- function(list, na.action = na.omit, out = FALSE, dir = NULL,
   z$call <- call
   # save list with evaluated arguments, so they can be used to rerun
   z$list <- rm_defaults(lapply(list, eval, envir = parent.frame()))
+  if (!identical(na.action, stats::na.omit)) z$list$na.action <- na.action
   z$x <- list[['x']]
   z$spc <- spc
 
