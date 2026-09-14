@@ -11,3 +11,4 @@ travis
 ^codecov\.yml$
 ^seasonal\.Rproj$
 ^manual-tests$
+^cran-comments\.md$
