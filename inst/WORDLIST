@@ -63,6 +63,7 @@ armacmatrix
 armahistory
 ars
 ase
+attr
 autocorr
 automdl
 backcasts
@@ -136,6 +137,7 @@ filtersasym
 filtertrendconc
 filtertrendsym
 finaltests
+fivebestmdl
 forcefactor
 fsd
 ftc

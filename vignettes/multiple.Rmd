@@ -109,6 +109,28 @@ seas(
 )
 ```
 
+### Extracting from the output
+
+Extractors that return a time series are applied to every model, and the results
+are combined column by column:
+
+```r
+m <- seas(cbind(fdeaths, mdeaths), x11 = "")
+
+final(m)
+series(m, "x11.seasadj")
+residuals(m)
+```
+
+Everything else is a job for `lapply()`, since the object holds nothing but
+models. A single model is reached by name, and behaves as it would on its own:
+
+```r
+lapply(m, udg)
+udg(m[["fdeaths"]], "x13mdl")
+```
+
+
 ### Backend
 
 X-13 ships with a batch mode that allows multiple adjustments in a single call

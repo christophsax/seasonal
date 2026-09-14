@@ -135,8 +135,10 @@ seas_multi <- function(x = NULL, xreg = NULL, xtrans = NULL,
     unlink(wdir, recursive = TRUE)
   }
 
-  zs$call <- zs[[1]]$call
+  # the call is an attribute, not an element, so that the object contains
+  # nothing but models and lapply(x, fun) works on it (#288)
   class(zs) <- c("seas_multi", class(zs))
+  attr(zs, "call") <- zs[[1]]$call
 
   zs
 

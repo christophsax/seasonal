@@ -277,7 +277,12 @@
 #' }
 #'
 #'
-#' @param x  an object of class `"seas"`.
+#' On the output of a multiple series call, every model is asked for the series,
+#' and the results are combined column by column, the way [final()] does. On a
+#' composite object, the tables of the composite model are returned.
+#'
+#' @param x  an object of class `"seas"`, or the output of a multiple series
+#'   call.
 #' @param series  character vector, short or long names of an X-13ARIMA-SEATS
 #'   table. If a long name is specified, it needs to be combined with the spec
 #'   name and separated by a dot (it is not unique, otherwise. See list below.). More than one
@@ -365,14 +370,14 @@ series <- function(x, series, reeval = TRUE, verbose = TRUE){
 
   if (inherits(x, "seas_multi")) {
     if (is.null(x$composite)) {
-      stop("does not contain a composite element")
+      return(series_multi(x, series = series, reeval = reeval))
     }
     series.short <- series_short(series)
 
     if (reeval){
       reeval.dots <- reeval_dots(x = x$composite, series.short = series.short, verbose = FALSE)
       if (length(reeval.dots) > 0){
-        message_rerun_hint(x$call, reeval.dots)
+        message_rerun_hint(attr(x, "call"), reeval.dots)
 
         x$composite$list <- c(x$composite$list, reeval.dots)
         x <- update_seas_multi(x)
@@ -437,6 +442,34 @@ message_rerun_hint <- function(call, dots) {
   message(sprintf("To speed up, extend the `seas()` call (see ?series):\n%s",
                   paste(deparse(call), collapse = "\n")))
 }
+
+# series() on the models of a multiple series call, one column per model. The
+# models are re-evaluated in a single run of X-13, not in one run per model.
+# Composite objects do not get here, they are handled by series(). (#306)
+series_multi <- function(x, series, reeval = TRUE) {
+
+  series.short <- series_short(series)
+
+  if (reeval) {
+    reeval.dots <- lapply(x, reeval_dots, series.short = series.short,
+                          verbose = FALSE)
+    if (any(lengths(reeval.dots) > 0)) {
+      message_rerun_hint(attr(x, "call"),
+                         unlist(unname(reeval.dots), recursive = FALSE))
+
+      series.names <- names(x)
+      for (i in series.names) {
+        x[[i]]$list <- c(x[[i]]$list, reeval.dots[[i]])
+      }
+      x <- update_seas_multi(x)
+      names(x) <- series.names
+    }
+  }
+
+  # not lapply(x, series, ...): 'series' is also the name of the argument
+  do.call(cbind, lapply(x, function(e) series(e, series.short, reeval = FALSE)))
+}
+
 
 series_short <- function(series) {
   SPECS <- get_specs()
