@@ -19,11 +19,6 @@ skip_if_not_extensive <- function() {
   )
 }
 
-# path to a file in tests/testthat/fixtures
-fixture <- function(...) {
-  testthat::test_path("fixtures", ...)
-}
-
 # Reference value for the numerical regression tests in
 # test-extensive-cases.R. A csv and not an rds, so that regenerating it shows
 # up as a readable diff. Regenerate with
