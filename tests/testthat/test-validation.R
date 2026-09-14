@@ -177,9 +177,14 @@ test_that("out() on a composite model shows the composite output", {
 test_that("checkX13() reports a binary it cannot run", {
   broken <- file.path(tempdir(), "broken-x13")
   dir.create(broken, showWarnings = FALSE)
-  # a file with the right name that is not a program
-  writeLines("not a binary", file.path(broken, "x13ashtml"))
-  Sys.chmod(file.path(broken, "x13ashtml"), "0644")
+  # a file with the right name that is not a program. On Windows, checkX13()
+  # only looks for names ending in .exe.
+  bin <- file.path(
+    broken,
+    if (.Platform$OS.type == "windows") "x13ashtml.exe" else "x13ashtml"
+  )
+  writeLines("not a binary", bin)
+  Sys.chmod(bin, "0644")
 
   with_x13_path(broken, {
     msg <- capture.output(
