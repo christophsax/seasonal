@@ -24,6 +24,10 @@ bug fix
     estimated ARMA coefficients. It used to be 'Box.test(resid(m), lag = 24,
     type = "Ljung")', which accounted for none of the three #310
 
+minor changes
+  - structure() no longer uses the deprecated '.Names' argument in
+    import.spc(), which caused a CRAN NOTE on r-devel #357
+
 
 1.10.0
 --------------------------------------------------------------------------------
