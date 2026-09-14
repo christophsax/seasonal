@@ -223,3 +223,17 @@ test_that("summary() shows the corrected Box-Ljung statistic (#310)", {
   # the check spec is not saved, summary() costs no extra output file
   expect_null(m$series$acf)
 })
+
+test_that("na.action survives re-evaluation (#295)", {
+  APNA <- window(AirPassengers, end = 1962, extend = TRUE)
+
+  m <- seas(APNA, na.action = na.exclude)
+  expect_identical(class(update(m)$na.action), "exclude")
+  expect_true(anyNA(predict(m, APNA)))
+
+  m <- seas(APNA, na.action = na.x13)
+  expect_identical(final(update(m)), final(m))
+
+  # the default stays out of the list
+  expect_false("na.action" %in% names(seas(APNA)$list))
+})
