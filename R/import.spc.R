@@ -126,7 +126,7 @@ import.spc <- function(file, text = NULL){
   # clean args that are produced by seas
   pp[c("series", "regression", "transform")] <- lapply(pp[c("series", "regression", "transform")], function(spc) spc[!names(spc) %in% c("file", "data", "start", "name", "title", "format", "period", "user")])
 
-  if (identical(pp$series, structure(list(), .Names = character(0)))){
+  if (identical(pp$series, structure(list(), names = character(0)))){
     pp$series <- NULL
   }
 
@@ -257,7 +257,7 @@ rem_quotes <- function(x){
 
 expand_spclist_to_args <- function(ll){
   # substitute empty names lists by ""
-  ll[sapply(ll, identical, structure(list(), .Names = character(0)))] <- ""
+  ll[sapply(ll, identical, structure(list(), names = character(0)))] <- ""
   do.call("c", ll)
 }
 
