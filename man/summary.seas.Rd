@@ -43,6 +43,10 @@ deviations, t-values and p-values}
 
 \item{transform}{character string with the type of initial transformation}
 
+\item{lbq}{named numeric vector with the Ljung-Box Q statistic of the
+residuals, its degrees of freedom and its p-value, computed the way
+X-13ARIMA-SEATS does}
+
 The \code{print} method prints the summary output in a similar way as the
 method for \code{"lm"}.
 }
