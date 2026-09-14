@@ -2,6 +2,15 @@
 --------------------------------------------------------------------------------
 
 bug fix
+  - series() works on multiple series output without a composite spec. It used
+    to fail with 'does not contain a composite element' #306
+    Thanks to @HomoCodens!
+  - original() no longer returns the call as extra columns of multiple series
+    output, and residuals() and predict() no longer return NULL. The call of
+    such an object is an attribute now, so 'lapply(m, udg)' works. Use
+    'attr(m, "call")' instead of 'm$call' #288
+  - fivebestmdl() reports that it needs a single model, instead of returning
+    NULL #288
   - import.spc() deals with tabs, with the legacy 'x12save' format label and
     with non-UTF-8 comments #338
     Thanks to @CatalinDochitoiu!
