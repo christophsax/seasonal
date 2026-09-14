@@ -17,6 +17,8 @@ test_that("checkX13() can skip the long checks", {
 })
 
 test_that("checkX13() complains about a path that does not exist", {
+  skip_on_cran()
+
   with_x13_path(file.path(tempdir(), "no-such-directory"), {
     expect_error(
       suppressMessages(checkX13(fail = TRUE)),
@@ -30,6 +32,8 @@ test_that("checkX13() complains about a path that does not exist", {
 })
 
 test_that("checkX13() complains when the binary is missing from the path", {
+  skip_on_cran()
+
   empty <- file.path(tempdir(), "empty-x13-dir")
   dir.create(empty, showWarnings = FALSE)
 

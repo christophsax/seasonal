@@ -175,6 +175,8 @@ test_that("out() on a composite model shows the composite output", {
 })
 
 test_that("checkX13() reports a binary it cannot run", {
+  skip_on_cran()
+
   broken <- file.path(tempdir(), "broken-x13")
   dir.create(broken, showWarnings = FALSE)
   # a file with the right name that is not a program. On Windows, checkX13()
