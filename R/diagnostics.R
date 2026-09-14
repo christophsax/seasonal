@@ -69,6 +69,8 @@ spc <- function(x){
 #' }
 #' @export
 fivebestmdl <- function(x){
+  stopifnot(inherits(x, "seas"))
+
   if (!is.null(x$fivebestmdl)){
     if (getOption("htmlmode") == 1){
       txt <- x$fivebestmdl[4:8]

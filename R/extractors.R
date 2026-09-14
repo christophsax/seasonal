@@ -91,6 +91,14 @@ residuals.seas <- function(object, ...){
 }
 
 
+#' @method residuals seas_multi
+#' @rdname final
+#' @export
+residuals.seas_multi <- function(object, ...){
+  series(object, "rsd")
+}
+
+
 extract_w_na_action <- function(x, name){
   # extract a data series and applies na_action according to the attribute
   #

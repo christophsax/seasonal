@@ -109,3 +109,14 @@ predict.seas <- function(object, newdata, ...){
   final(update(object, x = newdata, ...))
 }
 
+
+#' @method predict seas_multi
+#' @export
+predict.seas_multi <- function(object, newdata, ...){
+  if (missing("newdata") && length(list(...)) == 0) {
+    return(final(object))
+  }
+  stop("predict() with 'newdata' does not work on multiple series output, ",
+       "since update() does not. If you think it should, please file an issue.")
+}
+

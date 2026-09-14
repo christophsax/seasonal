@@ -7,7 +7,8 @@
 series(x, series, reeval = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{x}{an object of class \code{"seas"}.}
+\item{x}{an object of class \code{"seas"}, or the output of a multiple series
+call.}
 
 \item{series}{character vector, short or long names of an X-13ARIMA-SEATS
 table. If a long name is specified, it needs to be combined with the spec
@@ -301,6 +302,10 @@ x11regression \tab x11regression.x11regb \tab b15 \tab preliminary irregular reg
 x11regression \tab x11regression.xregressioncmatrix \tab xrc \tab correlation matrix of irregular regression parameter estimates if used with the print argument; covariance matrix of same if used with the save argument \cr
 x11regression \tab x11regression.xregressionmatrix \tab xrm \tab values of irregular regression variables with associated dates \cr
 }
+
+On the output of a multiple series call, every model is asked for the series,
+and the results are combined column by column, the way \code{\link[=final]{final()}} does. On a
+composite object, the tables of the composite model are returned.
 }
 \examples{
 

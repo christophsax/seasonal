@@ -6,6 +6,7 @@
 \alias{trend}
 \alias{irregular}
 \alias{residuals.seas}
+\alias{residuals.seas_multi}
 \title{Time Series of a Seasonal Adjustment Model}
 \usage{
 final(object)
@@ -17,6 +18,8 @@ trend(object)
 irregular(object)
 
 \method{residuals}{seas}(object, ...)
+
+\method{residuals}{seas_multi}(object, ...)
 }
 \arguments{
 \item{object}{an object of class \code{"seas"}.}
